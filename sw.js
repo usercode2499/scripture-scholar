@@ -4,7 +4,7 @@
 
 // Bump this version when you push significant content updates,
 // so installed PWAs pick up the new cache. e.g. 'v2', 'v3', etc.
-const CACHE_VERSION = 'scripture-scholar-v1';
+const CACHE_VERSION = 'scripture-scholar-v2';
 
 // Files that make up the app shell (everything needed for first paint).
 const APP_SHELL = [
@@ -13,13 +13,26 @@ const APP_SHELL = [
   './manifest.json',
   './icon-192.png',
   './icon-512.png',
-  './apple-touch-icon.png'
+  './apple-touch-icon.png',
+  './background-music.mp3',
+  './correct-music.mp3',
+  './wrong-music.mp3'
 ];
 
 // On install: cache the app shell.
+// Use individual cache.add() so missing files (e.g. audio not yet uploaded)
+// don't break the entire install.
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_VERSION).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_VERSION).then(async (cache) => {
+      await Promise.all(
+        APP_SHELL.map((url) =>
+          cache.add(url).catch((err) => {
+            console.warn('SW: skipped caching', url, err.message);
+          })
+        )
+      );
+    })
   );
   self.skipWaiting();
 });
