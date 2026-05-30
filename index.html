@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Scripture Scholar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf6ed;
+    --card: #ffffff;
+    --ink: #2d1f15;
+    --ink-soft: #6b5544;
+    --ink-faint: #a89580;
+    --gold: #c89b3c;
+    --gold-dark: #a37d22;
+    --gold-light: #f4d77b;
+    --gold-glow: rgba(200, 155, 60, 0.15);
+    --green: #6b8e3d;
+    --green-soft: #e8efd9;
+    --red: #c4523c;
+    --red-soft: #f7e1dc;
+    --border: #e8dec9;
+    --border-soft: #f0e8d5;
+    --lock: #c8baa6;
+    --shadow: 0 4px 24px rgba(60, 40, 20, 0.06);
+    --shadow-lg: 0 12px 40px rgba(60, 40, 20, 0.1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-image:
+      radial-gradient(at 15% 10%, rgba(200, 155, 60, 0.06) 0%, transparent 50%),
+      radial-gradient(at 85% 90%, rgba(107, 142, 61, 0.05) 0%, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 20px 20px 40px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .serif { font-family: 'Cormorant Garamond', Georgia, serif; }
+
+  /* Top bar */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 4px 0;
+  }
+
+  .stat {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 8px 14px;
+    background: var(--card);
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .stat-icon { font-size: 18px; line-height: 1; }
+  .stat-streak { color: #d97706; }
+  .stat-level {
+    flex-direction: column;
+    gap: 4px;
+    padding: 7px 14px 6px;
+    color: var(--gold-dark);
+    cursor: pointer;
+    min-width: 80px;
+  }
+  .stat-level-top {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .stat-level-top span:nth-child(2) { font-size: 11px; opacity: 0.7; }
+  .stat-level-bar {
+    width: 100%;
+    height: 3px;
+    background: var(--border-soft);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .stat-level-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #e0b656);
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .stat-hints { color: #5b8de8; }
+
+  /* Screens */
+  .screen {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === HOME SCREEN === */
+  .home-header {
+    text-align: center;
+    padding: 16px 0 24px;
+  }
+
+  .liahona-wrap {
+    width: 72px;
+    height: 82px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 6px 14px rgba(200, 155, 60, 0.25));
+  }
+
+  .liahona-svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+
+  .home-title {
+    font-size: 32px;
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+  }
+
+  .home-tagline {
+    font-size: 14px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 4px;
+  }
+
+  /* Unit header */
+  .unit-header {
+    text-align: center;
+    margin: 12px 0 24px;
+    position: relative;
+  }
+  .unit-header::before, .unit-header::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+  .unit-header::before { left: 50%; transform: translateX(-110px); }
+  .unit-header::after { right: 50%; transform: translateX(110px); }
+
+  .unit-eyebrow {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+
+  .unit-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 2px;
+  }
+
+  /* Lesson path */
+  .lesson-path {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .lesson-node {
+    width: 100%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 18px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 0 var(--border);
+    text-align: left;
+    font-family: inherit;
+    color: var(--ink);
+  }
+
+  .lesson-node:hover:not(.locked) {
+    transform: translateY(-1px);
+    border-color: var(--gold);
+    box-shadow: 0 4px 0 var(--gold);
+  }
+
+  /* completed state */
+  .lesson-node.completed {
+    background: linear-gradient(135deg, #fdf8eb 0%, #f9f0d8 100%);
+    border-color: var(--gold);
+    box-shadow: 0 3px 0 var(--gold-dark);
+  }
+
+  /* current/active state - the next lesson to take */
+  .lesson-node.current {
+    background: var(--card);
+    border-color: var(--gold);
+    box-shadow: 0 4px 0 var(--gold-dark), 0 0 0 4px var(--gold-glow);
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 0 var(--gold-dark), 0 0 0 4px var(--gold-glow); }
+    50% { box-shadow: 0 4px 0 var(--gold-dark), 0 0 0 8px var(--gold-glow); }
+  }
+
+  /* locked state */
+  .lesson-node.locked {
+    background: var(--border-soft);
+    border-color: var(--border);
+    box-shadow: 0 2px 0 var(--border);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .lesson-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--border-soft);
+    color: var(--ink-soft);
+  }
+
+  .completed .lesson-icon {
+    background: var(--gold);
+    color: white;
+  }
+  .current .lesson-icon {
+    background: var(--ink);
+    color: var(--gold-light);
+  }
+  .locked .lesson-icon {
+    background: var(--lock);
+    color: white;
+    font-size: 20px;
+  }
+
+  .lesson-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .lesson-eyebrow {
+    font-size: 10.5px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .completed .lesson-eyebrow { color: var(--gold-dark); }
+  .current .lesson-eyebrow { color: var(--gold-dark); }
+
+  .lesson-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .locked .lesson-name { color: var(--ink-soft); }
+
+  .lesson-range {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .lesson-action {
+    flex-shrink: 0;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .completed .lesson-action { color: var(--green); font-size: 20px; }
+  .current .lesson-action { color: var(--gold-dark); }
+
+  /* path connector between nodes */
+  .path-connector {
+    width: 4px;
+    height: 28px;
+    background: repeating-linear-gradient(0deg,
+      var(--gold) 0px, var(--gold) 6px,
+      transparent 6px, transparent 12px);
+    margin: 0 auto;
+    opacity: 0.5;
+  }
+  .path-connector.dim {
+    background: repeating-linear-gradient(0deg,
+      var(--lock) 0px, var(--lock) 6px,
+      transparent 6px, transparent 12px);
+    opacity: 0.4;
+  }
+
+  /* Source note */
+  .source-note {
+    margin-top: 32px;
+    padding: 14px 16px;
+    background: rgba(200, 155, 60, 0.06);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+  .source-note strong { color: var(--ink); font-weight: 600; }
+  .source-note a {
+    color: var(--gold-dark);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gold-dark);
+  }
+
+  /* === LESSON DETAIL SCREEN === */
+  .detail-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 22px;
+  }
+
+  .back-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--ink);
+    box-shadow: var(--shadow);
+    transition: all 0.2s;
+  }
+  .back-btn:hover { background: var(--bg); transform: translateX(-2px); }
+
+  .detail-eyebrow-bar {
+    flex: 1;
+    font-size: 12px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+
+  .detail-hero {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 26px 24px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+  }
+
+  .detail-chapter-tag {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: white;
+    background: var(--gold);
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 14px;
+  }
+
+  .completed-banner {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: var(--green-soft);
+    border: 1px solid var(--green);
+    border-radius: 12px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--green);
+  }
+  .completed-banner-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--green);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+
+  .detail-title {
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .detail-subtitle {
+    font-size: 16px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-bottom: 18px;
+  }
+
+  .detail-meta {
+    display: flex;
+    gap: 14px;
+    font-size: 13px;
+    color: var(--ink-soft);
+    flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .detail-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: 14px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 0 #1a120a, 0 6px 16px rgba(0,0,0,0.15);
+  }
+
+  .btn:hover { transform: translateY(-1px); box-shadow: 0 5px 0 #1a120a, 0 8px 18px rgba(0,0,0,0.18); }
+  .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #1a120a; }
+
+  .btn-gold {
+    background: var(--gold);
+    color: white;
+    box-shadow: 0 4px 0 var(--gold-dark), 0 6px 16px var(--gold-glow);
+  }
+  .btn-gold:hover { box-shadow: 0 5px 0 var(--gold-dark), 0 8px 18px var(--gold-glow); }
+  .btn-gold:active { box-shadow: 0 2px 0 var(--gold-dark); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    box-shadow: none;
+    font-weight: 500;
+  }
+  .btn-ghost:hover { background: var(--border-soft); transform: none; box-shadow: none; }
+
+  /* Reading screen */
+  .reading-header { margin-bottom: 24px; }
+
+  .reading-eyebrow {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .reading-title {
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .reading-subtitle {
+    font-size: 15px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .reading-content {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 26px 22px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    flex: 1;
+    margin: 20px 0;
+  }
+
+  .reading-content p {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .reading-content p:last-child { margin-bottom: 0; }
+  .reading-content p:first-child:first-letter {
+    font-size: 1.4em;
+    font-weight: 600;
+    color: var(--gold-dark);
+  }
+
+  .principles-list {
+    margin-top: 18px;
+    padding: 16px 18px;
+    background: rgba(200, 155, 60, 0.07);
+    border-radius: 12px;
+    border-left: 3px solid var(--gold);
+  }
+
+  .principles-list-title {
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .principles-list ul { list-style: none; padding: 0; }
+  .principles-list li {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--ink);
+    padding: 4px 0 4px 20px;
+    position: relative;
+  }
+  .principles-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--gold-dark);
+  }
+
+  /* Progress bar */
+  .progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .progress-back {
+    background: none;
+    border: none;
+    color: var(--ink-soft);
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 22px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .progress-back:hover { color: var(--ink); }
+
+  .progress-bar {
+    flex: 1;
+    height: 14px;
+    background: var(--border-soft);
+    border-radius: 100px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #e0b656);
+    border-radius: 100px;
+    transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+    position: relative;
+  }
+
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 6px;
+    right: 6px;
+    height: 4px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 100px;
+  }
+
+  /* Question screen */
+  .question-prompt {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 26px;
+    line-height: 1.3;
+    font-weight: 600;
+    margin-bottom: 28px;
+    color: var(--ink);
+    white-space: pre-line;
+  }
+
+  .question-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .question-type {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+
+  .scripture-mastery-badge {
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: white;
+    background: var(--gold);
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+
+  .option {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 20px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 2px 0 var(--border);
+  }
+
+  .option:hover:not(:disabled) {
+    border-color: var(--gold);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 0 var(--gold);
+  }
+
+  .option-letter {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: var(--border-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .option.selected { border-color: var(--gold); background: #fdf8eb; }
+  .option.selected .option-letter { background: var(--gold); color: white; }
+  .option.correct { border-color: var(--green); background: var(--green-soft); }
+  .option.correct .option-letter { background: var(--green); color: white; }
+  .option.incorrect { border-color: var(--red); background: var(--red-soft); }
+  .option.incorrect .option-letter { background: var(--red); color: white; }
+  .option:disabled { cursor: not-allowed; }
+
+  /* Fill blank input */
+  .fillblank-input {
+    width: 100%;
+    padding: 16px 20px;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 22px;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    background: var(--card);
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 24px;
+    transition: border-color 0.2s;
+    box-shadow: 0 2px 0 var(--border);
+  }
+  .fillblank-input:focus { outline: none; border-color: var(--gold); box-shadow: 0 2px 0 var(--gold); }
+  .fillblank-input.correct { border-color: var(--green); background: var(--green-soft); box-shadow: 0 2px 0 var(--green); }
+  .fillblank-input.incorrect { border-color: var(--red); background: var(--red-soft); box-shadow: 0 2px 0 var(--red); }
+
+  /* Feedback */
+  .feedback {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--gold);
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+  .feedback.correct { border-left-color: var(--green); }
+  .feedback.incorrect { border-left-color: var(--red); }
+
+  .feedback-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .feedback.correct .feedback-title { color: var(--green); }
+  .feedback.incorrect .feedback-title { color: var(--red); }
+
+  .feedback-text { font-size: 14px; line-height: 1.5; color: var(--ink-soft); }
+
+  .feedback-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold-dark);
+    margin-top: 6px;
+    font-weight: 600;
+  }
+  .feedback-ref a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--gold-dark); }
+
+  /* Complete screen */
+  .complete-hero { text-align: center; padding: 40px 0 32px; }
+
+  .trophy {
+    font-size: 80px;
+    margin-bottom: 20px;
+    animation: bounce 1s ease;
+  }
+
+  @keyframes bounce {
+    0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+    50% { transform: scale(1.2) rotate(10deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  .complete-title { font-size: 36px; font-weight: 600; margin-bottom: 8px; }
+  .complete-sub { color: var(--ink-soft); font-size: 16px; margin-bottom: 28px; }
+
+  .reward-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .reward-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: var(--shadow);
+  }
+
+  .reward-icon { font-size: 32px; margin-bottom: 8px; line-height: 1; }
+  .reward-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold-dark);
+    line-height: 1;
+  }
+  .reward-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+
+  .reflection {
+    background: linear-gradient(135deg, #fdf8eb 0%, #faf3dc 100%);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .reflection-label {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .reflection-prompt {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    line-height: 1.4;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* Toast for locked lessons */
+  .toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 14px 22px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    z-index: 100;
+    animation: toastIn 0.3s ease, toastOut 0.3s ease 2.4s forwards;
+  }
+  @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+  @keyframes toastOut { to { opacity: 0; transform: translate(-50%, 20px); } }
+
+  /* Footer button area */
+  .footer-actions {
+    margin-top: auto;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Hidden util */
+  .hidden { display: none !important; }
+
+  /* === DASHBOARD SECTIONS === */
+
+  /* Section labels (eyebrow text above each home section) */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 24px 0 12px;
+  }
+  .section-label-text {
+    font-size: 11px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .section-label-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--gold) 0%, transparent 100%);
+    opacity: 0.5;
+  }
+
+  /* Daily Verse card */
+  .daily-verse {
+    background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
+    border: 1px solid var(--gold);
+    border-radius: 18px;
+    padding: 22px 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .daily-verse::before {
+    content: '"';
+    position: absolute;
+    top: -30px;
+    left: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 120px;
+    color: var(--gold);
+    opacity: 0.18;
+    line-height: 1;
+    font-weight: 700;
+  }
+  .daily-verse-eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+  }
+  .daily-verse-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-style: italic;
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 14px;
+  }
+  .daily-verse-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    color: var(--gold-dark);
+    font-weight: 700;
+    position: relative;
+    z-index: 1;
+  }
+  .daily-verse-ref a {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gold-dark);
+  }
+
+  /* Continue Learning card */
+  .continue-card {
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 20px;
+    padding: 22px 24px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    position: relative;
+    overflow: hidden;
+  }
+  .continue-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle at top right, var(--gold) 0%, transparent 60%);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .continue-eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 6px;
+    position: relative;
+    z-index: 1;
+  }
+  .continue-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    line-height: 1.15;
+    font-weight: 600;
+    margin-bottom: 4px;
+    position: relative;
+    z-index: 1;
+  }
+  .continue-subtitle {
+    font-size: 14px;
+    color: rgba(250, 246, 237, 0.7);
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .continue-meta {
+    display: flex;
+    gap: 14px;
+    font-size: 12px;
+    color: rgba(250, 246, 237, 0.6);
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 1;
+  }
+  .continue-btn {
+    width: 100%;
+    padding: 14px 20px;
+    background: var(--gold);
+    color: var(--ink);
+    border: none;
+    border-radius: 12px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 3px 0 var(--gold-dark);
+    position: relative;
+    z-index: 1;
+  }
+  .continue-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 0 var(--gold-dark);
+  }
+  .continue-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 var(--gold-dark);
+  }
+
+  /* Progress Overview */
+  .progress-overview {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 18px;
+    box-shadow: var(--shadow);
+  }
+  .stat-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .stat-tile {
+    text-align: center;
+    padding: 12px 6px;
+    background: var(--border-soft);
+    border-radius: 12px;
+  }
+  .stat-tile-icon { font-size: 22px; line-height: 1; margin-bottom: 4px; }
+  .stat-tile-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-tile-label {
+    font-size: 10.5px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .progress-overview .level-progress {
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+  }
+  .progress-overview .level-progress:hover { transform: none; }
+
+  .level-progress-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .level-progress-current {
+    font-weight: 700;
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+  }
+  .level-progress-xp {
+    color: var(--ink-soft);
+    font-weight: 600;
+  }
+  .level-progress-bar {
+    height: 8px;
+    background: var(--border-soft);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .level-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), #e0b656);
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  /* Hint button in quiz */
+  .hint-bar {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+  .hint-btn {
+    background: var(--card);
+    border: 2px dashed #5b8de8;
+    color: #4170c4;
+    padding: 10px 18px;
+    border-radius: 100px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .hint-btn:hover:not(:disabled) {
+    background: #eef3fb;
+    transform: translateY(-1px);
+  }
+  .hint-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-style: solid;
+  }
+  .hint-btn-icon { font-size: 16px; line-height: 1; }
+
+  /* Eliminated option */
+  .option.eliminated {
+    opacity: 0.35;
+    text-decoration: line-through;
+    pointer-events: none;
+    background: var(--border-soft);
+  }
+
+  /* Level Up callout on completion screen */
+  .levelup-callout {
+    background: linear-gradient(135deg, #fdf8eb 0%, #f5e4b8 100%);
+    border: 2px solid var(--gold);
+    border-radius: 16px;
+    padding: 18px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    animation: levelUpPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  @keyframes levelUpPop {
+    0% { opacity: 0; transform: scale(0.7); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .levelup-icon {
+    font-size: 36px;
+    flex-shrink: 0;
+    animation: spin 1s ease;
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg) scale(0.5); }
+    100% { transform: rotate(360deg) scale(1); }
+  }
+
+  .levelup-text-eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+  .levelup-text-main {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    line-height: 1.2;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .levelup-text-sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  /* Streak fire bump */
+  @keyframes flame {
+    0%, 100% { transform: scale(1) rotate(-2deg); }
+    50% { transform: scale(1.1) rotate(2deg); }
+  }
+  .stat-streak .stat-icon { animation: flame 1.5s ease-in-out infinite; display: inline-block; }
+
+  /* === RESPONSIVE === */
+
+  /* Very small phones (≤ 360px wide, e.g. older iPhone SE) */
+  @media (max-width: 360px) {
+    .app { padding: 14px 12px 30px; }
+    .stat { padding: 6px 10px; font-size: 13px; }
+    .stat-icon { font-size: 16px; }
+    .stat-level { min-width: 70px; padding: 6px 10px 5px; }
+    .stat-level-top { font-size: 13px; }
+    .home-title { font-size: 28px; }
+    .lesson-name { font-size: 17px; }
+    .lesson-icon { width: 42px; height: 42px; font-size: 19px; }
+    .question-prompt { font-size: 22px; }
+    .daily-verse-text { font-size: 17px; }
+    .continue-title { font-size: 22px; }
+    .reading-content { padding: 22px 18px; }
+    .reading-content p { font-size: 17px; }
+    .lesson-meta { gap: 10px; font-size: 12px; }
+    .detail-title { font-size: 26px; }
+    .complete-title { font-size: 30px; }
+    .trophy { font-size: 66px; }
+  }
+
+  /* Tablets and desktop — keep phone-shaped frame but lift it visually */
+  @media (min-width: 600px) {
+    body {
+      background-image:
+        radial-gradient(at 15% 10%, rgba(200, 155, 60, 0.1) 0%, transparent 50%),
+        radial-gradient(at 85% 90%, rgba(107, 142, 61, 0.08) 0%, transparent 50%),
+        linear-gradient(135deg, #f4ead2 0%, var(--bg) 100%);
+    }
+    .app {
+      margin: 32px auto;
+      max-width: 480px;
+      background: var(--bg);
+      border-radius: 28px;
+      box-shadow: 0 24px 60px rgba(60, 40, 20, 0.12);
+      border: 1px solid var(--border);
+      min-height: calc(100vh - 64px);
+      padding: 24px 24px 40px;
+    }
+    .toast {
+      max-width: 460px;
+    }
+  }
+
+  /* Tablet — let the app breathe a bit wider */
+  @media (min-width: 900px) {
+    .app { max-width: 520px; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- Top status bar -->
+  <div class="topbar" id="topbar">
+    <div class="stat stat-streak"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
+    <div class="stat stat-level" id="levelPill" onclick="showLevelInfo()">
+      <div class="stat-level-top">
+        <span class="stat-icon">📜</span>
+        <span>Lv</span>
+        <span id="levelNum">1</span>
+      </div>
+      <div class="stat-level-bar">
+        <div class="stat-level-fill" id="topbarLevelFill" style="width: 0%"></div>
+      </div>
+    </div>
+    <div class="stat stat-hints"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div class="screen" id="screen-home">
+    <div class="home-header">
+      <div class="liahona-wrap">
+        <svg class="liahona-svg" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" aria-label="Liahona logo">
+          <defs>
+            <radialGradient id="liaSphere" cx="32%" cy="26%" r="72%">
+              <stop offset="0%" stop-color="#fce078"/>
+              <stop offset="45%" stop-color="#d4a73c"/>
+              <stop offset="100%" stop-color="#6b5018"/>
+            </radialGradient>
+            <linearGradient id="liaBand" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#b8862a"/>
+              <stop offset="50%" stop-color="#8a6418"/>
+              <stop offset="100%" stop-color="#b8862a"/>
+            </linearGradient>
+          </defs>
+          <!-- Top finial -->
+          <circle cx="50" cy="6" r="3" fill="url(#liaSphere)" stroke="#5c4313" stroke-width="0.7"/>
+          <line x1="50" y1="9" x2="50" y2="14" stroke="#5c4313" stroke-width="2" stroke-linecap="round"/>
+          <!-- Main sphere -->
+          <circle cx="50" cy="58" r="40" fill="url(#liaSphere)" stroke="#5c4313" stroke-width="1.2"/>
+          <!-- Top dome arched panels -->
+          <g fill="#3d2817" opacity="0.72">
+            <path d="M 19,42 Q 19,28 29,24 L 29,42 Z"/>
+            <path d="M 32,42 Q 36,21 47,19 L 47,42 Z"/>
+            <path d="M 53,42 Q 64,21 68,42 Z"/>
+            <path d="M 71,42 Q 81,28 81,42 Z"/>
+          </g>
+          <!-- Top arch peak accents -->
+          <g fill="#d4a73c">
+            <circle cx="24" cy="33" r="1"/>
+            <circle cx="40" cy="25" r="1.2"/>
+            <circle cx="60" cy="25" r="1.2"/>
+            <circle cx="76" cy="33" r="1"/>
+          </g>
+          <!-- Center inscription band -->
+          <rect x="7" y="50" width="86" height="9" fill="url(#liaBand)" stroke="#5c4313" stroke-width="0.8"/>
+          <!-- Stylized engraved symbols on band -->
+          <g fill="#3d2817">
+            <path d="M 14,54.5 L 16,52.5 L 18,54.5 L 16,56.5 Z"/>
+            <rect x="22" y="52.5" width="1" height="4"/>
+            <path d="M 28,52.5 L 31,56.5 L 25,56.5 Z"/>
+            <rect x="35" y="52.5" width="4" height="1"/>
+            <rect x="35" y="55.5" width="4" height="1"/>
+            <path d="M 50,51 L 53.5,54.5 L 50,58 L 46.5,54.5 Z"/>
+            <rect x="61" y="52.5" width="4" height="1"/>
+            <rect x="61" y="55.5" width="4" height="1"/>
+            <path d="M 72,52.5 L 75,56.5 L 69,56.5 Z"/>
+            <rect x="77" y="52.5" width="1" height="4"/>
+            <path d="M 82,54.5 L 84,52.5 L 86,54.5 L 84,56.5 Z"/>
+          </g>
+          <!-- Bottom dome arched panels (mirror of top) -->
+          <g fill="#3d2817" opacity="0.72">
+            <path d="M 19,68 Q 19,82 29,86 L 29,68 Z"/>
+            <path d="M 32,68 Q 36,89 47,91 L 47,68 Z"/>
+            <path d="M 53,68 Q 64,89 68,68 Z"/>
+            <path d="M 71,68 Q 81,82 81,68 Z"/>
+          </g>
+          <!-- Bottom arch accents -->
+          <g fill="#d4a73c">
+            <circle cx="24" cy="77" r="1"/>
+            <circle cx="40" cy="85" r="1.2"/>
+            <circle cx="60" cy="85" r="1.2"/>
+            <circle cx="76" cy="77" r="1"/>
+          </g>
+          <!-- 3D highlight on upper-left -->
+          <ellipse cx="37" cy="40" rx="13" ry="8" fill="#fce078" opacity="0.4"/>
+        </svg>
+      </div>
+      <h1 class="home-title serif">Scripture Scholar</h1>
+      <p class="home-tagline">A little every day. Learning becomes light.</p>
+    </div>
+
+    <!-- Verse of the Day -->
+    <div class="section-label">
+      <span class="section-label-text">✦ Verse of the Day</span>
+      <span class="section-label-line"></span>
+    </div>
+    <div class="daily-verse" id="dailyVerse">
+      <div class="daily-verse-eyebrow">From the Book of Mormon</div>
+      <div class="daily-verse-text" id="dailyVerseText">—</div>
+      <div class="daily-verse-ref"><a id="dailyVerseRef" href="#" target="_blank" rel="noopener">—</a></div>
+    </div>
+
+    <!-- Continue Learning -->
+    <div class="section-label">
+      <span class="section-label-text">▶ Continue Learning</span>
+      <span class="section-label-line"></span>
+    </div>
+    <div class="continue-card" id="continueCard">
+      <div class="continue-eyebrow" id="continueEyebrow">Chapter 1</div>
+      <div class="continue-title serif" id="continueTitle">The Keystone of Our Religion</div>
+      <div class="continue-subtitle" id="continueSubtitle">Why the Book of Mormon matters</div>
+      <div class="continue-meta" id="continueMeta">
+        <span>📖 7 questions</span>
+        <span>⏱ ~5 min</span>
+        <span>⭐ +25 XP</span>
+      </div>
+      <button class="continue-btn" onclick="continueFromDashboard()" id="continueBtn">Begin Lesson →</button>
+    </div>
+
+    <!-- Progress Overview -->
+    <div class="section-label">
+      <span class="section-label-text">📊 Your Progress</span>
+      <span class="section-label-line"></span>
+    </div>
+    <div class="progress-overview">
+      <div class="stat-tiles">
+        <div class="stat-tile">
+          <div class="stat-tile-icon">✓</div>
+          <div class="stat-tile-value" id="statChapters">0</div>
+          <div class="stat-tile-label">Chapters Done</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-icon">⭐</div>
+          <div class="stat-tile-value" id="statXp">0</div>
+          <div class="stat-tile-label">Total XP</div>
+        </div>
+        <div class="stat-tile">
+          <div class="stat-tile-icon">🔥</div>
+          <div class="stat-tile-value" id="statStreak">0</div>
+          <div class="stat-tile-label">Day Streak</div>
+        </div>
+      </div>
+      <div class="level-progress" id="levelProgress" onclick="showLevelInfo()">
+        <div class="level-progress-text">
+          <span class="level-progress-current"><span id="levelLabel">Scholar Level 1</span></span>
+          <span class="level-progress-xp"><span id="xpCurrent">0</span> / <span id="xpTarget">50</span> XP</span>
+        </div>
+        <div class="level-progress-bar">
+          <div class="level-progress-fill" id="levelProgressFill" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- All Lessons -->
+    <div class="section-label">
+      <span class="section-label-text">📖 All Lessons</span>
+      <span class="section-label-line"></span>
+    </div>
+    <div class="unit-header">
+      <div class="unit-eyebrow">Unit 1</div>
+      <div class="unit-title serif">1 Nephi</div>
+    </div>
+    <div class="lesson-path" id="lessonPath">
+      <!-- Lesson nodes are rendered here by JS -->
+    </div>
+    <div class="source-note">
+      <strong>Content sourced from:</strong> <em>Book of Mormon Teacher Manual</em>, published by The Church of Jesus Christ of Latter-day Saints. Scripture references link to the official text. <a href="https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual?lang=eng" target="_blank" rel="noopener">View manual →</a>
+    </div>
+  </div>
+
+  <!-- LESSON DETAIL SCREEN -->
+  <div class="screen hidden" id="screen-detail">
+    <div class="detail-header">
+      <button class="back-btn" onclick="goHome()" aria-label="Back">←</button>
+      <span class="detail-eyebrow-bar">Unit 1 · 1 Nephi</span>
+    </div>
+    <div class="detail-hero">
+      <div class="completed-banner hidden" id="completedBanner">
+        <div class="completed-banner-icon">✓</div>
+        <div>You've completed this lesson — review anytime to keep your streak alive.</div>
+      </div>
+      <span class="detail-chapter-tag" id="detailChapterTag">Chapter 2</span>
+      <h2 class="detail-title serif" id="detailTitle">1 Nephi 1–5</h2>
+      <div class="detail-subtitle" id="detailSubtitle">Lehi's Vision and the Brass Plates</div>
+      <div class="detail-meta">
+        <span>📖 7 questions</span>
+        <span>⏱ ~5 min</span>
+        <span>⭐ +25 XP</span>
+      </div>
+    </div>
+    <div class="footer-actions">
+      <button class="btn btn-gold" onclick="startLesson()" id="detailStartBtn">Begin Lesson →</button>
+      <button class="btn btn-ghost" onclick="goHome()">Back to path</button>
+    </div>
+  </div>
+
+  <!-- READING SCREEN -->
+  <div class="screen hidden" id="screen-reading">
+    <div class="detail-header">
+      <button class="back-btn" onclick="openDetail(state.currentLessonId)" aria-label="Back">←</button>
+      <span class="detail-eyebrow-bar" id="readingEyebrow">Chapter 2 · Part 1 of 2</span>
+    </div>
+    <div class="reading-content" id="readingContent">
+      <!-- Reading content rendered by JS -->
+    </div>
+    <div class="footer-actions">
+      <button class="btn btn-gold" onclick="startQuiz()">I'm Ready — Start Quiz</button>
+    </div>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div class="screen hidden" id="screen-quiz">
+    <div class="progress-wrap">
+      <button class="progress-back" onclick="exitQuiz()" aria-label="Exit lesson">✕</button>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width: 0%"></div></div>
+    </div>
+    <div class="question-meta">
+      <span class="question-type" id="qType">Multiple Choice</span>
+      <span class="scripture-mastery-badge hidden" id="qMasteryBadge">✦ Scripture Mastery</span>
+    </div>
+    <div class="question-prompt serif" id="qPrompt"></div>
+    <div id="qBody"></div>
+    <div class="hint-bar hidden" id="hintBar">
+      <button class="hint-btn" id="hintBtn" onclick="useHint()">
+        <span class="hint-btn-icon">💡</span>
+        <span id="hintBtnText">Use Hint</span>
+      </button>
+    </div>
+    <div id="qFeedback"></div>
+    <div class="footer-actions">
+      <button class="btn btn-gold hidden" id="btnCheck" onclick="checkAnswer()">Check Answer</button>
+      <button class="btn btn-gold hidden" id="btnNext" onclick="nextQuestion()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- COMPLETE SCREEN -->
+  <div class="screen hidden" id="screen-complete">
+    <div class="complete-hero">
+      <div class="trophy">🏆</div>
+      <h1 class="complete-title serif" id="completeTitle">Lesson Complete!</h1>
+      <p class="complete-sub" id="completeSub">Beautiful work. Your testimony grows one verse at a time.</p>
+    </div>
+    <div class="reward-grid">
+      <div class="reward-card">
+        <div class="reward-icon">⭐</div>
+        <div class="reward-value" id="earnedXp">+25</div>
+        <div class="reward-label">XP Earned</div>
+      </div>
+      <div class="reward-card">
+        <div class="reward-icon">🎯</div>
+        <div class="reward-value" id="earnedScore">7/7</div>
+        <div class="reward-label">Score</div>
+      </div>
+    </div>
+    <div class="levelup-callout hidden" id="levelupCallout">
+      <div class="levelup-icon">⭐</div>
+      <div>
+        <div class="levelup-text-eyebrow">Level Up!</div>
+        <div class="levelup-text-main" id="levelupTitle">You are now Scholar Level 2</div>
+        <div class="levelup-text-sub" id="levelupSub">+1 hint added to your inventory</div>
+      </div>
+    </div>
+    <div class="reflection">
+      <div class="reflection-label">✦ Reflect</div>
+      <div class="reflection-prompt" id="reflectionPrompt"></div>
+    </div>
+    <div class="footer-actions">
+      <button class="btn btn-gold" onclick="goHome()">Continue Journey →</button>
+    </div>
+  </div>
+</div>
+
+<div id="toastContainer"></div>
+
+<script>
+  // ============ LESSON DATA ============
+  // All content sourced from the Book of Mormon Teacher Manual
+  // published by The Church of Jesus Christ of Latter-day Saints
+  // https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual
+  const LESSONS = {
+    ch1: {
+      id: 'ch1',
+      chapter: 1,
+      range: 'Introduction',
+      title: "The Keystone of Our Religion",
+      subtitle: "Why the Book of Mormon matters",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-1?lang=eng',
+      reading: {
+        body: [
+          "Before we journey through the Book of Mormon, we pause to ask: why does this book matter?",
+          "The Prophet Joseph Smith taught that the Book of Mormon is the keystone of our religion — and that a person would get nearer to God by abiding by its precepts than by any other book. A keystone is the central wedge of an arch. Remove it, and the structure falls. So too with the Book of Mormon: it holds together our testimony of Jesus Christ, of Joseph Smith as a prophet, and of the restored gospel.",
+          "The book bears the subtitle 'Another Testament of Jesus Christ.' Eleven witnesses — three who saw an angel with the plates, and eight who handled the plates with their own hands — testified that it is true. Their testimonies still stand printed in the front of every copy.",
+          "Today's lesson explores why the Book of Mormon is essential, who witnessed its truth, and how prayerful study draws us closer to the Lord."
+        ],
+        principles: [
+          "The Book of Mormon is another testament of Jesus Christ",
+          "It is the keystone of our religion",
+          "Many witnesses have testified of its truthfulness",
+          "We draw closer to God as we prayerfully study it"
+        ]
+      },
+      reflection: '"What passage from the Book of Mormon has most strengthened your testimony of Jesus Christ?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'What is the subtitle of the Book of Mormon?',
+          options: ['The Sealed Record', 'A History of Ancient America', 'Another Testament of Jesus Christ', 'The Word of the Prophets'],
+          correct: 2,
+          reference: 'Title Page of the Book of Mormon',
+          explanation: "The subtitle declares the book's central purpose: to stand as another witness, alongside the Bible, that Jesus is the Christ."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does the word "Christ" (or "Messiah" in Hebrew) mean?',
+          options: ['Son of God', 'Anointed One', 'Savior', 'Redeemer'],
+          correct: 1,
+          reference: '1 Nephi 10:4',
+          explanation: "When we say Jesus is the Christ, we testify that He is the One anointed by God to save us."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete Joseph Smith\'s famous declaration:\n"The Book of Mormon is the ______ of our religion."',
+          answer: 'keystone',
+          acceptable: ['keystone'],
+          reference: 'Introduction to the Book of Mormon',
+          explanation: "A keystone is the central wedge of an arch — remove it, and the structure falls. So too is the Book of Mormon to the restored gospel."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How many witnesses (besides Joseph Smith) formally testified of the gold plates?',
+          options: ['Three', 'Eight', 'Eleven (three plus eight)', 'Twelve'],
+          correct: 2,
+          reference: 'Testimony of Three Witnesses; Testimony of Eight Witnesses',
+          explanation: "Three witnesses saw an angel and the plates; eight more handled and examined them. Their testimonies appear at the front of every Book of Mormon."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to the title page, what did the writers of the Book of Mormon want to convince readers of?',
+          options: ['That America is a promised land', 'That Jesus is the Christ, the Eternal God', 'That Joseph Smith was a prophet', 'That ancient prophets existed'],
+          correct: 1,
+          reference: 'Title Page of the Book of Mormon',
+          explanation: "The title page states the book was written to convince Jew and Gentile that Jesus is the Christ, the Eternal God, manifesting Himself to all nations."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this quote from Joseph Smith:\n"A man would get nearer to God by abiding by its ______ than by any other book."',
+          answer: 'precepts',
+          acceptable: ['precepts'],
+          reference: 'Introduction to the Book of Mormon',
+          explanation: "Joseph Smith's testimony of the Book of Mormon's power: more than reading — living its teachings — brings us closer to God."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to D&C 6:28 and Matthew 18:16, in the mouth of how many witnesses shall every word be established?',
+          options: ['One', 'Two or three', 'Seven', 'Twelve'],
+          correct: 1,
+          reference: 'D&C 6:28; Matthew 18:16',
+          explanation: "This is the Lord's pattern: He provides multiple witnesses to establish His word. The Bible and the Book of Mormon together fulfill this pattern."
+        }
+      ]
+    },
+
+    ch2: {
+      id: 'ch2',
+      chapter: 2,
+      range: '1 Nephi 1–5',
+      title: "Lehi's Vision",
+      subtitle: "The Vision and the Brass Plates",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-2?lang=eng',
+      reading: {
+        body: [
+          "The opening chapters of 1 Nephi follow a sacred pattern that runs through scripture: a prophet prays, receives revelation, warns the people, and is rejected. Lehi lived this pattern. He prayed earnestly for the people of Jerusalem, then saw God on His throne and a coming Messiah in vision. When he went out to warn the city, many mocked him — and some sought to take his life.",
+          "The Lord commanded Lehi to take his family — his wife Sariah and their sons Laman, Lemuel, Sam, and Nephi — into the wilderness. Along the way the family received the Lord's tender mercies. They were soon sent back to Jerusalem on a difficult errand: to obtain the brass plates, a sacred record containing the scriptures and their family's lineage.",
+          "It is in this story that Nephi delivers his famous declaration of faith — a verse memorized by Latter-day Saints around the world."
+        ],
+        principles: [
+          "The Lord calls prophets to warn and testify",
+          "The Lord extends tender mercies to those of faith",
+          "The Lord prepares a way to keep His commandments",
+          "The scriptures preserve God's word for generations"
+        ]
+      },
+      reflection: '"Like Nephi, where in your own life is the Lord asking you to \'go and do\' something that feels difficult?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'Why did Lehi go out and warn the people of Jerusalem?',
+          options: ['He wanted political power', 'He had received revelation from the Lord', 'His sons urged him to', 'He was a city official'],
+          correct: 1,
+          reference: '1 Nephi 1:4–20',
+          explanation: 'True to his prophetic calling, Lehi warned the people of Jerusalem according to the revelations he had received from the Lord.'
+        },
+        {
+          type: 'multiple_choice',
+          prompt: "According to 1 Nephi 1:20, who receives the Lord's tender mercies?",
+          options: ['Only prophets', 'Those born into the covenant', 'All those whom He has chosen', 'Only those who live in Jerusalem'],
+          correct: 2,
+          reference: '1 Nephi 1:20',
+          explanation: "Nephi shows that the Lord's tender mercies are over all those whom He has chosen, because of their faith."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this scripture mastery verse:\n"I will go and do the things which the Lord hath ______..."',
+          answer: 'commanded',
+          acceptable: ['commanded'],
+          reference: '1 Nephi 3:7',
+          explanation: "Nephi's declaration of faith — the Lord prepares a way for His children to accomplish what He commands.",
+          scriptureMastery: true
+        },
+        {
+          type: 'multiple_choice',
+          prompt: "What did Lehi and his sons return to Jerusalem to obtain from Laban?",
+          options: ['Food and provisions', 'The brass plates', 'Their belongings', 'Sacred relics'],
+          correct: 1,
+          reference: '1 Nephi 3:2–4',
+          explanation: "The brass plates contained the scriptures and their family genealogy. The Lord commanded them to obtain this sacred record."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Nephi mean when he said the Lord would "prepare a way" for him?',
+          options: ['God would send angels to do the work', 'God would provide means to keep His commandments', 'God would remove all difficulty', 'God would make him wealthy'],
+          correct: 1,
+          reference: '1 Nephi 3:7',
+          explanation: "Nephi understood that the Lord provides the means and strength to accomplish what He commands — even when the task seems impossible."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 1 Nephi 5:10–16, what did the brass plates contain?',
+          options: ["A history of Lehi's family only", 'Maps to a promised land', 'Five books of Moses, prophets, and a genealogy', 'Prophecies about Jerusalem only'],
+          correct: 2,
+          reference: '1 Nephi 5:10–16',
+          explanation: "The plates held the five books of Moses, a record of the Jews from the beginning, prophecies of holy prophets, and Lehi's family genealogy."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What happened to the people of Zarahemla, who had fled Jerusalem without scriptures?',
+          options: ['They built a great temple', 'They prospered as a mighty nation', 'Their language and faith deteriorated', 'They returned to Jerusalem within a generation'],
+          correct: 2,
+          reference: 'Omni 1:14–17',
+          explanation: "Without written scripture, their language was corrupted and they denied the existence of their Creator. This shows why the brass plates mattered so deeply."
+        }
+      ]
+    },
+
+    ch3: {
+      id: 'ch3',
+      chapter: 3,
+      range: '1 Nephi 6–11',
+      title: "Tree of Life Vision",
+      subtitle: "Coming unto Christ",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-3?lang=eng',
+      reading: {
+        body: [
+          "In 1 Nephi 6, Nephi pauses to tell us why he writes. Not to record genealogy. Not to keep a wilderness journal. But to persuade his readers — including you, today — to come unto Jesus Christ and be saved.",
+          "The chapters that follow contain one of the most beloved visions in all of scripture: the Tree of Life. Lehi sees a tree whose fruit is delicious above all. He calls his family to partake. Some come. Some never start. Some begin the journey but lose their way in mists of darkness.",
+          "When Nephi prays to understand his father's vision, the Spirit reveals the meaning of each symbol — and shows him the birth, ministry, and Atonement of Christ. The tree is the love of God. The fruit is eternal life. The iron rod is the word of God. The path is the same one we walk today."
+        ],
+        principles: [
+          "The Book of Mormon was written to bring us to Christ",
+          "Marriage in the covenant raises up children to the Lord",
+          "To receive eternal life, we must come unto Christ",
+          "God reveals truth to those who diligently seek Him"
+        ]
+      },
+      reflection: '"What is one specific \'mist of darkness\' in your life today? What does the iron rod look like for you this week?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 1 Nephi 6:4, what is the primary purpose of the Book of Mormon?',
+          options: ['To preserve a family record', 'To persuade people to come unto Christ', 'To document the wilderness journey', 'To teach the law of Moses'],
+          correct: 1,
+          reference: '1 Nephi 6:4',
+          explanation: "Nephi declares his intent: to persuade his readers to come unto the God of Abraham, Isaac, and Jacob, and be saved."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: "Before continuing into the wilderness, what did the Lord command Lehi's sons to do?",
+          options: ['Build an altar', "Return for Ishmael's daughters as wives", 'Make sacrifice for sin', 'Gather more provisions'],
+          correct: 1,
+          reference: '1 Nephi 7:1–2',
+          explanation: "The Lord commanded the sons to take wives so they could raise up seed unto Him in the promised land."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: "In Lehi's vision, what does the tree of life represent?",
+          options: ['Wisdom', 'The love of God', 'Eternal life', 'The covenant of Abraham'],
+          correct: 1,
+          reference: '1 Nephi 11:21–22',
+          explanation: "When Nephi asked the Spirit, he was shown that the tree represents the love of God — most desirable above all things."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In the Tree of Life vision, what does the iron rod represent?',
+          options: ['The word of God', 'The priesthood', 'Faith in Christ', 'The Holy Ghost'],
+          correct: 0,
+          reference: '1 Nephi 11:25',
+          explanation: "The rod of iron is the word of God — by holding fast to it, we can press forward safely through the mists of darkness."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does the great and spacious building represent?',
+          options: ['The temple', 'Jerusalem', 'The pride and vain imaginations of the world', 'The kingdom of God'],
+          correct: 2,
+          reference: '1 Nephi 11:36; 12:18',
+          explanation: "The building, filled with mocking people, represents the pride and vain imaginations of the children of men."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this scripture mastery verse:\n"And, if you keep my commandments and endure to the end you shall have ______ life, which gift is the greatest of all the gifts of God."',
+          answer: 'eternal',
+          acceptable: ['eternal'],
+          reference: 'D&C 14:7',
+          explanation: "Eternal life — the greatest of all God's gifts — is the fruit of the tree of life and the goal of the gospel.",
+          scriptureMastery: true
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does the word "condescension" mean in 1 Nephi 11:16, 26?',
+          options: ['A voluntary descent from rank or dignity', 'A divine judgment', 'A prophetic vision', 'A revelation of glory'],
+          correct: 0,
+          reference: '1 Nephi 11:16, 26',
+          explanation: "Christ's condescension — His willingness to come down from glory to suffer for us — is one of the great evidences of God's love."
+        }
+      ]
+    },
+
+    // Future lessons (placeholders — content not yet built)
+    ch4: {
+      id: 'ch4',
+      chapter: 4,
+      range: '1 Nephi 12–15',
+      title: "Nephi's Vision of the Last Days",
+      subtitle: "Plain and precious truths restored",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-4?lang=eng',
+      reading: {
+        body: [
+          "Nephi's vision continues, expanding into a sweeping view of the future. He sees the land of promise where his family will settle. He sees periods of war and peace among his descendants. He sees the Savior's ministry in the Americas. And he sees something more sobering: the Great Apostasy — a time when 'plain and precious' truths would be lost from the Bible.",
+          "But the vision does not end in darkness. Nephi sees the Restoration of the gospel. He sees God's kingdom growing small but mighty in the last days — armed not with weapons but with righteousness and the power of God. He sees Satan's kingdom rage against the Saints, and God's kingdom ultimately triumph.",
+          "When Nephi returns from this overwhelming vision, his older brothers Laman and Lemuel are arguing over their father's words. They had not understood — because they had not asked. Nephi teaches them four conditions for receiving revelation, conditions that still apply to us today."
+        ],
+        principles: [
+          "Satan organizes to pervert the right ways of the Lord",
+          "The Lord has restored plain and precious truths",
+          "Prayer leads to personal revelation",
+          "The Lord remembers His covenants with Israel"
+        ]
+      },
+      reflection: '"Which \'plain and precious\' truth restored through the Book of Mormon means the most to you?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 1 Nephi 14:10, the angel told Nephi there are how many churches?',
+          options: ['One', 'Two', 'Three', 'Twelve'],
+          correct: 1,
+          reference: '1 Nephi 14:10',
+          explanation: "The Church of the Lamb of God and the church of the devil. This is about allegiance — every soul ultimately belongs to one or the other."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to Nephi\'s vision in 1 Nephi 13:26–28, what happened to the Bible as it passed through history?',
+          options: ['It was destroyed entirely', 'Many plain and precious truths were taken away', 'It was perfectly preserved', 'It was rewritten in modern English'],
+          correct: 1,
+          reference: '1 Nephi 13:26–28',
+          explanation: "Nephi saw that plain and precious truths were removed from the Bible, causing many to stumble. The Restoration brings these truths back."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In Nephi\'s vision of the last days, what was the Church of the Lamb of God armed with? (1 Nephi 14:14)',
+          options: ['Swords and armor', 'Righteousness and the power of God', 'Wisdom and learning', 'Faith and patience'],
+          correct: 1,
+          reference: '1 Nephi 14:14',
+          explanation: "Though small in number compared to the world, God's people are armed with righteousness and the power of God in great glory."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this scripture mastery verse:\n"If any of you lack wisdom, let him ask of God ... and it shall be given ____."',
+          answer: 'him',
+          acceptable: ['him'],
+          reference: 'James 1:5',
+          explanation: "The verse that inspired Joseph Smith's First Vision. The Lord promises wisdom to all who ask Him in faith.",
+          scriptureMastery: true
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What four things did Nephi say Laman and Lemuel must do to receive spiritual understanding? (1 Nephi 15:10–11)',
+          options: [
+            'Travel to the temple, pray often, study scriptures, give offerings',
+            'Not harden hearts, ask in faith, believe they will receive, keep the commandments',
+            'Memorize scripture, fast weekly, attend meetings, pay tithing',
+            'Build an altar, offer sacrifice, journey to Jerusalem, rest'
+          ],
+          correct: 1,
+          reference: '1 Nephi 15:10–11',
+          explanation: "These four conditions still apply today: a soft heart, faith, belief in answers, and obedience open the way for personal revelation."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 1 Nephi 15:12, what does the olive tree represent?',
+          options: ['The Tree of Life', 'Eternal life', 'The house of Israel', 'The Garden of Eden'],
+          correct: 2,
+          reference: '1 Nephi 15:12',
+          explanation: "The olive tree symbolizes the covenant people, the house of Israel. This imagery returns in Jacob's grand allegory in Jacob 5."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 1 Nephi 15:24, what protects us from the "fiery darts" of the adversary?',
+          options: ['The shield of faith only', 'Holding fast to the word of God', 'Praying always', 'Wearing the helmet of salvation'],
+          correct: 1,
+          reference: '1 Nephi 15:24',
+          explanation: "Those who hearken to and hold fast to the word of God — the iron rod from Lehi's vision — cannot be overpowered by Satan's temptations."
+        }
+      ]
+    },
+    ch5: {
+      id: 'ch5',
+      chapter: 5,
+      range: '1 Nephi 16–18',
+      title: "The Liahona & The Journey",
+      subtitle: "Following the Lord across wilderness and sea",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-5?lang=eng',
+      reading: {
+        body: [
+          "After the family received their commission from the Lord, they continued their journey through the wilderness — guided by a remarkable gift. One morning, Lehi found a round ball of curious workmanship by his tent door. It had two spindles, and one pointed the way they should travel. This was the Liahona.",
+          "The Liahona worked according to the faith and diligence of the family. When they were faithful, the pointers worked and even displayed writing 'plain to be read' that gave them understanding. When they were faithless, it ceased to work. It led them through 'the more fertile parts of the wilderness' — small means producing great results.",
+          "Their journey continued with trials: Nephi's bow broke and the family hungered. Even Lehi murmured. But Nephi made a new bow, asked his father where to hunt, and the Lord provided. Later, when commanded to build a ship to cross the ocean, Nephi did not know how. He prayed, was shown patterns 'from time to time,' and built a ship that was 'exceedingly fine' in the eyes of the Lord.",
+          "When his brothers tied him during the voyage, the Liahona ceased to work and a terrible storm threatened to swallow them. Only when Laman and Lemuel repented and freed Nephi did the storm subside. The family reached the promised land."
+        ],
+        principles: [
+          "The Lord guides His faithful servants",
+          "The Lord blesses those who keep His commandments",
+          "Becoming 'past feeling' cuts us off from God's voice",
+          "Revelation comes line upon line, as we are ready"
+        ]
+      },
+      reflection: '"What is a \'Liahona\' in your own life — what guides you according to your faith and diligence?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 1 Nephi 16:10, what was the Liahona?',
+          options: [
+            'A type of weapon',
+            'A round ball of curious workmanship that pointed the way',
+            'A scroll of scriptures',
+            'A ceremonial vessel'
+          ],
+          correct: 1,
+          reference: '1 Nephi 16:10',
+          explanation: "Lehi found this brass ball with two spindles by his tent door. It guided the family through the wilderness toward the promised land."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 1 Nephi 16:28, how did the Liahona work?',
+          options: [
+            'Through mechanical springs',
+            'According to the faith and diligence of those who used it',
+            'Whenever the sun shone',
+            'Only when Lehi held it'
+          ],
+          correct: 1,
+          reference: '1 Nephi 16:28',
+          explanation: "The pointers worked by faith and diligence. When the family was faithful, the Liahona guided them. When they murmured, it ceased to work."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this verse:\n"The ball ... led us in the more ______ parts of the wilderness."',
+          answer: 'fertile',
+          acceptable: ['fertile'],
+          reference: '1 Nephi 16:16',
+          explanation: "By 'small and simple means,' the Lord led them to fertile places — symbolic of how the Holy Ghost still leads us to spiritual nourishment today."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: "What happened when Nephi's bow broke?",
+          options: [
+            'The family turned back toward Jerusalem',
+            'Laman, Lemuel — and even Lehi — murmured; Nephi made a new bow and asked his father where to hunt',
+            'They prayed and a herd of animals appeared',
+            'Lehi disciplined Laman and Lemuel for their lack of faith'
+          ],
+          correct: 1,
+          reference: '1 Nephi 16:18–32',
+          explanation: "Even Lehi murmured under hunger. But Nephi made a new bow from wood, then sustained his father as prophet by asking him to inquire of the Lord. Lehi was humbled, prayed, and was answered."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does it mean that Laman and Lemuel were "past feeling" (1 Nephi 17:45)?',
+          options: [
+            'They were physically exhausted',
+            'They had lost hope of returning home',
+            "They had hardened their hearts so they could not feel the Spirit's words",
+            'They no longer trusted Lehi'
+          ],
+          correct: 2,
+          reference: '1 Nephi 17:45',
+          explanation: "Repeated wickedness deadens our spiritual senses. We feel the Holy Ghost more than we hear Him — so 'past feeling' means cut off from divine guidance."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How did the Lord teach Nephi to build the ship?',
+          options: [
+            'He sent angels with detailed instructions',
+            'He gave Nephi all the plans at once',
+            'From time to time — line upon line, as Nephi was ready',
+            'He provided plans on the brass plates'
+          ],
+          correct: 2,
+          reference: '1 Nephi 18:1; 2 Nephi 28:30',
+          explanation: "The Lord showed Nephi 'from time to time' how to build the ship. This is how revelation often works — step by step, as we act in faith on what we already know."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 1 Nephi 17:13, what is the recurring "if-then" promise the Lord makes throughout the Book of Mormon?',
+          options: [
+            'If we obey, He will make us a great nation',
+            'If we keep His commandments, He will prosper us in the promised land',
+            'If we pray, He will deliver us from enemies',
+            'If we are faithful, He will bless our children'
+          ],
+          correct: 1,
+          reference: '1 Nephi 17:13',
+          explanation: "This 'if-then' promise — obedience leads to prosperity in the land — is one of the central themes of the entire Book of Mormon."
+        }
+      ]
+    },
+    ch6: { id: 'ch6', chapter: 6, range: '1 Nephi 19–22', title: "Isaiah's Prophecies", subtitle: "Israel scattered and gathered", available: false }
+  };
+
+  // Order in which lessons appear on the path
+  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6'];
+
+  // ============ LEVEL SYSTEM ============
+  // XP thresholds to reach each level (index = level - 1)
+  const LEVEL_THRESHOLDS = [0, 50, 125, 225, 350, 500, 700, 950, 1250, 1600];
+  const MAX_LEVEL = LEVEL_THRESHOLDS.length;
+
+  function getLevel(xp) {
+    for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
+      if (xp >= LEVEL_THRESHOLDS[i]) return i + 1;
+    }
+    return 1;
+  }
+  function getXpForLevel(level) {
+    return LEVEL_THRESHOLDS[Math.min(level, MAX_LEVEL) - 1] || 0;
+  }
+  function getNextLevelXp(xp) {
+    const level = getLevel(xp);
+    if (level >= MAX_LEVEL) return null;
+    return LEVEL_THRESHOLDS[level];
+  }
+
+  // ============ DAILY VERSES ============
+  // Full verse text from the Book of Mormon, sourced from
+  // The Church of Jesus Christ of Latter-day Saints (churchofjesuschrist.org).
+  // The verse shown rotates daily based on the day of the year.
+  const DAILY_VERSES = [
+    {
+      text: "And it came to pass that I, Nephi, said unto my father: I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way for them that they may accomplish the thing which he commandeth them.",
+      ref: "1 Nephi 3:7"
+    },
+    {
+      text: "Adam fell that men might be; and men are, that they might have joy.",
+      ref: "2 Nephi 2:25"
+    },
+    {
+      text: "For we labor diligently to write, to persuade our children, and also our brethren, to believe in Christ, and to be reconciled to God; for we know that it is by grace that we are saved, after all we can do.",
+      ref: "2 Nephi 25:23"
+    },
+    {
+      text: "Wherefore, ye must press forward with a steadfastness in Christ, having a perfect brightness of hope, and a love of God and of all men. Wherefore, if ye shall press forward, feasting upon the word of Christ, and endure to the end, behold, thus saith the Father: Ye shall have eternal life.",
+      ref: "2 Nephi 31:20"
+    },
+    {
+      text: "And now as I said concerning faith — faith is not to have a perfect knowledge of things; therefore if ye have faith ye hope for things which are not seen, which are true.",
+      ref: "Alma 32:21"
+    },
+    {
+      text: "Now ye may suppose that this is foolishness in me; but behold I say unto you, that by small and simple things are great things brought to pass; and small means in many instances doth confound the wise.",
+      ref: "Alma 37:6"
+    },
+    {
+      text: "And now, my sons, remember, remember that it is upon the rock of our Redeemer, who is Christ, the Son of God, that ye must build your foundation; that when the devil shall send forth his mighty winds, yea, his shafts in the whirlwind, yea, when all his hail and his mighty storm shall beat upon you, it shall have no power over you to drag you down to the gulf of misery and endless wo, because of the rock upon which ye are built, which is a sure foundation, a foundation whereon if men build they cannot fall.",
+      ref: "Helaman 5:12"
+    },
+    {
+      text: "And now, I, Moroni, would speak somewhat concerning these things; I would show unto the world that faith is things which are hoped for and not seen; wherefore, dispute not because ye see not, for ye receive no witness until after the trial of your faith.",
+      ref: "Ether 12:6"
+    },
+    {
+      text: "And if men come unto me I will show unto them their weakness. I give unto men weakness that they may be humble; and my grace is sufficient for all men that humble themselves before me; for if they humble themselves before me, and have faith in me, then will I make weak things become strong unto them.",
+      ref: "Ether 12:27"
+    },
+    {
+      text: "And charity suffereth long, and is kind, and envieth not, and is not puffed up, seeketh not her own, is not easily provoked, thinketh no evil, and rejoiceth not in iniquity but rejoiceth in the truth, beareth all things, believeth all things, hopeth all things, endureth all things.",
+      ref: "Moroni 7:45"
+    },
+    {
+      text: "But behold, I, Nephi, will show unto you that the tender mercies of the Lord are over all those whom he hath chosen, because of their faith, to make them mighty even unto the power of deliverance.",
+      ref: "1 Nephi 1:20"
+    },
+    {
+      text: "And now I would that ye should be humble, and be submissive and gentle; easy to be entreated; full of patience and long-suffering; being temperate in all things; being diligent in keeping the commandments of God at all times; asking for whatsoever things ye stand in need, both spiritual and temporal; always returning thanks unto God for whatsoever things ye do receive.",
+      ref: "Alma 7:23"
+    },
+    {
+      text: "Do not suppose, because it has been spoken concerning restoration, that ye shall be restored from sin to happiness. Behold, I say unto you, wickedness never was happiness.",
+      ref: "Alma 41:10"
+    },
+    {
+      text: "And behold, I tell you these things that ye may learn wisdom; that ye may learn that when ye are in the service of your fellow beings ye are only in the service of your God.",
+      ref: "Mosiah 2:17"
+    }
+  ];
+
+  function getDayOfYear() {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), 0, 0);
+    const diff = now - start;
+    return Math.floor(diff / (1000 * 60 * 60 * 24));
+  }
+
+  function getTodaysVerse() {
+    return DAILY_VERSES[getDayOfYear() % DAILY_VERSES.length];
+  }
+
+  // ============ STATE ============
+  const state = {
+    streak: 0,
+    xp: 0,
+    hints: 3, // welcome gift
+    lastDate: null,
+    completedLessons: [],
+    // session-only:
+    currentLessonId: null,
+    currentQ: 0,
+    correctCount: 0,
+    selected: null,
+    answered: false,
+    hintUsedThisQ: false,
+    eliminatedOptions: []
+  };
+
+  // ============ PERSISTENCE ============
+  function loadState() {
+    try {
+      const saved = JSON.parse(localStorage.getItem('scripture-scholar') || '{}');
+      Object.assign(state, saved);
+      if (!Array.isArray(state.completedLessons)) state.completedLessons = [];
+      // Migration: if upgrading from old version with hearts, give 3 starter hints
+      if (typeof state.hints !== 'number') state.hints = 3;
+      delete state.hearts; // no longer used
+    } catch(e) {}
+    updateTopbar();
+    updateLevelProgress();
+  }
+  function saveState() {
+    try {
+      localStorage.setItem('scripture-scholar', JSON.stringify({
+        streak: state.streak,
+        xp: state.xp,
+        hints: state.hints,
+        lastDate: state.lastDate,
+        completedLessons: state.completedLessons
+      }));
+    } catch(e) {}
+  }
+  function updateTopbar() {
+    document.getElementById('streakCount').textContent = state.streak;
+    document.getElementById('levelNum').textContent = getLevel(state.xp);
+    document.getElementById('hintsCount').textContent = state.hints;
+    updateLevelProgress();
+  }
+  function updateLevelProgress() {
+    const level = getLevel(state.xp);
+    const currentLevelXp = getXpForLevel(level);
+    const nextXp = getNextLevelXp(state.xp);
+    const label = document.getElementById('levelLabel');
+    const xpCur = document.getElementById('xpCurrent');
+    const xpTar = document.getElementById('xpTarget');
+    const fill = document.getElementById('levelProgressFill');
+    const topbarFill = document.getElementById('topbarLevelFill');
+
+    let pct;
+    if (nextXp === null) {
+      pct = 100;
+      if (xpCur) xpCur.textContent = state.xp;
+      if (xpTar) xpTar.textContent = 'MAX';
+    } else {
+      const intoLevel = state.xp - currentLevelXp;
+      const levelSpan = nextXp - currentLevelXp;
+      pct = Math.min(100, (intoLevel / levelSpan) * 100);
+      if (xpCur) xpCur.textContent = intoLevel;
+      if (xpTar) xpTar.textContent = levelSpan;
+    }
+
+    if (label) label.textContent = 'Scholar Level ' + level;
+    if (fill) fill.style.width = pct + '%';
+    if (topbarFill) topbarFill.style.width = pct + '%';
+  }
+
+  function showLevelInfo() {
+    const level = getLevel(state.xp);
+    const next = getNextLevelXp(state.xp);
+    if (next === null) {
+      showToast('🏆 You\'ve reached the highest level!');
+    } else {
+      showToast(`Scholar Level ${level} · ${next - state.xp} XP to next level`);
+    }
+  }
+
+  // ============ NAVIGATION ============
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }
+
+  function goHome() {
+    state.currentLessonId = null;
+    renderHome();
+    showScreen('screen-home');
+  }
+
+  function showToast(msg) {
+    const container = document.getElementById('toastContainer');
+    container.innerHTML = '';
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = msg;
+    container.appendChild(toast);
+    setTimeout(() => toast.remove(), 2800);
+  }
+
+  // ============ HOME PATH RENDERING ============
+  function renderHome() {
+    renderDashboard();
+    renderLessonPath();
+    updateLevelProgress();
+  }
+
+  function renderDashboard() {
+    // Daily verse
+    const verse = getTodaysVerse();
+    document.getElementById('dailyVerseText').textContent = '"' + verse.text + '"';
+    const refEl = document.getElementById('dailyVerseRef');
+    refEl.textContent = '— ' + verse.ref;
+    refEl.href = scriptureLink(verse.ref);
+
+    // Continue learning card
+    const currentId = getCurrentLessonId();
+    const continueBtn = document.getElementById('continueBtn');
+    if (currentId) {
+      const lesson = LESSONS[currentId];
+      const isReplay = state.completedLessons.includes(currentId);
+      document.getElementById('continueEyebrow').textContent = `Chapter ${lesson.chapter} · ${lesson.range}`;
+      document.getElementById('continueTitle').textContent = lesson.title;
+      document.getElementById('continueSubtitle').textContent = lesson.subtitle;
+      document.getElementById('continueMeta').innerHTML = `
+        <span>📖 ${lesson.questions.length} questions</span>
+        <span>⏱ ~5 min</span>
+        <span>⭐ +${lesson.xpReward} XP</span>
+      `;
+      continueBtn.textContent = isReplay ? 'Play Again →' : 'Begin Lesson →';
+      continueBtn.disabled = false;
+    } else {
+      // All available lessons complete
+      document.getElementById('continueEyebrow').textContent = 'All caught up!';
+      document.getElementById('continueTitle').textContent = "You've mastered every chapter available";
+      document.getElementById('continueSubtitle').textContent = "Replay a lesson to keep your streak alive, or wait for new chapters to be added.";
+      document.getElementById('continueMeta').innerHTML = '<span>🏆 Excellent work</span>';
+      continueBtn.textContent = 'Review a Chapter ↓';
+      continueBtn.disabled = false;
+    }
+
+    // Progress stats
+    document.getElementById('statChapters').textContent = state.completedLessons.length;
+    document.getElementById('statXp').textContent = state.xp;
+    document.getElementById('statStreak').textContent = state.streak;
+  }
+
+  function continueFromDashboard() {
+    const currentId = getCurrentLessonId();
+    if (currentId) {
+      openDetail(currentId);
+    } else {
+      // Scroll to the lesson path so user can pick one to review
+      document.getElementById('lessonPath').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  function renderLessonPath() {
+    const path = document.getElementById('lessonPath');
+    path.innerHTML = '';
+
+    // Determine which lesson is the "current" (next to take)
+    const currentId = getCurrentLessonId();
+
+    LESSON_ORDER.forEach((id, idx) => {
+      const lesson = LESSONS[id];
+      const isCompleted = state.completedLessons.includes(id);
+      const isCurrent = id === currentId;
+      const playable = isPlayable(id);
+      const isUnbuilt = !lesson.available;
+
+      // Node
+      const node = document.createElement('button');
+      node.className = 'lesson-node';
+      if (isCompleted) node.classList.add('completed');
+      else if (isCurrent) node.classList.add('current');
+      else if (!playable) node.classList.add('locked');
+
+      let iconContent = lesson.chapter;
+      let actionText = isCurrent ? 'Start' : 'Open';
+      if (isCompleted) { iconContent = '✓'; actionText = '✓'; }
+      else if (!playable) { iconContent = '🔒'; actionText = isUnbuilt ? 'Soon' : 'Locked'; }
+
+      node.innerHTML = `
+        <div class="lesson-icon">${iconContent}</div>
+        <div class="lesson-body">
+          <div class="lesson-eyebrow">Chapter ${lesson.chapter}</div>
+          <div class="lesson-name">${lesson.title}</div>
+          <div class="lesson-range">${lesson.range}</div>
+        </div>
+        <div class="lesson-action">${actionText}</div>
+      `;
+
+      if (!playable) {
+        if (isUnbuilt) {
+          node.onclick = () => showToast('📜 This lesson is coming soon');
+        } else {
+          // Gated by previous incomplete lesson
+          const prevId = LESSON_ORDER[idx - 1];
+          const prevLesson = LESSONS[prevId];
+          node.onclick = () => showToast(`🔒 Complete Chapter ${prevLesson.chapter} first to unlock`);
+        }
+      } else {
+        node.onclick = () => openDetail(id);
+      }
+
+      path.appendChild(node);
+
+      // Connector between nodes (except after last)
+      if (idx < LESSON_ORDER.length - 1) {
+        const connector = document.createElement('div');
+        connector.className = 'path-connector';
+        if (!playable && !isPlayable(LESSON_ORDER[idx+1])) {
+          connector.classList.add('dim');
+        }
+        path.appendChild(connector);
+      }
+    });
+  }
+
+  // A lesson is playable if: it's built AND (it's the first OR all earlier lessons are completed)
+  // Already-completed lessons are also playable (for review)
+  function isPlayable(lessonId) {
+    const lesson = LESSONS[lessonId];
+    if (!lesson.available) return false;
+    if (state.completedLessons.includes(lessonId)) return true;
+    const idx = LESSON_ORDER.indexOf(lessonId);
+    if (idx === 0) return true;
+    // All earlier lessons in order must be completed
+    for (let i = 0; i < idx; i++) {
+      if (!state.completedLessons.includes(LESSON_ORDER[i])) return false;
+    }
+    return true;
+  }
+
+  function getCurrentLessonId() {
+    for (const id of LESSON_ORDER) {
+      if (isPlayable(id) && !state.completedLessons.includes(id)) return id;
+    }
+    return null;
+  }
+
+  // ============ LESSON DETAIL ============
+  function openDetail(lessonId) {
+    state.currentLessonId = lessonId;
+    const lesson = LESSONS[lessonId];
+    document.getElementById('detailChapterTag').textContent = 'Chapter ' + lesson.chapter;
+    document.getElementById('detailTitle').textContent = lesson.range;
+    document.getElementById('detailSubtitle').textContent = lesson.subtitle;
+    const isReplay = state.completedLessons.includes(lessonId);
+    document.getElementById('detailStartBtn').textContent = isReplay ? 'Play Again →' : 'Begin Lesson →';
+    document.getElementById('completedBanner').classList.toggle('hidden', !isReplay);
+    showScreen('screen-detail');
+  }
+
+  // ============ READING SCREEN ============
+  function startLesson() {
+    const lesson = LESSONS[state.currentLessonId];
+    state.currentQ = 0;
+    state.correctCount = 0;
+
+    // Render reading content
+    document.getElementById('readingEyebrow').textContent = `Chapter ${lesson.chapter} · ${lesson.range} · Part 1 of 2`;
+    const content = document.getElementById('readingContent');
+    let html = `
+      <div class="reading-eyebrow">Read First</div>
+      <h1 class="reading-title serif">${lesson.range}</h1>
+      <p class="reading-subtitle" style="margin-bottom: 20px;">${lesson.subtitle}</p>
+    `;
+    lesson.reading.body.forEach(p => { html += `<p>${p}</p>`; });
+    html += `
+      <div class="principles-list">
+        <div class="principles-list-title">Principles to Learn</div>
+        <ul>
+          ${lesson.reading.principles.map(p => `<li>${p}</li>`).join('')}
+        </ul>
+      </div>
+    `;
+    content.innerHTML = html;
+    showScreen('screen-reading');
+  }
+
+  function exitQuiz() {
+    if (confirm('Exit this lesson? Your progress will be lost.')) {
+      goHome();
+    }
+  }
+
+  // ============ QUIZ LOGIC ============
+  function startQuiz() {
+    state.currentQ = 0;
+    state.correctCount = 0;
+    showScreen('screen-quiz');
+    renderQuestion();
+  }
+
+  function getCurrentLesson() {
+    return LESSONS[state.currentLessonId];
+  }
+
+  function renderQuestion() {
+    const lesson = getCurrentLesson();
+    const q = lesson.questions[state.currentQ];
+    state.selected = null;
+    state.answered = false;
+    state.hintUsedThisQ = false;
+    state.eliminatedOptions = [];
+
+    const pct = (state.currentQ / lesson.questions.length) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+
+    const typeLabel = q.type === 'fill_blank' ? 'Fill in the Blank' : 'Multiple Choice';
+    document.getElementById('qType').textContent = typeLabel;
+    const badge = document.getElementById('qMasteryBadge');
+    badge.classList.toggle('hidden', !q.scriptureMastery);
+
+    document.getElementById('qPrompt').textContent = q.prompt;
+
+    const body = document.getElementById('qBody');
+    body.innerHTML = '';
+
+    if (q.type === 'multiple_choice') {
+      const opts = document.createElement('div');
+      opts.className = 'options';
+      q.options.forEach((opt, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'option';
+        btn.innerHTML = `<div class="option-letter">${String.fromCharCode(65+i)}</div><div>${opt}</div>`;
+        btn.onclick = () => selectOption(i);
+        btn.dataset.idx = i;
+        opts.appendChild(btn);
+      });
+      body.appendChild(opts);
+    } else if (q.type === 'fill_blank') {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'fillblank-input';
+      input.placeholder = 'Type your answer';
+      input.id = 'fillInput';
+      input.autocomplete = 'off';
+      input.autocapitalize = 'none';
+      input.oninput = () => {
+        state.selected = input.value.trim();
+        document.getElementById('btnCheck').classList.toggle('hidden', !state.selected);
+      };
+      input.onkeydown = (e) => {
+        if (e.key === 'Enter' && state.selected && !state.answered) checkAnswer();
+      };
+      body.appendChild(input);
+      setTimeout(() => input.focus(), 100);
+    }
+
+    // Hint button visibility
+    updateHintButton();
+
+    document.getElementById('qFeedback').innerHTML = '';
+    document.getElementById('btnCheck').classList.add('hidden');
+    document.getElementById('btnNext').classList.add('hidden');
+  }
+
+  function updateHintButton() {
+    const hintBar = document.getElementById('hintBar');
+    const hintBtn = document.getElementById('hintBtn');
+    const hintBtnText = document.getElementById('hintBtnText');
+    // Don't show after answer is locked in
+    if (state.answered) {
+      hintBar.classList.add('hidden');
+      return;
+    }
+    hintBar.classList.remove('hidden');
+    if (state.hints <= 0) {
+      hintBtn.disabled = true;
+      hintBtnText.textContent = 'No hints — earn by leveling up';
+    } else if (state.hintUsedThisQ) {
+      hintBtn.disabled = true;
+      hintBtnText.textContent = 'Hint used';
+    } else {
+      hintBtn.disabled = false;
+      hintBtnText.textContent = `Use Hint (${state.hints} left)`;
+    }
+  }
+
+  function useHint() {
+    if (state.hints <= 0 || state.hintUsedThisQ || state.answered) return;
+    const lesson = getCurrentLesson();
+    const q = lesson.questions[state.currentQ];
+
+    if (q.type === 'multiple_choice') {
+      // Eliminate one wrong answer that isn't the correct one and isn't already eliminated
+      const candidates = [];
+      for (let i = 0; i < q.options.length; i++) {
+        if (i !== q.correct && !state.eliminatedOptions.includes(i)) candidates.push(i);
+      }
+      if (candidates.length === 0) return;
+      const eliminate = candidates[Math.floor(Math.random() * candidates.length)];
+      state.eliminatedOptions.push(eliminate);
+      const btn = document.querySelector(`.option[data-idx="${eliminate}"]`);
+      if (btn) {
+        btn.classList.add('eliminated');
+        btn.disabled = true;
+      }
+      // If the eliminated one was selected, deselect
+      if (state.selected === eliminate) {
+        state.selected = null;
+        document.getElementById('btnCheck').classList.add('hidden');
+      }
+    } else if (q.type === 'fill_blank') {
+      // Reveal first letter
+      const input = document.getElementById('fillInput');
+      const firstLetter = q.answer.charAt(0);
+      input.value = firstLetter;
+      input.placeholder = `${firstLetter}_____`;
+      state.selected = firstLetter;
+      // Show check button if there's something
+      document.getElementById('btnCheck').classList.toggle('hidden', !state.selected);
+      input.focus();
+      // place cursor at end
+      setTimeout(() => input.setSelectionRange(input.value.length, input.value.length), 50);
+    }
+
+    state.hints -= 1;
+    state.hintUsedThisQ = true;
+    saveState();
+    updateTopbar();
+    updateHintButton();
+  }
+
+  function selectOption(i) {
+    if (state.answered) return;
+    if (state.eliminatedOptions.includes(i)) return;
+    state.selected = i;
+    document.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
+    document.querySelector(`.option[data-idx="${i}"]`).classList.add('selected');
+    document.getElementById('btnCheck').classList.remove('hidden');
+  }
+
+  function checkAnswer() {
+    const lesson = getCurrentLesson();
+    const q = lesson.questions[state.currentQ];
+    let isCorrect = false;
+
+    if (q.type === 'multiple_choice') {
+      isCorrect = state.selected === q.correct;
+      document.querySelectorAll('.option').forEach((o, i) => {
+        o.disabled = true;
+        if (i === q.correct) o.classList.add('correct');
+        else if (i === state.selected) o.classList.add('incorrect');
+      });
+    } else if (q.type === 'fill_blank') {
+      const answer = (state.selected || '').toLowerCase().trim();
+      isCorrect = q.acceptable.some(a => a.toLowerCase() === answer);
+      const input = document.getElementById('fillInput');
+      input.disabled = true;
+      input.classList.add(isCorrect ? 'correct' : 'incorrect');
+    }
+
+    state.answered = true;
+    if (isCorrect) state.correctCount++;
+    updateTopbar();
+    updateHintButton();
+
+    const fb = document.getElementById('qFeedback');
+    const refLink = scriptureLink(q.reference);
+    fb.innerHTML = `
+      <div class="feedback ${isCorrect ? 'correct' : 'incorrect'}">
+        <div class="feedback-title">${isCorrect ? '✓ Well done' : '✗ Not quite'}</div>
+        <div class="feedback-text">${q.explanation}</div>
+        <div class="feedback-ref">— <a href="${refLink}" target="_blank" rel="noopener">${q.reference}</a></div>
+      </div>
+    `;
+
+    document.getElementById('btnCheck').classList.add('hidden');
+    document.getElementById('btnNext').classList.remove('hidden');
+  }
+
+  // Build a churchofjesuschrist.org link from a reference like "1 Nephi 3:7"
+  function scriptureLink(ref) {
+    const bookMap = {
+      '1 Nephi': ['bofm', '1-ne'], '2 Nephi': ['bofm', '2-ne'], 'Jacob': ['bofm', 'jacob'], 'Enos': ['bofm', 'enos'],
+      'Jarom': ['bofm', 'jarom'], 'Omni': ['bofm', 'omni'], 'Words of Mormon': ['bofm', 'w-of-m'],
+      'Mosiah': ['bofm', 'mosiah'], 'Alma': ['bofm', 'alma'], 'Helaman': ['bofm', 'hel'],
+      '3 Nephi': ['bofm', '3-ne'], '4 Nephi': ['bofm', '4-ne'], 'Mormon': ['bofm', 'morm'],
+      'Ether': ['bofm', 'ether'], 'Moroni': ['bofm', 'moro'],
+      'D&C': ['dc-testament', 'dc']
+    };
+    const m = ref.match(/^(.+?)\s+(\d+):(\d+)(?:[–-]\d+)?/);
+    if (!m) return 'https://www.churchofjesuschrist.org/study/scriptures/bofm';
+    const bookEntry = bookMap[m[1]] || ['bofm', 'bofm'];
+    const [collection, book] = bookEntry;
+    const chapter = m[2];
+    const verse = m[3];
+    return `https://www.churchofjesuschrist.org/study/scriptures/${collection}/${book}/${chapter}?lang=eng&id=p${verse}#p${verse}`;
+  }
+
+  function nextQuestion() {
+    const lesson = getCurrentLesson();
+    state.currentQ++;
+    if (state.currentQ >= lesson.questions.length) {
+      finishLesson();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function finishLesson() {
+    const lesson = getCurrentLesson();
+    const isReview = state.completedLessons.includes(lesson.id);
+    // Replays earn a smaller XP reward (5) regardless of score; first completion scales with score
+    const earned = isReview ? 5 : Math.round((state.correctCount / lesson.questions.length) * lesson.xpReward);
+
+    const levelBefore = getLevel(state.xp);
+    state.xp += earned;
+    const levelAfter = getLevel(state.xp);
+    const leveledUp = levelAfter > levelBefore;
+    if (leveledUp) {
+      // +1 hint per level gained
+      state.hints += (levelAfter - levelBefore);
+    }
+
+    // Mark lesson complete if it isn't already
+    if (!isReview) {
+      state.completedLessons.push(lesson.id);
+    }
+
+    // Streak logic — bump streak any day a lesson is finished (review or new)
+    const today = new Date().toDateString();
+    if (state.lastDate !== today) {
+      state.streak += 1;
+      state.lastDate = today;
+    }
+    updateTopbar();
+    saveState();
+
+    document.getElementById('earnedXp').textContent = '+' + earned;
+    document.getElementById('earnedScore').textContent = state.correctCount + '/' + lesson.questions.length;
+    document.getElementById('reflectionPrompt').textContent = lesson.reflection;
+
+    // Level-up callout
+    const callout = document.getElementById('levelupCallout');
+    if (leveledUp) {
+      document.getElementById('levelupTitle').textContent = `You are now Scholar Level ${levelAfter}`;
+      const hintGain = levelAfter - levelBefore;
+      document.getElementById('levelupSub').textContent = `+${hintGain} hint${hintGain > 1 ? 's' : ''} added to your inventory`;
+      callout.classList.remove('hidden');
+    } else {
+      callout.classList.add('hidden');
+    }
+
+    // Dynamic completion text
+    if (isReview) {
+      document.getElementById('completeTitle').textContent = 'Well Reviewed!';
+      document.getElementById('completeSub').textContent = "Coming back to the word again — that's how testimony deepens.";
+    } else {
+      document.getElementById('completeTitle').textContent = 'Lesson Complete!';
+      document.getElementById('completeSub').textContent = 'Beautiful work. Your testimony grows one verse at a time.';
+    }
+
+    document.getElementById('progressFill').style.width = '100%';
+    setTimeout(() => showScreen('screen-complete'), 300);
+  }
+
+  // ============ INIT ============
+  loadState();
+  renderHome();
+</script>
+</body>
+</html>
