@@ -2694,10 +2694,10 @@
       </div>
     </div>
 
-    <!-- Continue Learning (returning users only — hidden for first-time users) -->
-    <div id="continueSection" class="hidden">
+    <!-- Start Learning (first-time users) / Continue Learning (returning users) -->
+    <div id="continueSection">
       <div class="section-label">
-        <span class="section-label-text">▶ Continue Learning</span>
+        <span class="section-label-text" id="continueLabel">▶ Continue Learning</span>
         <span class="section-label-line"></span>
       </div>
       <div class="continue-card" id="continueCard">
@@ -4380,16 +4380,19 @@
     refEl.textContent = '— ' + verse.ref;
     refEl.href = scriptureLink(verse.ref);
 
-    // Continue Learning section — only for returning users (those who have
-    // completed at least one chapter). First-time visitors see the lesson
-    // list directly and start from Chapter 1.
-    const continueSection = document.getElementById('continueSection');
+    // Start Learning / Continue Learning section — shown for everyone.
+    // For first-time users (no completed chapters) the label and CTA become
+    // a welcoming "Start Learning Here". Returning users see "Continue Learning"
+    // with the next chapter queued.
     const isReturningUser = (state.completedLessons || []).length > 0;
-    if (continueSection) {
-      continueSection.classList.toggle('hidden', !isReturningUser);
+    const continueLabel = document.getElementById('continueLabel');
+    if (continueLabel) {
+      continueLabel.textContent = isReturningUser
+        ? '▶ Continue Learning'
+        : '✨ Start Learning Here';
     }
 
-    // Continue learning card content (only renders when section is visible)
+    // Continue learning card content
     const currentId = getCurrentLessonId();
     const continueBtn = document.getElementById('continueBtn');
     if (currentId) {
@@ -4403,7 +4406,14 @@
         <span>⏱ ~5 min</span>
         <span>⭐ +${lesson.xpReward} XP</span>
       `;
-      continueBtn.textContent = isReplay ? 'Play Again →' : 'Begin Lesson →';
+      // Button text varies by user state: first lesson, replay, or next lesson
+      if (!isReturningUser) {
+        continueBtn.textContent = 'Begin Your First Lesson →';
+      } else if (isReplay) {
+        continueBtn.textContent = 'Play Again →';
+      } else {
+        continueBtn.textContent = 'Begin Lesson →';
+      }
       continueBtn.disabled = false;
     } else {
       // All available lessons complete
