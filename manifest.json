@@ -1,0 +1,33 @@
+{
+  "name": "Scripture Scholar",
+  "short_name": "Scholar",
+  "description": "A daily journey through the Book of Mormon — learn, reflect, and grow one verse at a time.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#faf6ed",
+  "theme_color": "#c89b3c",
+  "lang": "en",
+  "categories": ["education", "books", "lifestyle"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

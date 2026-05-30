@@ -4,6 +4,21 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Scripture Scholar</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#c89b3c">
+<meta name="description" content="A daily journey through the Book of Mormon — learn, reflect, and grow one verse at a time.">
+
+<!-- iOS PWA support -->
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Scripture Scholar">
+
+<!-- Favicon (browser tab icon) -->
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -2688,6 +2703,29 @@
   // ============ INIT ============
   loadState();
   renderHome();
+
+  // ============ PWA SERVICE WORKER ============
+  // Registers the service worker so the app loads instantly and works offline.
+  // Only runs in production (skipped on file:// to avoid local dev issues).
+  if ('serviceWorker' in navigator && location.protocol !== 'file:') {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => {
+          // Optional: listen for updates and prompt user
+          reg.addEventListener('updatefound', () => {
+            const newWorker = reg.installing;
+            if (!newWorker) return;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                // A new version is available. It will activate next time the app is opened.
+                console.log('Scripture Scholar: new version cached, refresh to update');
+              }
+            });
+          });
+        })
+        .catch((err) => console.warn('Service Worker registration failed:', err));
+    });
+  }
 </script>
 </body>
 </html>
