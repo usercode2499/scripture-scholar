@@ -44,6 +44,66 @@
     --shadow-lg: 0 12px 40px rgba(60, 40, 20, 0.1);
   }
 
+  /* === DARK MODE === */
+  body.dark-mode {
+    --bg: #1a130b;
+    --card: #2a1f12;
+    --ink: #f0e6d2;
+    --ink-soft: #b8a585;
+    --ink-faint: #7e6e58;
+    --gold: #e3b855;
+    --gold-dark: #b88f30;
+    --gold-light: #f4d77b;
+    --gold-glow: rgba(227, 184, 85, 0.22);
+    --green: #9bbf65;
+    --green-soft: #2c3a1c;
+    --red: #e07a5f;
+    --red-soft: #3a201a;
+    --border: #3d2e1c;
+    --border-soft: #2f2316;
+    --lock: #5a4a35;
+    --shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Smooth color transitions when toggling dark mode */
+  html, body, .stat, .topbar-settings, .feedback, .settings-card,
+  .verse-card, .continue-card, .progress-card, .lesson-node,
+  .option, .detail-card, .reading-card, .complete-card {
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* Card-specific dark-mode overrides (these elements had hardcoded colors
+     or color-inverting behavior we need to neutralize) */
+  body.dark-mode .daily-verse {
+    background: linear-gradient(135deg, #3a2a18 0%, #2a1d10 100%);
+    border-color: var(--gold-dark);
+  }
+  body.dark-mode .continue-card {
+    background: linear-gradient(135deg, #3a2a18 0%, #211710 100%);
+    color: var(--ink);
+    border: 1px solid var(--gold-dark);
+  }
+  body.dark-mode .continue-card::after {
+    opacity: 0.25;
+  }
+  body.dark-mode .continue-title,
+  body.dark-mode .continue-subtitle {
+    color: var(--ink);
+  }
+  body.dark-mode .continue-meta {
+    color: var(--ink-soft);
+  }
+  /* Lesson node — current/playable nodes need correct contrast */
+  body.dark-mode .lesson-node.playable {
+    background: var(--card);
+    border-color: var(--gold);
+  }
+  body.dark-mode .lesson-node.locked,
+  body.dark-mode .lesson-node.coming {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   html, body {
@@ -56,10 +116,6 @@
   }
 
   body {
-    background-image:
-      radial-gradient(at 15% 10%, rgba(200, 155, 60, 0.06) 0%, transparent 50%),
-      radial-gradient(at 85% 90%, rgba(107, 142, 61, 0.05) 0%, transparent 50%);
-    background-attachment: fixed;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -794,6 +850,26 @@
 
   .feedback-text { font-size: 14px; line-height: 1.5; color: var(--ink-soft); }
 
+  .feedback-correct {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    background: rgba(107, 142, 61, 0.08);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+  }
+  .feedback-correct strong { color: var(--green, #6b8e3d); font-weight: 700; }
+  .feedback-correct-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ink-soft);
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+
   .feedback-ref {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -1289,6 +1365,49 @@
     gap: 16px;
   }
 
+  /* Stacked variant — used for the volume slider so it sits below its label */
+  .settings-row-stack {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  /* Volume slider */
+  .volume-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  .volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border: 2px solid var(--card);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    transition: transform 0.15s ease;
+  }
+  .volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.12);
+  }
+  .volume-slider::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    background: var(--gold);
+    border: 2px solid var(--card);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+  }
+
   .settings-row-info {
     flex: 1;
     min-width: 0;
@@ -1369,6 +1488,228 @@
     border-radius: 0 10px 10px 0;
   }
   .settings-note strong { color: var(--ink); font-weight: 700; }
+
+  /* =================================== */
+  /* === LEVEL INFO MODAL === */
+  /* =================================== */
+
+  .level-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 12, 6, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    z-index: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    animation: lmFadeIn 0.25s ease;
+  }
+  @keyframes lmFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .level-modal-card {
+    position: relative;
+    background: var(--card);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+    width: 100%;
+    max-width: 380px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 28px 24px 24px;
+    animation: lmScaleIn 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes lmScaleIn {
+    from { opacity: 0; transform: scale(0.85) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .level-modal-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: var(--border-soft);
+    color: var(--ink-soft);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .level-modal-close:hover {
+    background: var(--border);
+    color: var(--ink);
+  }
+
+  .level-modal-hero {
+    text-align: center;
+    padding: 12px 0 22px;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 20px;
+  }
+
+  .level-modal-icon {
+    font-size: 48px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 4px 10px rgba(200, 155, 60, 0.3));
+  }
+
+  .level-modal-num {
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .level-modal-num span { color: var(--gold); font-size: 18px; }
+
+  .level-modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ink);
+    font-style: italic;
+  }
+
+  /* Progress block */
+  .level-modal-progress {
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+  }
+
+  .level-modal-progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+
+  .level-modal-progress-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+
+  .level-modal-progress-xp {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .level-modal-progress-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+
+  .level-modal-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    border-radius: 100px;
+    transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 0 12px var(--gold-glow);
+  }
+
+  .level-modal-progress-remain {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  /* Rewards block */
+  .level-modal-rewards {
+    background: linear-gradient(135deg, rgba(200, 155, 60, 0.06), rgba(200, 155, 60, 0.02));
+    border: 1px solid var(--gold-glow);
+    border-left: 3px solid var(--gold);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+  }
+
+  .level-modal-rewards-title {
+    font-size: 13px;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .level-modal-rewards-title span { color: var(--gold); }
+
+  .level-modal-rewards-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .level-modal-rewards-list li {
+    font-size: 14px;
+    color: var(--ink);
+    padding: 4px 0;
+    padding-left: 18px;
+    position: relative;
+  }
+  .level-modal-rewards-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  /* Stats grid */
+  .level-modal-stats-title {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .level-modal-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+  }
+
+  .level-modal-stat {
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 12px;
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  .level-modal-stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .level-modal-stat-lbl {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 600;
+    margin-top: 4px;
+  }
 
   /* Streak fire bump */
   @keyframes flame {
@@ -1662,20 +2003,9 @@
 
   /* Tablets and desktop — keep phone-shaped frame but lift it visually */
   @media (min-width: 600px) {
-    body {
-      background-image:
-        radial-gradient(at 15% 10%, rgba(200, 155, 60, 0.1) 0%, transparent 50%),
-        radial-gradient(at 85% 90%, rgba(107, 142, 61, 0.08) 0%, transparent 50%),
-        linear-gradient(135deg, #f4ead2 0%, var(--bg) 100%);
-    }
     .app {
-      margin: 32px auto;
+      margin: 0 auto;
       max-width: 480px;
-      background: var(--bg);
-      border-radius: 28px;
-      box-shadow: 0 24px 60px rgba(60, 40, 20, 0.12);
-      border: 1px solid var(--border);
-      min-height: calc(100vh - 64px);
       padding: 24px 24px 40px;
     }
     .toast {
@@ -1963,6 +2293,17 @@
 
       <div class="settings-divider"></div>
 
+      <div class="settings-row settings-row-stack">
+        <div class="settings-row-info">
+          <div class="settings-row-title">Music Volume</div>
+          <div class="settings-row-sub">Adjust background music level — <span id="bgVolumeValue">60%</span></div>
+        </div>
+        <input type="range" min="0" max="100" value="60" class="volume-slider" id="bgVolumeSlider"
+               oninput="onBgVolumeChange(this.value); document.getElementById('bgVolumeValue').textContent = this.value + '%';">
+      </div>
+
+      <div class="settings-divider"></div>
+
       <div class="settings-row">
         <div class="settings-row-info">
           <div class="settings-row-title">Sound Effects</div>
@@ -1970,6 +2311,21 @@
         </div>
         <label class="toggle">
           <input type="checkbox" id="toggleSfx" onchange="onToggleSfx(this.checked)">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <h2 class="settings-section-title serif" style="margin-top: 28px;">Appearance</h2>
+
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-row-info">
+          <div class="settings-row-title">Dark Mode</div>
+          <div class="settings-row-sub">Easier on the eyes at night</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="toggleDarkMode" onchange="onToggleDarkMode(this.checked)">
           <span class="toggle-slider"></span>
         </label>
       </div>
@@ -2076,6 +2432,53 @@
     </div>
     <div class="footer-actions">
       <button class="btn btn-gold" onclick="goHome()">Continue Journey →</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEVEL INFO MODAL -->
+<div class="level-modal-overlay hidden" id="levelModal" onclick="closeLevelModal(event)">
+  <div class="level-modal-card" onclick="event.stopPropagation()">
+    <button class="level-modal-close" onclick="closeLevelModal()" aria-label="Close">×</button>
+
+    <div class="level-modal-hero">
+      <div class="level-modal-icon">📜</div>
+      <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
+      <div class="level-modal-title" id="lmTitle">Initiate</div>
+    </div>
+
+    <div class="level-modal-progress">
+      <div class="level-modal-progress-row">
+        <span class="level-modal-progress-label">Progress to Level <span id="lmNextLvl">2</span></span>
+        <span class="level-modal-progress-xp"><span id="lmXpCur">0</span> / <span id="lmXpTarget">50</span> XP</span>
+      </div>
+      <div class="level-modal-progress-track">
+        <div class="level-modal-progress-fill" id="lmFill" style="width: 0%"></div>
+      </div>
+      <div class="level-modal-progress-remain" id="lmRemain">50 XP to next level</div>
+    </div>
+
+    <div class="level-modal-rewards" id="lmRewardsBlock">
+      <div class="level-modal-rewards-title">✨ At Level <span id="lmRewardLvl">2</span> you'll unlock:</div>
+      <ul class="level-modal-rewards-list" id="lmRewards"></ul>
+    </div>
+
+    <div class="level-modal-stats">
+      <div class="level-modal-stats-title">📊 Your Journey</div>
+      <div class="level-modal-stats-grid">
+        <div class="level-modal-stat">
+          <div class="level-modal-stat-num" id="lmChapters">0</div>
+          <div class="level-modal-stat-lbl">Chapters</div>
+        </div>
+        <div class="level-modal-stat">
+          <div class="level-modal-stat-num" id="lmTotalXp">0</div>
+          <div class="level-modal-stat-lbl">Total XP</div>
+        </div>
+        <div class="level-modal-stat">
+          <div class="level-modal-stat-num" id="lmStreak">0</div>
+          <div class="level-modal-stat-lbl">Day Streak</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -2671,7 +3074,12 @@
       // Audio preferences — default ON for new users
       if (typeof state.audioBg !== 'boolean') state.audioBg = true;
       if (typeof state.audioSfx !== 'boolean') state.audioSfx = true;
+      if (typeof state.audioBgVol !== 'number') state.audioBgVol = 0.6;
+      // Theme preference — default OFF (light mode)
+      if (typeof state.darkMode !== 'boolean') state.darkMode = false;
     } catch(e) {}
+    // Apply theme as early as possible
+    if (typeof applyTheme === 'function') applyTheme();
     updateTopbar();
     updateLevelProgress();
   }
@@ -2684,7 +3092,9 @@
         lastDate: state.lastDate,
         completedLessons: state.completedLessons,
         audioBg: state.audioBg,
-        audioSfx: state.audioSfx
+        audioSfx: state.audioSfx,
+        audioBgVol: state.audioBgVol,
+        darkMode: state.darkMode
       }));
     } catch(e) {}
   }
@@ -2722,14 +3132,90 @@
     if (topbarFill) topbarFill.style.width = pct + '%';
   }
 
+  // Level titles awarded as the user progresses
+  const LEVEL_TITLES = [
+    'Initiate',            // 1
+    'Devoted Student',     // 2
+    'Scripture Seeker',    // 3
+    'Faithful Reader',     // 4
+    'True Disciple',       // 5
+    'Steward of the Word', // 6
+    'Keeper of Records',   // 7
+    'Witness Bearer',      // 8
+    'Scholar of Light',    // 9
+    'Master of the Word'   // 10 (max)
+  ];
+
+  function getLevelTitle(level) {
+    return LEVEL_TITLES[Math.min(Math.max(level, 1), LEVEL_TITLES.length) - 1];
+  }
+
+  function getLevelRewards(nextLevel) {
+    // Returns the rewards a user gets WHEN reaching nextLevel.
+    // Currently the system grants +1 starting hint per level, plus a new title.
+    const rewards = [];
+    rewards.push(`+1 hint added to your inventory`);
+    rewards.push(`Unlock the title <em>"${getLevelTitle(nextLevel)}"</em>`);
+    return rewards;
+  }
+
   function showLevelInfo() {
+    renderLevelModal();
+    const modal = document.getElementById('levelModal');
+    modal.classList.remove('hidden');
+  }
+
+  function renderLevelModal() {
     const level = getLevel(state.xp);
-    const next = getNextLevelXp(state.xp);
-    if (next === null) {
-      showToast('🏆 You\'ve reached the highest level!');
+    const nextXp = getNextLevelXp(state.xp);
+    const currentLevelXp = getXpForLevel(level);
+    const isMax = nextXp === null;
+
+    // Hero
+    document.getElementById('lmLevel').textContent = level;
+    document.getElementById('lmTitle').textContent = getLevelTitle(level);
+
+    // Progress
+    const progressBlock = document.querySelector('.level-modal-progress');
+    const rewardsBlock = document.getElementById('lmRewardsBlock');
+    if (isMax) {
+      // Max level reached — show a special state instead of progress + rewards
+      if (progressBlock) {
+        progressBlock.innerHTML = '<div style="text-align:center; padding: 6px 0;"><div style="font-family:\'Cormorant Garamond\',serif; font-size:20px; font-weight:700; color:var(--gold);">🏆 Maximum Level Reached</div><div style="font-size:13px; color:var(--ink-soft); margin-top:4px;">You are a Master of the Word.</div></div>';
+      }
+      if (rewardsBlock) rewardsBlock.style.display = 'none';
     } else {
-      showToast(`Scholar Level ${level} · ${next - state.xp} XP to next level`);
+      if (rewardsBlock) rewardsBlock.style.display = '';
+      const into = state.xp - currentLevelXp;
+      const span = nextXp - currentLevelXp;
+      const pct = Math.max(0, Math.min(100, (into / span) * 100));
+      const remaining = Math.max(0, nextXp - state.xp);
+
+      document.getElementById('lmNextLvl').textContent = level + 1;
+      document.getElementById('lmXpCur').textContent = state.xp;
+      document.getElementById('lmXpTarget').textContent = nextXp;
+      document.getElementById('lmFill').style.width = pct + '%';
+      document.getElementById('lmRemain').textContent = remaining + ' XP to go';
+      document.getElementById('lmRewardLvl').textContent = level + 1;
+
+      // Render rewards list
+      const list = document.getElementById('lmRewards');
+      list.innerHTML = getLevelRewards(level + 1).map(r => `<li>${r}</li>`).join('');
     }
+
+    // Stats grid
+    document.getElementById('lmChapters').textContent = (state.completedLessons || []).length;
+    document.getElementById('lmTotalXp').textContent = state.xp;
+    document.getElementById('lmStreak').textContent = state.streak;
+  }
+
+  function closeLevelModal(event) {
+    // If passed an event (backdrop click), only close when clicking the overlay itself, not the card.
+    if (event && event.target && !event.target.classList.contains('level-modal-overlay')) {
+      // Allow direct calls (no event arg) to always close — handled below
+      if (event.type) return;
+    }
+    document.getElementById('levelModal').classList.add('hidden');
   }
 
   // ============ NAVIGATION ============
@@ -3095,17 +3581,22 @@
     const lesson = getCurrentLesson();
     const q = lesson.questions[state.currentQ];
     let isCorrect = false;
+    let correctAnswerText = '';
 
     if (q.type === 'multiple_choice') {
       isCorrect = state.selected === q.correct;
+      correctAnswerText = q.options[q.correct];
       document.querySelectorAll('.option').forEach((o, i) => {
         o.disabled = true;
         if (i === q.correct) o.classList.add('correct');
         else if (i === state.selected) o.classList.add('incorrect');
       });
     } else if (q.type === 'fill_blank') {
-      const answer = (state.selected || '').toLowerCase().trim();
-      isCorrect = q.acceptable.some(a => a.toLowerCase() === answer);
+      // Normalize both sides: lowercase + trim + collapse internal whitespace
+      const norm = (s) => (s || '').toString().toLowerCase().trim().replace(/\s+/g, ' ');
+      const answer = norm(state.selected);
+      isCorrect = q.acceptable.some(a => norm(a) === answer);
+      correctAnswerText = q.answer || (q.acceptable && q.acceptable[0]) || '';
       const input = document.getElementById('fillInput');
       input.disabled = true;
       input.classList.add(isCorrect ? 'correct' : 'incorrect');
@@ -3124,6 +3615,7 @@
     fb.innerHTML = `
       <div class="feedback ${isCorrect ? 'correct' : 'incorrect'}">
         <div class="feedback-title">${isCorrect ? '✓ Well done' : '✗ Not quite'}</div>
+        ${!isCorrect && correctAnswerText ? `<div class="feedback-correct"><span class="feedback-correct-label">Correct answer:</span> <strong>${correctAnswerText}</strong></div>` : ''}
         <div class="feedback-text">${q.explanation}</div>
         <div class="feedback-ref">— <a href="${refLink}" target="_blank" rel="noopener">${q.reference}</a></div>
       </div>
@@ -3235,14 +3727,14 @@
     try {
       audio.bg = new Audio('background-music.mp3');
       audio.bg.loop = true;
-      audio.bg.volume = 0.35;
+      audio.bg.volume = (typeof state.audioBgVol === 'number' ? state.audioBgVol : 0.6);
       audio.bg.preload = 'auto';
 
-      audio.correct = new Audio('correct-music.wav');
+      audio.correct = new Audio('correct-music.mp3');
       audio.correct.volume = 0.7;
       audio.correct.preload = 'auto';
 
-      audio.wrong = new Audio('wrong-music.wav');
+      audio.wrong = new Audio('wrong-music.mp3');
       audio.wrong.volume = 0.7;
       audio.wrong.preload = 'auto';
 
@@ -3299,10 +3791,42 @@
     saveState();
   }
 
+  function onBgVolumeChange(val) {
+    // val is 0-100, convert to 0-1
+    const v = Math.max(0, Math.min(1, parseInt(val, 10) / 100));
+    state.audioBgVol = v;
+    if (audio.bg) audio.bg.volume = v;
+    saveState();
+  }
+
+  // ============ DARK MODE ============
+  function applyTheme() {
+    if (state.darkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
+
+  function onToggleDarkMode(enabled) {
+    state.darkMode = enabled;
+    applyTheme();
+    saveState();
+  }
+
   function openSettings() {
-    // Sync toggle states with current settings
+    // Sync UI with current settings
     document.getElementById('toggleBgMusic').checked = !!state.audioBg;
     document.getElementById('toggleSfx').checked = !!state.audioSfx;
+    const volSlider = document.getElementById('bgVolumeSlider');
+    if (volSlider) {
+      const v = typeof state.audioBgVol === 'number' ? state.audioBgVol : 0.6;
+      volSlider.value = Math.round(v * 100);
+      const valLabel = document.getElementById('bgVolumeValue');
+      if (valLabel) valLabel.textContent = Math.round(v * 100) + '%';
+    }
+    const darkToggle = document.getElementById('toggleDarkMode');
+    if (darkToggle) darkToggle.checked = !!state.darkMode;
     showScreen('screen-settings');
   }
 
