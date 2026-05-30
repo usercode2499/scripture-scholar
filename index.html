@@ -136,10 +136,67 @@
   /* Top bar */
   .topbar {
     display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-bottom: 20px;
+    padding: 4px 0 0;
+  }
+
+  .topbar-stats {
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
-    padding: 4px 0;
+    gap: 8px;
+  }
+
+  /* Brand row inside the topbar — only visible on the home screen */
+  .topbar-brand {
+    display: none;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 4px 6px;
+    border-top: 1px solid var(--border-soft);
+  }
+  .topbar.with-brand .topbar-brand {
+    display: flex;
+  }
+
+  .topbar-brand-logo {
+    width: 52px;
+    height: 60px;
+    flex-shrink: 0;
+    animation: float 4s ease-in-out infinite;
+    filter: drop-shadow(0 4px 10px rgba(200, 155, 60, 0.22));
+  }
+  .topbar-brand-logo .liahona-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  .topbar-brand-text {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .topbar-brand-title {
+    font-size: 24px;
+    line-height: 1.05;
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    margin: 0;
+  }
+
+  .topbar-brand-tagline {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin: 4px 0 0;
+    line-height: 1.35;
+  }
+
+  body.dark-mode .topbar-brand {
+    border-top-color: var(--border);
   }
 
   .stat {
@@ -244,6 +301,153 @@
     text-align: center;
     margin: 12px 0 24px;
     position: relative;
+  }
+  .unit-header-spaced {
+    margin-top: 36px;
+  }
+
+  /* =================================== */
+  /* === SCRIPTURE SECTION (collapsible) === */
+  /* =================================== */
+
+  .scripture-section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    padding: 18px 20px;
+    background: linear-gradient(135deg, #fdf8eb 0%, #faf3dc 100%);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--gold);
+    border-radius: 14px;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+    box-shadow: var(--shadow);
+    margin-bottom: 4px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .scripture-section-header:hover {
+    background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
+    box-shadow: 0 6px 18px rgba(60, 40, 20, 0.1);
+  }
+  .scripture-section-header:active {
+    transform: scale(0.99);
+  }
+
+  .scripture-section-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .scripture-section-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .scripture-section-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.2;
+    margin-bottom: 2px;
+  }
+
+  .scripture-section-meta {
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .scripture-section-dot {
+    color: var(--ink-faint);
+  }
+
+  .scripture-section-chevron {
+    color: var(--gold-dark);
+    font-size: 16px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+  }
+  .scripture-section-header:not(.expanded) .scripture-section-chevron {
+    transform: rotate(-90deg);
+  }
+
+  /* Collapsible content area */
+  .scripture-section-content {
+    overflow: hidden;
+    max-height: 8000px;
+    opacity: 1;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.3s ease;
+    margin: 16px 0 8px;
+  }
+  .scripture-section-content.collapsed {
+    max-height: 0;
+    opacity: 0;
+    margin: 0;
+    pointer-events: none;
+  }
+
+  /* Dark mode overrides for the section header */
+  body.dark-mode .scripture-section-header {
+    background: linear-gradient(135deg, #2a1d10 0%, #211710 100%);
+    border-color: var(--border);
+    border-left-color: var(--gold);
+  }
+  body.dark-mode .scripture-section-header:hover {
+    background: linear-gradient(135deg, #322215 0%, #2a1d10 100%);
+  }
+
+  /* Coming-soon variant — muted styling, no chevron, "Soon" pill */
+  .scripture-section-header.coming-soon {
+    background: var(--card);
+    border-left-color: var(--lock);
+    opacity: 0.78;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+  .scripture-section-header.coming-soon:hover {
+    opacity: 1;
+    background: var(--card);
+    box-shadow: var(--shadow);
+  }
+  .scripture-section-header.coming-soon .scripture-section-icon {
+    filter: grayscale(0.4);
+  }
+  .scripture-section-header.coming-soon .scripture-section-title {
+    color: var(--ink-soft);
+  }
+  .scripture-section-header.coming-soon .scripture-section-meta {
+    font-style: italic;
+  }
+
+  .coming-soon-pill {
+    flex-shrink: 0;
+    padding: 5px 12px;
+    background: var(--border-soft);
+    color: var(--gold-dark);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+
+  body.dark-mode .scripture-section-header.coming-soon {
+    background: rgba(255, 255, 255, 0.03);
+    border-left-color: var(--lock);
+  }
+  body.dark-mode .coming-soon-pill {
+    background: rgba(227, 184, 85, 0.1);
+    color: var(--gold);
+    border-color: var(--border);
   }
   .unit-header::before, .unit-header::after {
     content: '';
@@ -969,7 +1173,7 @@
     font-size: 14px;
     font-weight: 500;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    z-index: 100;
+    z-index: 1100;
     animation: toastIn 0.3s ease, toastOut 0.3s ease 2.4s forwards;
   }
   @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
@@ -1066,6 +1270,189 @@
     color: inherit;
     text-decoration: none;
     border-bottom: 1px dotted var(--gold-dark);
+  }
+
+  /* =================================== */
+  /* === INFO CAROUSEL === */
+  /* =================================== */
+
+  .info-carousel {
+    margin: 4px 0 24px;
+  }
+
+  .info-carousel-frame {
+    overflow: hidden;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
+    border: 1px solid var(--gold);
+    box-shadow: var(--shadow);
+    position: relative;
+  }
+
+  .info-carousel-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    /* Allow vertical scroll but pick up horizontal swipes for the carousel */
+    touch-action: pan-y;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .info-carousel-track:active {
+    cursor: grabbing;
+  }
+  /* Re-enable text selection on interactive children */
+  .info-slide-link, .info-slide-btn {
+    user-select: auto;
+    -webkit-user-select: auto;
+  }
+
+  .info-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    padding: 22px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    min-height: 200px;
+  }
+
+  .info-slide-eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .info-slide-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 12px;
+  }
+
+  .info-slide-text {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .info-slide-text strong {
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+  .info-slide-link {
+    color: var(--gold-dark);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--gold-dark);
+    font-weight: 600;
+  }
+  .info-slide-link:hover {
+    color: var(--gold);
+    border-bottom-color: var(--gold);
+  }
+
+  .info-slide-tagline {
+    margin-top: auto;
+    padding-top: 6px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+
+  .info-slide-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .info-slide-list li {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 7px;
+  }
+  .info-slide-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--gold);
+  }
+
+  .info-slide-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 12px;
+    flex-wrap: wrap;
+  }
+
+  .info-slide-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 18px;
+    background: var(--ink);
+    color: var(--bg);
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .info-slide-btn:hover {
+    background: #4a3520;
+    transform: translateY(-1px);
+  }
+  .info-slide-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Dot indicators */
+  .info-carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    margin-top: 12px;
+  }
+
+  .info-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    border: none;
+    background: var(--border);
+    padding: 0;
+    cursor: pointer;
+    transition: background 0.25s ease, width 0.25s ease, border-radius 0.25s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .info-dot:hover { background: var(--lock); }
+  .info-dot.active {
+    background: var(--gold);
+    width: 22px;
+    border-radius: 4px;
+  }
+
+  /* Dark mode overrides */
+  body.dark-mode .info-carousel-frame {
+    background: linear-gradient(135deg, #3a2a18 0%, #2a1d10 100%);
+    border-color: var(--gold-dark);
+  }
+  body.dark-mode .info-slide-btn {
+    background: var(--gold);
+    color: #1a130b;
+  }
+  body.dark-mode .info-slide-btn:hover {
+    background: var(--gold-light);
   }
 
   /* Continue Learning card */
@@ -2102,25 +2489,23 @@
 <div class="app">
   <!-- Top status bar -->
   <div class="topbar" id="topbar">
-    <div class="stat stat-streak"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
-    <div class="stat stat-level" id="levelPill" onclick="showLevelInfo()">
-      <div class="stat-level-top">
-        <span class="stat-icon">📜</span>
-        <span>Lv</span>
-        <span id="levelNum">1</span>
+    <div class="topbar-stats">
+      <div class="stat stat-streak"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
+      <div class="stat stat-level" id="levelPill" onclick="showLevelInfo()">
+        <div class="stat-level-top">
+          <span class="stat-icon">📜</span>
+          <span>Lv</span>
+          <span id="levelNum">1</span>
+        </div>
+        <div class="stat-level-bar">
+          <div class="stat-level-fill" id="topbarLevelFill" style="width: 0%"></div>
+        </div>
       </div>
-      <div class="stat-level-bar">
-        <div class="stat-level-fill" id="topbarLevelFill" style="width: 0%"></div>
-      </div>
+      <div class="stat stat-hints"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
+      <button class="topbar-settings" onclick="openSettings()" aria-label="Settings">⚙</button>
     </div>
-    <div class="stat stat-hints"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
-    <button class="topbar-settings" onclick="openSettings()" aria-label="Settings">⚙</button>
-  </div>
-
-  <!-- HOME SCREEN -->
-  <div class="screen" id="screen-home">
-    <div class="home-header">
-      <div class="liahona-wrap">
+    <div class="topbar-brand" id="topbarBrand">
+      <div class="topbar-brand-logo">
         <svg class="liahona-svg" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" aria-label="Liahona logo">
           <defs>
             <radialGradient id="liaSphere" cx="32%" cy="26%" r="72%">
@@ -2134,28 +2519,22 @@
               <stop offset="100%" stop-color="#b8862a"/>
             </linearGradient>
           </defs>
-          <!-- Top finial -->
           <circle cx="50" cy="6" r="3" fill="url(#liaSphere)" stroke="#5c4313" stroke-width="0.7"/>
           <line x1="50" y1="9" x2="50" y2="14" stroke="#5c4313" stroke-width="2" stroke-linecap="round"/>
-          <!-- Main sphere -->
           <circle cx="50" cy="58" r="40" fill="url(#liaSphere)" stroke="#5c4313" stroke-width="1.2"/>
-          <!-- Top dome arched panels -->
           <g fill="#3d2817" opacity="0.72">
             <path d="M 19,42 Q 19,28 29,24 L 29,42 Z"/>
             <path d="M 32,42 Q 36,21 47,19 L 47,42 Z"/>
             <path d="M 53,42 Q 64,21 68,42 Z"/>
             <path d="M 71,42 Q 81,28 81,42 Z"/>
           </g>
-          <!-- Top arch peak accents -->
           <g fill="#d4a73c">
             <circle cx="24" cy="33" r="1"/>
             <circle cx="40" cy="25" r="1.2"/>
             <circle cx="60" cy="25" r="1.2"/>
             <circle cx="76" cy="33" r="1"/>
           </g>
-          <!-- Center inscription band -->
           <rect x="7" y="50" width="86" height="9" fill="url(#liaBand)" stroke="#5c4313" stroke-width="0.8"/>
-          <!-- Stylized engraved symbols on band -->
           <g fill="#3d2817">
             <path d="M 14,54.5 L 16,52.5 L 18,54.5 L 16,56.5 Z"/>
             <rect x="22" y="52.5" width="1" height="4"/>
@@ -2169,26 +2548,112 @@
             <rect x="77" y="52.5" width="1" height="4"/>
             <path d="M 82,54.5 L 84,52.5 L 86,54.5 L 84,56.5 Z"/>
           </g>
-          <!-- Bottom dome arched panels (mirror of top) -->
           <g fill="#3d2817" opacity="0.72">
             <path d="M 19,68 Q 19,82 29,86 L 29,68 Z"/>
             <path d="M 32,68 Q 36,89 47,91 L 47,68 Z"/>
             <path d="M 53,68 Q 64,89 68,68 Z"/>
             <path d="M 71,68 Q 81,82 81,68 Z"/>
           </g>
-          <!-- Bottom arch accents -->
           <g fill="#d4a73c">
             <circle cx="24" cy="77" r="1"/>
             <circle cx="40" cy="85" r="1.2"/>
             <circle cx="60" cy="85" r="1.2"/>
             <circle cx="76" cy="77" r="1"/>
           </g>
-          <!-- 3D highlight on upper-left -->
           <ellipse cx="37" cy="40" rx="13" ry="8" fill="#fce078" opacity="0.4"/>
         </svg>
       </div>
-      <h1 class="home-title serif">Scripture Scholar</h1>
-      <p class="home-tagline">A little every day. Learning becomes light.</p>
+      <div class="topbar-brand-text">
+        <h1 class="topbar-brand-title serif">Scripture Scholar</h1>
+        <p class="topbar-brand-tagline">A little every day. Learning becomes light.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div class="screen" id="screen-home">
+
+    <!-- Info Carousel -->
+    <div class="info-carousel">
+      <div class="info-carousel-frame">
+        <div class="info-carousel-track" id="infoCarouselTrack">
+
+          <!-- Slide 1: About the App -->
+          <div class="info-slide">
+            <div class="info-slide-eyebrow">✦ About</div>
+            <h3 class="info-slide-title serif">About the App</h3>
+            <p class="info-slide-text">
+              Scripture Scholar is an independent study app and is <strong>not affiliated with, endorsed by, or sponsored by</strong> The Church of Jesus Christ of Latter-day Saints.
+            </p>
+            <p class="info-slide-text">
+              Created by <strong>Alexander Bongo</strong> and built with AI. Questions and lessons are aligned with the official <a class="info-slide-link" href="https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual?lang=eng" target="_blank" rel="noopener">Institute scripture course</a> on the Book of Mormon.
+            </p>
+            <p class="info-slide-tagline">— kay tungod walay lingaw 😊</p>
+          </div>
+
+          <!-- Slide 2: Announcements -->
+          <div class="info-slide">
+            <div class="info-slide-eyebrow">📢 Announcements</div>
+            <h3 class="info-slide-title serif">Latest News</h3>
+            <p class="info-slide-text">
+              No announcements at this time. Watch this space for ward news, study reminders, and special events.
+            </p>
+          </div>
+
+          <!-- Slide 3: New Updates -->
+          <div class="info-slide">
+            <div class="info-slide-eyebrow">✨ New Updates</div>
+            <h3 class="info-slide-title serif">What's New</h3>
+            <ul class="info-slide-list">
+              <li>Chapters 6–10 added (2 Nephi unit complete)</li>
+              <li>Dark mode + music volume slider</li>
+              <li>Wrong answers now show the correct one</li>
+              <li>Back button no longer closes app instantly</li>
+              <li>Music pauses when phone locks or app closes</li>
+            </ul>
+          </div>
+
+          <!-- Slide 4: Feedback -->
+          <div class="info-slide">
+            <div class="info-slide-eyebrow">💬 Feedback</div>
+            <h3 class="info-slide-title serif">Help Us Improve</h3>
+            <p class="info-slide-text">
+              Suggestions, bug reports, or just want to say hi? Reach out to <strong>Alexander Bongo</strong>:
+            </p>
+            <div class="info-slide-actions">
+              <a href="https://m.me/alexander.bongo" target="_blank" rel="noopener" class="info-slide-btn">
+                <span>💬</span><span>Messenger</span>
+              </a>
+              <a href="mailto:arekusanda.bongo@gmail.com" class="info-slide-btn">
+                <span>✉</span><span>Email</span>
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="info-carousel-dots" id="infoCarouselDots">
+        <!-- Dots generated by JS -->
+      </div>
+    </div>
+
+    <!-- Continue Learning (returning users only — hidden for first-time users) -->
+    <div id="continueSection" class="hidden">
+      <div class="section-label">
+        <span class="section-label-text">▶ Continue Learning</span>
+        <span class="section-label-line"></span>
+      </div>
+      <div class="continue-card" id="continueCard">
+        <div class="continue-eyebrow" id="continueEyebrow">Chapter 1</div>
+        <div class="continue-title serif" id="continueTitle">The Keystone of Our Religion</div>
+        <div class="continue-subtitle" id="continueSubtitle">Why the Book of Mormon matters</div>
+        <div class="continue-meta" id="continueMeta">
+          <span>📖 7 questions</span>
+          <span>⏱ ~5 min</span>
+          <span>⭐ +25 XP</span>
+        </div>
+        <button class="continue-btn" onclick="continueFromDashboard()" id="continueBtn">Begin Lesson →</button>
+      </div>
     </div>
 
     <!-- Verse of the Day -->
@@ -2200,23 +2665,6 @@
       <div class="daily-verse-eyebrow">From the Book of Mormon</div>
       <div class="daily-verse-text" id="dailyVerseText">—</div>
       <div class="daily-verse-ref"><a id="dailyVerseRef" href="#" target="_blank" rel="noopener">—</a></div>
-    </div>
-
-    <!-- Continue Learning -->
-    <div class="section-label">
-      <span class="section-label-text">▶ Continue Learning</span>
-      <span class="section-label-line"></span>
-    </div>
-    <div class="continue-card" id="continueCard">
-      <div class="continue-eyebrow" id="continueEyebrow">Chapter 1</div>
-      <div class="continue-title serif" id="continueTitle">The Keystone of Our Religion</div>
-      <div class="continue-subtitle" id="continueSubtitle">Why the Book of Mormon matters</div>
-      <div class="continue-meta" id="continueMeta">
-        <span>📖 7 questions</span>
-        <span>⏱ ~5 min</span>
-        <span>⭐ +25 XP</span>
-      </div>
-      <button class="continue-btn" onclick="continueFromDashboard()" id="continueBtn">Begin Lesson →</button>
     </div>
 
     <!-- Progress Overview -->
@@ -2258,12 +2706,8 @@
       <span class="section-label-text">📖 All Lessons</span>
       <span class="section-label-line"></span>
     </div>
-    <div class="unit-header">
-      <div class="unit-eyebrow">Unit 1</div>
-      <div class="unit-title serif">1 Nephi</div>
-    </div>
     <div class="lesson-path" id="lessonPath">
-      <!-- Lesson nodes are rendered here by JS -->
+      <!-- Lesson nodes and unit headers are rendered here by JS -->
     </div>
     <div class="source-note">
       <strong>Content sourced from:</strong> <em>Book of Mormon Teacher Manual</em>, published by The Church of Jesus Christ of Latter-day Saints. Scripture references link to the official text. <a href="https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual?lang=eng" target="_blank" rel="noopener">View manual →</a>
@@ -2945,11 +3389,570 @@
         }
       ]
     },
-    ch6: { id: 'ch6', chapter: 6, range: '1 Nephi 19–22', title: "Isaiah's Prophecies", subtitle: "Israel scattered and gathered", available: false }
+    ch6: {
+      id: 'ch6',
+      chapter: 6,
+      range: '1 Nephi 19–22',
+      title: "Isaiah's Prophecies",
+      subtitle: "Remembering our Redeemer",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-6?lang=eng',
+      reading: {
+        body: [
+          "Nephi continued his record with great care, writing on two sets of plates: large plates for the history of his people, and small plates 'for the special purpose' of preserving the things of God. Why? 'To persuade [his people] to believe in the Lord their Redeemer' (1 Nephi 19:23).",
+          "To strengthen his people's faith, Nephi turned to the words of the prophet Isaiah, copying his prophecies into the record. He urged them — and us — to 'liken all scriptures unto us, that it might be for our profit and learning.' The scriptures are not just history. They speak directly to our lives when we read them that way.",
+          "In Isaiah's words, the Lord declared that He refines His people 'in the furnace of affliction' (1 Nephi 20:10). And though Israel had been scattered and humbled, He had not forgotten them: 'Behold, I have graven thee upon the palms of my hands' (1 Nephi 21:16). The marks of nails would later make that promise literal.",
+          "Nephi closed his first book by prophesying of the latter days: the gospel would be restored, Israel would be gathered, and the righteous 'need not fear, for the Lord will preserve them by his power' (1 Nephi 22:17)."
+        ],
+        principles: [
+          "Nephi wrote to persuade us to remember our Redeemer",
+          "We should liken the scriptures to ourselves for our profit and learning",
+          "The Lord refines His people through the furnace of affliction",
+          "The Lord will gather Israel and preserve the righteous in the latter days"
+        ]
+      },
+      reflection: '"How would your scripture study change if you read each passage as if the Lord were speaking directly to you?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: "According to 1 Nephi 19:18, what was Nephi's primary purpose in writing his record?",
+          options: [
+            'To document family history',
+            'To prove that Lehi was a true prophet',
+            'That his people might know and remember the Lord their Redeemer',
+            'To explain ancient customs and prophecies'
+          ],
+          correct: 2,
+          reference: '1 Nephi 19:18',
+          explanation: "Nephi wrote 'for the more part of all these things have I written for the intent that ye may learn to be more wise than we have been... and that ye may remember the Lord your Redeemer.'"
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this scripture mastery passage (1 Nephi 19:23):\n"I did read many things unto them... that I might more fully persuade them to believe in the Lord their ______."',
+          answer: 'Redeemer',
+          acceptable: ['Redeemer', 'redeemer'],
+          reference: '1 Nephi 19:23',
+          explanation: "Nephi shared Isaiah's words to point his people to Christ. This is the central purpose of all the scriptures: to testify of the Redeemer."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 1 Nephi 19:23, what does Nephi teach us to do with the scriptures?',
+          options: [
+            'Memorize them word for word',
+            'Liken them unto ourselves for our profit and learning',
+            'Read them only on the Sabbath',
+            'Keep them hidden from outsiders'
+          ],
+          correct: 1,
+          reference: '1 Nephi 19:23',
+          explanation: "To 'liken' the scriptures is to apply them personally — to read them as if the Lord were speaking directly to us about our own lives."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 1 Nephi 20:10, what phrase does the Lord use to describe how He refines His people?',
+          options: [
+            'The fire of testing',
+            'The crucible of trial',
+            'The furnace of affliction',
+            'The mill of obedience'
+          ],
+          correct: 2,
+          reference: '1 Nephi 20:10',
+          explanation: "The Lord said, 'I have refined thee... I have chosen thee in the furnace of affliction.' Trials are how He refines and prepares His people."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 1 Nephi 21:16, what powerful image does the Lord use to show He will never forget His people?',
+          options: [
+            'He has written their names upon the stars',
+            'He has graven them upon the palms of His hands',
+            'He has built a temple of remembrance for them',
+            'He has placed them deep within His heart'
+          ],
+          correct: 1,
+          reference: '1 Nephi 21:16',
+          explanation: "'Behold, I have graven thee upon the palms of my hands.' Elder Holland taught that the marks of the Roman nails in Christ's hands are the literal fulfillment of this promise."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this verse:\n"Behold, I have graven thee upon the palms of my ______." (1 Nephi 21:16)',
+          answer: 'hands',
+          acceptable: ['hands', 'hand'],
+          reference: '1 Nephi 21:16',
+          explanation: "A constant reminder that Christ remembers each of His covenant people — even when we feel forgotten."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: "According to 1 Nephi 22:17, what is the Lord's promise to the righteous in the last days?",
+          options: [
+            'They will not face any trials',
+            'They need not fear, for the Lord will preserve them by His power',
+            'They will be made wealthy in the world',
+            'They will be hidden away from the world'
+          ],
+          correct: 1,
+          reference: '1 Nephi 22:17',
+          explanation: "Nephi prophesied that though calamities will come to the world, 'the righteous need not fear... for the Lord will preserve [them] by his power.' Righteousness is our protection."
+        }
+      ]
+    },
+    ch7: {
+      id: 'ch7',
+      chapter: 7,
+      range: '2 Nephi 1–3',
+      title: "Lehi's Final Counsel",
+      subtitle: "Creation, Fall, and Atonement",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-7?lang=eng',
+      reading: {
+        body: [
+          "As Lehi prepared to die, he gathered his children and gave them his final counsel. His words in 2 Nephi 1–3 contain some of the most profound doctrine in all of scripture.",
+          "To his sons born in the wilderness — Jacob and Joseph — Lehi taught the great connected truths of the plan of salvation: the Creation, the Fall, and the Atonement. He explained, 'It must needs be, that there is an opposition in all things' (2 Nephi 2:11). Without bitter, no sweet. Without misery, no joy.",
+          "The Fall was not a disaster, Lehi taught. It was a deliberate part of the plan: 'Adam fell that men might be; and men are, that they might have joy' (2 Nephi 2:25). And God has given each of us agency: 'They are free to choose liberty and eternal life... or to choose captivity and death' (2 Nephi 2:27).",
+          "Then, in 2 Nephi 3, Lehi shared an astonishing prophecy from Joseph who was sold into Egypt — recorded thousands of years before its fulfillment. Joseph foretold that a 'choice seer' would be raised up in the latter days to restore the gospel, and that his name, like his father's, would be Joseph (2 Nephi 3:15). That seer was Joseph Smith Jr."
+        ],
+        principles: [
+          "The righteous are blessed in the land of promise",
+          "The Creation, Fall, and Atonement are essential parts of God's plan",
+          "Adam fell that men might be; men are, that they might have joy",
+          "We are free to choose liberty and eternal life, or captivity and death",
+          "Joseph Smith's calling was prophesied by Joseph of Egypt"
+        ]
+      },
+      reflection: '"Lehi taught we are free to act, not be acted upon. In what part of your life today are you most invited to act for yourself?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 1:7, what kind of land did Lehi prophesy the promised land would be?',
+          options: [
+            'A land of wealth and power',
+            'A land of liberty, never brought into captivity (if its people serve God)',
+            'A land of secrets, hidden from all nations forever',
+            'A land of warriors and conquest'
+          ],
+          correct: 1,
+          reference: '2 Nephi 1:7',
+          explanation: "Lehi prophesied it would be 'a land of liberty' for the righteous — but if iniquity abounded, the Lord's protection would be withdrawn."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 2:11, what is necessary in all things?',
+          options: [
+            'Faith and obedience',
+            'Opposition in all things',
+            'Patience and trial',
+            'Wisdom and study'
+          ],
+          correct: 1,
+          reference: '2 Nephi 2:11',
+          explanation: "Lehi taught that without opposition, there is no joy, no good, no holiness. The bitter is what makes us know the sweet."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this scripture mastery passage (2 Nephi 2:25):\n"Adam fell that men might be; and men are, that they might have ______."',
+          answer: 'joy',
+          acceptable: ['joy'],
+          reference: '2 Nephi 2:25',
+          explanation: "The Fall was not a disaster — it was a deliberate part of the plan. Mortality, with all its trials, is the path to authentic joy."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 2:27, what are men "free to choose"?',
+          options: [
+            'Wealth or poverty',
+            'Liberty and eternal life, or captivity and death',
+            'Friends or enemies',
+            'Light or only darkness'
+          ],
+          correct: 1,
+          reference: '2 Nephi 2:27',
+          explanation: "Agency is the foundation of God's plan. Each of us must choose between two paths — and the Atonement makes the better path possible."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Why was the Fall of Adam and Eve necessary in the plan of salvation?',
+          options: [
+            'It was a tragic mistake the Lord later corrected',
+            'It enabled humanity to exist, experience opposition, and require the Atonement',
+            'It only affected Adam and Eve, not their descendants',
+            'It was caused by Satan against God\'s plan'
+          ],
+          correct: 1,
+          reference: '2 Nephi 2:22–25',
+          explanation: "Without the Fall, Adam and Eve would have remained childless, knowing neither joy nor misery, doing neither good nor evil. The Fall opened the way to all that mortality teaches us."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 3, whose ancient prophecy foretold the calling of the Prophet Joseph Smith?',
+          options: [
+            'Moses',
+            'Abraham',
+            'Joseph of Egypt (son of Jacob who was sold by his brothers)',
+            'Isaiah'
+          ],
+          correct: 2,
+          reference: '2 Nephi 3:6–18',
+          explanation: "Joseph who was sold into Egypt prophesied of a 'choice seer' the Lord would raise up — Joseph Smith — to restore the gospel in the latter days."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 3:15, the latter-day seer would be:',
+          options: [
+            'Called Joseph, after the name of his father',
+            'Called Moroni, after the angel',
+            'Called Lehi, like Nephi\'s father',
+            'Called Mormon, the compiler'
+          ],
+          correct: 0,
+          reference: '2 Nephi 3:15',
+          explanation: "The prophecy said his name would be Joseph, 'and it shall be after the name of his father' — fulfilled exactly in Joseph Smith Jr. and his father Joseph Smith Sr."
+        }
+      ]
+    },
+    ch8: {
+      id: 'ch8',
+      chapter: 8,
+      range: '2 Nephi 4–8',
+      title: "The Psalm of Nephi",
+      subtitle: "Trusting the Lord through weakness",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-8?lang=eng',
+      reading: {
+        body: [
+          "After Lehi died, his family fractured again — Laman and Lemuel sought to take Nephi's life, and the Lord commanded Nephi to flee with all who would go with him into the wilderness.",
+          "But before that journey, Nephi wrote one of the most personal passages in all scripture, often called 'the Psalm of Nephi' (2 Nephi 4:15–35). In it he moves between exultation and anguish — 'My soul delighteth in the things of the Lord' (v. 16), then 'O wretched man that I am!' (v. 17) — and finally lands on a settled truth: 'I have trusted in thee, and I will trust in thee forever' (v. 34). Even the great prophets feel weakness. Even they must choose to trust.",
+          "Once safe in their new land, Nephi's people 'did observe to keep the judgments, and the statutes, and the commandments of the Lord in all things... And it came to pass that we lived after the manner of happiness' (2 Nephi 5:27). Happiness, Nephi teaches, has a manner — a way of living that produces it.",
+          "Chapters 6 through 8 record a sermon by Nephi's brother Jacob, who quoted Isaiah to teach that Israel will be gathered when 'they shall come to the knowledge of their Redeemer' (2 Nephi 6:11). The gathering is not just geographical — it is a turning of the heart toward Christ."
+        ],
+        principles: [
+          "Trusting in the Lord gives us reason to rejoice",
+          "Even the faithful experience weakness — the answer is to keep trusting",
+          "Separating from wickedness preserves spiritual life",
+          "We can live 'after the manner of happiness' by keeping the commandments",
+          "Israel is gathered as they come to know their Redeemer"
+        ]
+      },
+      reflection: '"Nephi felt both spiritual delight and personal anguish in the same psalm. When have you experienced both — and how did trusting the Lord help?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'What is 2 Nephi 4:15–35 commonly called?',
+          options: [
+            "Nephi's lamentation",
+            "The psalm of Nephi",
+            "Nephi's farewell",
+            "The song of the wilderness"
+          ],
+          correct: 1,
+          reference: '2 Nephi 4:15–35',
+          explanation: "It's called a psalm because of its poetic, deeply personal expression of both worship and struggle — much like the psalms of David."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: "In 2 Nephi 4:16, what does Nephi say his soul delights in?",
+          options: [
+            'In the wealth of his people',
+            'In the things of the Lord, and his heart pondereth continually upon them',
+            'In the safety of his family',
+            'In the building of the temple'
+          ],
+          correct: 1,
+          reference: '2 Nephi 4:16',
+          explanation: "'My soul delighteth in the things of the Lord; and my heart pondereth continually upon the things which I have seen and heard.' Delight in scripture fueled Nephi's faith."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this verse from the Psalm of Nephi:\n"I have trusted in thee, and I will trust in thee ______." (2 Nephi 4:34)',
+          answer: 'forever',
+          acceptable: ['forever'],
+          reference: '2 Nephi 4:34',
+          explanation: "Even after expressing his weaknesses, Nephi anchored himself in trust. Faith is a decision repeated daily."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Why did the Lord command Nephi to flee with his people into the wilderness (2 Nephi 5:5–7)?',
+          options: [
+            'To find better farmland',
+            'To preserve their lives and separate them from the wickedness of Laman, Lemuel, and their followers',
+            'To search for the promised land',
+            'To meet with other tribes of Israel'
+          ],
+          correct: 1,
+          reference: '2 Nephi 5:5–7',
+          explanation: "The Lord warned Nephi that his brothers sought his life. Fleeing wickedness — both physical and spiritual — is sometimes the Lord's protection."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this verse (2 Nephi 5:27):\n"And it came to pass that we lived after the manner of ______."',
+          answer: 'happiness',
+          acceptable: ['happiness'],
+          reference: '2 Nephi 5:27',
+          explanation: "Happiness is a way of living, not an accident. Nephi's people kept the commandments, worked diligently, built a temple, and walked uprightly — and joy followed."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 6:11, what will lead to the gathering of the house of Israel?',
+          options: [
+            'When they return to the land of Jerusalem',
+            'When they come to the knowledge of their Redeemer',
+            'When they become a great nation',
+            'When they build a new temple'
+          ],
+          correct: 1,
+          reference: '2 Nephi 6:11',
+          explanation: "Jacob taught that the gathering is fundamentally a return to Christ. Knowing the Redeemer is what gathers Israel — geography follows."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Whose sermon is recorded in 2 Nephi 6–8?',
+          options: [
+            'Nephi',
+            'Lehi (recorded posthumously)',
+            'Jacob, the brother of Nephi',
+            'Sam, the brother of Nephi'
+          ],
+          correct: 2,
+          reference: '2 Nephi 6:1–4',
+          explanation: "Jacob, born in the wilderness, became a powerful teacher. He used Isaiah's words to testify of the Messiah and the gathering of Israel."
+        }
+      ]
+    },
+    ch9: {
+      id: 'ch9',
+      chapter: 9,
+      range: '2 Nephi 9–10',
+      title: "The Infinite Atonement",
+      subtitle: "Jacob's sermon on the Savior's grace",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-9?lang=eng',
+      reading: {
+        body: [
+          "2 Nephi 9 is one of the most descriptive chapters on the Atonement in all of scripture. Jacob taught with urgency: without an 'infinite atonement,' he said, our bodies would never rise again, and our spirits would be subject to 'that awful monster, death and hell' (2 Nephi 9:7, 10). But because of Jesus Christ, both physical death and spiritual death are conquered.",
+          "Jacob then warned that the blessings of the Atonement are not automatic — our attitudes and actions determine whether we receive its full power. He named obstacles: pride in learning, idol worship, being 'carnally-minded,' and wasting 'the days of [our] probation.' 'To be carnally-minded is death, and to be spiritually-minded is life eternal' (2 Nephi 9:39).",
+          "He warned the learned in particular: 'When they are learned they think they are wise, and they hearken not unto the counsel of God... wherefore, their wisdom is foolishness... But to be learned is good if they hearken unto the counsels of God' (2 Nephi 9:28–29).",
+          "In 2 Nephi 10, Jacob closed with a message of hope. Despite Israel's scattering and our personal struggles, 'we are not cast off' (2 Nephi 10:20). He invited us to 'cheer up [our] hearts' and 'reconcile [our]selves to the will of God' (2 Nephi 10:23–24) — bringing our wills into harmony with His."
+        ],
+        principles: [
+          "The Atonement is infinite — it conquers both physical and spiritual death",
+          "Our attitudes and actions determine how much of the Atonement's power we receive",
+          "Learning is good IF we hearken to the counsels of God",
+          "To be carnally-minded is death; to be spiritually-minded is life eternal",
+          "We can reconcile ourselves to God's will and cheer up our hearts"
+        ]
+      },
+      reflection: '"Jacob taught that we must \'reconcile yourselves to the will of God.\' What is one area of your life where you sense the Lord inviting your will to align with His?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 9:7, what kind of atonement was needed to overcome the Fall?',
+          options: [
+            'A partial atonement',
+            'A symbolic atonement',
+            'An infinite atonement',
+            'A temporary atonement'
+          ],
+          correct: 2,
+          reference: '2 Nephi 9:7',
+          explanation: "Jacob taught the atonement 'must needs be an infinite atonement' — infinite in scope, in power, and in mercy."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 9:10, what does Jacob call physical death and spiritual death?',
+          options: [
+            'A heavy burden',
+            'That awful monster, death and hell',
+            'A long darkness',
+            'A great mystery'
+          ],
+          correct: 1,
+          reference: '2 Nephi 9:10',
+          explanation: "'O how great the goodness of our God, who prepareth a way for our escape from the grasp of this awful monster!' The Atonement is what rescues us."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this verse (2 Nephi 9:39):\n"To be carnally-minded is death, and to be spiritually-minded is ______."',
+          answer: 'life eternal',
+          acceptable: ['life eternal', 'eternal life'],
+          reference: '2 Nephi 9:39',
+          explanation: "What we set our hearts on shapes us. Spiritually-minded living invites the very life of God to flow into ours."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 9:28–29, when is being learned a good thing?',
+          options: [
+            'When it brings worldly success',
+            'When it earns respect from others',
+            'When the learned hearken unto the counsels of God',
+            'When learning is shared widely'
+          ],
+          correct: 2,
+          reference: '2 Nephi 9:28–29',
+          explanation: "'To be learned is good IF they hearken unto the counsels of God.' Knowledge becomes wisdom only when humbled before the Lord."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 9:41, who is "the keeper of the gate"?',
+          options: [
+            'An angel of the Lord',
+            'The Holy One of Israel — He employeth no servant there',
+            'The prophet of His Church',
+            'The Father, who alone admits the worthy'
+          ],
+          correct: 1,
+          reference: '2 Nephi 9:41',
+          explanation: "'The keeper of the gate is the Holy One of Israel; and he employeth no servant there.' Christ Himself receives those who come unto Him."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 10:20, what reassurance does Jacob give to those who feel discouraged?',
+          options: [
+            'Trials will end quickly',
+            'We are not cast off',
+            'Wealth will come to the faithful',
+            'God will remove our challenges'
+          ],
+          correct: 1,
+          reference: '2 Nephi 10:20',
+          explanation: "'Let us remember him, and lay aside our sins, and not hang down our heads, for we are not cast off.' However far we feel from Christ, He is not far from us."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does Jacob mean when he tells us to "reconcile yourselves to the will of God" (2 Nephi 10:24)?',
+          options: [
+            'Accept that bad things happen and move on',
+            'Make our will consistent with God\'s will and submit to Him',
+            'Apologize for our mistakes once a year',
+            'Stop praying for things we want'
+          ],
+          correct: 1,
+          reference: '2 Nephi 10:24',
+          explanation: "Reconciling means aligning our will with God's. Even with all our diligence, we are saved 'only in and through the grace of God.'"
+        }
+      ]
+    },
+    ch10: {
+      id: 'ch10',
+      chapter: 10,
+      range: '2 Nephi 11–16',
+      title: "All Things Typify Christ",
+      subtitle: "Isaiah's testimony begins",
+      available: true,
+      xpReward: 25,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-10?lang=eng',
+      reading: {
+        body: [
+          "Before Nephi quoted extensive chapters from Isaiah, he gave us a key for reading them. 'My soul delighteth in proving unto my people the truth of the coming of Christ,' he wrote, 'for, for this end hath the law of Moses been given; and all things which have been given of God from the beginning of the world, unto man, are the typifying of him' (2 Nephi 11:4).",
+          "All things typify Christ. The whole creation, every ordinance, every prophet's life — all of it points to the Savior. This is the lens Isaiah uses too. Nephi joins his testimony with that of his brother Jacob and the prophet Isaiah, giving us three witnesses of Christ in the small plates: 'by the words of three, God hath said, I will establish my word' (2 Nephi 11:3).",
+          "Isaiah's prophecies in 2 Nephi 12–15 describe both judgment and peace in the last days. The 'house of Jacob' would suffer for their idols. The 'daughters of Zion' — members of the Church grown prideful and worldly — would lose their adornments. But 'them that are escaped' — the righteous remnant cleansed by the Atonement — would be 'beautiful and glorious,' protected by the Lord (2 Nephi 14:2–6).",
+          "Isaiah prophesied that 'the mountain of the Lord's house' would be established in the tops of the mountains in the last days, and that the Lord would 'lift up an ensign to the nations' (2 Nephi 12:2; 15:26). Latter-day temples and the restored Church fulfill these prophecies — a signal calling Israel home.",
+          "In 2 Nephi 16, we read Isaiah's own call to be a prophet. After his sins are purged with a live coal from the altar, the Lord asks, 'Whom shall I send, and who will go for us?' Isaiah replies, 'Here am I; send me' (2 Nephi 16:8)."
+        ],
+        principles: [
+          "All things given of God typify Jesus Christ",
+          "Three witnesses (Nephi, Jacob, Isaiah) establish the testimony of Christ",
+          "God brings both judgment and peace in the last days",
+          "The Lord lifts an ensign — His temples and Church — to gather Israel",
+          "Isaiah is the great messianic prophet of the Old Testament"
+        ]
+      },
+      reflection: '"Isaiah\'s answer to the Lord was \'Here am I; send me.\' What is one small \'send me\' moment the Lord may be inviting from you this week?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 11:4, what do all things that God has given testify of?',
+          options: [
+            'The covenants of Abraham',
+            'Jesus Christ (they typify Him)',
+            'The Creation of the world',
+            'The faithfulness of prophets'
+          ],
+          correct: 1,
+          reference: '2 Nephi 11:4',
+          explanation: "Nephi teaches that 'all things which have been given of God from the beginning of the world, unto man, are the typifying of him' — Christ is the center of everything God has revealed."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 11:1–3, who are the three witnesses of Christ in the small plates of the Book of Mormon?',
+          options: [
+            'Lehi, Nephi, and Jacob',
+            'Nephi, Jacob, and Isaiah',
+            'Nephi, Joseph, and Isaiah',
+            'Jacob, Joseph, and Sam'
+          ],
+          correct: 1,
+          reference: '2 Nephi 11:1–3',
+          explanation: "Three prophets — Nephi, Jacob, and Isaiah — each saw the Redeemer. Their combined testimony establishes the truth of Christ early in the Book of Mormon."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does it mean that something "typifies" Christ?',
+          options: [
+            'It represents, foreshadows, or points to Christ as a type or symbol',
+            'It is a copy of Christ\'s exact words',
+            'It is a written prophecy about Christ',
+            'It is identical to Christ in every way'
+          ],
+          correct: 0,
+          reference: '2 Nephi 11:4',
+          explanation: "A 'type' is a likeness — a symbol or shadow that teaches us about Christ. The brass serpent, the manna, sacrificial offerings — all typified Him."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this verse where Isaiah accepts his call from the Lord:\n"Here am I; send ______." (2 Nephi 16:8)',
+          answer: 'me',
+          acceptable: ['me'],
+          reference: '2 Nephi 16:8',
+          explanation: "After his lips were purged with a coal from the altar, Isaiah heard the Lord ask, 'Whom shall I send?' His willing answer became the model of every called prophet."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 15:26, Isaiah prophesied the Lord would "lift up an ensign to the nations." What is an ensign?',
+          options: [
+            'A military uniform',
+            'A signal or banner to gather the nations',
+            'A type of priesthood office',
+            'A foreign language translation'
+          ],
+          correct: 1,
+          reference: '2 Nephi 15:26',
+          explanation: "An ensign is a signal to assemble — a banner lifted high to call people together. Latter-day prophets have taught that the restored Church and its temples fulfill this prophecy."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 12:2–3, Isaiah prophesied that "the mountain of the Lord\'s house" would be established in the last days. What is this generally understood to refer to?',
+          options: [
+            'The original temple in Jerusalem rebuilt',
+            'Latter-day temples — including those built on mountains in the West',
+            'A specific mountain in Israel',
+            'The Garden of Eden'
+          ],
+          correct: 1,
+          reference: '2 Nephi 12:2–3',
+          explanation: "President Hinckley taught that this prophecy is fulfilled in latter-day temples — sacred mountains of the Lord drawing people from every nation to learn His ways."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 14:2–6, what blessings does Isaiah prophesy for "them that are escaped" of Israel?',
+          options: [
+            'Wealth, power, and political control',
+            'They will be beautiful and glorious, called holy, with filth washed away, protected by the Lord',
+            'A return to their original lands without trial',
+            'Recognition by all worldly nations'
+          ],
+          correct: 1,
+          reference: '2 Nephi 14:2–6',
+          explanation: "The righteous remnant — cleansed through the Atonement — receive sanctification, protection, and the Lord's continual presence. The 'escape' is from sin, not just from circumstance."
+        }
+      ]
+    }
   };
 
   // Order in which lessons appear on the path
-  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6'];
+  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10'];
 
   // ============ LEVEL SYSTEM ============
   // XP thresholds to reach each level (index = level - 1)
@@ -3094,7 +4097,8 @@
         audioBg: state.audioBg,
         audioSfx: state.audioSfx,
         audioBgVol: state.audioBgVol,
-        darkMode: state.darkMode
+        darkMode: state.darkMode,
+        expandedSections: state.expandedSections
       }));
     } catch(e) {}
   }
@@ -3218,10 +4222,73 @@
     document.getElementById('levelModal').classList.add('hidden');
   }
 
+  // ============ BACK BUTTON HANDLING ============
+  // Prevents the system/browser back button from closing the app immediately.
+  // Instead it navigates within the app, and requires a double-tap at the
+  // home screen to actually exit (Android-style behavior).
+  let lastBackPress = 0;
+  let backHandlerInitialized = false;
+
+  function getCurrentScreenId() {
+    const screens = document.querySelectorAll('.screen');
+    for (const s of screens) {
+      if (!s.classList.contains('hidden')) return s.id;
+    }
+    return null;
+  }
+
+  function isOverlayOpen() {
+    // Returns the id of any open overlay/modal that back should close first.
+    const modal = document.getElementById('levelModal');
+    if (modal && !modal.classList.contains('hidden')) return 'levelModal';
+    return null;
+  }
+
+  function onBackPressed() {
+    // 1. Close any open modal first
+    const overlay = isOverlayOpen();
+    if (overlay === 'levelModal') {
+      closeLevelModal();
+      history.pushState({ s: 'app' }, '', location.href);
+      return;
+    }
+
+    // 2. If we're on a sub-screen, go home instead of exiting
+    const current = getCurrentScreenId();
+    if (current && current !== 'screen-home') {
+      goHome();
+      history.pushState({ s: 'app' }, '', location.href);
+      return;
+    }
+
+    // 3. On the home screen — require double-tap to exit
+    const now = Date.now();
+    if (now - lastBackPress < 2000) {
+      // Confirmed exit. Don't re-push state — the popstate already
+      // moved history back, so the app/tab will close.
+      return;
+    }
+    lastBackPress = now;
+    showToast('Press back again to exit');
+    history.pushState({ s: 'app' }, '', location.href);
+  }
+
+  function initBackHandling() {
+    if (backHandlerInitialized) return;
+    backHandlerInitialized = true;
+    // Push an initial state so the first back press fires popstate
+    // instead of closing the tab/PWA outright.
+    history.pushState({ s: 'app' }, '', location.href);
+    window.addEventListener('popstate', onBackPressed);
+  }
+
   // ============ NAVIGATION ============
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
+    // Show the brand block in the topbar only on the home screen
+    const topbar = document.getElementById('topbar');
+    if (topbar) topbar.classList.toggle('with-brand', id === 'screen-home');
     window.scrollTo(0, 0);
   }
 
@@ -3256,7 +4323,16 @@
     refEl.textContent = '— ' + verse.ref;
     refEl.href = scriptureLink(verse.ref);
 
-    // Continue learning card
+    // Continue Learning section — only for returning users (those who have
+    // completed at least one chapter). First-time visitors see the lesson
+    // list directly and start from Chapter 1.
+    const continueSection = document.getElementById('continueSection');
+    const isReturningUser = (state.completedLessons || []).length > 0;
+    if (continueSection) {
+      continueSection.classList.toggle('hidden', !isReturningUser);
+    }
+
+    // Continue learning card content (only renders when section is visible)
     const currentId = getCurrentLessonId();
     const continueBtn = document.getElementById('continueBtn');
     if (currentId) {
@@ -3298,19 +4374,174 @@
     }
   }
 
+  // Maps a chapter number to its Book of Mormon section, used as a "Unit" label
+  function getUnitForChapter(ch) {
+    if (ch === 1) return '1 Nephi';
+    if (ch >= 2 && ch <= 6) return '1 Nephi';
+    if (ch >= 7 && ch <= 14) return '2 Nephi';
+    if (ch >= 15 && ch <= 16) return 'Jacob';
+    if (ch === 17) return 'Enos – Words of Mormon';
+    if (ch >= 18 && ch <= 22) return 'Mosiah';
+    if (ch >= 23 && ch <= 34) return 'Alma';
+    if (ch >= 35 && ch <= 38) return 'Helaman';
+    if (ch >= 39 && ch <= 46) return '3 Nephi';
+    if (ch === 47) return '4 Nephi';
+    if (ch >= 48 && ch <= 49) return 'Mormon';
+    if (ch >= 50 && ch <= 52) return 'Ether';
+    if (ch >= 53 && ch <= 56) return 'Moroni';
+    return 'Scripture';
+  }
+
+  // ============ SCRIPTURE SECTIONS ============
+  // Top-level groupings for the lesson path. Each section has its own
+  // collapsible header. Sections marked comingSoon are visible to set
+  // expectations but aren't yet available to study.
+  const SCRIPTURE_SECTIONS = [
+    {
+      id: 'bofm',
+      title: 'Book of Mormon',
+      icon: '📜',
+      lessonIds: ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10'],
+      totalChapters: 56
+    },
+    {
+      id: 'ot',
+      title: 'Old Testament',
+      icon: '📖',
+      lessonIds: [],
+      totalChapters: 0,
+      comingSoon: true
+    },
+    {
+      id: 'nt',
+      title: 'New Testament',
+      icon: '✝',
+      lessonIds: [],
+      totalChapters: 0,
+      comingSoon: true
+    },
+    {
+      id: 'dc',
+      title: 'Doctrine & Covenants',
+      icon: '⚡',
+      lessonIds: [],
+      totalChapters: 0,
+      comingSoon: true
+    }
+  ];
+
+  function isSectionExpanded(sectionId) {
+    if (!state.expandedSections) return true; // default: all expanded
+    return state.expandedSections[sectionId] !== false;
+  }
+
+  function toggleSection(sectionId) {
+    if (!state.expandedSections) state.expandedSections = {};
+    const wasExpanded = isSectionExpanded(sectionId);
+    state.expandedSections[sectionId] = !wasExpanded;
+    saveState();
+
+    const header = document.querySelector(`.scripture-section-header[data-section-id="${sectionId}"]`);
+    const content = document.getElementById(`section-content-${sectionId}`);
+    if (!header || !content) return;
+    if (state.expandedSections[sectionId]) {
+      header.classList.add('expanded');
+      content.classList.remove('collapsed');
+    } else {
+      header.classList.remove('expanded');
+      content.classList.add('collapsed');
+    }
+  }
+
   function renderLessonPath() {
     const path = document.getElementById('lessonPath');
     path.innerHTML = '';
 
-    // Determine which lesson is the "current" (next to take)
-    const currentId = getCurrentLessonId();
+    SCRIPTURE_SECTIONS.forEach((section) => {
+      // -- Coming-soon sections get a simpler, non-collapsible card --
+      if (section.comingSoon) {
+        const header = document.createElement('button');
+        header.className = 'scripture-section-header coming-soon';
+        header.setAttribute('data-section-id', section.id);
+        header.innerHTML = `
+          <div class="scripture-section-icon">${section.icon}</div>
+          <div class="scripture-section-info">
+            <div class="scripture-section-title serif">${section.title}</div>
+            <div class="scripture-section-meta">In preparation — lessons coming soon</div>
+          </div>
+          <div class="coming-soon-pill">Soon</div>
+        `;
+        header.onclick = () => showToast(`📜 ${section.title} lessons are coming soon`);
+        path.appendChild(header);
+        return;
+      }
 
-    LESSON_ORDER.forEach((id, idx) => {
+      // -- Available sections (Book of Mormon for now) --
+      const lessonIds = section.lessonIds.filter(id => LESSONS[id]);
+      const completedCount = lessonIds.filter(id => state.completedLessons.includes(id)).length;
+      const builtCount = lessonIds.length;
+      const expanded = isSectionExpanded(section.id);
+
+      const header = document.createElement('button');
+      header.className = 'scripture-section-header';
+      if (expanded) header.classList.add('expanded');
+      header.setAttribute('data-section-id', section.id);
+      header.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      header.innerHTML = `
+        <div class="scripture-section-icon">${section.icon}</div>
+        <div class="scripture-section-info">
+          <div class="scripture-section-title serif">${section.title}</div>
+          <div class="scripture-section-meta">
+            <span>${builtCount} of ${section.totalChapters} chapters available</span>
+            <span class="scripture-section-dot">·</span>
+            <span>${completedCount} completed</span>
+          </div>
+        </div>
+        <div class="scripture-section-chevron">▾</div>
+      `;
+      header.onclick = () => toggleSection(section.id);
+      path.appendChild(header);
+
+      // -- Section content (the lessons themselves) --
+      const content = document.createElement('div');
+      content.className = 'scripture-section-content';
+      if (!expanded) content.classList.add('collapsed');
+      content.id = `section-content-${section.id}`;
+
+      renderLessonNodes(content, lessonIds);
+      path.appendChild(content);
+    });
+  }
+
+  // Renders the unit headers, lesson nodes, and connectors for a list of lesson IDs
+  // into the given container element.
+  function renderLessonNodes(container, lessonIds) {
+    const currentId = getCurrentLessonId();
+    let lastUnit = null;
+    let unitNumber = 0;
+
+    lessonIds.forEach((id, idx) => {
       const lesson = LESSONS[id];
+      if (!lesson) return;
       const isCompleted = state.completedLessons.includes(id);
       const isCurrent = id === currentId;
       const playable = isPlayable(id);
       const isUnbuilt = !lesson.available;
+
+      // Insert unit header when the book changes
+      const unit = getUnitForChapter(lesson.chapter);
+      if (unit !== lastUnit) {
+        unitNumber++;
+        const unitHeader = document.createElement('div');
+        unitHeader.className = 'unit-header';
+        if (lastUnit !== null) unitHeader.classList.add('unit-header-spaced');
+        unitHeader.innerHTML = `
+          <div class="unit-eyebrow">Unit ${unitNumber}</div>
+          <div class="unit-title serif">${unit}</div>
+        `;
+        container.appendChild(unitHeader);
+        lastUnit = unit;
+      }
 
       // Node
       const node = document.createElement('button');
@@ -3338,8 +4569,7 @@
         if (isUnbuilt) {
           node.onclick = () => showToast('📜 This lesson is coming soon');
         } else {
-          // Gated by previous incomplete lesson
-          const prevId = LESSON_ORDER[idx - 1];
+          const prevId = lessonIds[idx - 1];
           const prevLesson = LESSONS[prevId];
           node.onclick = () => showToast(`🔒 Complete Chapter ${prevLesson.chapter} first to unlock`);
         }
@@ -3347,16 +4577,19 @@
         node.onclick = () => openDetail(id);
       }
 
-      path.appendChild(node);
+      container.appendChild(node);
 
-      // Connector between nodes (except after last)
-      if (idx < LESSON_ORDER.length - 1) {
+      // Connector between nodes (except after last, and not before next unit header)
+      const nextIdx = idx + 1;
+      const hasNextLesson = nextIdx < lessonIds.length;
+      const nextStartsNewUnit = hasNextLesson && getUnitForChapter(LESSONS[lessonIds[nextIdx]].chapter) !== unit;
+      if (hasNextLesson && !nextStartsNewUnit) {
         const connector = document.createElement('div');
         connector.className = 'path-connector';
-        if (!playable && !isPlayable(LESSON_ORDER[idx+1])) {
+        if (!playable && !isPlayable(lessonIds[nextIdx])) {
           connector.classList.add('dim');
         }
-        path.appendChild(connector);
+        container.appendChild(connector);
       }
     });
   }
@@ -3775,6 +5008,53 @@
     }
   }
 
+  // ============ AUDIO LIFECYCLE ============
+  // Stops the background music when the app is closed, backgrounded,
+  // or the phone is locked. Resumes when the user returns (if they had it on).
+  function pauseBgForLifecycle() {
+    if (audio.bg && !audio.bg.paused) {
+      audio.bg.pause();
+      audio.bgPausedByLifecycle = true;
+    }
+  }
+
+  function resumeBgFromLifecycle() {
+    if (audio.bgPausedByLifecycle && state.audioBg && audio.bg) {
+      audio.bg.play().catch(() => {});
+      audio.bgPausedByLifecycle = false;
+    }
+  }
+
+  // visibilitychange: fires when tab/app is hidden or shown.
+  // On Android, this fires when the user switches apps OR locks the phone.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      pauseBgForLifecycle();
+    } else if (document.visibilityState === 'visible') {
+      resumeBgFromLifecycle();
+    }
+  });
+
+  // pagehide: fires when navigating away or the page is being unloaded.
+  // More reliable than 'unload' (which doesn't fire on mobile when app is killed).
+  window.addEventListener('pagehide', () => {
+    if (audio.bg) audio.bg.pause();
+    if (audio.correct) audio.correct.pause();
+    if (audio.wrong) audio.wrong.pause();
+  });
+
+  // freeze: newer event for when page is put into back-forward cache.
+  // Some browsers fire this before visibilitychange.
+  if ('onfreeze' in document) {
+    document.addEventListener('freeze', () => {
+      if (audio.bg) audio.bg.pause();
+    });
+  }
+
+  // blur: window loses focus on desktop (clicking other windows etc.)
+  // We don't pause on this — it would be too aggressive — but if you ever want
+  // to, swap pauseBgForLifecycle in here.
+
   // Settings toggle handlers
   function onToggleBgMusic(enabled) {
     state.audioBg = enabled;
@@ -3830,9 +5110,146 @@
     showScreen('screen-settings');
   }
 
+  // ============ INFO CAROUSEL ============
+  function initInfoCarousel() {
+    const track = document.getElementById('infoCarouselTrack');
+    const dotsContainer = document.getElementById('infoCarouselDots');
+    if (!track || !dotsContainer) return;
+
+    const slides = track.querySelectorAll('.info-slide');
+    const count = slides.length;
+    if (count === 0) return;
+    let currentIndex = 0;
+
+    // Build dot indicators
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < count; i++) {
+      const dot = document.createElement('button');
+      dot.className = 'info-dot';
+      if (i === 0) dot.classList.add('active');
+      dot.setAttribute('aria-label', `Slide ${i + 1} of ${count}`);
+      dot.addEventListener('click', () => {
+        goToSlide(i);
+        scheduleAutoplayResume();
+      });
+      dotsContainer.appendChild(dot);
+    }
+
+    function goToSlide(index) {
+      currentIndex = ((index % count) + count) % count;
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dotsContainer.querySelectorAll('.info-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === currentIndex);
+      });
+    }
+
+    // -- Autoplay --
+    let autoplayTimer = null;
+    let resumeTimer = null;
+    const AUTOPLAY_INTERVAL_MS = 5000;
+    const RESUME_DELAY_MS = 8000; // resume after 8s of no interaction
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = setInterval(() => goToSlide(currentIndex + 1), AUTOPLAY_INTERVAL_MS);
+    }
+    function stopAutoplay() {
+      if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; }
+    }
+    function scheduleAutoplayResume() {
+      stopAutoplay();
+      if (resumeTimer) clearTimeout(resumeTimer);
+      resumeTimer = setTimeout(startAutoplay, RESUME_DELAY_MS);
+    }
+
+    // Pause when tab/app is hidden so we don't burn cycles in the background
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') stopAutoplay();
+      else startAutoplay();
+    });
+
+    // -- Pointer-based drag (works for touch, mouse, and pen) --
+    let pointerStartX = null;
+    let pointerStartY = null;
+    let pointerDeltaX = 0;
+    let isHorizontalDrag = false;
+    let isPointerDown = false;
+    let activePointerId = null;
+
+    track.addEventListener('pointerdown', (e) => {
+      // Only handle primary button for mouse; touch and pen don't set this
+      if (e.pointerType === 'mouse' && e.button !== 0) return;
+      pointerStartX = e.clientX;
+      pointerStartY = e.clientY;
+      pointerDeltaX = 0;
+      isHorizontalDrag = false;
+      isPointerDown = true;
+      activePointerId = e.pointerId;
+      stopAutoplay();
+      // Disable transition while dragging for a 1:1 feel
+      track.style.transition = 'none';
+    });
+
+    track.addEventListener('pointermove', (e) => {
+      if (!isPointerDown || e.pointerId !== activePointerId) return;
+      const dx = e.clientX - pointerStartX;
+      const dy = e.clientY - pointerStartY;
+      // Lock direction once decided — avoids hijacking vertical scrolls
+      if (!isHorizontalDrag && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy)) {
+        isHorizontalDrag = true;
+        try { track.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+      if (isHorizontalDrag) {
+        pointerDeltaX = dx;
+        // Live drag offset so the card follows the finger/cursor
+        const offset = -currentIndex * 100 + (dx / track.offsetWidth) * 100;
+        track.style.transform = `translateX(${offset}%)`;
+        e.preventDefault();
+      }
+    });
+
+    function endDrag(e) {
+      if (!isPointerDown) return;
+      if (e.pointerId !== activePointerId && e.pointerId !== undefined) return;
+      // Re-enable transition for the snap animation
+      track.style.transition = '';
+      if (isHorizontalDrag && Math.abs(pointerDeltaX) > 50) {
+        if (pointerDeltaX < 0) goToSlide(currentIndex + 1);
+        else goToSlide(currentIndex - 1);
+      } else {
+        // Snap back to the current slide
+        goToSlide(currentIndex);
+      }
+      pointerStartX = null;
+      pointerStartY = null;
+      pointerDeltaX = 0;
+      isHorizontalDrag = false;
+      isPointerDown = false;
+      activePointerId = null;
+      scheduleAutoplayResume();
+    }
+
+    track.addEventListener('pointerup', endDrag);
+    track.addEventListener('pointercancel', endDrag);
+    track.addEventListener('pointerleave', (e) => {
+      // If the user drags off the carousel without releasing, end the drag
+      if (isPointerDown && e.pointerType === 'mouse') endDrag(e);
+    });
+
+    // Prevent default drag behavior on links/images inside the slides during a horizontal drag
+    track.addEventListener('dragstart', (e) => e.preventDefault());
+
+    // Kick off autoplay
+    startAutoplay();
+  }
+
   // ============ INIT ============
   loadState();
   renderHome();
+  initInfoCarousel();
+  initBackHandling();
+  // Show the brand block initially since home is the default screen
+  document.getElementById('topbar').classList.add('with-brand');
 
   // ============ LANDING & SPLASH ============
   function createParticles() {
