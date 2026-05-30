@@ -1160,6 +1160,63 @@
     font-style: italic;
   }
 
+  /* =================================== */
+  /* === CONFETTI POPPER === */
+  /* =================================== */
+
+  .confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1200;
+    overflow: hidden;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 9px;
+    height: 9px;
+    opacity: 0;
+    transform: translate(-50%, -50%);
+    animation-name: confettiBurst;
+    animation-timing-function: cubic-bezier(0.18, 0.85, 0.4, 1);
+    animation-fill-mode: forwards;
+    will-change: transform, opacity;
+    box-shadow: 0 2px 4px rgba(60, 40, 20, 0.18);
+  }
+
+  .confetti-square { border-radius: 1px; }
+  .confetti-circle { border-radius: 50%; }
+  .confetti-rect {
+    width: 6px;
+    height: 14px;
+    border-radius: 1px;
+  }
+
+  @keyframes confettiBurst {
+    0% {
+      transform: translate(-50%, -50%) rotate(0deg);
+      opacity: 0;
+    }
+    8% { opacity: 1; }
+    /* "Launch": pieces travel outward to their burst destination */
+    35% {
+      transform:
+        translate(calc(-50% + var(--vx)), calc(-50% + var(--vy)))
+        rotate(calc(var(--rot) * 0.5));
+      opacity: 1;
+    }
+    /* "Fall": gravity carries them down past the burst point while still spinning */
+    100% {
+      transform:
+        translate(calc(-50% + var(--vx)), calc(-50% + var(--vy) + var(--fall)))
+        rotate(var(--rot));
+      opacity: 0;
+    }
+  }
+
   /* Toast for locked lessons */
   .toast {
     position: fixed;
@@ -4927,6 +4984,12 @@
       const hintGain = levelAfter - levelBefore;
       document.getElementById('levelupSub').textContent = `+${hintGain} hint${hintGain > 1 ? 's' : ''} added to your inventory`;
       callout.classList.remove('hidden');
+      // Celebrate! 🎉 — fire confetti & play the level-up chime once the
+      // complete screen has rendered so the timing feels right.
+      setTimeout(() => {
+        fireConfetti();
+        playLevelUpSfx();
+      }, 500);
     } else {
       callout.classList.add('hidden');
     }
@@ -4952,6 +5015,7 @@
     bg: null,
     correct: null,
     wrong: null,
+    levelup: null,
     initialized: false
   };
 
@@ -4971,8 +5035,12 @@
       audio.wrong.volume = 0.7;
       audio.wrong.preload = 'auto';
 
+      audio.levelup = new Audio('levelup-music.mp3');
+      audio.levelup.volume = 0.75;
+      audio.levelup.preload = 'auto';
+
       // Log any load failures (e.g. file missing) but don't crash the app
-      [audio.bg, audio.correct, audio.wrong].forEach((a) => {
+      [audio.bg, audio.correct, audio.wrong, audio.levelup].forEach((a) => {
         a.addEventListener('error', () => {
           console.warn('Audio file failed to load:', a.src);
         });
@@ -5008,6 +5076,60 @@
     }
   }
 
+  function playLevelUpSfx() {
+    // Level-up chime — respects the SFX toggle so it can be muted with other effects
+    if (!state.audioSfx) return;
+    if (!audio.levelup) return;
+    try {
+      audio.levelup.currentTime = 0;
+      audio.levelup.play().catch(() => {});
+    } catch (e) {
+      console.warn('Level-up SFX play failed:', e);
+    }
+  }
+
+  // ============ CONFETTI ============
+  // Vanilla-JS confetti popper. Creates a burst of small colored shapes from
+  // the center of the screen that arc outward and fall with gravity.
+  function fireConfetti() {
+    const container = document.createElement('div');
+    container.className = 'confetti-container';
+    document.body.appendChild(container);
+
+    const colors = ['#c89b3c', '#f4d77b', '#fce078', '#a37d22', '#e3b855', '#faf6ed'];
+    const shapes = ['square', 'circle', 'rect'];
+    const PIECE_COUNT = 70;
+
+    for (let i = 0; i < PIECE_COUNT; i++) {
+      const piece = document.createElement('div');
+      const shape = shapes[Math.floor(Math.random() * shapes.length)];
+      piece.className = `confetti-piece confetti-${shape}`;
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+      // Burst angle: spread over full 360°, slightly biased upward
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 180 + Math.random() * 260;     // how far each piece flies
+      const vx = Math.cos(angle) * distance;
+      const vy = Math.sin(angle) * distance - 140;    // bias upward so they arc up first
+      const rotation = (Math.random() - 0.5) * 1440;  // 0–720° of spin either way
+      const fallDistance = 600 + Math.random() * 300; // gravity carries them down past the burst
+      const duration = 2200 + Math.random() * 1200;
+      const delay = Math.random() * 120;
+
+      piece.style.setProperty('--vx', vx + 'px');
+      piece.style.setProperty('--vy', vy + 'px');
+      piece.style.setProperty('--rot', rotation + 'deg');
+      piece.style.setProperty('--fall', fallDistance + 'px');
+      piece.style.animationDuration = duration + 'ms';
+      piece.style.animationDelay = delay + 'ms';
+
+      container.appendChild(piece);
+    }
+
+    // Clean up the DOM once the animation has finished
+    setTimeout(() => container.remove(), 4000);
+  }
+
   // ============ AUDIO LIFECYCLE ============
   // Stops the background music when the app is closed, backgrounded,
   // or the phone is locked. Resumes when the user returns (if they had it on).
@@ -5041,6 +5163,7 @@
     if (audio.bg) audio.bg.pause();
     if (audio.correct) audio.correct.pause();
     if (audio.wrong) audio.wrong.pause();
+    if (audio.levelup) audio.levelup.pause();
   });
 
   // freeze: newer event for when page is put into back-forward cache.
