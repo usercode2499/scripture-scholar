@@ -15,8 +15,8 @@ const APP_SHELL = [
   './icon-512.png',
   './apple-touch-icon.png',
   './background-music.mp3',
-  './correct-music.mp3',
-  './wrong-music.mp3'
+  './correct-music.wav',
+  './wrong-music.wav'
 ];
 
 // On install: cache the app shell.
