@@ -156,6 +156,69 @@
       correct: 1,
       ref: 'Mosiah 2:6',
       note: 'The people pitched their tents with the doors toward the temple so they could hear King Benjamin\'s words.'
+    },
+    {
+      q: 'How many years did Lehi\'s family travel in the wilderness before crossing the ocean?',
+      options: ['Forty years', 'Eight years', 'Three years', 'Twelve years'],
+      correct: 1,
+      ref: '1 Nephi 17:4',
+      note: 'Nephi records they "did sojourn for the space of many years, yea, even eight years in the wilderness" before reaching Bountiful.'
+    },
+    {
+      q: 'Who did Nephi obtain the brass plates from in Jerusalem?',
+      options: ['King Zedekiah', 'Laban', 'Ishmael', 'Zoram'],
+      correct: 1,
+      ref: '1 Nephi 4',
+      note: 'Nephi obtained the plates of brass from Laban, who had kept the record of the Jews. Zoram, Laban\'s servant, then joined Lehi\'s family.'
+    },
+    {
+      q: 'What did the Lord prepare to feed the people of Israel that Nephi compared to the word of Christ?',
+      options: ['Quail', 'Manna', 'The brass serpent', 'Living water'],
+      correct: 1,
+      ref: '1 Nephi 17:28',
+      note: 'Nephi recalled how the Lord fed Israel with manna in the wilderness as a testimony of God\'s power and care.'
+    },
+    {
+      q: 'Who was the wicked king that Gideon fought against and later served under his son?',
+      options: ['King Benjamin', 'King Noah', 'King Mosiah', 'King Limhi'],
+      correct: 1,
+      ref: 'Mosiah 19',
+      note: 'King Noah was the wicked king who burned Abinadi. Gideon opposed him, and later served the more righteous King Limhi, Noah\'s son.'
+    },
+    {
+      q: 'How many people did Alma baptize at the Waters of Mormon?',
+      options: ['About 200', 'About 450', 'About 1,000', 'About 2,000'],
+      correct: 1,
+      ref: 'Mosiah 18:16',
+      note: 'Alma baptized about 204 souls at the Waters of Mormon, forming the church of Christ among Noah\'s former people.'
+    },
+    {
+      q: 'What was unusual about the language of the Lamanites\' missionary Samuel?',
+      options: ['He spoke from a city wall', 'He preached only at night', 'He used no scriptures', 'He spoke in tongues'],
+      correct: 0,
+      ref: 'Helaman 13:4',
+      note: 'Samuel the Lamanite preached repentance to the Nephites from the wall of the city of Zarahemla when they would not let him enter.'
+    },
+    {
+      q: 'Who were the three Nephite disciples granted their desire to remain on earth until Christ returns?',
+      options: ['The sons of Helaman', 'Three of the twelve disciples', 'Nephi, Lehi, and Mormon', 'The brothers of Jared'],
+      correct: 1,
+      ref: '3 Nephi 28',
+      note: 'Three of the twelve Nephite disciples desired to tarry on earth to bring souls to Christ until His Second Coming, like John the Beloved.'
+    },
+    {
+      q: 'What happened to the people of Limhi that allowed them to escape Lamanite bondage?',
+      options: ['They built a great wall', 'They got the guards drunk on wine', 'They tunneled out at night', 'They won a great battle'],
+      correct: 1,
+      ref: 'Mosiah 22:10',
+      note: 'Gideon\'s plan worked: extra wine made the Lamanite guards drunk, and the people of Limhi slipped away with their flocks and families.'
+    },
+    {
+      q: 'According to Moroni, what should we do to know the truth of the Book of Mormon?',
+      options: ['Memorize it', 'Ask God with a sincere heart and real intent', 'Debate it with others', 'Read it seven times'],
+      correct: 1,
+      ref: 'Moroni 10:4',
+      note: 'Moroni\'s promise: ask God in faith "with a sincere heart, with real intent," and the Holy Ghost will manifest the truth of it.'
     }
   ];
 

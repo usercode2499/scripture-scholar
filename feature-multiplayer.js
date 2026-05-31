@@ -49,7 +49,7 @@
     timerInterval: null,
     timeLeft: 0,
     QUESTION_SECONDS: 15,
-    NUM_QUESTIONS: 8,
+    NUM_QUESTIONS: 10,
     botTimers: [],
     lastStatus: null,     // track room status transitions (firebase mode)
     committing: false
