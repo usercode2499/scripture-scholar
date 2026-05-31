@@ -1307,6 +1307,51 @@
   @keyframes toastIn { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
   @keyframes toastOut { to { opacity: 0; transform: translate(-50%, 20px); } }
 
+  /* Anchored popover — points at the tapped icon */
+  .icon-popover {
+    position: fixed;
+    z-index: 1600;
+    background: var(--ink);
+    color: var(--bg);
+    padding: 9px 13px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    max-width: 200px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.28);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+  }
+  .icon-popover.show {
+    opacity: 1;
+  }
+  /* Little arrow pointing toward the anchor; side set via class */
+  .icon-popover::after {
+    content: '';
+    position: absolute;
+    width: 0; height: 0;
+    border: 6px solid transparent;
+  }
+  /* Popover sits BELOW the icon → arrow points up */
+  .icon-popover.below::after {
+    bottom: 100%;
+    left: var(--arrow-x, 50%);
+    transform: translateX(-50%);
+    border-bottom-color: var(--ink);
+  }
+  /* Popover sits ABOVE the icon → arrow points down */
+  .icon-popover.above::after {
+    top: 100%;
+    left: var(--arrow-x, 50%);
+    transform: translateX(-50%);
+    border-top-color: var(--ink);
+  }
+  .icon-popover.below { animation: popIn 0.2s ease; }
+  .icon-popover.above { animation: popIn 0.2s ease; }
+  @keyframes popIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
   /* Footer button area */
   .footer-actions {
     margin-top: auto;
@@ -3864,9 +3909,9 @@
       </div>
       <!-- Flexible spacer so the right-side group stays anchored right -->
       <div class="topbar-spacer"></div>
-      <div class="stat stat-hints" onclick="showStatLabel('hints')"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
+      <div class="stat stat-hints" onclick="showStatLabel('hints', event)"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
       <button class="topbar-icon-btn" onclick="openMiniGames()" aria-label="Practice">🎮</button>
-      <div class="stat stat-streak" onclick="showStatLabel('streak')"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
+      <div class="stat stat-streak" onclick="showStatLabel('streak', event)"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
       <button class="topbar-settings" onclick="openSettings()" aria-label="Settings">⚙</button>
     </div>
     <div class="topbar-brand" id="topbarBrand">
@@ -4305,7 +4350,7 @@
     <button class="level-modal-close" onclick="closeLevelModal()" aria-label="Close">×</button>
 
     <div class="level-modal-hero">
-      <button class="level-modal-badge-btn" id="lmBadgeBtn" onclick="revealBadgeName('modal')" aria-label="Show badge name">
+      <button class="level-modal-badge-btn" id="lmBadgeBtn" onclick="revealBadgeName('modal', null, event)" aria-label="Show badge name">
         <div class="level-modal-icon" id="lmBadgeIcon">📜</div>
       </button>
       <div class="level-modal-hero-text">
@@ -4412,6 +4457,9 @@
 </div>
 
 <div id="toastContainer"></div>
+
+<!-- Anchored popover — small label that points to a tapped icon -->
+<div id="iconPopover" class="icon-popover hidden" role="status" aria-live="polite"></div>
 
 <!-- Feature modules — loaded before main script so their globals are available -->
 <script src="data-lessons.js"></script>
@@ -4622,13 +4670,17 @@
   }
 
   // Shows a small toast describing what a stat icon means, plus its value.
-  function showStatLabel(which) {
+  function showStatLabel(which, evt) {
+    const anchor = evt && (evt.currentTarget || evt.target);
+    let msg = '';
     if (which === 'hints') {
-      showToast(`💡 Hints — you have ${state.hints} available`);
+      msg = `💡 Hints — you have ${state.hints} available`;
     } else if (which === 'streak') {
       const d = state.streak;
-      showToast(`🔥 Streak — ${d} day${d === 1 ? '' : 's'} in a row`);
+      msg = `🔥 Streak — ${d} day${d === 1 ? '' : 's'} in a row`;
     }
+    if (anchor) showIconPopover(anchor, msg);
+    else showToast(msg);
   }
 
   // ============ XP & LEVEL-UP (shared) ============
@@ -4741,7 +4793,7 @@
       const badge = (typeof renderBadgeSVG === 'function') ? renderBadgeSVG(lvl, 40, false) : lvl;
       const badgeName = (typeof getBadgeName === 'function') ? getBadgeName(lvl) : '';
       return `
-        <button class="level-list-item ${stateClass}" onclick="revealBadgeName('list', ${lvl})">
+        <button class="level-list-item ${stateClass}" onclick="revealBadgeName('list', ${lvl}, event)">
           <div class="level-list-badge">${badge}</div>
           <div class="level-list-info">
             <div class="level-list-title-row">
@@ -4757,14 +4809,17 @@
     scroll.innerHTML = html;
   }
 
-  // Reveals the badge name. context 'modal' uses current level; 'list' uses
-  // the tapped level. Shows a toast naming the badge + tier.
-  function revealBadgeName(context, lvl) {
+  // Reveals the badge name beside the tapped badge. context 'modal' uses
+  // current level; 'list' uses the tapped level.
+  function revealBadgeName(context, lvl, evt) {
     const level = (context === 'list' && lvl) ? lvl : getLevel(state.xp);
     const name = (typeof getBadgeName === 'function') ? getBadgeName(level) : '';
     const tier = (typeof getBadgeTier === 'function') ? getBadgeTier(level) : '';
     const tierLabel = tier ? (tier.charAt(0).toUpperCase() + tier.slice(1) + ' badge') : '';
-    showToast(`🏅 ${name}${tierLabel ? ' — ' + tierLabel : ''}`);
+    const msg = `🏅 ${name}${tierLabel ? ' — ' + tierLabel : ''}`;
+    const anchor = evt && (evt.currentTarget || evt.target);
+    if (anchor) showIconPopover(anchor, msg);
+    else showToast(msg);
   }
 
   function renderLevelModal() {
@@ -4942,6 +4997,58 @@
     state.currentLessonId = null;
     renderHome();
     showScreen('screen-home');
+  }
+
+  // Shows a small popover anchored to a given element (the tapped icon).
+  // Falls back to a bottom toast if no element is available.
+  let iconPopoverTimer = null;
+  function showIconPopover(anchorEl, msg) {
+    const pop = document.getElementById('iconPopover');
+    if (!pop || !anchorEl) { showToast(msg); return; }
+
+    // Set content first so we can measure its size
+    pop.textContent = msg;
+    pop.classList.remove('hidden', 'above', 'below', 'show');
+    // Make it measurable but invisible
+    pop.style.visibility = 'hidden';
+    pop.style.left = '0px';
+    pop.style.top = '0px';
+
+    const rect = anchorEl.getBoundingClientRect();
+    const popRect = pop.getBoundingClientRect();
+    const margin = 8;
+    const vw = window.innerWidth;
+
+    // Decide above vs below — prefer below, flip to above if not enough room
+    const spaceBelow = window.innerHeight - rect.bottom;
+    const placeBelow = spaceBelow > popRect.height + margin + 10;
+    pop.classList.add(placeBelow ? 'below' : 'above');
+
+    // Vertical position
+    let top = placeBelow ? rect.bottom + margin : rect.top - popRect.height - margin;
+
+    // Horizontal: center over the icon, but clamp to viewport
+    const iconCenter = rect.left + rect.width / 2;
+    let left = iconCenter - popRect.width / 2;
+    const pad = 8;
+    left = Math.max(pad, Math.min(left, vw - popRect.width - pad));
+
+    // Position the little arrow to still point at the icon center
+    const arrowX = Math.max(12, Math.min(iconCenter - left, popRect.width - 12));
+    pop.style.setProperty('--arrow-x', arrowX + 'px');
+
+    pop.style.left = left + 'px';
+    pop.style.top = top + 'px';
+    pop.style.visibility = 'visible';
+    // Force reflow then show (for the fade/scale transition)
+    void pop.offsetWidth;
+    pop.classList.add('show');
+
+    clearTimeout(iconPopoverTimer);
+    iconPopoverTimer = setTimeout(() => {
+      pop.classList.remove('show');
+      setTimeout(() => pop.classList.add('hidden'), 200);
+    }, 2400);
   }
 
   function showToast(msg) {
