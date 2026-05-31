@@ -179,15 +179,63 @@
     return a;
   }
 
-  // Entry point — called from the mini-games hub
+  // True if there's a session in progress that can be resumed
+  function hasVerseQuizInProgress() {
+    return vqState.pool.length > 0 && vqState.currentIdx < vqState.pool.length;
+  }
+
+  // Returns {current, total} for the resume pill, or null
+  function getVerseQuizPosition() {
+    if (!hasVerseQuizInProgress()) return null;
+    return { current: vqState.currentIdx + 1, total: vqState.pool.length };
+  }
+
+  // Entry point — called from the mini-games hub.
+  // If a session is mid-way, resume it instead of restarting.
   function openVerseQuiz() {
+    if (hasVerseQuizInProgress()) {
+      // Resume where the user left off
+      if (typeof showScreen === 'function') showScreen('screen-verse-quiz');
+      renderVerseQuizScreen();
+      return;
+    }
+    startNewVerseQuiz();
+  }
+
+  // Always begins a fresh shuffled session
+  function startNewVerseQuiz() {
     vqState.currentIdx = 0;
     vqState.selectedTiles = [];
     vqState.answeredCorrectly = 0;
     vqState.totalXp = 0;
-    vqState.pool = shuffleArray(VERSE_QUIZ_DATA);
+    vqState.pool = buildVerseQuizPool();
     if (typeof showScreen === 'function') showScreen('screen-verse-quiz');
     renderVerseQuizScreen();
+  }
+
+  // Builds the question pool ordered by difficulty: questions with more
+  // blanks and more distractors come later, so the quiz gets harder as the
+  // number climbs. Within each difficulty tier, order is shuffled for variety.
+  function buildVerseQuizPool() {
+    // Difficulty score = number of blanks (answers) weighted heavily,
+    // plus distractor count as a tiebreaker.
+    const scored = VERSE_QUIZ_DATA.map(q => ({
+      q,
+      difficulty: q.answers.length * 10 + q.distractors.length
+    }));
+    // Group by difficulty so we can shuffle within a tier but keep tiers ordered
+    const tiers = {};
+    scored.forEach(item => {
+      const t = item.difficulty;
+      if (!tiers[t]) tiers[t] = [];
+      tiers[t].push(item.q);
+    });
+    const sortedKeys = Object.keys(tiers).map(Number).sort((a, b) => a - b);
+    let pool = [];
+    sortedKeys.forEach(k => {
+      pool = pool.concat(shuffleArray(tiers[k]));
+    });
+    return pool;
   }
 
   function renderVerseQuizScreen() {
@@ -268,16 +316,25 @@
       (vqState.selectedTiles[i] || '').toLowerCase().trim() === ans.toLowerCase().trim()
     );
     const xpReward = isCorrect ? 5 : 0;
+    let levelResult = null;
     if (isCorrect) {
       vqState.answeredCorrectly++;
       vqState.totalXp += xpReward;
-      state.xp += xpReward;
-      if (typeof saveState === 'function') saveState();
-      if (typeof updateTopbar === 'function') updateTopbar();
+      // awardXp handles XP, level-up detection, hints, topbar, save, AND the
+      // celebration overlay — so mini-game level-ups feel identical to lessons.
+      if (typeof awardXp === 'function') {
+        levelResult = awardXp(xpReward);
+      } else {
+        state.xp += xpReward;
+        if (typeof saveState === 'function') saveState();
+        if (typeof updateTopbar === 'function') updateTopbar();
+      }
       if (typeof playSfx === 'function') playSfx('correct');
     } else {
       if (typeof playSfx === 'function') playSfx('wrong');
     }
+    // If a level-up overlay is showing, delay the result card slightly so they
+    // don't stack. The overlay sits on top regardless (higher z-index).
     showVqResult(isCorrect, q, xpReward);
   }
 
@@ -314,6 +371,9 @@
   }
 
   function onVqStop() {
+    // User chose to stop — clear the session so next visit starts fresh
+    vqState.pool = [];
+    vqState.currentIdx = 0;
     if (typeof goHome === 'function') goHome();
   }
 
@@ -325,9 +385,12 @@
         <p class="vq-complete-sub">You answered <strong>${vqState.answeredCorrectly} of ${vqState.pool.length}</strong> verses correctly.</p>
         <div class="vq-complete-xp">+${vqState.totalXp} XP earned</div>
         <div class="vq-actions vq-actions-stack">
-          <button class="btn btn-gold" onclick="openVerseQuiz()">Play Again</button>
+          <button class="btn btn-gold" onclick="startNewVerseQuiz()">Play Again</button>
           <button class="btn btn-ghost" onclick="goHome()">Back to Home</button>
         </div>
       </div>
     `;
+    // Clear the finished session so it won't try to "resume" a completed run
+    vqState.pool = [];
+    vqState.currentIdx = 0;
   }

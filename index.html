@@ -1964,6 +1964,16 @@
     letter-spacing: 1.2px;
     text-transform: uppercase;
   }
+  .minigame-resume-pill {
+    padding: 3px 10px;
+    background: var(--gold);
+    color: var(--ink);
+    border-radius: 100px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
 
   /* =================================== */
   /* === DAILY TASKS CARD === */
@@ -2452,6 +2462,84 @@
   /* =================================== */
 
   /* =================================== */
+  /* === LEVEL-UP CELEBRATION OVERLAY === */
+  /* =================================== */
+  .levelup-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 12, 6, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: cmFadeIn 0.25s ease;
+  }
+  .levelup-overlay-card {
+    background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
+    border: 1px solid var(--gold);
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg), 0 0 60px rgba(200, 155, 60, 0.4);
+    width: 100%;
+    max-width: 340px;
+    padding: 36px 28px 28px;
+    text-align: center;
+    animation: luPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes luPop {
+    0% { opacity: 0; transform: scale(0.7) translateY(30px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .levelup-overlay-burst {
+    font-size: 64px;
+    line-height: 1;
+    margin-bottom: 12px;
+    animation: luSpin 0.8s ease;
+  }
+  @keyframes luSpin {
+    0% { transform: scale(0) rotate(-180deg); }
+    60% { transform: scale(1.25) rotate(10deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  .levelup-overlay-eyebrow {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .levelup-overlay-level {
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .levelup-overlay-level span { color: var(--gold-dark); font-size: 18px; }
+  .levelup-overlay-title {
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .levelup-overlay-sub {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .levelup-overlay-btn { width: 100%; }
+  body.dark-mode .levelup-overlay-card {
+    background: linear-gradient(135deg, #3a2a18 0%, #2a1d10 100%);
+    border-color: var(--gold-dark);
+  }
+
+  /* =================================== */
   /* === INTERNAL CONFIRM DIALOG === */
   /* =================================== */
   .confirm-overlay {
@@ -2650,8 +2738,14 @@
     transition: transform 0.25s ease;
   }
   .level-modal-title-btn.expanded .level-modal-title-hint {
-    transform: rotate(180deg);
     opacity: 1;
+  }
+  .level-hint-arrow {
+    display: inline-block;
+    transition: transform 0.25s ease;
+  }
+  .level-modal-title-btn.expanded .level-hint-arrow {
+    transform: rotate(180deg);
   }
 
   /* All-levels expandable list */
@@ -3286,9 +3380,9 @@
       </div>
       <!-- Flexible spacer so the right-side group stays anchored right -->
       <div class="topbar-spacer"></div>
-      <div class="stat stat-hints"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
+      <div class="stat stat-hints" onclick="showStatLabel('hints')"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
       <button class="topbar-icon-btn" onclick="openMiniGames()" aria-label="Practice">🎮</button>
-      <div class="stat stat-streak"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
+      <div class="stat stat-streak" onclick="showStatLabel('streak')"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
       <button class="topbar-settings" onclick="openSettings()" aria-label="Settings">⚙</button>
     </div>
     <div class="topbar-brand" id="topbarBrand">
@@ -3395,11 +3489,11 @@
             <div class="info-slide-eyebrow">✨ New Updates</div>
             <h3 class="info-slide-title serif">What's New</h3>
             <ul class="info-slide-list">
-              <li>Practice screen with Daily Tasks for bonus XP</li>
-              <li>Background music no longer hijacks notification bar</li>
-              <li>Settings now preserves your quiz progress</li>
-              <li>SFX (correct, wrong, level-up) work reliably</li>
-              <li>Code split into modules for faster loading</li>
+              <li>Verse Quiz mini-game — complete passages with word cards</li>
+              <li>Tap sounds on buttons + 25 levels to climb</li>
+              <li>Level-ups now celebrate in mini-games too</li>
+              <li>Quizzes get harder as you progress</li>
+              <li>Tap the streak or hint icons to see what they mean</li>
             </ul>
           </div>
 
@@ -3710,7 +3804,7 @@
       <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
       <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
         <span class="level-modal-title" id="lmTitle">Initiate</span>
-        <span class="level-modal-title-hint">tap to see all ranks ▾</span>
+        <span class="level-modal-title-hint">tap to see all ranks <span class="level-hint-arrow">▾</span></span>
       </button>
     </div>
 
@@ -3753,6 +3847,18 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- LEVEL-UP CELEBRATION OVERLAY (fires from lessons AND mini-games) -->
+<div class="levelup-overlay hidden" id="levelUpOverlay" onclick="closeLevelUpOverlay()">
+  <div class="levelup-overlay-card" onclick="event.stopPropagation()">
+    <div class="levelup-overlay-burst">⭐</div>
+    <div class="levelup-overlay-eyebrow">Level Up!</div>
+    <div class="levelup-overlay-level">Level <span id="luOverlayLevel">2</span></div>
+    <div class="levelup-overlay-title serif" id="luOverlayTitle">Devoted Student</div>
+    <div class="levelup-overlay-sub" id="luOverlaySub">+1 hint added to your inventory</div>
+    <button class="btn btn-gold levelup-overlay-btn" onclick="closeLevelUpOverlay()">Continue →</button>
   </div>
 </div>
 
@@ -3967,6 +4073,61 @@
     return rewards;
   }
 
+  // Shows a small toast describing what a stat icon means, plus its value.
+  function showStatLabel(which) {
+    if (which === 'hints') {
+      showToast(`💡 Hints — you have ${state.hints} available`);
+    } else if (which === 'streak') {
+      const d = state.streak;
+      showToast(`🔥 Streak — ${d} day${d === 1 ? '' : 's'} in a row`);
+    }
+  }
+
+  // ============ XP & LEVEL-UP (shared) ============
+  // Central place to award XP. Detects level-ups, grants hints, updates the
+  // topbar, and fires the celebration overlay. Used by BOTH lessons and
+  // mini-games so the level-up experience is identical everywhere.
+  // Returns { leveledUp, levelBefore, levelAfter }.
+  function awardXp(amount, opts) {
+    opts = opts || {};
+    const levelBefore = getLevel(state.xp);
+    state.xp += amount;
+    const levelAfter = getLevel(state.xp);
+    const leveledUp = levelAfter > levelBefore;
+    if (leveledUp) {
+      state.hints += (levelAfter - levelBefore);
+    }
+    updateTopbar();
+    saveState();
+    // Fire the celebration unless the caller wants to handle it itself
+    // (lessons render the level-up inside their complete screen).
+    if (leveledUp && !opts.deferCelebration) {
+      showLevelUpCelebration(levelBefore, levelAfter);
+    }
+    return { leveledUp, levelBefore, levelAfter };
+  }
+
+  // Full-screen level-up celebration overlay — confetti + chime + a card
+  // announcing the new level and title. Works from anywhere in the app.
+  function showLevelUpCelebration(levelBefore, levelAfter) {
+    const hintGain = levelAfter - levelBefore;
+    const title = (typeof getLevelTitle === 'function') ? getLevelTitle(levelAfter) : '';
+    document.getElementById('luOverlayLevel').textContent = levelAfter;
+    document.getElementById('luOverlayTitle').textContent = title;
+    document.getElementById('luOverlaySub').textContent =
+      `+${hintGain} hint${hintGain > 1 ? 's' : ''} added to your inventory`;
+    const overlay = document.getElementById('levelUpOverlay');
+    overlay.classList.remove('hidden');
+    setTimeout(() => {
+      if (typeof fireConfetti === 'function') fireConfetti();
+      if (typeof playLevelUpSfx === 'function') playLevelUpSfx();
+    }, 250);
+  }
+
+  function closeLevelUpOverlay() {
+    document.getElementById('levelUpOverlay').classList.add('hidden');
+  }
+
   function showLevelInfo() {
     renderLevelModal();
     renderLevelList();
@@ -4126,6 +4287,14 @@
     if (current === 'screen-quiz') {
       history.pushState({ s: 'app' }, '', location.href);
       exitQuiz(); // shows the confirm modal; user can cancel to stay
+      return;
+    }
+
+    // 3b. Verse Quiz mini-game — back returns to the hub WITHOUT clearing the
+    //     session, so the user can resume from the same question.
+    if (current === 'screen-verse-quiz') {
+      openMiniGames();
+      history.pushState({ s: 'app' }, '', location.href);
       return;
     }
 
@@ -4836,13 +5005,9 @@
     const earned = isReview ? 5 : Math.round((state.correctCount / lesson.questions.length) * lesson.xpReward);
 
     const levelBefore = getLevel(state.xp);
-    state.xp += earned;
-    const levelAfter = getLevel(state.xp);
-    const leveledUp = levelAfter > levelBefore;
-    if (leveledUp) {
-      // +1 hint per level gained
-      state.hints += (levelAfter - levelBefore);
-    }
+    const result = awardXp(earned, { deferCelebration: true });
+    const levelAfter = result.levelAfter;
+    const leveledUp = result.leveledUp;
 
     // Mark lesson complete if it isn't already
     if (!isReview) {

@@ -49,6 +49,14 @@
     if (!grid) return;
     grid.innerHTML = MINI_GAMES.map(game => {
       const soon = game.comingSoon;
+      // Show a "Resume" hint if this game has an in-progress session
+      let resumeTag = '';
+      if (game.id === 'verse_quiz' && typeof hasVerseQuizInProgress === 'function' && hasVerseQuizInProgress()) {
+        const pos = (typeof getVerseQuizPosition === 'function') ? getVerseQuizPosition() : null;
+        resumeTag = pos
+          ? `<span class="minigame-resume-pill">Resume · Q${pos.current}/${pos.total}</span>`
+          : `<span class="minigame-resume-pill">Resume</span>`;
+      }
       return `
         <button class="minigame-card${soon ? ' coming-soon' : ''}" onclick="launchMiniGame('${game.id}')">
           <div class="minigame-icon">${game.icon}</div>
@@ -58,6 +66,7 @@
             <div class="minigame-meta">
               <span class="minigame-xp">${game.xpRange}</span>
               ${soon ? '<span class="minigame-soon-pill">Coming Soon</span>' : ''}
+              ${resumeTag}
             </div>
           </div>
         </button>
