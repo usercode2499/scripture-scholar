@@ -22,7 +22,7 @@
       title: 'Open the app',
       description: 'Just by being here today',
       icon: '✨',
-      xp: 2,
+      xp: 10,
       // Auto-completed on app open
       autoComplete: true
     },
@@ -31,21 +31,21 @@
       title: 'Complete a lesson',
       description: 'Finish any chapter (review or new)',
       icon: '📖',
-      xp: 10
+      xp: 50
     },
     {
       id: 'read_verse',
       title: 'Read the daily verse',
       description: 'Tap the Verse of the Day to view its reference',
       icon: '📜',
-      xp: 3
+      xp: 15
     },
     {
       id: 'streak_keep',
       title: 'Keep your streak',
       description: 'Maintain your day streak',
       icon: '🔥',
-      xp: 5
+      xp: 25
     }
   ];
 

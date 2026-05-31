@@ -315,7 +315,7 @@
     const isCorrect = q.answers.every((ans, i) =>
       (vqState.selectedTiles[i] || '').toLowerCase().trim() === ans.toLowerCase().trim()
     );
-    const xpReward = isCorrect ? 5 : 0;
+    const xpReward = isCorrect ? Math.min(q.answers.length <= 1 ? 10 : (q.answers.length === 2 ? 25 : 40), 50) : 0;
     let levelResult = null;
     if (isCorrect) {
       vqState.answeredCorrectly++;

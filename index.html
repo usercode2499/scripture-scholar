@@ -1500,6 +1500,168 @@
     color: var(--gold);
   }
 
+  /* "View update history" button on the updates slide */
+  .info-slide-history-btn {
+    margin-top: auto;
+    align-self: flex-start;
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold-dark);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 8px 14px;
+    border-radius: 100px;
+    cursor: pointer;
+    margin-top: 14px;
+    transition: background 0.2s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .info-slide-history-btn:hover { background: var(--gold-glow); }
+  .info-slide-history-btn:active { transform: scale(0.97); }
+
+  /* =================================== */
+  /* === CHANGELOG / UPDATE HISTORY MODAL === */
+  /* =================================== */
+  .changelog-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 12, 6, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1500;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    animation: cmFadeIn 0.2s ease;
+  }
+  @media (min-width: 480px) {
+    .changelog-overlay { align-items: center; }
+  }
+  .changelog-card {
+    background: var(--card);
+    border-radius: 22px 22px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-lg);
+    animation: clSlideUp 0.32s cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+  @media (min-width: 480px) {
+    .changelog-card { border-radius: 22px; }
+  }
+  @keyframes clSlideUp {
+    from { transform: translateY(40px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .changelog-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 22px 22px 14px;
+    border-bottom: 1px solid var(--border-soft);
+    flex-shrink: 0;
+  }
+  .changelog-eyebrow {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .changelog-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+  .changelog-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--border-soft);
+    border: none;
+    color: var(--ink-soft);
+    font-size: 14px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+  }
+  .changelog-close:hover { background: var(--border); color: var(--ink); }
+  .changelog-scroll {
+    overflow-y: auto;
+    padding: 8px 22px 28px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .changelog-entry {
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .changelog-entry:last-child { border-bottom: none; }
+  .changelog-entry-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  .changelog-version {
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+  .changelog-badge {
+    font-size: 9px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: var(--ink);
+    background: var(--gold);
+    padding: 2px 8px;
+    border-radius: 100px;
+  }
+  .changelog-date {
+    font-size: 10px;
+    color: var(--ink-faint);
+    font-weight: 600;
+  }
+  .changelog-entry-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .changelog-entry.latest .changelog-entry-title { color: var(--gold-dark); }
+  .changelog-entry-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .changelog-entry-list li {
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    padding-left: 18px;
+    position: relative;
+    margin-bottom: 5px;
+  }
+  .changelog-entry-list li::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--gold);
+  }
+  body.dark-mode .changelog-badge { color: #1a130b; }
+
   .info-slide-actions {
     display: flex;
     gap: 10px;
@@ -2462,6 +2624,47 @@
   /* =================================== */
 
   /* =================================== */
+  /* === LEVEL BADGES === */
+  /* =================================== */
+  .badge-svg { display: block; }
+  .badge-shine { opacity: 0; }
+
+  /* Bronze: static, no animation, hide the shine entirely */
+  .badge-fx-bronze .badge-shine { display: none; }
+
+  /* Silver: mild periodic shimmer sweep */
+  .badge-fx-silver .badge-shine {
+    opacity: 1;
+    animation: badgeShine 4.5s ease-in-out infinite;
+  }
+
+  /* Gold: faster shine sweep + a soft glow pulse on the whole badge */
+  .badge-fx-gold {
+    animation: badgeGlow 2.8s ease-in-out infinite;
+    border-radius: 50%;
+  }
+  .badge-fx-gold .badge-shine {
+    opacity: 1;
+    animation: badgeShine 3s ease-in-out infinite;
+  }
+
+  @keyframes badgeShine {
+    0%   { transform: translateX(0) rotate(20deg); opacity: 0; }
+    12%  { opacity: 0.9; }
+    30%  { transform: translateX(170px) rotate(20deg); opacity: 0; }
+    100% { transform: translateX(170px) rotate(20deg); opacity: 0; }
+  }
+  @keyframes badgeGlow {
+    0%, 100% { filter: drop-shadow(0 0 3px rgba(212, 163, 44, 0.4)); }
+    50%      { filter: drop-shadow(0 0 12px rgba(252, 224, 120, 0.85)); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .badge-fx-silver .badge-shine,
+    .badge-fx-gold .badge-shine { animation: none; opacity: 0; }
+    .badge-fx-gold { animation: none; }
+  }
+
+  /* =================================== */
   /* === LEVEL-UP CELEBRATION OVERLAY === */
   /* =================================== */
   .levelup-overlay {
@@ -2476,6 +2679,50 @@
     justify-content: center;
     padding: 24px;
     animation: cmFadeIn 0.25s ease;
+  }
+  .levelup-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .levelup-badge-wrap {
+    margin-bottom: 22px;
+    animation: luBadgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes luBadgePop {
+    0% { opacity: 0; transform: scale(0.3) rotate(-25deg); }
+    60% { transform: scale(1.15) rotate(8deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  .levelup-badge-name {
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
+    color: #fdf0dc;
+    line-height: 1.1;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .levelup-badge-tier {
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    font-weight: 700;
+    margin-bottom: 26px;
+  }
+  .levelup-tap-hint {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    font-weight: 600;
+    animation: luTapPulse 1.6s ease-in-out infinite;
+  }
+  @keyframes luTapPulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.9; }
   }
   .levelup-overlay-card {
     background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
@@ -3484,17 +3731,16 @@
             </p>
           </div>
 
-          <!-- Slide 3: New Updates -->
+          <!-- Slide 3: New Updates (populated from CHANGELOG) -->
           <div class="info-slide">
             <div class="info-slide-eyebrow">✨ New Updates</div>
-            <h3 class="info-slide-title serif">What's New</h3>
-            <ul class="info-slide-list">
-              <li>Verse Quiz mini-game — complete passages with word cards</li>
-              <li>Tap sounds on buttons + 25 levels to climb</li>
-              <li>Level-ups now celebrate in mini-games too</li>
-              <li>Quizzes get harder as you progress</li>
-              <li>Tap the streak or hint icons to see what they mean</li>
+            <h3 class="info-slide-title serif" id="updatesSlideTitle">What's New</h3>
+            <ul class="info-slide-list" id="updatesSlideList">
+              <!-- latest changelog entry injected by JS -->
             </ul>
+            <button class="info-slide-history-btn" onclick="openChangelog()" data-no-tap-sound>
+              🕘 View update history
+            </button>
           </div>
 
           <!-- Slide 4: Feedback -->
@@ -3800,7 +4046,7 @@
     <button class="level-modal-close" onclick="closeLevelModal()" aria-label="Close">×</button>
 
     <div class="level-modal-hero">
-      <div class="level-modal-icon">📜</div>
+      <div class="level-modal-icon" id="lmBadgeIcon">📜</div>
       <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
       <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
         <span class="level-modal-title" id="lmTitle">Initiate</span>
@@ -3851,14 +4097,41 @@
 </div>
 
 <!-- LEVEL-UP CELEBRATION OVERLAY (fires from lessons AND mini-games) -->
-<div class="levelup-overlay hidden" id="levelUpOverlay" onclick="closeLevelUpOverlay()">
-  <div class="levelup-overlay-card" onclick="event.stopPropagation()">
-    <div class="levelup-overlay-burst">⭐</div>
-    <div class="levelup-overlay-eyebrow">Level Up!</div>
-    <div class="levelup-overlay-level">Level <span id="luOverlayLevel">2</span></div>
-    <div class="levelup-overlay-title serif" id="luOverlayTitle">Devoted Student</div>
-    <div class="levelup-overlay-sub" id="luOverlaySub">+1 hint added to your inventory</div>
-    <button class="btn btn-gold levelup-overlay-btn" onclick="closeLevelUpOverlay()">Continue →</button>
+<div class="levelup-overlay hidden" id="levelUpOverlay">
+  <!-- Stage 1: the badge reveal -->
+  <div class="levelup-stage" id="luStageBadge" onclick="advanceLevelUpStage()">
+    <div class="levelup-badge-wrap" id="luBadgeWrap"><!-- badge SVG injected --></div>
+    <div class="levelup-badge-name serif" id="luBadgeName">Basic Scroll</div>
+    <div class="levelup-badge-tier" id="luBadgeTier">Bronze Badge</div>
+    <div class="levelup-tap-hint">tap to continue</div>
+  </div>
+
+  <!-- Stage 2: the classic level-up card -->
+  <div class="levelup-stage hidden" id="luStageClassic">
+    <div class="levelup-overlay-card" onclick="event.stopPropagation()">
+      <div class="levelup-overlay-burst">⭐</div>
+      <div class="levelup-overlay-eyebrow">Level Up!</div>
+      <div class="levelup-overlay-level">Level <span id="luOverlayLevel">2</span></div>
+      <div class="levelup-overlay-title serif" id="luOverlayTitle">Devoted Student</div>
+      <div class="levelup-overlay-sub" id="luOverlaySub">+1 hint added to your inventory</div>
+      <button class="btn btn-gold levelup-overlay-btn" onclick="closeLevelUpOverlay()">Continue →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CHANGELOG / UPDATE HISTORY MODAL -->
+<div class="changelog-overlay hidden" id="changelogModal" onclick="onChangelogBackdropClick(event)">
+  <div class="changelog-card" onclick="event.stopPropagation()">
+    <div class="changelog-header">
+      <div>
+        <div class="changelog-eyebrow">🕘 Update History</div>
+        <h3 class="changelog-title serif">What's Changed</h3>
+      </div>
+      <button class="changelog-close" onclick="closeChangelog()" aria-label="Close">✕</button>
+    </div>
+    <div class="changelog-scroll" id="changelogScroll">
+      <!-- versions injected by JS -->
+    </div>
   </div>
 </div>
 
@@ -3884,6 +4157,7 @@
 <script src="feature-daily-tasks.js"></script>
 <script src="feature-mini-games.js"></script>
 <script src="feature-verse-quiz.js"></script>
+<script src="feature-badges.js"></script>
 
 <script>
   // Lesson data is loaded from data-lessons.js (loaded before this script)
@@ -3893,31 +4167,31 @@
   // 25 level thresholds — XP required to REACH each level.
   // Curve: gentle early (encourage starters), steeper late (long-term goal)
   const LEVEL_THRESHOLDS = [
-    0,      // Level 1  — Initiate (start)
-    50,     // Level 2  — Devoted Student
-    125,    // Level 3  — Scripture Seeker
-    225,    // Level 4  — Faithful Reader
-    350,    // Level 5  — True Disciple
-    500,    // Level 6  — Steward of the Word
-    700,    // Level 7  — Keeper of Records
-    950,    // Level 8  — Witness Bearer
-    1250,   // Level 9  — Scholar of Light
-    1600,   // Level 10 — Master of the Word
-    2000,   // Level 11 — Diligent Searcher
-    2450,   // Level 12 — Faithful Servant
-    2950,   // Level 13 — Lamp of the Lord
-    3500,   // Level 14 — Bearer of Light
-    4100,   // Level 15 — Voice of Testimony
-    4750,   // Level 16 — Pillar of Faith
-    5450,   // Level 17 — Wise Counselor
-    6200,   // Level 18 — Teacher of Truth
-    7000,   // Level 19 — Guardian of the Word
-    7850,   // Level 20 — Steward of Zion
-    8750,   // Level 21 — Sage of Scriptures
-    9700,   // Level 22 — Champion of the Covenant
-    10700,  // Level 23 — Standard-Bearer
-    11750,  // Level 24 — Apostle of Learning
-    12850   // Level 25 — Lighthouse of the Word (max)
+    0,       // Level 1  — Initiate (start)
+    50,      // Level 2  — Devoted Student (reachable in ~1 perfect lesson)
+    150,     // Level 3  — Scripture Seeker
+    300,     // Level 4  — Faithful Reader
+    500,     // Level 5  — True Disciple
+    750,     // Level 6  — Steward of the Word
+    1050,    // Level 7  — Keeper of Records
+    1400,    // Level 8  — Witness Bearer
+    1800,    // Level 9  — Scholar of Light
+    2300,    // Level 10 — Master of the Word
+    2900,    // Level 11 — Diligent Searcher
+    3600,    // Level 12 — Faithful Servant
+    4400,    // Level 13 — Lamp of the Lord
+    5300,    // Level 14 — Bearer of Light
+    6300,    // Level 15 — Voice of Testimony
+    7400,    // Level 16 — Pillar of Faith
+    8600,    // Level 17 — Wise Counselor
+    9900,    // Level 18 — Teacher of Truth
+    11300,   // Level 19 — Guardian of the Word
+    12800,   // Level 20 — Steward of Zion
+    14400,   // Level 21 — Sage of Scriptures
+    16100,   // Level 22 — Champion of the Covenant
+    17900,   // Level 23 — Standard-Bearer
+    19800,   // Level 24 — Apostle of Learning
+    21800    // Level 25 — Lighthouse of the Word (max)
   ];
   const MAX_LEVEL = LEVEL_THRESHOLDS.length;
 
@@ -4107,21 +4381,45 @@
     return { leveledUp, levelBefore, levelAfter };
   }
 
-  // Full-screen level-up celebration overlay — confetti + chime + a card
-  // announcing the new level and title. Works from anywhere in the app.
+  // Full-screen level-up celebration — TWO stages:
+  //   Stage 1: the new badge is revealed (tap to continue)
+  //   Stage 2: the classic "Level Up! / title / +hint" card
   function showLevelUpCelebration(levelBefore, levelAfter) {
     const hintGain = levelAfter - levelBefore;
     const title = (typeof getLevelTitle === 'function') ? getLevelTitle(levelAfter) : '';
+
+    // --- Stage 1: badge ---
+    if (typeof renderBadgeSVG === 'function') {
+      document.getElementById('luBadgeWrap').innerHTML = renderBadgeSVG(levelAfter, 150, true);
+    }
+    const tier = (typeof getBadgeTier === 'function') ? getBadgeTier(levelAfter) : 'bronze';
+    const badgeName = (typeof getBadgeName === 'function') ? getBadgeName(levelAfter) : '';
+    document.getElementById('luBadgeName').textContent = badgeName;
+    document.getElementById('luBadgeTier').textContent =
+      tier.charAt(0).toUpperCase() + tier.slice(1) + ' Badge';
+
+    // --- Stage 2 content (filled now, shown after tap) ---
     document.getElementById('luOverlayLevel').textContent = levelAfter;
     document.getElementById('luOverlayTitle').textContent = title;
     document.getElementById('luOverlaySub').textContent =
       `+${hintGain} hint${hintGain > 1 ? 's' : ''} added to your inventory`;
-    const overlay = document.getElementById('levelUpOverlay');
-    overlay.classList.remove('hidden');
+
+    // Show overlay on stage 1
+    document.getElementById('luStageBadge').classList.remove('hidden');
+    document.getElementById('luStageClassic').classList.add('hidden');
+    document.getElementById('levelUpOverlay').classList.remove('hidden');
+
+    // Celebrate the badge reveal
     setTimeout(() => {
       if (typeof fireConfetti === 'function') fireConfetti();
       if (typeof playLevelUpSfx === 'function') playLevelUpSfx();
     }, 250);
+  }
+
+  // Tap on the badge stage → reveal the classic card
+  function advanceLevelUpStage() {
+    document.getElementById('luStageBadge').classList.add('hidden');
+    document.getElementById('luStageClassic').classList.remove('hidden');
   }
 
   function closeLevelUpOverlay() {
@@ -4191,6 +4489,11 @@
     // Hero
     document.getElementById('lmLevel').textContent = level;
     document.getElementById('lmTitle').textContent = getLevelTitle(level);
+    // Show the badge for the current level instead of the static scroll emoji
+    const badgeIcon = document.getElementById('lmBadgeIcon');
+    if (badgeIcon && typeof renderBadgeSVG === 'function') {
+      badgeIcon.innerHTML = renderBadgeSVG(level, 72, true);
+    }
 
     // Progress
     const progressBlock = document.querySelector('.level-modal-progress');
@@ -4269,6 +4572,13 @@
     const confirmModal = document.getElementById('confirmModal');
     if (confirmModal && !confirmModal.classList.contains('hidden')) {
       closeConfirmModal(false);
+      history.pushState({ s: 'app' }, '', location.href);
+      return;
+    }
+    // Changelog modal open? Back closes it.
+    const changelogModal = document.getElementById('changelogModal');
+    if (changelogModal && !changelogModal.classList.contains('hidden')) {
+      closeChangelog();
       history.pushState({ s: 'app' }, '', location.href);
       return;
     }
@@ -4470,7 +4780,7 @@
       id: 'bofm',
       title: 'Book of Mormon',
       icon: '📜',
-      lessonIds: ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10'],
+      lessonIds: ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15'],
       totalChapters: 56
     },
     {
@@ -5144,6 +5454,106 @@
   }
 
   // ============ INFO CAROUSEL ============
+  // ============ CHANGELOG ============
+  // Update history, newest first. To publish a new update, add an entry to
+  // the TOP of this array. The carousel slide shows the latest entry; the
+  // full list appears in the history modal.
+  const CHANGELOG = [
+    {
+      version: 'Day 2 — Update 6',
+      date: 'Latest',
+      title: "What's New",
+      changes: [
+        'Bigger XP rewards across lessons, tasks & games',
+        '5 new chapters added (2 Nephi 17 – Jacob 4)',
+        'Level up faster — one great lesson reaches Level 2',
+        'Update history you can scroll back through'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 5',
+      date: 'Earlier',
+      title: 'Level Badges',
+      changes: [
+        '25 collectible level badges (bronze, silver, gold)',
+        'Badge reveal celebration when you level up',
+        'Tap your level to see every rank and badge'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 4',
+      date: 'Earlier',
+      title: 'Verse Quiz & Polish',
+      changes: [
+        'Verse Quiz mini-game — complete passages with word cards',
+        'Tap sounds on buttons + 25 levels to climb',
+        'Level-ups now celebrate in mini-games too',
+        'Quizzes get harder as you progress',
+        'Tap the streak or hint icons to see what they mean'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 3',
+      date: 'Earlier',
+      title: 'Practice & Daily Tasks',
+      changes: [
+        'Practice screen with Daily Tasks for bonus XP',
+        'Background music no longer hijacks the notification bar',
+        'Settings now preserves your quiz progress',
+        'Sound effects work reliably',
+        'Code split into modules for faster loading'
+      ]
+    },
+    {
+      version: 'Day 1 — Launch',
+      date: 'Earlier',
+      title: 'First Release',
+      changes: [
+        'First 10 chapters of the Book of Mormon course',
+        'Lessons, quizzes, XP, levels, and streaks',
+        'Verse of the Day and dark mode',
+        'Works offline as an installable app'
+      ]
+    }
+  ];
+
+  // Render the latest changelog entry into the carousel slide
+  function renderLatestUpdate() {
+    const list = document.getElementById('updatesSlideList');
+    const titleEl = document.getElementById('updatesSlideTitle');
+    if (!list || !CHANGELOG.length) return;
+    const latest = CHANGELOG[0];
+    if (titleEl) titleEl.textContent = latest.title || "What's New";
+    list.innerHTML = latest.changes.map(c => `<li>${c}</li>`).join('');
+  }
+
+  function openChangelog() {
+    const scroll = document.getElementById('changelogScroll');
+    if (scroll) {
+      scroll.innerHTML = CHANGELOG.map((entry, i) => `
+        <div class="changelog-entry${i === 0 ? ' latest' : ''}">
+          <div class="changelog-entry-head">
+            <span class="changelog-version">${entry.version}</span>
+            ${i === 0 ? '<span class="changelog-badge">Newest</span>' : `<span class="changelog-date">${entry.date}</span>`}
+          </div>
+          <div class="changelog-entry-title serif">${entry.title}</div>
+          <ul class="changelog-entry-list">
+            ${entry.changes.map(c => `<li>${c}</li>`).join('')}
+          </ul>
+        </div>
+      `).join('');
+    }
+    document.getElementById('changelogModal').classList.remove('hidden');
+  }
+
+  function closeChangelog() {
+    document.getElementById('changelogModal').classList.add('hidden');
+  }
+
+  function onChangelogBackdropClick(event) {
+    if (event.target.classList.contains('changelog-overlay')) closeChangelog();
+  }
+
   function initInfoCarousel() {
     const track = document.getElementById('infoCarouselTrack');
     const dotsContainer = document.getElementById('infoCarouselDots');
@@ -5279,6 +5689,7 @@
   // ============ INIT ============
   loadState();
   renderHome();
+  renderLatestUpdate();
   initInfoCarousel();
   initBackHandling();
   // Show the brand block initially since home is the default screen

@@ -21,7 +21,7 @@
       title: "The Keystone of Our Religion",
       subtitle: "Why the Book of Mormon matters",
       available: true,
-      xpReward: 25,
+      xpReward: 50,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-1?lang=eng',
       reading: {
         body: [
@@ -105,7 +105,7 @@
       title: "Lehi's Vision",
       subtitle: "The Vision and the Brass Plates",
       available: true,
-      xpReward: 25,
+      xpReward: 55,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-2?lang=eng',
       reading: {
         body: [
@@ -189,7 +189,7 @@
       title: "Tree of Life Vision",
       subtitle: "Coming unto Christ",
       available: true,
-      xpReward: 25,
+      xpReward: 60,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-3?lang=eng',
       reading: {
         body: [
@@ -274,7 +274,7 @@
       title: "Nephi's Vision of the Last Days",
       subtitle: "Plain and precious truths restored",
       available: true,
-      xpReward: 25,
+      xpReward: 60,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-4?lang=eng',
       reading: {
         body: [
@@ -362,7 +362,7 @@
       title: "The Liahona & The Journey",
       subtitle: "Following the Lord across wilderness and sea",
       available: true,
-      xpReward: 25,
+      xpReward: 55,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-5?lang=eng',
       reading: {
         body: [
@@ -475,7 +475,7 @@
       title: "Isaiah's Prophecies",
       subtitle: "Remembering our Redeemer",
       available: true,
-      xpReward: 25,
+      xpReward: 65,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-6?lang=eng',
       reading: {
         body: [
@@ -583,7 +583,7 @@
       title: "Lehi's Final Counsel",
       subtitle: "Creation, Fall, and Atonement",
       available: true,
-      xpReward: 25,
+      xpReward: 70,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-7?lang=eng',
       reading: {
         body: [
@@ -697,7 +697,7 @@
       title: "The Psalm of Nephi",
       subtitle: "Trusting the Lord through weakness",
       available: true,
-      xpReward: 25,
+      xpReward: 65,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-8?lang=eng',
       reading: {
         body: [
@@ -806,7 +806,7 @@
       title: "The Infinite Atonement",
       subtitle: "Jacob's sermon on the Savior's grace",
       available: true,
-      xpReward: 25,
+      xpReward: 75,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-9?lang=eng',
       reading: {
         body: [
@@ -920,7 +920,7 @@
       title: "All Things Typify Christ",
       subtitle: "Isaiah's testimony begins",
       available: true,
-      xpReward: 25,
+      xpReward: 70,
       sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-10?lang=eng',
       reading: {
         body: [
@@ -1027,11 +1027,517 @@
           explanation: "The righteous remnant — cleansed through the Atonement — receive sanctification, protection, and the Lord's continual presence. The 'escape' is from sin, not just from circumstance."
         }
       ]
+    },
+    ch11: {
+      id: 'ch11',
+      chapter: 11,
+      range: '2 Nephi 17–24',
+      title: "The Prince of Peace",
+      subtitle: "Isaiah's prophecies of Christ's birth and Second Coming",
+      available: true,
+      xpReward: 60,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-11?lang=eng',
+      reading: {
+        body: [
+          "Through a series of remarkable revelations, Isaiah learned about the Savior's birth and Second Coming, the conditions of the last days, the peace and joy of the Millennium, and the ultimate failure of the adversary. Though these prophecies also spoke to events in Isaiah's own day, we can read them with confidence that they hold messages for us — messages of warning, peace, and hope.",
+          "Isaiah prophesied of a sign: 'a virgin shall conceive, and shall bear a son, and shall call his name Immanuel' (2 Nephi 17:14). Immanuel means 'God with us.' This prophecy found its ultimate fulfillment in the birth of Jesus Christ (see Matthew 1:18–25).",
+          "One of the best-loved prophecies of the Savior is found in 2 Nephi 19:6: 'For unto us a child is born, unto us a son is given... and his name shall be called Wonderful, Counselor, The Mighty God, The Everlasting Father, The Prince of Peace.' Five titles, each revealing a role Christ fills in our lives now and in the world to come.",
+          "Isaiah warned that the wicked would be destroyed at the Second Coming. Using the destruction of ancient Assyria as a type, he described the pride, hypocrisy, and greed that bring judgment — and counseled the people to 'stay upon the Lord,' to fix their reliance and confidence on Him (2 Nephi 20:20).",
+          "Isaiah also saw the Millennium — a thousand years of peace when people would praise God for His goodness (2 Nephi 22) — and foresaw the final fall of Lucifer, whose pride led to his being cast down (2 Nephi 24:12–15). Satan's opposition to God will ultimately fail."
+        ],
+        principles: [
+          "Jesus Christ was born to reign as the Prince of Peace",
+          "Immanuel means 'God with us' — the Lord is with those who trust Him",
+          "The wicked will be destroyed at the Second Coming",
+          "We are to 'stay upon' the Lord — rely on Him completely",
+          "Satan's opposition to God will ultimately fail"
+        ]
+      },
+      reflection: '"Of the five titles in 2 Nephi 19:6 — Wonderful, Counselor, Mighty God, Everlasting Father, Prince of Peace — which one do you most need the Savior to be for you right now?"',
+      questions: [
+        {
+          type: 'fill_blank',
+          prompt: 'Complete the name given in Isaiah\'s prophecy of the Savior\'s birth:\n"a virgin shall conceive... and shall call his name ______." (2 Nephi 17:14)',
+          answer: 'Immanuel',
+          acceptable: ['immanuel', 'emmanuel'],
+          reference: '2 Nephi 17:14',
+          explanation: "Immanuel means 'God with us.' Isaiah's sign pointed to the birth of Jesus Christ, fulfilled centuries later as recorded in Matthew 1."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 19:6, Isaiah lists five titles of the coming Messiah. Which set is correct?',
+          options: [
+            'Shepherd, King, Servant, Teacher, Friend',
+            'Wonderful, Counselor, The Mighty God, The Everlasting Father, The Prince of Peace',
+            'Redeemer, Savior, Master, Lord, Creator',
+            'Alpha, Omega, First, Last, Beginning'
+          ],
+          correct: 1,
+          reference: '2 Nephi 19:6',
+          explanation: "'His name shall be called Wonderful, Counselor, The Mighty God, The Everlasting Father, The Prince of Peace.' Each title reveals a role Christ fills."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does the title "Immanuel" mean?',
+          options: [
+            'King of Kings',
+            'God with us',
+            'The Anointed One',
+            'Light of the World'
+          ],
+          correct: 1,
+          reference: '2 Nephi 17:14',
+          explanation: "Immanuel means 'God with us' — a reminder that the Lord is present with those who trust in Him, even in times of difficulty and fear."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 20:20, Isaiah counsels Israel to "stay upon the Lord." What does "stay upon" mean in this context?',
+          options: [
+            'To wait patiently without acting',
+            'To fix reliance and confidence on Him as a foundation',
+            'To remain physically in one place',
+            'To delay until commanded'
+          ],
+          correct: 1,
+          reference: '2 Nephi 20:20',
+          explanation: "To 'stay upon' the Lord means to place your reliance, confidence, and foundation in Him — rather than in worldly alliances or your own strength."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 24:12–15, what ultimately happens to Lucifer (Satan)?',
+          options: [
+            'He wins control of the earth for a time',
+            'He is cast down; his opposition to God ultimately fails',
+            'He repents at the last day',
+            'He is given a kingdom of his own'
+          ],
+          correct: 1,
+          reference: '2 Nephi 24:12–15',
+          explanation: "Isaiah foresaw Lucifer's fall — brought down by his own pride. However fierce his opposition, Satan's efforts against God will ultimately fail."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What is 2 Nephi 22 primarily about?',
+          options: [
+            'The destruction of Jerusalem',
+            'The Millennium — a period of peace when people praise the Lord',
+            'The journey through the wilderness',
+            'The building of the temple'
+          ],
+          correct: 1,
+          reference: '2 Nephi 22',
+          explanation: "2 Nephi 22 describes the Millennium. Even after the cataclysmic events preceding the Second Coming, people will praise the Lord for His goodness and loving-kindness."
+        }
+      ]
+    },
+    ch12: {
+      id: 'ch12',
+      chapter: 12,
+      range: '2 Nephi 25–27',
+      title: "Nephi's Plainness",
+      subtitle: "Salvation in Christ and the coming forth of the Book of Mormon",
+      available: true,
+      xpReward: 65,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-12?lang=eng',
+      reading: {
+        body: [
+          "After quoting many chapters of Isaiah, Nephi offered his own inspired commentary. He acknowledged that Isaiah's words are hard for many to understand, but said, 'I glory in plainness; I glory in truth' (2 Nephi 33:6). Nephi's insights fall into three categories: the role of Christ as the source of salvation, a warning about the evils of the last days, and a prophecy of the Restoration.",
+          "First, Nephi testified plainly of Christ: 'we labor diligently to write, to persuade our children, and also our brethren, to believe in Christ, and to be reconciled to God; for we know that it is by grace that we are saved, after all we can do' (2 Nephi 25:23). Salvation comes only through Jesus Christ. 'There is none other name given under heaven save it be this Jesus Christ... whereby man can be saved' (2 Nephi 25:20).",
+          "Second, Nephi warned of stumbling blocks in the last days: pride, priestcraft, and secret combinations. 'Priestcrafts are that men preach and set themselves up for a light unto the world, that they may get gain and praise of the world; but they seek not the welfare of Zion' (2 Nephi 26:29).",
+          "Nephi taught that 'the Lord God worketh not in darkness... he doeth nothing save it be plain unto the children of men... all are alike unto God' (2 Nephi 26:33). The Lord invites all to come to Him — black and white, bond and free, male and female.",
+          "Third, Nephi quoted Isaiah's prophecy of a sealed book that would come forth — words of a book delivered to the learned and the unlearned, a 'marvelous work and a wonder' (2 Nephi 27:26). This prophecy describes the coming forth of the Book of Mormon, including the experience of Martin Harris with Professor Charles Anthon."
+        ],
+        principles: [
+          "Salvation comes only through Jesus Christ",
+          "We are saved by grace, after all we can do",
+          "Pride, priestcraft, and secret combinations are stumbling blocks of the last days",
+          "The Lord works in plainness — all are alike unto God",
+          "Isaiah and Nephi prophesied of the coming forth of the Book of Mormon"
+        ]
+      },
+      reflection: '"Nephi said he gloried in plainness. What is one truth of the gospel that feels simple and plain to you — and how does that plainness strengthen your faith?"',
+      questions: [
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this central verse on grace:\n"for we know that it is by grace that we are saved, after all we can ______." (2 Nephi 25:23)',
+          answer: 'do',
+          acceptable: ['do'],
+          reference: '2 Nephi 25:23',
+          explanation: "Nephi teaches the relationship between grace and effort: we are saved by the grace of Christ, after we have done all we can do to come unto Him."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 25:20, how can mankind be saved?',
+          options: [
+            'Through obedience to the law of Moses',
+            'Through no other name than Jesus Christ',
+            'Through the wisdom of the learned',
+            'Through their own good works alone'
+          ],
+          correct: 1,
+          reference: '2 Nephi 25:20',
+          explanation: "'There is none other name given under heaven save it be this Jesus Christ... whereby man can be saved.' Salvation comes only through Him."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How does Nephi define "priestcraft" in 2 Nephi 26:29?',
+          options: [
+            'The proper ordination of priests',
+            'Men preaching and setting themselves up as a light to get gain and praise, not seeking the welfare of Zion',
+            'The building of temples',
+            'Teaching the scriptures to children'
+          ],
+          correct: 1,
+          reference: '2 Nephi 26:29',
+          explanation: "Priestcraft is preaching for personal gain and the praise of the world rather than for the welfare of Zion and the good of others."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 26:33, Nephi teaches that the Lord invites all to come unto Him. What phrase captures this?',
+          options: [
+            '"Many are called, but few are chosen"',
+            '"All are alike unto God"',
+            '"The first shall be last"',
+            '"Strait is the gate"'
+          ],
+          correct: 1,
+          reference: '2 Nephi 26:33',
+          explanation: "'All are alike unto God' — black and white, bond and free, male and female. The Lord denies none who come unto Him."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'The prophecy of a sealed book and a "marvelous work and a wonder" in 2 Nephi 27 refers to what?',
+          options: [
+            'The rebuilding of the temple in Jerusalem',
+            'The coming forth of the Book of Mormon',
+            'The writings of Isaiah',
+            'The creation of the world'
+          ],
+          correct: 1,
+          reference: '2 Nephi 27:26',
+          explanation: "Nephi quotes and expands Isaiah's prophecy of a sealed book delivered to the learned and unlearned — fulfilled in the coming forth of the Book of Mormon."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to Nephi, why does the Lord do "nothing save it be plain" (2 Nephi 26:33)?',
+          options: [
+            'Because He wants to test only the wise',
+            'Because He loves all His children and invites all to partake of His goodness',
+            'Because plainness hides deeper secrets',
+            'Because only prophets can understand Him'
+          ],
+          correct: 1,
+          reference: '2 Nephi 26:33',
+          explanation: "The Lord works in plainness out of love — He doeth nothing save it be for the benefit of the world, inviting all to come unto Him and be saved."
+        }
+      ]
+    },
+    ch13: {
+      id: 'ch13',
+      chapter: 13,
+      range: '2 Nephi 28–30',
+      title: "A Second Witness",
+      subtitle: "False doctrines of the last days and the role of scripture",
+      available: true,
+      xpReward: 65,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-13?lang=eng',
+      reading: {
+        body: [
+          "In 2 Nephi 28–30, Nephi describes the challenging conditions of the latter days — and the Lord's response. He warns of 'vain and foolish doctrines' that would deceive many, and points to the Book of Mormon as a second witness that establishes the truth.",
+          "Nephi foresaw false teachings of the last days: 'eat, drink, and be merry, for tomorrow we die' (2 Nephi 28:7); 'there is no hell... God will beat us with a few stripes, and at last we shall be saved' (2 Nephi 28:8); and 'all is well in Zion; yea, Zion prospereth, all is well' (2 Nephi 28:21). The devil would lull people away into carnal security.",
+          "Nephi warned of pride entering the Lord's churches, and of those who 'rob the poor because of their fine sanctuaries' and 'persecute the meek' (2 Nephi 28:13). He cautioned against trusting in the precepts of men.",
+          "To those who would say 'a Bible, a Bible, we have got a Bible, and there cannot be any more Bible' (2 Nephi 29:3), the Lord answers that He speaks to all nations and gathers their words. The Bible and the Book of Mormon 'shall grow together, unto the confounding of false doctrines' (2 Nephi 3:12). The Book of Mormon joins the Bible in bearing witness that the Lord is God.",
+          "Finally, 2 Nephi 30 describes the blessings of the covenant people and the conditions of the Millennium — when the Lord's knowledge will cover the earth and there shall be peace among all. Obedience, repentance, and faith in Jesus Christ qualify us to become the Lord's covenant people."
+        ],
+        principles: [
+          "In the last days, many will be deceived by false doctrines",
+          "The devil seeks to lull people into carnal security ('all is well in Zion')",
+          "The Book of Mormon joins the Bible in witnessing that the Lord is God",
+          "Two or more witnesses confound false doctrine and establish truth",
+          "Obedience, repentance, and faith in Christ make us the Lord's covenant people"
+        ]
+      },
+      reflection: '"Nephi warned against the comfortable lie \'all is well in Zion.\' Where in your own life might you be tempted toward spiritual complacency — and what is one step toward greater diligence?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'Which of these is one of the false doctrines Nephi warned would be taught in the last days (2 Nephi 28)?',
+          options: [
+            '"Eat, drink, and be merry, for tomorrow we die"',
+            '"Pray always and faint not"',
+            '"Seek ye first the kingdom of God"',
+            '"Come unto Christ, and be perfected in Him"'
+          ],
+          correct: 0,
+          reference: '2 Nephi 28:7',
+          explanation: "Nephi foresaw the false teaching 'eat, drink, and be merry, for tomorrow we die' — a denial of accountability that lulls people into spiritual carelessness."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this false teaching Nephi warned about:\n"All is well in ______; yea, Zion prospereth, all is well." (2 Nephi 28:21)',
+          answer: 'Zion',
+          acceptable: ['zion'],
+          reference: '2 Nephi 28:21',
+          explanation: "The devil seeks to lull people into 'carnal security' with the comforting lie that 'all is well in Zion' — discouraging the diligence and repentance that salvation requires."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In 2 Nephi 29, how does the Lord respond to those who say "we have got a Bible, and there cannot be any more Bible"?',
+          options: [
+            'He agrees the Bible is complete',
+            'He declares He speaks to all nations and gathers their words as witnesses',
+            'He condemns all written scripture',
+            'He says only prophets may read scripture'
+          ],
+          correct: 1,
+          reference: '2 Nephi 29:3',
+          explanation: "The Lord teaches that He speaks the same words to all nations, and their records will come together as witnesses — He is not limited to one book or one people."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 3:12 (referenced in this lesson), what happens when the records of Judah (Bible) and Joseph (Book of Mormon) grow together?',
+          options: [
+            'They replace each other',
+            'They confound false doctrines, lay down contentions, and establish peace',
+            'They create confusion',
+            'They prove the Bible false'
+          ],
+          correct: 1,
+          reference: '2 Nephi 3:12',
+          explanation: "The two records 'grow together, unto the confounding of false doctrines and laying down of contentions, and establishing peace.' Two witnesses establish truth."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 30:1–2, who becomes the Lord\'s covenant people?',
+          options: [
+            'Only those born into a certain lineage',
+            'All who repent and have faith in Christ, both Jew and Gentile',
+            'Only those who lived in ancient times',
+            'Only the learned and wise'
+          ],
+          correct: 1,
+          reference: '2 Nephi 30:1–2',
+          explanation: "Nephi teaches that being the Lord's covenant people is not about lineage but about repentance and faith in Christ — open to all who come unto Him."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Why does Nephi describe the false doctrines of the last days?',
+          options: [
+            'To frighten people into obedience',
+            'To help us recognize and avoid worldly influences that weaken faith',
+            'To condemn other religions',
+            'To predict exact dates of future events'
+          ],
+          correct: 1,
+          reference: '2 Nephi 28',
+          explanation: "Nephi names the false doctrines so we can recognize 'vain and foolish doctrines' for what they are and choose to anchor ourselves in Christ instead."
+        }
+      ]
+    },
+    ch14: {
+      id: 'ch14',
+      chapter: 14,
+      range: '2 Nephi 31–33',
+      title: "The Doctrine of Christ",
+      subtitle: "Nephi's final testimony and the way to eternal life",
+      available: true,
+      xpReward: 75,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-14?lang=eng',
+      reading: {
+        body: [
+          "In his final chapters, Nephi gives what he calls 'the doctrine of Christ' — the simple, clear path that leads to eternal life. It focuses on faith in the Lord Jesus Christ, repentance, baptism by immersion, receiving the gift of the Holy Ghost, and enduring to the end.",
+          "Nephi explains that even Jesus, who was sinless, was baptized to 'fulfil all righteousness' and to show 'the straitness of the path, and the narrowness of the gate, by which they should enter, he having set the example before them' (2 Nephi 31:9). If the Holy One needed baptism, how much more do we?",
+          "After baptism comes the baptism of fire and the Holy Ghost. Then, Nephi teaches, comes one of the most beautiful invitations in scripture: 'press forward with a steadfastness in Christ, having a perfect brightness of hope, and a love of God and of all men. Wherefore, if ye shall press forward, feasting upon the word of Christ, and endure to the end, behold, thus saith the Father: Ye shall have eternal life' (2 Nephi 31:20).",
+          "Nephi teaches that after entering the path, we must continue to be nourished: 'feast upon the words of Christ; for behold, the words of Christ will tell you all things what ye should do' (2 Nephi 32:3). And we should 'pray always, and not faint' (2 Nephi 32:9).",
+          "Nephi closes his record with his testimony: 'I glory in plainness; I glory in truth; I glory in my Jesus, for he hath redeemed my soul' (2 Nephi 33:6). His words, he promises, will stand as a witness against us or for us at the last day."
+        ],
+        principles: [
+          "The doctrine of Christ: faith, repentance, baptism, the Holy Ghost, and enduring to the end",
+          "Jesus was baptized to fulfil all righteousness and set the example",
+          "We must press forward with a perfect brightness of hope and endure to the end",
+          "Feasting on the words of Christ tells us all things we should do",
+          "We should pray always and not faint"
+        ]
+      },
+      reflection: '"Nephi invites us to \'press forward, feasting upon the word of Christ.\' What is one way you can feast — rather than merely nibble — on the scriptures this week?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 31, what are the elements of "the doctrine of Christ"?',
+          options: [
+            'Fasting, tithing, temple work, and missionary service',
+            'Faith in Christ, repentance, baptism, receiving the Holy Ghost, and enduring to the end',
+            'Prayer, scripture study, and church attendance',
+            'Charity, humility, and obedience only'
+          ],
+          correct: 1,
+          reference: '2 Nephi 31:13–20',
+          explanation: "Nephi's 'doctrine of Christ' is the foundational path: faith in Jesus Christ, repentance, baptism by immersion, the gift of the Holy Ghost, and enduring to the end."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 31:9, why was Jesus — who was sinless — baptized?',
+          options: [
+            'To be forgiven of sin',
+            'To fulfil all righteousness and set the example for us',
+            'Because the law of Moses required it',
+            'To begin His public ministry only'
+          ],
+          correct: 1,
+          reference: '2 Nephi 31:9',
+          explanation: "Jesus was baptized to 'fulfil all righteousness' and to show us the straitness of the path — setting the example we are to follow."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete this beloved verse:\n"Wherefore, ye must press forward with a steadfastness in Christ, having a perfect brightness of ______." (2 Nephi 31:20)',
+          answer: 'hope',
+          acceptable: ['hope'],
+          reference: '2 Nephi 31:20',
+          explanation: "We press forward with 'a perfect brightness of hope, and a love of God and of all men' — feasting on the word and enduring to the end leads to eternal life."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to 2 Nephi 32:3, what will the words of Christ do for us?',
+          options: [
+            'Tell us all things what we should do',
+            'Replace the need for prayer',
+            'Reveal the date of the Second Coming',
+            'Give us power over others'
+          ],
+          correct: 0,
+          reference: '2 Nephi 32:3',
+          explanation: "'Feast upon the words of Christ; for behold, the words of Christ will tell you all things what ye should do.' The scriptures are our daily guide."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete Nephi\'s counsel on prayer:\n"ye must pray always, and not ______." (2 Nephi 32:9)',
+          answer: 'faint',
+          acceptable: ['faint'],
+          reference: '2 Nephi 32:9',
+          explanation: "Nephi teaches that we 'must pray always, and not faint' — and that we should consecrate our performance unto the Lord for the welfare of our souls."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How does Nephi describe his own writing and testimony in 2 Nephi 33:6?',
+          options: [
+            '"I glory in plainness; I glory in truth; I glory in my Jesus"',
+            '"I write only for the learned"',
+            '"My words are too sacred to share"',
+            '"I speak in mysteries and dark sayings"'
+          ],
+          correct: 0,
+          reference: '2 Nephi 33:6',
+          explanation: "Nephi's closing testimony: 'I glory in plainness; I glory in truth; I glory in my Jesus, for he hath redeemed my soul.' His words witness of Christ."
+        }
+      ]
+    },
+    ch15: {
+      id: 'ch15',
+      chapter: 15,
+      range: 'Jacob 1–4',
+      title: "Reconciled to Christ",
+      subtitle: "Jacob's bold ministry and the call to purity",
+      available: true,
+      xpReward: 70,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-15?lang=eng',
+      reading: {
+        body: [
+          "When Nephi died, the task of leading the Nephites spiritually fell to Jacob, whom Nephi had consecrated to be a priest and teacher. Jacob took this charge seriously: 'we labored diligently among our people, that we might persuade them to come unto Christ' (Jacob 1:7). To Jacob, teaching the word of God was an 'errand from the Lord.'",
+          "Jacob taught a sobering principle of responsibility. He understood that if he 'did not teach them the word of God with all diligence,' he would be partly to blame for their sins (Jacob 1:19). The Lord holds His servants accountable to teach the people and warn them of their sins.",
+          "From the temple, Jacob delivered a bold sermon. He reproved his people for three grievous sins: pride, the love and misuse of riches, and sexual immorality (see Jacob 2–3). 'Think of your brethren like unto yourselves,' he taught, 'and be familiar with all and free with your substance, that they may be rich like unto you' (Jacob 2:17).",
+          "Jacob also condemned the practice of unauthorized plural marriage, teaching that the Lord delights in the chastity of His people. He spoke tenderly of those wounded by others' sins, whose hearts had been 'pierced with deep wounds' (Jacob 2:35), and pointed both sinner and victim to the healing of the Savior.",
+          "At the heart of Jacob's message was an invitation: 'be reconciled unto him through the atonement of Christ, his Only Begotten Son' (Jacob 4:11). Jacob taught us to 'look unto God with firmness of mind, and pray unto him with exceeding faith' (Jacob 3:1) — centering our whole lives in Jesus Christ."
+        ],
+        principles: [
+          "The Lord holds His servants accountable to teach and warn the people",
+          "Pride, misuse of riches, and sexual immorality are grievous sins to avoid",
+          "Plural marriage is forbidden unless the Lord commands it through His prophet",
+          "We should look to God with firmness of mind and seek His kingdom first",
+          "We are to be reconciled to God through the Atonement of Christ"
+        ]
+      },
+      reflection: '"Jacob invited his people to \'be reconciled unto God through the atonement of Christ.\' What is one area of your life where you long to feel that reconciliation and healing?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'Who was Jacob, and what was his calling among the Nephites?',
+          options: [
+            'A king who ruled after Nephi',
+            'A priest and teacher consecrated by Nephi to lead the people spiritually',
+            'A military captain',
+            'A record-keeper only, who never taught'
+          ],
+          correct: 1,
+          reference: 'Jacob 1:18',
+          explanation: "Jacob, Nephi's younger brother, was consecrated a priest and teacher. After Nephi's death, the spiritual leadership of the people fell to him."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to Jacob 1:19, what did Jacob understand about his responsibility as a teacher?',
+          options: [
+            'That teaching was optional',
+            'That if he did not teach with diligence, he would be partly responsible for the people\'s sins',
+            'That only the prophet could teach',
+            'That he should teach only the willing'
+          ],
+          correct: 1,
+          reference: 'Jacob 1:19',
+          explanation: "Jacob labored to 'magnify his office,' knowing that failing to teach the word of God with diligence would leave him partly accountable for the people's sins."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Which three grievous sins did Jacob reprove his people for in Jacob 2–3?',
+          options: [
+            'Idleness, gossip, and anger',
+            'Pride, the misuse of riches, and sexual immorality',
+            'Idolatry, theft, and murder',
+            'Doubt, fear, and complaining'
+          ],
+          correct: 1,
+          reference: 'Jacob 2:12–35',
+          explanation: "From the temple, Jacob boldly reproved pride, the love and misuse of riches, and sexual impurity — sins much like those people struggle with today."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete Jacob\'s central invitation:\n"be reconciled unto him through the ______ of Christ." (Jacob 4:11)',
+          answer: 'atonement',
+          acceptable: ['atonement', 'atonment'],
+          reference: 'Jacob 4:11',
+          explanation: "Jacob's message, like Nephi's, was a call to 'be reconciled unto God through the atonement of Christ' — the source of healing for both the sinner and the wounded."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Jacob teach about plural marriage in his day (Jacob 2:27–30)?',
+          options: [
+            'It was always encouraged',
+            'It was forbidden unless the Lord commands it through His prophet',
+            'It was a matter of personal choice',
+            'It was required of all leaders'
+          ],
+          correct: 1,
+          reference: 'Jacob 2:27–30',
+          explanation: "Jacob taught that the practice was forbidden among his people; the Lord delights in chastity. Plural marriage is only permitted when the Lord commands it through His prophet."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In Jacob 3:1, how does Jacob counsel the "pure in heart" to face their afflictions?',
+          options: [
+            'To flee from their enemies',
+            'To look unto God with firmness of mind and pray with exceeding faith',
+            'To demand justice from their leaders',
+            'To remain silent and wait'
+          ],
+          correct: 1,
+          reference: 'Jacob 3:1',
+          explanation: "Jacob counsels the pure in heart to 'look unto God with firmness of mind, and pray unto him with exceeding faith' — and He will console them in their afflictions."
+        }
+      ]
     }
+
   };
 
   // Order in which lessons appear on the path
-  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10'];
+  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15'];
 
   // ============ DAILY VERSES ============
   // 14 verses that rotate daily based on day-of-year
