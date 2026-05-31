@@ -73,6 +73,7 @@
     } catch (e) {
       console.warn('Firebase multiplayer unavailable, using local mock:', e && e.message);
       MP_FB.ready = false;
+      MP_FB.lastError = (e && e.message) ? e.message : 'unknown error';
       return false;
     }
   }

@@ -128,9 +128,12 @@
         mpState.online = ok;
         const note = document.getElementById('mpConnNote');
         if (note) {
-          note.innerHTML = ok
-            ? '<div class="mp-mock-banner mp-live-banner">🟢 Connected — play live with others on their own phones.</div>'
-            : '<div class="mp-mock-banner">✨ Preview mode — you\u2019ll play against sample players (offline).</div>';
+          if (ok) {
+            note.innerHTML = '<div class="mp-mock-banner mp-live-banner">🟢 Connected — play live with others on their own phones.</div>';
+          } else {
+            const reason = (typeof MP_FB !== 'undefined' && MP_FB.lastError) ? MP_FB.lastError : 'offline';
+            note.innerHTML = '<div class="mp-mock-banner">✨ Preview mode — you\u2019ll play against sample players.<br><span style="font-size:10px;opacity:0.7;">(' + escapeHtmlMp(reason) + ')</span></div>';
+          }
         }
       });
     }

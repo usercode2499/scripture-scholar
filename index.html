@@ -2472,6 +2472,20 @@
   .fg-option:hover:not(:disabled) { background: var(--bg); }
   .fg-option:active:not(:disabled) { transform: scale(0.99); }
   .fg-option:disabled { cursor: default; }
+  .fg-option.selected {
+    background: var(--gold-glow);
+    border-color: var(--gold);
+    border-bottom-color: var(--gold-dark);
+    color: var(--gold-dark);
+  }
+  .fg-submit-btn {
+    width: 100%;
+    margin-top: 18px;
+  }
+  .fg-submit-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
   .fg-option.correct {
     background: rgba(107, 142, 61, 0.14);
     border-color: var(--green);

@@ -4,7 +4,7 @@
 
 // Bump this version when you push significant content updates,
 // so installed PWAs pick up the new cache. e.g. 'v2', 'v3', etc.
-const CACHE_VERSION = 'scripture-scholar-v16';
+const CACHE_VERSION = 'scripture-scholar-v17';
 
 // Files that make up the app shell (everything needed for first paint).
 const APP_SHELL = [
@@ -88,7 +88,23 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Other assets: cache-first
+  // App code (JS/CSS): network-first so new versions always reach users.
+  // Falls back to cache only when offline. This prevents stale feature files
+  // (like an old multiplayer build) from sticking around after a deploy.
+  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css')) {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then((cache) => cache.put(req, copy));
+          return res;
+        })
+        .catch(() => caches.match(req))
+    );
+    return;
+  }
+
+  // Other assets (images, audio, fonts): cache-first
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;

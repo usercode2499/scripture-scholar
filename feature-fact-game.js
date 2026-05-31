@@ -224,6 +224,7 @@
     }
     const item = fgState.pool[fgState.currentIdx];
     fgState.answered = false;
+    fgState.selectedIdx = null;
     container.innerHTML = `
       <div class="fg-header">
         <div class="fg-progress-row">
@@ -237,10 +238,30 @@
       <div class="fg-question serif">${item.q}</div>
       <div class="fg-options" id="fgOptions">
         ${item.options.map((opt, i) => `
-          <button class="fg-option" onclick="onFgAnswer(${i})" data-no-tap-sound>${opt}</button>
+          <button class="fg-option" onclick="onFgSelect(${i})">${opt}</button>
         `).join('')}
       </div>
+      <button class="btn btn-gold fg-submit-btn" id="fgSubmitBtn" onclick="onFgSubmit()" data-no-tap-sound disabled>Submit Answer</button>
     `;
+  }
+
+  // Step 1: highlight the chosen option (does not grade yet)
+  function onFgSelect(choiceIdx) {
+    if (fgState.answered) return;
+    fgState.selectedIdx = choiceIdx;
+    const optionEls = document.querySelectorAll('#fgOptions .fg-option');
+    optionEls.forEach((el, i) => {
+      el.classList.toggle('selected', i === choiceIdx);
+    });
+    const submitBtn = document.getElementById('fgSubmitBtn');
+    if (submitBtn) submitBtn.disabled = false;
+    if (typeof playTapSfx === 'function') playTapSfx();
+  }
+
+  // Step 2: grade the selected answer
+  function onFgSubmit() {
+    if (fgState.answered || fgState.selectedIdx === null) return;
+    onFgAnswer(fgState.selectedIdx);
   }
 
   function onFgAnswer(choiceIdx) {
@@ -250,13 +271,16 @@
     const isCorrect = choiceIdx === item.correct;
     const xpReward = isCorrect ? 10 : 0;
 
-    // Mark buttons
+    // Mark buttons + hide the submit button
     const optionEls = document.querySelectorAll('#fgOptions .fg-option');
     optionEls.forEach((el, i) => {
       el.disabled = true;
+      el.classList.remove('selected');
       if (i === item.correct) el.classList.add('correct');
       else if (i === choiceIdx) el.classList.add('wrong');
     });
+    const submitBtn = document.getElementById('fgSubmitBtn');
+    if (submitBtn) submitBtn.style.display = 'none';
 
     if (isCorrect) {
       fgState.correctCount++;
