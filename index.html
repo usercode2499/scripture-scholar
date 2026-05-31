@@ -145,8 +145,11 @@
   .topbar-stats {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+    gap: 6px;
+  }
+  .topbar-spacer {
+    flex: 1;
+    min-width: 4px;
   }
 
   /* Brand row inside the topbar — only visible on the home screen */
@@ -214,6 +217,7 @@
 
   .stat-icon { font-size: 18px; line-height: 1; }
   .stat-streak { color: #d97706; }
+
   .stat-level {
     flex-direction: column;
     gap: 4px;
@@ -222,6 +226,49 @@
     cursor: pointer;
     min-width: 80px;
   }
+
+  /* Profile-style variant: bigger, avatar on the left, level + bar on right */
+  .stat-level-profile {
+    flex-direction: row;
+    align-items: center;
+    gap: 9px;
+    padding: 5px 12px 5px 5px;
+    min-width: 0;
+    border: 1px solid var(--gold);
+    background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
+  }
+  .stat-level-profile:hover {
+    box-shadow: 0 4px 14px rgba(200, 155, 60, 0.25);
+  }
+  .stat-level-avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--card);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  }
+  .stat-level-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 48px;
+  }
+  body.dark-mode .stat-level-profile {
+    background: linear-gradient(135deg, #3a2a18 0%, #2a1d10 100%);
+    border-color: var(--gold-dark);
+  }
+  body.dark-mode .stat-level-avatar {
+    border-color: var(--card);
+  }
+
   .stat-level-top {
     display: flex;
     align-items: center;
@@ -230,6 +277,8 @@
     font-size: 14px;
   }
   .stat-level-top span:nth-child(2) { font-size: 11px; opacity: 0.7; }
+  .stat-level-profile .stat-level-top span:first-child { font-size: 11px; opacity: 0.7; }
+  .stat-level-profile .stat-level-top span:nth-child(2) { font-size: 15px; opacity: 1; font-weight: 700; }
   .stat-level-bar {
     width: 100%;
     height: 3px;
@@ -244,6 +293,15 @@
     transition: width 0.6s cubic-bezier(0.65, 0, 0.35, 1);
   }
   .stat-hints { color: #5b8de8; }
+
+  /* Tighten right-side stats on small screens so everything fits */
+  .stat-streak, .stat-hints { padding: 7px 11px; }
+
+  .footer-actions-stack {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .footer-actions-stack .btn { width: 100%; }
 
   /* Screens */
   .screen {
@@ -1911,6 +1969,223 @@
   /* === DAILY TASKS CARD === */
   /* =================================== */
 
+  /* =================================== */
+  /* === VERSE QUIZ (mini-game) === */
+  /* =================================== */
+  .vq-header { margin-bottom: 18px; }
+  .vq-progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .vq-progress-label {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+  .vq-progress-xp {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--gold-dark);
+  }
+  .vq-progress-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .vq-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+
+  .vq-instructions {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    text-align: center;
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .vq-prompt {
+    font-size: 21px;
+    line-height: 1.6;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+  }
+
+  .vq-blank {
+    display: inline-block;
+    min-width: 60px;
+    text-align: center;
+    border-radius: 6px;
+    padding: 0 8px;
+    margin: 0 2px;
+    font-style: normal;
+  }
+  .vq-blank-empty {
+    color: var(--gold-dark);
+    border-bottom: 2px dashed var(--gold);
+    letter-spacing: 2px;
+  }
+  .vq-blank-filled {
+    background: var(--gold-glow);
+    color: var(--gold-dark);
+    font-weight: 700;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .vq-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--gold-dark);
+    text-align: right;
+    margin-bottom: 22px;
+  }
+
+  .vq-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .vq-tile {
+    padding: 12px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-bottom: 3px solid var(--border);
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+    transition: transform 0.12s ease, background 0.15s ease, opacity 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .vq-tile:hover { background: var(--bg); }
+  .vq-tile:active { transform: scale(0.95); }
+  .vq-tile.used {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .vq-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .vq-actions .btn { flex: 1; }
+  .vq-actions-stack {
+    flex-direction: column;
+  }
+  .vq-actions-stack .btn { width: 100%; }
+
+  /* Result state */
+  .vq-result {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 18px;
+    margin: 20px 0 24px;
+    animation: cmScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .vq-result-correct {
+    background: linear-gradient(135deg, rgba(107, 142, 61, 0.14), rgba(107, 142, 61, 0.05));
+    border: 1px solid var(--green);
+  }
+  .vq-result-wrong {
+    background: linear-gradient(135deg, rgba(196, 82, 60, 0.12), rgba(196, 82, 60, 0.04));
+    border: 1px solid var(--red);
+  }
+  .vq-result-icon {
+    font-size: 44px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .vq-result-correct .vq-result-icon { color: var(--green); }
+  .vq-result-wrong .vq-result-icon { color: var(--red); }
+  .vq-result-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .vq-result-xp {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+  .vq-result-correct-label {
+    display: block;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--ink-soft);
+    font-weight: 700;
+    margin-bottom: 3px;
+  }
+  .vq-result .vq-result-correct-label + strong,
+  .vq-result strong { color: var(--green); font-size: 17px; }
+  .vq-result-wrong strong { color: var(--red); }
+  .vq-result-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-top: 10px;
+  }
+
+  /* Complete state */
+  .vq-complete {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .vq-complete-icon { font-size: 64px; margin-bottom: 16px; }
+  .vq-complete-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 10px;
+  }
+  .vq-complete-sub {
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+  .vq-complete-xp {
+    display: inline-block;
+    background: var(--gold-glow);
+    color: var(--gold-dark);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+
+  /* Dark mode */
+  body.dark-mode .vq-prompt { background: var(--card); }
+  body.dark-mode .vq-tile { background: var(--card); }
+  body.dark-mode .vq-tile:hover { background: rgba(255,255,255,0.04); }
+
+  /* =================================== */
+  /* === DAILY TASKS CARD === */
+  /* =================================== */
+
   .daily-tasks-card {
     background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
     border: 1px solid var(--gold);
@@ -2176,6 +2451,94 @@
   /* === LEVEL INFO MODAL === */
   /* =================================== */
 
+  /* =================================== */
+  /* === INTERNAL CONFIRM DIALOG === */
+  /* =================================== */
+  .confirm-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(20, 12, 6, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 1500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: cmFadeIn 0.2s ease;
+  }
+  @keyframes cmFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .confirm-card {
+    background: var(--card);
+    border-radius: 22px;
+    box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+    width: 100%;
+    max-width: 340px;
+    padding: 30px 24px 24px;
+    text-align: center;
+    animation: cmScaleIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes cmScaleIn {
+    from { opacity: 0; transform: scale(0.82) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .confirm-icon {
+    font-size: 44px;
+    margin-bottom: 10px;
+    line-height: 1;
+  }
+  .confirm-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+    line-height: 1.2;
+  }
+  .confirm-message {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+  }
+  .confirm-actions {
+    display: flex;
+    gap: 10px;
+  }
+  .btn-confirm {
+    flex: 1;
+    padding: 13px 18px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.15s ease, background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn-confirm:active { transform: scale(0.97); }
+  .btn-confirm-cancel {
+    background: var(--border-soft);
+    color: var(--ink-soft);
+  }
+  .btn-confirm-cancel:hover { background: var(--border); color: var(--ink); }
+  .btn-confirm-ok {
+    background: var(--red, #c4523c);
+    color: white;
+  }
+  .btn-confirm-ok:hover { background: #a93f2b; }
+  /* Variant: primary action is "ok/go ahead" not "destructive" */
+  .btn-confirm-ok.is-primary {
+    background: var(--gold);
+    color: var(--ink);
+  }
+  .btn-confirm-ok.is-primary:hover { background: var(--gold-dark); color: white; }
+
+  /* =================================== */
+  /* === LEVEL INFO MODAL === */
+  /* =================================== */
   .level-modal-overlay {
     position: fixed;
     inset: 0;
@@ -2261,6 +2624,128 @@
     font-weight: 700;
     color: var(--ink);
     font-style: italic;
+  }
+  /* Make the title a button — visible affordance to expand the rank list */
+  .level-modal-title-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 12px;
+    transition: background 0.2s ease;
+    font-family: inherit;
+  }
+  .level-modal-title-btn:hover { background: var(--border-soft); }
+  .level-modal-title-hint {
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    font-weight: 700;
+    opacity: 0.7;
+    transition: transform 0.25s ease;
+  }
+  .level-modal-title-btn.expanded .level-modal-title-hint {
+    transform: rotate(180deg);
+    opacity: 1;
+  }
+
+  /* All-levels expandable list */
+  .level-list {
+    background: var(--bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 12px 4px 4px;
+    margin-bottom: 18px;
+    animation: lmFadeIn 0.25s ease;
+  }
+  .level-list-title {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+    padding: 0 12px 10px;
+    border-bottom: 1px solid var(--border-soft);
+    margin-bottom: 6px;
+  }
+  .level-list-scroll {
+    max-height: 320px;
+    overflow-y: auto;
+    padding: 4px 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .level-list-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+  .level-list-item.locked { opacity: 0.5; }
+  .level-list-item.reached { opacity: 0.85; }
+  .level-list-item.current {
+    background: linear-gradient(135deg, rgba(200, 155, 60, 0.16), rgba(200, 155, 60, 0.06));
+    border: 1px solid var(--gold);
+    margin: 4px 8px;
+    padding: 12px;
+  }
+  .level-list-num {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--border-soft);
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .level-list-item.reached .level-list-num {
+    background: var(--green);
+    color: white;
+  }
+  .level-list-item.current .level-list-num {
+    background: var(--gold);
+    color: var(--ink);
+    font-size: 14px;
+    box-shadow: 0 0 0 4px var(--gold-glow);
+  }
+  .level-list-info { flex: 1; min-width: 0; }
+  .level-list-title-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 1px;
+  }
+  .level-list-rank {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    font-style: italic;
+  }
+  .level-list-item.current .level-list-rank { color: var(--gold-dark); }
+  .level-list-lvl-tag {
+    font-size: 10px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .level-list-xp {
+    font-size: 11px;
+    color: var(--ink-soft);
+    font-weight: 500;
   }
 
   /* Progress block */
@@ -2786,19 +3271,24 @@
   <!-- Top status bar -->
   <div class="topbar" id="topbar">
     <div class="topbar-stats">
-      <div class="stat stat-streak"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
-      <div class="stat stat-level" id="levelPill" onclick="showLevelInfo()">
-        <div class="stat-level-top">
-          <span class="stat-icon">📜</span>
-          <span>Lv</span>
-          <span id="levelNum">1</span>
-        </div>
-        <div class="stat-level-bar">
-          <div class="stat-level-fill" id="topbarLevelFill" style="width: 0%"></div>
+      <!-- Level on the FAR LEFT — acts as the user's "profile" pill -->
+      <div class="stat stat-level stat-level-profile" id="levelPill" onclick="showLevelInfo()">
+        <div class="stat-level-avatar">📜</div>
+        <div class="stat-level-info">
+          <div class="stat-level-top">
+            <span>Lv</span>
+            <span id="levelNum">1</span>
+          </div>
+          <div class="stat-level-bar">
+            <div class="stat-level-fill" id="topbarLevelFill" style="width: 0%"></div>
+          </div>
         </div>
       </div>
+      <!-- Flexible spacer so the right-side group stays anchored right -->
+      <div class="topbar-spacer"></div>
       <div class="stat stat-hints"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
       <button class="topbar-icon-btn" onclick="openMiniGames()" aria-label="Practice">🎮</button>
+      <div class="stat stat-streak"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
       <button class="topbar-settings" onclick="openSettings()" aria-label="Settings">⚙</button>
     </div>
     <div class="topbar-brand" id="topbarBrand">
@@ -3035,6 +3525,15 @@
     <div class="mini-games-grid" id="miniGamesGrid"></div>
   </div>
 
+  <!-- VERSE QUIZ (mini-game) -->
+  <div class="screen hidden" id="screen-verse-quiz">
+    <div class="detail-header">
+      <button class="back-btn" onclick="openMiniGames()" aria-label="Back">←</button>
+      <span class="detail-eyebrow-bar">Verse Quiz</span>
+    </div>
+    <div id="verseQuizContainer"></div>
+  </div>
+
   <div class="screen hidden" id="screen-settings">
     <div class="detail-header">
       <button class="back-btn" onclick="closeSettings()" aria-label="Back">←</button>
@@ -3194,8 +3693,9 @@
       <div class="reflection-label">✦ Reflect</div>
       <div class="reflection-prompt" id="reflectionPrompt"></div>
     </div>
-    <div class="footer-actions">
-      <button class="btn btn-gold" onclick="goHome()">Continue Journey →</button>
+    <div class="footer-actions footer-actions-stack">
+      <button class="btn btn-gold" id="completeNextBtn" onclick="continueToNextLesson()">Next Lesson →</button>
+      <button class="btn btn-ghost" onclick="goHome()">Back to Home</button>
     </div>
   </div>
 </div>
@@ -3208,7 +3708,16 @@
     <div class="level-modal-hero">
       <div class="level-modal-icon">📜</div>
       <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
-      <div class="level-modal-title" id="lmTitle">Initiate</div>
+      <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
+        <span class="level-modal-title" id="lmTitle">Initiate</span>
+        <span class="level-modal-title-hint">tap to see all ranks ▾</span>
+      </button>
+    </div>
+
+    <!-- All-levels list (hidden by default, expanded by tapping the title) -->
+    <div class="level-list hidden" id="lmLevelList">
+      <div class="level-list-title">All Ranks (Level 1 – 25)</div>
+      <div class="level-list-scroll" id="lmLevelListScroll"></div>
     </div>
 
     <div class="level-modal-progress">
@@ -3247,6 +3756,19 @@
   </div>
 </div>
 
+<!-- CONFIRM DIALOG (internal — replaces native confirm()) -->
+<div class="confirm-overlay hidden" id="confirmModal" onclick="onConfirmBackdropClick(event)">
+  <div class="confirm-card" onclick="event.stopPropagation()">
+    <div class="confirm-icon" id="confirmIcon">⚠️</div>
+    <h3 class="confirm-title serif" id="confirmTitle">Are you sure?</h3>
+    <p class="confirm-message" id="confirmMessage"></p>
+    <div class="confirm-actions">
+      <button class="btn-confirm btn-confirm-cancel" id="confirmCancelBtn" onclick="closeConfirmModal(false)">Cancel</button>
+      <button class="btn-confirm btn-confirm-ok" id="confirmOkBtn" onclick="closeConfirmModal(true)">Yes</button>
+    </div>
+  </div>
+</div>
+
 <div id="toastContainer"></div>
 
 <!-- Feature modules — loaded before main script so their globals are available -->
@@ -3255,13 +3777,42 @@
 <script src="feature-effects.js"></script>
 <script src="feature-daily-tasks.js"></script>
 <script src="feature-mini-games.js"></script>
+<script src="feature-verse-quiz.js"></script>
 
 <script>
   // Lesson data is loaded from data-lessons.js (loaded before this script)
 
   // ============ LEVEL SYSTEM ============
   // XP thresholds to reach each level (index = level - 1)
-  const LEVEL_THRESHOLDS = [0, 50, 125, 225, 350, 500, 700, 950, 1250, 1600];
+  // 25 level thresholds — XP required to REACH each level.
+  // Curve: gentle early (encourage starters), steeper late (long-term goal)
+  const LEVEL_THRESHOLDS = [
+    0,      // Level 1  — Initiate (start)
+    50,     // Level 2  — Devoted Student
+    125,    // Level 3  — Scripture Seeker
+    225,    // Level 4  — Faithful Reader
+    350,    // Level 5  — True Disciple
+    500,    // Level 6  — Steward of the Word
+    700,    // Level 7  — Keeper of Records
+    950,    // Level 8  — Witness Bearer
+    1250,   // Level 9  — Scholar of Light
+    1600,   // Level 10 — Master of the Word
+    2000,   // Level 11 — Diligent Searcher
+    2450,   // Level 12 — Faithful Servant
+    2950,   // Level 13 — Lamp of the Lord
+    3500,   // Level 14 — Bearer of Light
+    4100,   // Level 15 — Voice of Testimony
+    4750,   // Level 16 — Pillar of Faith
+    5450,   // Level 17 — Wise Counselor
+    6200,   // Level 18 — Teacher of Truth
+    7000,   // Level 19 — Guardian of the Word
+    7850,   // Level 20 — Steward of Zion
+    8750,   // Level 21 — Sage of Scriptures
+    9700,   // Level 22 — Champion of the Covenant
+    10700,  // Level 23 — Standard-Bearer
+    11750,  // Level 24 — Apostle of Learning
+    12850   // Level 25 — Lighthouse of the Word (max)
+  ];
   const MAX_LEVEL = LEVEL_THRESHOLDS.length;
 
   function getLevel(xp) {
@@ -3376,16 +3927,31 @@
 
   // Level titles awarded as the user progresses
   const LEVEL_TITLES = [
-    'Initiate',            // 1
-    'Devoted Student',     // 2
-    'Scripture Seeker',    // 3
-    'Faithful Reader',     // 4
-    'True Disciple',       // 5
-    'Steward of the Word', // 6
-    'Keeper of Records',   // 7
-    'Witness Bearer',      // 8
-    'Scholar of Light',    // 9
-    'Master of the Word'   // 10 (max)
+    'Initiate',                  // 1
+    'Devoted Student',           // 2
+    'Scripture Seeker',          // 3
+    'Faithful Reader',           // 4
+    'True Disciple',             // 5
+    'Steward of the Word',       // 6
+    'Keeper of Records',         // 7
+    'Witness Bearer',            // 8
+    'Scholar of Light',          // 9
+    'Master of the Word',        // 10
+    'Diligent Searcher',         // 11
+    'Faithful Servant',          // 12
+    'Lamp of the Lord',          // 13
+    'Bearer of Light',           // 14
+    'Voice of Testimony',        // 15
+    'Pillar of Faith',           // 16
+    'Wise Counselor',            // 17
+    'Teacher of Truth',          // 18
+    'Guardian of the Word',      // 19
+    'Steward of Zion',           // 20
+    'Sage of Scriptures',        // 21
+    'Champion of the Covenant',  // 22
+    'Standard-Bearer',           // 23
+    'Apostle of Learning',       // 24
+    'Lighthouse of the Word'     // 25 (max)
   ];
 
   function getLevelTitle(level) {
@@ -3403,8 +3969,56 @@
 
   function showLevelInfo() {
     renderLevelModal();
+    renderLevelList();
+    // Always start collapsed
+    const list = document.getElementById('lmLevelList');
+    if (list) list.classList.add('hidden');
     const modal = document.getElementById('levelModal');
     modal.classList.remove('hidden');
+  }
+
+  function toggleLevelList() {
+    const list = document.getElementById('lmLevelList');
+    const btn = document.getElementById('lmTitleBtn');
+    if (!list || !btn) return;
+    const isHidden = list.classList.contains('hidden');
+    list.classList.toggle('hidden', !isHidden);
+    btn.classList.toggle('expanded', isHidden);
+    // Scroll the current level into view if expanding
+    if (isHidden) {
+      setTimeout(() => {
+        const cur = list.querySelector('.level-list-item.current');
+        if (cur) cur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 250);
+    }
+  }
+
+  function renderLevelList() {
+    const scroll = document.getElementById('lmLevelListScroll');
+    if (!scroll) return;
+    const currentLevel = getLevel(state.xp);
+    const html = LEVEL_TITLES.map((title, idx) => {
+      const lvl = idx + 1;
+      const xpReq = LEVEL_THRESHOLDS[idx];
+      const isCurrent = lvl === currentLevel;
+      const isReached = lvl <= currentLevel;
+      let stateClass = 'locked';
+      if (isCurrent) stateClass = 'current';
+      else if (isReached) stateClass = 'reached';
+      return `
+        <div class="level-list-item ${stateClass}">
+          <div class="level-list-num">${isReached ? (isCurrent ? '◉' : '✓') : lvl}</div>
+          <div class="level-list-info">
+            <div class="level-list-title-row">
+              <span class="level-list-rank serif">${title}</span>
+              <span class="level-list-lvl-tag">Lv ${lvl}</span>
+            </div>
+            <div class="level-list-xp">${xpReq.toLocaleString()} XP${isCurrent ? ' · You are here' : ''}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+    scroll.innerHTML = html;
   }
 
   function renderLevelModal() {
@@ -3490,6 +4104,13 @@
       history.pushState({ s: 'app' }, '', location.href);
       return;
     }
+    // Confirm dialog already open? Tapping back cancels it.
+    const confirmModal = document.getElementById('confirmModal');
+    if (confirmModal && !confirmModal.classList.contains('hidden')) {
+      closeConfirmModal(false);
+      history.pushState({ s: 'app' }, '', location.href);
+      return;
+    }
 
     const current = getCurrentScreenId();
 
@@ -3501,14 +4122,21 @@
       return;
     }
 
-    // 3. If we're on a sub-screen, go home instead of exiting
+    // 3. Quiz screen — back triggers the exit confirm (don't navigate away yet)
+    if (current === 'screen-quiz') {
+      history.pushState({ s: 'app' }, '', location.href);
+      exitQuiz(); // shows the confirm modal; user can cancel to stay
+      return;
+    }
+
+    // 4. If we're on any other sub-screen, go home
     if (current && current !== 'screen-home') {
       goHome();
       history.pushState({ s: 'app' }, '', location.href);
       return;
     }
 
-    // 4. On the home screen — require double-tap to exit
+    // 5. On the home screen — require double-tap to exit
     const now = Date.now();
     if (now - lastBackPress < 2000) {
       return;
@@ -3630,6 +4258,19 @@
     } else {
       // Scroll to the lesson path so user can pick one to review
       document.getElementById('lessonPath').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  // Called from the lesson-complete screen "Next Lesson" button.
+  // Jumps straight to the lesson detail for the next unlocked chapter.
+  // If there's no next lesson available, goes home instead.
+  function continueToNextLesson() {
+    const nextId = getCurrentLessonId(); // returns the next unstarted lesson
+    if (nextId && nextId !== state.currentLessonId) {
+      openDetail(nextId);
+    } else {
+      // No next lesson — either replaying a completed chapter or all done
+      goHome();
     }
   }
 
@@ -3916,8 +4557,50 @@
   }
 
   function exitQuiz() {
-    if (confirm('Exit this lesson? Your progress will be lost.')) {
-      goHome();
+    showConfirm({
+      icon: '⚠️',
+      title: 'Exit lesson?',
+      message: 'Your progress in this lesson will not be saved. The session will be lost if you leave now.',
+      okText: 'Yes, exit',
+      cancelText: 'Keep going',
+      destructive: true
+    }).then((confirmed) => {
+      if (confirmed) goHome();
+    });
+  }
+
+  // ============ INTERNAL CONFIRM MODAL ============
+  // Replacement for window.confirm() that shows a styled in-app dialog
+  // instead of the browser's native dialog (which displays the URL).
+  // Usage: showConfirm({title, message, okText, cancelText, destructive}).then(bool => ...)
+  let confirmResolver = null;
+
+  function showConfirm(opts) {
+    opts = opts || {};
+    document.getElementById('confirmIcon').textContent = opts.icon || '⚠️';
+    document.getElementById('confirmTitle').textContent = opts.title || 'Are you sure?';
+    document.getElementById('confirmMessage').textContent = opts.message || '';
+    document.getElementById('confirmCancelBtn').textContent = opts.cancelText || 'Cancel';
+    const okBtn = document.getElementById('confirmOkBtn');
+    okBtn.textContent = opts.okText || 'Yes';
+    okBtn.classList.toggle('is-primary', !opts.destructive);
+    document.getElementById('confirmModal').classList.remove('hidden');
+    return new Promise((resolve) => { confirmResolver = resolve; });
+  }
+
+  function closeConfirmModal(value) {
+    document.getElementById('confirmModal').classList.add('hidden');
+    if (confirmResolver) {
+      const r = confirmResolver;
+      confirmResolver = null;
+      r(value);
+    }
+  }
+
+  function onConfirmBackdropClick(event) {
+    // Tapping the dim backdrop counts as Cancel
+    if (event.target.classList.contains('confirm-overlay')) {
+      closeConfirmModal(false);
     }
   }
 
@@ -4217,6 +4900,25 @@
     }
 
     document.getElementById('progressFill').style.width = '100%';
+
+    // Show/hide Next Lesson button based on whether there's a next chapter
+    // ready to play. If they finished the last available chapter, the next
+    // button is hidden and "Back to Home" becomes the only action.
+    const nextBtn = document.getElementById('completeNextBtn');
+    if (nextBtn) {
+      // Compute "what's the next unstarted lesson?" — note this runs AFTER
+      // we marked the current one complete above, so getCurrentLessonId()
+      // returns the NEXT one.
+      const nextId = getCurrentLessonId();
+      if (nextId) {
+        nextBtn.classList.remove('hidden');
+        const nextLesson = LESSONS[nextId];
+        nextBtn.textContent = `Next: Chapter ${nextLesson.chapter} →`;
+      } else {
+        nextBtn.classList.add('hidden');
+      }
+    }
+
     setTimeout(() => showScreen('screen-complete'), 300);
   }
 

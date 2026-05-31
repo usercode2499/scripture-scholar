@@ -87,6 +87,7 @@
       loadAudioBuffer('wrong-music.wav').then((buf) => { audio.sfxBuffers.wrong = buf; });
       loadAudioBuffer('levelup-music.mp3').then((buf) => { audio.sfxBuffers.levelup = buf; });
       loadAudioBuffer('complete-lesson.mp3').then((buf) => { audio.sfxBuffers.complete = buf; });
+      loadAudioBuffer('tap.mp3').then((buf) => { audio.sfxBuffers.tap = buf; });
     } catch (e) {
       console.warn('Audio init failed:', e);
     }
@@ -173,19 +174,57 @@
     playSfxBuffer(audio.sfxBuffers.complete);
   }
 
+  // Tap SFX — throttled so rapid taps don't stack into noise.
+  // Plays at lower gain so it sits underneath music + other SFX.
+  let lastTapTime = 0;
+  function playTapSfx() {
+    if (!state.audioSfx) return;
+    const now = performance.now();
+    if (now - lastTapTime < 50) return; // throttle: ignore taps closer than 50ms
+    lastTapTime = now;
+    const buffer = audio.sfxBuffers.tap;
+    if (!audio.ctx || !buffer) return;
+    if (audio.ctx.state === 'suspended') audio.ctx.resume().catch(() => {});
+    try {
+      const src = audio.ctx.createBufferSource();
+      src.buffer = buffer;
+      // Tap should be quieter than other SFX so it doesn't dominate
+      const tapGain = audio.ctx.createGain();
+      tapGain.gain.value = 0.5;
+      tapGain.connect(audio.sfxGain);
+      src.connect(tapGain);
+      src.start(0);
+    } catch (e) {}
+  }
+
   // ============ AUDIO LIFECYCLE ============
-  // Stops the background music when the app is closed, backgrounded,
-  // or the phone is locked. Resumes when the user returns (if they had it on).
+  // When the app is backgrounded (phone locked, switched apps), we DON'T
+  // stop the music — that would restart the loop on return. Instead we
+  // duck the volume to 0 so it keeps progressing silently, then restore
+  // the user's volume when the app comes back to the foreground.
+  //
+  // Music only fully stops when the page is closed/unloaded (pagehide).
   function pauseBgForLifecycle() {
-    if (audio.bgIsPlaying) {
-      pauseBgMusic();
+    if (audio.bgIsPlaying && audio.bgGain) {
+      audio.bgPreLifecycleVol = audio.bgGain.gain.value;
+      // Ramp to silence over 200ms for a smooth fade
+      const now = audio.ctx.currentTime;
+      audio.bgGain.gain.cancelScheduledValues(now);
+      audio.bgGain.gain.setValueAtTime(audio.bgGain.gain.value, now);
+      audio.bgGain.gain.linearRampToValueAtTime(0, now + 0.2);
       audio.bgPausedByLifecycle = true;
     }
   }
 
   function resumeBgFromLifecycle() {
-    if (audio.bgPausedByLifecycle && state.audioBg) {
-      playBgMusic();
+    if (audio.bgPausedByLifecycle && state.audioBg && audio.bgGain) {
+      const targetVol = (typeof audio.bgPreLifecycleVol === 'number')
+        ? audio.bgPreLifecycleVol
+        : (typeof state.audioBgVol === 'number' ? state.audioBgVol : 0.6);
+      const now = audio.ctx.currentTime;
+      audio.bgGain.gain.cancelScheduledValues(now);
+      audio.bgGain.gain.setValueAtTime(audio.bgGain.gain.value, now);
+      audio.bgGain.gain.linearRampToValueAtTime(targetVol, now + 0.3);
       audio.bgPausedByLifecycle = false;
     }
   }
@@ -198,13 +237,17 @@
     }
   });
 
+  // pagehide: only fires when the page is genuinely being unloaded
+  // (app closed, navigated away). This is when we actually stop.
   window.addEventListener('pagehide', () => {
     pauseBgMusic();
   });
 
   if ('onfreeze' in document) {
     document.addEventListener('freeze', () => {
-      pauseBgMusic();
+      // The page is being put in bfcache — duck rather than stop so audio
+      // resumes seamlessly if the user returns
+      pauseBgForLifecycle();
     });
   }
 
@@ -226,4 +269,27 @@
     state.audioBgVol = v;
     if (audio.bgGain) audio.bgGain.gain.value = v;
     saveState();
+  }
+
+  // ============ TAP SOUND DELEGATION ============
+  // Plays a soft tap chime on every button click. Single capturing listener
+  // delegated at document level so we don't need to wire every button manually.
+  // Excludes elements with data-no-tap-sound (e.g. landing START button).
+  function bindTapSoundDelegation() {
+    document.addEventListener('click', (e) => {
+      // Only buttons and elements with explicit role=button or .tap-sound class
+      const target = e.target.closest('button, [role="button"], .tap-sound, a.info-slide-btn, .info-dot, .scripture-section-header, .minigame-card, .daily-task');
+      if (!target) return;
+      if (target.hasAttribute('data-no-tap-sound')) return;
+      // Disabled controls shouldn't make sound — the click was a no-op
+      if (target.disabled) return;
+      playTapSfx();
+    }, true); // capture phase so we fire even if a handler stops propagation
+  }
+
+  // Auto-bind on script load (DOM is ready since this file is loaded before main script runs)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', bindTapSoundDelegation);
+  } else {
+    bindTapSoundDelegation();
   }

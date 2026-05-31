@@ -1,24 +1,24 @@
 // ============================================================
 // Scripture Scholar — Mini-Games Hub
 // ============================================================
-// Hub screen showing available and upcoming mini-games.
-// Each game is its own card; when implemented, replace the
-// comingSoon flag with an onclick handler that launches it.
+// Hub screen listing the practice mini-games. Games can be played
+// any time — no daily limit. Each game lives in its own file.
 //
 // Exports (global):
 //   MINI_GAMES        — game catalog
-//   openMiniGames()   — show the mini-games screen
-//   renderMiniGames() — populate the hub
+//   openMiniGames()   — open the hub
+//   renderMiniGames() — populate the cards
+//   launchMiniGame(id) — start a specific game
 // ============================================================
 
   const MINI_GAMES = [
     {
       id: 'verse_quiz',
-      title: 'Daily Verse Quiz',
-      description: 'One scripture-mastery question per day. Free XP for staying consistent.',
+      title: 'Verse Quiz',
+      description: 'Complete scripture passages by tapping word cards in the correct order. Play one at a time and continue at your own pace.',
       icon: '📜',
-      xpRange: '+5 XP',
-      comingSoon: true
+      xpRange: '+5 XP per correct answer',
+      launch: 'openVerseQuiz'  // function name to call when started
     },
     {
       id: 'speed_review',
@@ -39,6 +39,7 @@
   ];
 
   function openMiniGames() {
+    if (typeof renderDailyTasksCard === 'function') renderDailyTasksCard();
     renderMiniGames();
     if (typeof showScreen === 'function') showScreen('screen-mini-games');
   }
@@ -49,7 +50,7 @@
     grid.innerHTML = MINI_GAMES.map(game => {
       const soon = game.comingSoon;
       return `
-        <button class="minigame-card${soon ? ' coming-soon' : ''}" ${soon ? '' : `onclick="launchMiniGame('${game.id}')"`}>
+        <button class="minigame-card${soon ? ' coming-soon' : ''}" onclick="launchMiniGame('${game.id}')">
           <div class="minigame-icon">${game.icon}</div>
           <div class="minigame-body">
             <div class="minigame-title serif">${game.title}</div>
@@ -64,10 +65,16 @@
     }).join('');
   }
 
-  // Placeholder for when a real game is plugged in — currently nothing
-  // is launchable because all games are comingSoon: true.
   function launchMiniGame(gameId) {
-    if (typeof showToast === 'function') {
-      showToast(`🎮 ${gameId} coming soon`);
+    const game = MINI_GAMES.find(g => g.id === gameId);
+    if (!game) return;
+    if (game.comingSoon) {
+      if (typeof showToast === 'function') showToast(`🎮 ${game.title} — coming soon`);
+      return;
+    }
+    if (game.launch && typeof window[game.launch] === 'function') {
+      window[game.launch]();
+    } else {
+      if (typeof showToast === 'function') showToast(`Could not start ${game.title}`);
     }
   }
