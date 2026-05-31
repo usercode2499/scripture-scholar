@@ -2533,6 +2533,187 @@
   body.dark-mode .fg-note { background: var(--card); }
 
   /* =================================== */
+  /* === MULTIPLAYER (Group Trivia) === */
+  /* =================================== */
+  .minigame-new-pill {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    background: var(--gold);
+    color: var(--ink);
+    border-radius: 100px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    vertical-align: middle;
+  }
+
+  .mp-intro { text-align: center; padding: 8px 0 24px; }
+  .mp-intro-icon { font-size: 52px; margin-bottom: 10px; }
+  .mp-intro-title { font-size: 28px; font-weight: 700; color: var(--ink); margin: 0 0 8px; }
+  .mp-intro-sub { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0 0 16px; }
+  .mp-mock-banner {
+    font-size: 12.5px;
+    color: var(--gold-dark);
+    background: var(--gold-glow);
+    border: 1px solid var(--gold);
+    border-radius: 12px;
+    padding: 10px 14px;
+    line-height: 1.4;
+  }
+
+  .mp-home-actions { display: flex; flex-direction: column; gap: 12px; }
+  .mp-big-btn {
+    display: flex !important;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    padding: 18px 20px !important;
+    width: 100%;
+  }
+  .mp-big-btn-icon { font-size: 30px; flex-shrink: 0; }
+  .mp-big-btn-text { display: flex; flex-direction: column; gap: 2px; }
+  .mp-big-btn-text strong { font-size: 16px; }
+  .mp-big-btn-text small { font-size: 12px; opacity: 0.7; font-weight: 500; }
+
+  /* Join form */
+  .mp-join-form { text-align: center; padding: 8px 0; }
+  .mp-back-link, .mp-leave-link {
+    background: none; border: none; color: var(--ink-soft);
+    font-family: inherit; font-size: 13px; cursor: pointer; padding: 8px;
+    text-decoration: underline; -webkit-tap-highlight-color: transparent;
+  }
+  .mp-back-link { display: block; margin-bottom: 8px; text-align: left; }
+  .mp-leave-link { display: block; margin: 16px auto 0; }
+  .mp-code-input {
+    width: 100%; max-width: 240px; margin: 8px auto 6px; display: block;
+    padding: 16px; font-size: 28px; font-weight: 700; letter-spacing: 8px;
+    text-align: center; text-transform: uppercase;
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--ink); background: var(--card);
+    border: 2px solid var(--border); border-radius: 14px; outline: none;
+  }
+  .mp-code-input:focus { border-color: var(--gold); }
+  .mp-join-hint { font-size: 13px; color: var(--red); min-height: 18px; margin: 4px 0 14px; }
+
+  /* Lobby */
+  .mp-room-card {
+    text-align: center;
+    background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
+    border: 1px solid var(--gold); border-radius: 18px;
+    padding: 20px; margin-bottom: 22px;
+  }
+  .mp-room-label { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; }
+  .mp-room-code {
+    font-family: 'Cormorant Garamond', serif; font-size: 44px; font-weight: 700;
+    letter-spacing: 8px; color: var(--ink); margin: 4px 0 6px;
+  }
+  .mp-room-hint { font-size: 13px; color: var(--ink-soft); }
+  body.dark-mode .mp-room-card { background: linear-gradient(135deg, #3a2a18 0%, #2a1d10 100%); }
+
+  .mp-players-head {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 10px;
+  }
+  .mp-players-count {
+    background: var(--gold); color: var(--ink); border-radius: 100px;
+    min-width: 24px; height: 22px; display: inline-flex; align-items: center;
+    justify-content: center; padding: 0 8px; font-size: 13px;
+  }
+  .mp-players-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .mp-player-chip {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 12px;
+    animation: mpChipIn 0.3s ease;
+  }
+  .mp-player-chip.me { border-color: var(--gold); background: var(--gold-glow); }
+  @keyframes mpChipIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
+  .mp-player-avatar { font-size: 20px; }
+  .mp-player-name { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .mp-start-btn { width: 100%; }
+  .mp-waiting-spinner { text-align: center; color: var(--ink-soft); font-size: 14px; padding: 14px; font-style: italic; }
+
+  /* Gameplay */
+  .mp-game-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .mp-qcount { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; }
+  .mp-timer {
+    font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 700;
+    color: var(--gold-dark); min-width: 32px; text-align: right;
+  }
+  .mp-timer-track { height: 8px; background: var(--border); border-radius: 100px; overflow: hidden; margin-bottom: 20px; }
+  .mp-timer-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-dark)); border-radius: 100px; transition: width 0.1s linear; }
+  .mp-question { font-size: 21px; line-height: 1.4; color: var(--ink); font-weight: 700; margin-bottom: 22px; }
+  .mp-options { display: flex; flex-direction: column; gap: 11px; margin-bottom: 16px; }
+  .mp-option {
+    width: 100%; text-align: left; padding: 16px 18px;
+    background: var(--card); border: 1px solid var(--border);
+    border-bottom: 3px solid var(--border); border-radius: 14px;
+    font-size: 15px; font-weight: 600; color: var(--ink);
+    cursor: pointer; font-family: inherit;
+    transition: background 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mp-option:hover:not(:disabled) { background: var(--bg); }
+  .mp-option:active:not(:disabled) { transform: scale(0.99); }
+  .mp-option:disabled { cursor: default; }
+  .mp-option.picked-correct { background: rgba(107,142,61,0.16); border-color: var(--green); border-bottom-color: var(--green); color: var(--green); }
+  .mp-option.picked-wrong { background: rgba(196,82,60,0.14); border-color: var(--red); border-bottom-color: var(--red); color: var(--red); }
+  .mp-answered-count { text-align: center; font-size: 13px; color: var(--ink-soft); font-weight: 600; }
+  body.dark-mode .mp-option { background: var(--card); }
+
+  /* Results / leaderboard */
+  .mp-result-banner { text-align: center; font-size: 17px; font-weight: 700; padding: 14px; border-radius: 12px; margin-bottom: 12px; animation: cmScaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+  .mp-result-correct { background: rgba(107,142,61,0.16); color: var(--green); }
+  .mp-result-wrong { background: rgba(196,82,60,0.14); color: var(--red); }
+  .mp-correct-answer { text-align: center; font-size: 14px; color: var(--ink); margin-bottom: 10px; }
+  .mp-correct-answer strong { color: var(--gold-dark); }
+  .mp-note { font-size: 13px; line-height: 1.5; color: var(--ink-soft); background: var(--card); border: 1px solid var(--border-soft); border-radius: 12px; padding: 14px; margin-bottom: 20px; }
+  .mp-leaderboard-title, .mp-full-standings-title { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--ink-soft); font-weight: 700; margin-bottom: 10px; }
+  .mp-leaderboard, .mp-full-standings { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+  .mp-lb-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 12px;
+    transition: transform 0.3s ease;
+  }
+  .mp-lb-row.me { border-color: var(--gold); background: var(--gold-glow); }
+  .mp-lb-rank {
+    width: 24px; height: 24px; flex-shrink: 0; border-radius: 50%;
+    background: var(--border-soft); color: var(--ink-soft);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700;
+  }
+  .mp-lb-row:nth-child(1) .mp-lb-rank { background: #f3c948; color: #6b5018; }
+  .mp-lb-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mp-lb-delta { font-size: 12px; font-weight: 700; color: var(--green); }
+  .mp-lb-score { font-size: 15px; font-weight: 700; color: var(--gold-dark); min-width: 42px; text-align: right; }
+
+  /* Podium */
+  .mp-podium-screen { text-align: center; padding: 10px 0 20px; }
+  .mp-podium-icon { font-size: 56px; margin-bottom: 8px; }
+  .mp-podium-title { font-size: 28px; font-weight: 700; color: var(--ink); margin: 0 0 24px; }
+  .mp-podium { display: flex; align-items: flex-end; justify-content: center; gap: 8px; margin-bottom: 22px; }
+  .mp-podium-col { display: flex; flex-direction: column; align-items: center; flex: 1; max-width: 110px; }
+  .mp-podium-crown { font-size: 26px; margin-bottom: 2px; }
+  .mp-podium-name { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+  .mp-podium-bar {
+    width: 100%; border-radius: 12px 12px 0 0; display: flex; align-items: flex-start;
+    justify-content: center; padding-top: 10px; font-family: 'Cormorant Garamond', serif;
+    font-size: 26px; font-weight: 700; color: #fff;
+  }
+  .mp-podium-1 { height: 100px; background: linear-gradient(180deg, #f3c948, #d4a32c); }
+  .mp-podium-2 { height: 72px; background: linear-gradient(180deg, #c4ccd6, #a8b0bd); }
+  .mp-podium-3 { height: 54px; background: linear-gradient(180deg, #d49a6a, #b87333); }
+  .mp-podium-score { font-size: 15px; font-weight: 700; color: var(--gold-dark); margin-top: 6px; }
+  .mp-your-result { font-size: 15px; color: var(--ink); margin-bottom: 20px; line-height: 1.5; }
+  .mp-your-result strong { color: var(--gold-dark); }
+  .mp-full-standings { margin-bottom: 24px; text-align: left; }
+  .mp-podium-actions { display: flex; flex-direction: column; gap: 10px; }
+  .mp-podium-actions .btn { width: 100%; }
+
+  /* =================================== */
   /* === DAILY TASKS CARD === */
   /* =================================== */
 
@@ -4004,12 +4185,12 @@
           <!-- Slide 2: Announcements -->
           <div class="info-slide">
             <div class="info-slide-eyebrow">📢 Announcements</div>
-            <h3 class="info-slide-title serif">Two Mini-Games Now Live!</h3>
+            <h3 class="info-slide-title serif">Group Trivia is Here!</h3>
             <p class="info-slide-text">
-              Try the <strong>Verse Quiz</strong> and the new <strong>Fact Game</strong> — tap the 🎮 icon in the navbar to play and earn bonus XP anytime.
+              Try the new <strong>Group Trivia</strong> (preview) — host a room, invite others, and race up a live leaderboard. Plus the <strong>Verse Quiz</strong> and <strong>Fact Game</strong> are always ready in the 🎮 menu.
             </p>
             <p class="info-slide-text">
-              <strong>Speed Review</strong> and <strong>Reference Match</strong> are still on the way. The course now covers <strong>15 chapters</strong>, with more being added.
+              Real device-to-device multiplayer is coming soon. The course now covers <strong>15 chapters</strong>, with more on the way.
             </p>
           </div>
 
@@ -4163,6 +4344,15 @@
       <span class="detail-eyebrow-bar">Fact Game</span>
     </div>
     <div id="factGameContainer"></div>
+  </div>
+
+  <!-- MULTIPLAYER (Group Trivia) -->
+  <div class="screen hidden" id="screen-multiplayer">
+    <div class="detail-header">
+      <button class="back-btn" onclick="mpConfirmLeave()" aria-label="Back">←</button>
+      <span class="detail-eyebrow-bar">Group Trivia</span>
+    </div>
+    <div id="multiplayerContainer"></div>
   </div>
 
   <div class="screen hidden" id="screen-settings">
@@ -4469,6 +4659,7 @@
 <script src="feature-mini-games.js"></script>
 <script src="feature-verse-quiz.js"></script>
 <script src="feature-fact-game.js"></script>
+<script src="feature-multiplayer.js"></script>
 <script src="feature-badges.js"></script>
 
 <script>
@@ -4954,6 +5145,13 @@
     if (current === 'screen-fact-game') {
       openMiniGames();
       history.pushState({ s: 'app' }, '', location.href);
+      return;
+    }
+
+    // Multiplayer — back triggers the leave confirm
+    if (current === 'screen-multiplayer') {
+      history.pushState({ s: 'app' }, '', location.href);
+      mpConfirmLeave();
       return;
     }
 
@@ -5878,9 +6076,20 @@
   // full list appears in the history modal.
   const CHANGELOG = [
     {
-      version: 'Day 2 — Update 8',
+      version: 'Day 2 — Update 9',
       date: 'Latest',
       title: "What's New",
+      changes: [
+        'Group Trivia (preview) — play live trivia with a lobby & leaderboard',
+        'Host a room or join with a code',
+        'Live podium finish with rankings',
+        'Tapped icons now show their label right beside them'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 8',
+      date: 'Earlier',
+      title: 'Your Name & Polish',
       changes: [
         'Personalize your experience — set your name on first launch',
         'Your name now appears in the navbar and welcome screen',

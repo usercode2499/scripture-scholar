@@ -29,6 +29,15 @@
       launch: 'openFactGame'
     },
     {
+      id: 'group_trivia',
+      title: 'Group Trivia',
+      description: 'Play live with friends, family, or your class — everyone answers the same questions and races up the leaderboard.',
+      icon: '🎮',
+      xpRange: 'Multiplayer · Preview',
+      launch: 'openMultiplayer',
+      badge: 'NEW'
+    },
+    {
       id: 'speed_review',
       title: 'Speed Review',
       description: 'Type the missing word before time runs out. Quick rounds of verse fill-ins.',
@@ -71,11 +80,12 @@
           ? `<span class="minigame-resume-pill">Resume · Q${pos.current}/${pos.total}</span>`
           : `<span class="minigame-resume-pill">Resume</span>`;
       }
+      const newTag = game.badge === 'NEW' ? '<span class="minigame-new-pill">NEW</span>' : '';
       return `
         <button class="minigame-card${soon ? ' coming-soon' : ''}" onclick="launchMiniGame('${game.id}')">
           <div class="minigame-icon">${game.icon}</div>
           <div class="minigame-body">
-            <div class="minigame-title serif">${game.title}</div>
+            <div class="minigame-title serif">${game.title}${newTag}</div>
             <div class="minigame-desc">${game.description}</div>
             <div class="minigame-meta">
               <span class="minigame-xp">${game.xpRange}</span>
