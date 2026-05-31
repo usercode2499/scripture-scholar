@@ -275,7 +275,7 @@
 
       <div class="vq-actions">
         <button class="btn btn-ghost" onclick="onVqUndo()" ${vqState.selectedTiles.length === 0 ? 'disabled' : ''}>↶ Undo</button>
-        <button class="btn btn-gold" id="vqCheckBtn" onclick="onVqCheck()" ${vqState.selectedTiles.length < q.answers.length ? 'disabled' : ''}>Check</button>
+        <button class="btn btn-gold" id="vqCheckBtn" onclick="onVqCheck()" data-no-tap-sound ${vqState.selectedTiles.length < q.answers.length ? 'disabled' : ''}>Check</button>
       </div>
     `;
   }

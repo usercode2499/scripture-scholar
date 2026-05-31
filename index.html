@@ -241,18 +241,23 @@
     box-shadow: 0 4px 14px rgba(200, 155, 60, 0.25);
   }
   .stat-level-avatar {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     flex-shrink: 0;
     border-radius: 50%;
-    background: var(--gold);
-    border: 2px solid var(--card);
     color: var(--ink);
     font-size: 16px;
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
+  }
+  .stat-level-avatar svg { display: block; width: 100%; height: 100%; }
+  /* fallback styling only when showing the emoji placeholder (no SVG yet) */
+  .stat-level-avatar:not(:has(svg)) {
+    background: var(--gold);
+    border: 2px solid var(--card);
     box-shadow: 0 2px 6px rgba(0,0,0,0.18);
   }
   .stat-level-info {
@@ -261,12 +266,20 @@
     gap: 3px;
     min-width: 48px;
   }
+  .stat-level-name {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .stat-level-name:empty { display: none; }
   body.dark-mode .stat-level-profile {
     background: linear-gradient(135deg, #3a2a18 0%, #2a1d10 100%);
     border-color: var(--gold-dark);
-  }
-  body.dark-mode .stat-level-avatar {
-    border-color: var(--card);
   }
 
   .stat-level-top {
@@ -2142,8 +2155,7 @@
   /* =================================== */
 
   /* =================================== */
-  /* === VERSE QUIZ (mini-game) === */
-  /* =================================== */
+  /* === VERSE QUIZ (mini-game) === */  /* =================================== */
   .vq-header { margin-bottom: 18px; }
   .vq-progress-row {
     display: flex;
@@ -2355,6 +2367,127 @@
   body.dark-mode .vq-tile:hover { background: rgba(255,255,255,0.04); }
 
   /* =================================== */
+  /* === FACT GAME (mini-game) === */
+  /* =================================== */
+  .fg-header { margin-bottom: 20px; }
+  .fg-progress-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 8px;
+  }
+  .fg-progress-label {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 700;
+  }
+  .fg-progress-xp { font-size: 14px; font-weight: 700; color: var(--gold-dark); }
+  .fg-progress-track {
+    height: 8px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .fg-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+  .fg-question {
+    font-size: 21px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 22px;
+    font-weight: 700;
+  }
+  .fg-options {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+  }
+  .fg-option {
+    width: 100%;
+    text-align: left;
+    padding: 16px 18px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-bottom: 3px solid var(--border);
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s ease, transform 0.1s ease, border-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fg-option:hover:not(:disabled) { background: var(--bg); }
+  .fg-option:active:not(:disabled) { transform: scale(0.99); }
+  .fg-option:disabled { cursor: default; }
+  .fg-option.correct {
+    background: rgba(107, 142, 61, 0.14);
+    border-color: var(--green);
+    border-bottom-color: var(--green);
+    color: var(--green);
+  }
+  .fg-option.wrong {
+    background: rgba(196, 82, 60, 0.12);
+    border-color: var(--red);
+    border-bottom-color: var(--red);
+    color: var(--red);
+  }
+  .fg-result { margin-top: 22px; animation: cmScaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .fg-result-banner {
+    text-align: center;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 14px;
+  }
+  .fg-result-correct { background: rgba(107, 142, 61, 0.14); color: var(--green); }
+  .fg-result-wrong { background: rgba(196, 82, 60, 0.12); color: var(--red); }
+  .fg-note {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    background: var(--card);
+    border: 1px solid var(--border-soft);
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 8px;
+  }
+  .fg-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--gold-dark);
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  .fg-actions { display: flex; flex-direction: column; gap: 10px; }
+  .fg-actions .btn { width: 100%; }
+  .fg-complete { text-align: center; padding: 40px 20px; }
+  .fg-complete-icon { font-size: 64px; margin-bottom: 16px; }
+  .fg-complete-title { font-size: 30px; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+  .fg-complete-sub { font-size: 15px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 16px; }
+  .fg-complete-xp {
+    display: inline-block;
+    background: var(--gold-glow);
+    color: var(--gold-dark);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 8px 20px;
+    border-radius: 100px;
+    margin-bottom: 28px;
+  }
+  body.dark-mode .fg-option { background: var(--card); }
+  body.dark-mode .fg-note { background: var(--card); }
+
+  /* =================================== */
   /* === DAILY TASKS CARD === */
   /* =================================== */
 
@@ -2555,6 +2688,21 @@
     font-size: 13px;
     color: var(--ink-soft);
   }
+  .settings-name-input {
+    width: 130px;
+    padding: 9px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    text-align: right;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .settings-name-input:focus { border-color: var(--gold); }
 
   .settings-divider {
     height: 1px;
@@ -2931,27 +3079,47 @@
   }
 
   .level-modal-hero {
-    text-align: center;
-    padding: 12px 0 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0 20px;
     border-bottom: 1px solid var(--border-soft);
     margin-bottom: 20px;
   }
 
+  .level-modal-badge-btn {
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    flex-shrink: 0;
+    border-radius: 50%;
+    transition: transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .level-modal-badge-btn:active { transform: scale(0.93); }
+
   .level-modal-icon {
     font-size: 48px;
-    margin-bottom: 8px;
+    line-height: 1;
     filter: drop-shadow(0 4px 10px rgba(200, 155, 60, 0.3));
   }
 
+  .level-modal-hero-text {
+    flex: 1;
+    min-width: 0;
+    text-align: left;
+  }
+
   .level-modal-num {
-    font-size: 14px;
-    letter-spacing: 3px;
+    font-size: 13px;
+    letter-spacing: 2px;
     text-transform: uppercase;
     color: var(--gold-dark);
     font-weight: 700;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
   }
-  .level-modal-num span { color: var(--gold); font-size: 18px; }
+  .level-modal-num span { color: var(--gold); font-size: 16px; }
 
   .level-modal-title {
     font-family: 'Cormorant Garamond', serif;
@@ -2959,22 +3127,24 @@
     font-weight: 700;
     color: var(--ink);
     font-style: italic;
+    line-height: 1.1;
   }
   /* Make the title a button — visible affordance to expand the rank list */
   .level-modal-title-btn {
     display: inline-flex;
     flex-direction: column;
-    align-items: center;
-    gap: 4px;
+    align-items: flex-start;
+    gap: 2px;
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 12px;
-    transition: background 0.2s ease;
+    padding: 4px 0;
+    border-radius: 8px;
+    transition: opacity 0.2s ease;
     font-family: inherit;
+    text-align: left;
   }
-  .level-modal-title-btn:hover { background: var(--border-soft); }
+  .level-modal-title-btn:hover { opacity: 0.7; }
   .level-modal-title-hint {
     font-size: 10px;
     letter-spacing: 1px;
@@ -3027,40 +3197,40 @@
     padding: 10px 12px;
     border-radius: 10px;
     transition: background 0.2s ease;
+    width: 100%;
+    background: transparent;
+    border: none;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
   }
+  .level-list-item:active { background: var(--border-soft); }
   .level-list-item.locked { opacity: 0.5; }
-  .level-list-item.reached { opacity: 0.85; }
+  .level-list-item.reached { opacity: 0.9; }
   .level-list-item.current {
     background: linear-gradient(135deg, rgba(200, 155, 60, 0.16), rgba(200, 155, 60, 0.06));
     border: 1px solid var(--gold);
     margin: 4px 8px;
     padding: 12px;
   }
-  .level-list-num {
-    width: 28px;
-    height: 28px;
+  .level-list-badge {
+    width: 40px;
+    height: 40px;
     flex-shrink: 0;
-    border-radius: 50%;
-    background: var(--border-soft);
-    color: var(--ink-soft);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-weight: 700;
-    font-family: 'Cormorant Garamond', serif;
   }
-  .level-list-item.reached .level-list-num {
-    background: var(--green);
-    color: white;
-  }
-  .level-list-item.current .level-list-num {
-    background: var(--gold);
-    color: var(--ink);
-    font-size: 14px;
-    box-shadow: 0 0 0 4px var(--gold-glow);
-  }
+  .level-list-badge svg { display: block; width: 100%; height: 100%; }
+  .level-list-item.locked .level-list-badge { filter: grayscale(0.6); }
   .level-list-info { flex: 1; min-width: 0; }
+  .level-list-badgename {
+    font-size: 11px;
+    color: var(--gold-dark);
+    font-weight: 600;
+    margin-top: 2px;
+  }
   .level-list-title-row {
     display: flex;
     align-items: baseline;
@@ -3360,6 +3530,59 @@
     animation: fadeInUp 0.9s ease 0.5s both;
   }
 
+  /* Returning-user greeting */
+  .landing-greeting {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    line-height: 1.4;
+    color: var(--gold-light, #f7e08a);
+    font-style: italic;
+    margin-bottom: 8px;
+    animation: fadeInUp 0.9s ease 0.45s both;
+  }
+  .landing-greeting strong { font-weight: 700; color: #fff; }
+
+  /* New-user name input */
+  .landing-name-group {
+    animation: fadeInUp 0.9s ease 0.45s both;
+    margin-bottom: 30px;
+  }
+  .landing-name-label {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-style: italic;
+    color: rgba(247, 224, 138, 0.85);
+    margin-bottom: 14px;
+  }
+  .landing-name-input {
+    width: 100%;
+    max-width: 280px;
+    padding: 14px 18px;
+    font-size: 17px;
+    font-family: inherit;
+    text-align: center;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(247, 224, 138, 0.4);
+    border-radius: 14px;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .landing-name-input::placeholder { color: rgba(247, 224, 138, 0.4); }
+  .landing-name-input:focus {
+    border-color: var(--gold, #d4a73c);
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .landing-name-hint {
+    font-size: 13px;
+    color: #e88;
+    margin-top: 10px;
+    min-height: 16px;
+    animation: none;
+  }
+
   .landing-start-btn {
     display: inline-block;
     padding: 16px 56px;
@@ -3538,8 +3761,21 @@
     <div class="landing-eyebrow">✦ &nbsp; Welcome &nbsp; ✦</div>
     <h1 class="landing-title serif">Scripture<br/>Scholar</h1>
     <div class="landing-divider"></div>
-    <p class="landing-subtitle">A daily journey through<br/>the Book of Mormon</p>
-    <button class="landing-start-btn" onclick="enterApp()" aria-label="Start">START</button>
+
+    <!-- Returning user: greeting shown here -->
+    <p class="landing-greeting" id="landingGreeting" style="display:none;"></p>
+
+    <!-- New user: name input -->
+    <div class="landing-name-group" id="landingNameGroup" style="display:none;">
+      <label class="landing-name-label" for="landingNameInput">What should we call you?</label>
+      <input type="text" class="landing-name-input" id="landingNameInput" maxlength="20"
+             placeholder="Enter your name" autocomplete="off"
+             onkeydown="if(event.key==='Enter')enterApp()" />
+      <p class="landing-name-hint" id="landingNameHint"></p>
+    </div>
+
+    <p class="landing-subtitle" id="landingSubtitle">A daily journey through<br/>the Book of Mormon</p>
+    <button class="landing-start-btn" onclick="enterApp()" aria-label="Start" data-no-tap-sound>START</button>
     <p class="landing-hint">tap to begin</p>
   </div>
 </div>
@@ -3614,8 +3850,9 @@
     <div class="topbar-stats">
       <!-- Level on the FAR LEFT — acts as the user's "profile" pill -->
       <div class="stat stat-level stat-level-profile" id="levelPill" onclick="showLevelInfo()">
-        <div class="stat-level-avatar">📜</div>
+        <div class="stat-level-avatar" id="navBadgeAvatar">📜</div>
         <div class="stat-level-info">
+          <div class="stat-level-name" id="navUsername"></div>
           <div class="stat-level-top">
             <span>Lv</span>
             <span id="levelNum">1</span>
@@ -3722,12 +3959,12 @@
           <!-- Slide 2: Announcements -->
           <div class="info-slide">
             <div class="info-slide-eyebrow">📢 Announcements</div>
-            <h3 class="info-slide-title serif">Mini-Games Coming Soon</h3>
+            <h3 class="info-slide-title serif">Two Mini-Games Now Live!</h3>
             <p class="info-slide-text">
-              We're working on <strong>Speed Review</strong>, <strong>Reference Match</strong>, and a <strong>Daily Verse Quiz</strong> — quick rounds for bonus XP between full lessons.
+              Try the <strong>Verse Quiz</strong> and the new <strong>Fact Game</strong> — tap the 🎮 icon in the navbar to play and earn bonus XP anytime.
             </p>
             <p class="info-slide-text">
-              Daily Tasks are live now! Tap the 🎮 icon in the navbar to start earning bonus XP every day.
+              <strong>Speed Review</strong> and <strong>Reference Match</strong> are still on the way. The course now covers <strong>15 chapters</strong>, with more being added.
             </p>
           </div>
 
@@ -3874,13 +4111,35 @@
     <div id="verseQuizContainer"></div>
   </div>
 
+  <!-- FACT GAME (mini-game) -->
+  <div class="screen hidden" id="screen-fact-game">
+    <div class="detail-header">
+      <button class="back-btn" onclick="openMiniGames()" aria-label="Back">←</button>
+      <span class="detail-eyebrow-bar">Fact Game</span>
+    </div>
+    <div id="factGameContainer"></div>
+  </div>
+
   <div class="screen hidden" id="screen-settings">
     <div class="detail-header">
       <button class="back-btn" onclick="closeSettings()" aria-label="Back">←</button>
       <span class="detail-eyebrow-bar">Settings</span>
     </div>
 
-    <h2 class="settings-section-title serif">Sound</h2>
+    <h2 class="settings-section-title serif">Profile</h2>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div>
+          <div class="settings-row-title">Your Name</div>
+          <div class="settings-row-sub">Shown in your profile pill</div>
+        </div>
+        <input type="text" class="settings-name-input" id="settingsNameInput" maxlength="20"
+               placeholder="Your name" autocomplete="off"
+               onchange="saveUsernameFromSettings()" onblur="saveUsernameFromSettings()" />
+      </div>
+    </div>
+
+    <h2 class="settings-section-title serif" style="margin-top: 28px;">Sound</h2>
 
     <div class="settings-card">
       <div class="settings-row">
@@ -3997,7 +4256,7 @@
     </div>
     <div id="qFeedback"></div>
     <div class="footer-actions">
-      <button class="btn btn-gold hidden" id="btnCheck" onclick="checkAnswer()">Check Answer</button>
+      <button class="btn btn-gold hidden" id="btnCheck" onclick="checkAnswer()" data-no-tap-sound>Check Answer</button>
       <button class="btn btn-gold hidden" id="btnNext" onclick="nextQuestion()">Continue →</button>
     </div>
   </div>
@@ -4046,12 +4305,16 @@
     <button class="level-modal-close" onclick="closeLevelModal()" aria-label="Close">×</button>
 
     <div class="level-modal-hero">
-      <div class="level-modal-icon" id="lmBadgeIcon">📜</div>
-      <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
-      <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
-        <span class="level-modal-title" id="lmTitle">Initiate</span>
-        <span class="level-modal-title-hint">tap to see all ranks <span class="level-hint-arrow">▾</span></span>
+      <button class="level-modal-badge-btn" id="lmBadgeBtn" onclick="revealBadgeName('modal')" aria-label="Show badge name">
+        <div class="level-modal-icon" id="lmBadgeIcon">📜</div>
       </button>
+      <div class="level-modal-hero-text">
+        <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
+        <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
+          <span class="level-modal-title" id="lmTitle">Initiate</span>
+          <span class="level-modal-title-hint">tap to see all ranks <span class="level-hint-arrow">▾</span></span>
+        </button>
+      </div>
     </div>
 
     <!-- All-levels list (hidden by default, expanded by tapping the title) -->
@@ -4157,6 +4420,7 @@
 <script src="feature-daily-tasks.js"></script>
 <script src="feature-mini-games.js"></script>
 <script src="feature-verse-quiz.js"></script>
+<script src="feature-fact-game.js"></script>
 <script src="feature-badges.js"></script>
 
 <script>
@@ -4257,6 +4521,7 @@
   function saveState() {
     try {
       localStorage.setItem('scripture-scholar', JSON.stringify({
+        username: state.username,
         streak: state.streak,
         xp: state.xp,
         hints: state.hints,
@@ -4273,8 +4538,17 @@
   }
   function updateTopbar() {
     document.getElementById('streakCount').textContent = state.streak;
-    document.getElementById('levelNum').textContent = getLevel(state.xp);
+    const lvl = getLevel(state.xp);
+    document.getElementById('levelNum').textContent = lvl;
     document.getElementById('hintsCount').textContent = state.hints;
+    // Show the user's name in the profile pill (if set)
+    const nameEl = document.getElementById('navUsername');
+    if (nameEl) nameEl.textContent = state.username || '';
+    // Show the current level's badge in the navbar profile pill
+    const navBadge = document.getElementById('navBadgeAvatar');
+    if (navBadge && typeof renderBadgeSVG === 'function') {
+      navBadge.innerHTML = renderBadgeSVG(lvl, 30, false);
+    }
     updateLevelProgress();
   }
   function updateLevelProgress() {
@@ -4464,20 +4738,33 @@
       let stateClass = 'locked';
       if (isCurrent) stateClass = 'current';
       else if (isReached) stateClass = 'reached';
+      const badge = (typeof renderBadgeSVG === 'function') ? renderBadgeSVG(lvl, 40, false) : lvl;
+      const badgeName = (typeof getBadgeName === 'function') ? getBadgeName(lvl) : '';
       return `
-        <div class="level-list-item ${stateClass}">
-          <div class="level-list-num">${isReached ? (isCurrent ? '◉' : '✓') : lvl}</div>
+        <button class="level-list-item ${stateClass}" onclick="revealBadgeName('list', ${lvl})">
+          <div class="level-list-badge">${badge}</div>
           <div class="level-list-info">
             <div class="level-list-title-row">
               <span class="level-list-rank serif">${title}</span>
               <span class="level-list-lvl-tag">Lv ${lvl}</span>
             </div>
             <div class="level-list-xp">${xpReq.toLocaleString()} XP${isCurrent ? ' · You are here' : ''}</div>
+            <div class="level-list-badgename">🏅 ${badgeName}</div>
           </div>
-        </div>
+        </button>
       `;
     }).join('');
     scroll.innerHTML = html;
+  }
+
+  // Reveals the badge name. context 'modal' uses current level; 'list' uses
+  // the tapped level. Shows a toast naming the badge + tier.
+  function revealBadgeName(context, lvl) {
+    const level = (context === 'list' && lvl) ? lvl : getLevel(state.xp);
+    const name = (typeof getBadgeName === 'function') ? getBadgeName(level) : '';
+    const tier = (typeof getBadgeTier === 'function') ? getBadgeTier(level) : '';
+    const tierLabel = tier ? (tier.charAt(0).toUpperCase() + tier.slice(1) + ' badge') : '';
+    showToast(`🏅 ${name}${tierLabel ? ' — ' + tierLabel : ''}`);
   }
 
   function renderLevelModal() {
@@ -4603,6 +4890,13 @@
     // 3b. Verse Quiz mini-game — back returns to the hub WITHOUT clearing the
     //     session, so the user can resume from the same question.
     if (current === 'screen-verse-quiz') {
+      openMiniGames();
+      history.pushState({ s: 'app' }, '', location.href);
+      return;
+    }
+
+    // Fact Game — back returns to hub, preserving the session for resume
+    if (current === 'screen-fact-game') {
       openMiniGames();
       history.pushState({ s: 'app' }, '', location.href);
       return;
@@ -5437,7 +5731,24 @@
     }
     const darkToggle = document.getElementById('toggleDarkMode');
     if (darkToggle) darkToggle.checked = !!state.darkMode;
+    const nameInput = document.getElementById('settingsNameInput');
+    if (nameInput) nameInput.value = state.username || '';
     showScreen('screen-settings');
+  }
+
+  // Save the name edited in Settings. Ignores empty values (keeps old name).
+  function saveUsernameFromSettings() {
+    const input = document.getElementById('settingsNameInput');
+    if (!input) return;
+    const val = input.value.trim();
+    if (val.length >= 2) {
+      state.username = val;
+      saveState();
+      updateTopbar();
+    } else if (val.length === 0) {
+      // restore the displayed value to the existing name
+      input.value = state.username || '';
+    }
   }
 
   // Called when leaving Settings (back button or top-bar back arrow).
@@ -5460,9 +5771,32 @@
   // full list appears in the history modal.
   const CHANGELOG = [
     {
-      version: 'Day 2 — Update 6',
+      version: 'Day 2 — Update 8',
       date: 'Latest',
       title: "What's New",
+      changes: [
+        'Personalize your experience — set your name on first launch',
+        'Your name now appears in the navbar and welcome screen',
+        'Change your name anytime in Settings',
+        'Answer buttons no longer double up on sounds'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 7',
+      date: 'Earlier',
+      title: 'Badges & Fact Game',
+      changes: [
+        'New Fact Game — trivia about Book of Mormon people & events',
+        'Badges renamed after Book of Mormon artifacts',
+        'Level badge now shown in the navbar and rank list',
+        'Tap any badge or rank to reveal its name',
+        'Cleaner level profile layout'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 6',
+      date: 'Earlier',
+      title: 'More XP & New Chapters',
       changes: [
         'Bigger XP rewards across lessons, tasks & games',
         '5 new chapters added (2 Nephi 17 – Jacob 4)',
@@ -5692,6 +6026,7 @@
   renderLatestUpdate();
   initInfoCarousel();
   initBackHandling();
+  setupLandingForUser();
   // Show the brand block initially since home is the default screen
   document.getElementById('topbar').classList.add('with-brand');
 
@@ -5771,9 +6106,53 @@
     showScreen('screen-mini-games');
   }
 
+  // Configures the landing screen depending on whether the user has a name.
+  // New users see a name input; returning users see a personalized greeting.
+  function setupLandingForUser() {
+    const greeting = document.getElementById('landingGreeting');
+    const nameGroup = document.getElementById('landingNameGroup');
+    const subtitle = document.getElementById('landingSubtitle');
+    const hasName = state.username && state.username.trim().length > 0;
+    if (hasName) {
+      // Returning user — greet them by name, hide the input
+      greeting.innerHTML = `Welcome back,<br/><strong>${escapeHtml(state.username)}</strong>`;
+      greeting.style.display = 'block';
+      nameGroup.style.display = 'none';
+      if (subtitle) subtitle.style.display = 'none';
+    } else {
+      // New user — show the name input
+      greeting.style.display = 'none';
+      nameGroup.style.display = 'block';
+      if (subtitle) subtitle.style.display = 'none';
+    }
+  }
+
+  // Simple HTML escaper for user-supplied text
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
   function enterApp() {
     const landing = document.getElementById('landingOverlay');
     const splash = document.getElementById('splashOverlay');
+
+    // If this is a new user (no name yet), require a name before entering.
+    const hasName = state.username && state.username.trim().length > 0;
+    if (!hasName) {
+      const input = document.getElementById('landingNameInput');
+      const hint = document.getElementById('landingNameHint');
+      const entered = input ? input.value.trim() : '';
+      if (entered.length < 2) {
+        if (hint) hint.textContent = 'Please enter at least 2 characters.';
+        if (input) input.focus();
+        return; // don't proceed until a valid name is given
+      }
+      state.username = entered;
+      saveState();
+      updateTopbar(); // reflect the name in the navbar immediately
+    }
 
     // 0. Initialize audio NOW — this is the user-gesture moment browsers require
     //    before allowing audio playback. Start the looping background music.

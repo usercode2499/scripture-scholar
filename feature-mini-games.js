@@ -21,6 +21,14 @@
       launch: 'openVerseQuiz'  // function name to call when started
     },
     {
+      id: 'fact_game',
+      title: 'Fact Game',
+      description: 'Test your knowledge of Book of Mormon people, places, and events with quick trivia questions.',
+      icon: '🧠',
+      xpRange: '+10 XP per correct answer',
+      launch: 'openFactGame'
+    },
+    {
       id: 'speed_review',
       title: 'Speed Review',
       description: 'Type the missing word before time runs out. Quick rounds of verse fill-ins.',
@@ -53,6 +61,12 @@
       let resumeTag = '';
       if (game.id === 'verse_quiz' && typeof hasVerseQuizInProgress === 'function' && hasVerseQuizInProgress()) {
         const pos = (typeof getVerseQuizPosition === 'function') ? getVerseQuizPosition() : null;
+        resumeTag = pos
+          ? `<span class="minigame-resume-pill">Resume · Q${pos.current}/${pos.total}</span>`
+          : `<span class="minigame-resume-pill">Resume</span>`;
+      }
+      if (game.id === 'fact_game' && typeof hasFactGameInProgress === 'function' && hasFactGameInProgress()) {
+        const pos = (typeof getFactGamePosition === 'function') ? getFactGamePosition() : null;
         resumeTag = pos
           ? `<span class="minigame-resume-pill">Resume · Q${pos.current}/${pos.total}</span>`
           : `<span class="minigame-resume-pill">Resume</span>`;
