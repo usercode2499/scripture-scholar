@@ -2672,8 +2672,17 @@
   .mp-option:hover:not(:disabled) { background: var(--bg); }
   .mp-option:active:not(:disabled) { transform: scale(0.99); }
   .mp-option:disabled { cursor: default; }
+  .mp-option.selected {
+    background: var(--gold-glow);
+    border-color: var(--gold);
+    border-bottom-color: var(--gold-dark);
+    color: var(--gold-dark);
+  }
   .mp-option.picked-correct { background: rgba(107,142,61,0.16); border-color: var(--green); border-bottom-color: var(--green); color: var(--green); }
   .mp-option.picked-wrong { background: rgba(196,82,60,0.14); border-color: var(--red); border-bottom-color: var(--red); color: var(--red); }
+  .mp-submit-btn { width: 100%; margin: 16px 0 8px; }
+  .mp-submit-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .mp-submit-btn.mp-submit-locked { opacity: 1; background: var(--green); cursor: default; }
   .mp-answered-count { text-align: center; font-size: 13px; color: var(--ink-soft); font-weight: 600; }
   body.dark-mode .mp-option { background: var(--card); }
 
@@ -4199,12 +4208,12 @@
           <!-- Slide 2: Announcements -->
           <div class="info-slide">
             <div class="info-slide-eyebrow">📢 Announcements</div>
-            <h3 class="info-slide-title serif">Group Trivia is Here!</h3>
+            <h3 class="info-slide-title serif">Live Group Trivia!</h3>
             <p class="info-slide-text">
-              Try the new <strong>Group Trivia</strong> (preview) — host a room, invite others, and race up a live leaderboard. Plus the <strong>Verse Quiz</strong> and <strong>Fact Game</strong> are always ready in the 🎮 menu.
+              <strong>Group Trivia</strong> now plays live across phones — host a room, share the code, and everyone races up the leaderboard together in real time.
             </p>
             <p class="info-slide-text">
-              Real device-to-device multiplayer is coming soon. The course now covers <strong>15 chapters</strong>, with more on the way.
+              Plus the <strong>Verse Quiz</strong> and <strong>Fact Game</strong> are always ready in the 🎮 menu. The course now covers <strong>15 chapters</strong>, with more on the way.
             </p>
           </div>
 
@@ -6094,11 +6103,22 @@
   // full list appears in the history modal.
   const CHANGELOG = [
     {
-      version: 'Day 2 — Update 9',
+      version: 'Day 2 — Update 10',
       date: 'Latest',
       title: "What's New",
       changes: [
-        'Group Trivia (preview) — play live trivia with a lobby & leaderboard',
+        'Group Trivia is now LIVE across phones — real multiplayer!',
+        'Answer with a Submit button (select, then confirm)',
+        'Fact Game also uses select-then-submit now',
+        'Smoother, more reliable connection'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 9',
+      date: 'Earlier',
+      title: 'Group Trivia & Popovers',
+      changes: [
+        'Group Trivia — play live trivia with a lobby & leaderboard',
         'Host a room or join with a code',
         'Live podium finish with rankings',
         'Tapped icons now show their label right beside them'

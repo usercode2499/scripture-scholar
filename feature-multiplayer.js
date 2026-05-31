@@ -439,6 +439,7 @@
   function mpRenderQuestion(q) {
     const c = document.getElementById('multiplayerContainer');
     if (!c) return;
+    mpState.mySelectedIdx = null;
     c.innerHTML = `
       <div class="mp-game">
         <div class="mp-game-top">
@@ -449,9 +450,10 @@
         <div class="mp-question serif">${q.q}</div>
         <div class="mp-options" id="mpOptions">
           ${q.options.map((opt, i) => `
-            <button class="mp-option" data-no-tap-sound onclick="mpAnswer(${i})">${opt}</button>
+            <button class="mp-option" onclick="mpSelect(${i})">${opt}</button>
           `).join('')}
         </div>
+        <button class="btn btn-gold mp-submit-btn" id="mpSubmitBtn" onclick="mpSubmit()" data-no-tap-sound disabled>Submit Answer</button>
         <div class="mp-answered-count" id="mpAnsweredCount"></div>
       </div>
     `;
@@ -461,6 +463,25 @@
   function mpScore(secondsUsed) {
     const frac = Math.max(0, 1 - (secondsUsed / mpState.QUESTION_SECONDS));
     return Math.round(500 + 500 * frac);
+  }
+
+  // Step 1: highlight a choice (does not lock it in)
+  function mpSelect(choiceIdx) {
+    if (mpState.myAnswerIdx !== null && mpState.myAnswerIdx !== undefined) return;
+    mpState.mySelectedIdx = choiceIdx;
+    document.querySelectorAll('#mpOptions .mp-option').forEach((el, i) => {
+      el.classList.toggle('selected', i === choiceIdx);
+    });
+    const submitBtn = document.getElementById('mpSubmitBtn');
+    if (submitBtn) submitBtn.disabled = false;
+    if (typeof playTapSfx === 'function') playTapSfx();
+  }
+
+  // Step 2: lock in the selected answer
+  function mpSubmit() {
+    if (mpState.mySelectedIdx === null || mpState.mySelectedIdx === undefined) return;
+    if (mpState.myAnswerIdx !== null && mpState.myAnswerIdx !== undefined) return;
+    mpAnswer(mpState.mySelectedIdx);
   }
 
   async function mpAnswer(choiceIdx) {
@@ -473,8 +494,16 @@
 
     document.querySelectorAll('#mpOptions .mp-option').forEach((el, i) => {
       el.disabled = true;
+      el.classList.remove('selected');
       if (i === choiceIdx) el.classList.add(correct ? 'picked-correct' : 'picked-wrong');
     });
+    // Hide the submit button + show a locked-in note
+    const submitBtn = document.getElementById('mpSubmitBtn');
+    if (submitBtn) {
+      submitBtn.textContent = '✓ Answer locked in';
+      submitBtn.disabled = true;
+      submitBtn.classList.add('mp-submit-locked');
+    }
     if (typeof playSfx === 'function') playSfx(correct ? 'correct' : 'wrong');
 
     if (mpState.online && typeof mpFbSubmitAnswer === 'function') {
