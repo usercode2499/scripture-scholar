@@ -145,7 +145,15 @@
     mpState.me = mpMyName();
     mpState.roomCode = mpRandomCode();
 
-    if (mpState.online && typeof mpFbCreateRoom === 'function') {
+    // Ensure Firebase init has actually completed before deciding.
+    // (Reading a stale mpState.online caused it to fall into mock mode.)
+    let canUseFirebase = mpState.online;
+    if (!canUseFirebase && typeof mpFbInit === 'function') {
+      canUseFirebase = await mpFbInit();
+      mpState.online = canUseFirebase;
+    }
+
+    if (canUseFirebase && typeof mpFbCreateRoom === 'function') {
       // Real room
       const questions = mpGetQuestions(mpState.NUM_QUESTIONS);
       try {
@@ -213,7 +221,15 @@
     mpState.me = mpMyName();
     mpState.roomCode = code;
 
-    if (mpState.online && typeof mpFbJoinRoom === 'function') {
+    // Ensure init finished before deciding (avoid stale flag → mock bots)
+    let canUseFirebase = mpState.online;
+    if (!canUseFirebase && typeof mpFbInit === 'function') {
+      if (hint) hint.textContent = 'Connecting…';
+      canUseFirebase = await mpFbInit();
+      mpState.online = canUseFirebase;
+    }
+
+    if (canUseFirebase && typeof mpFbJoinRoom === 'function') {
       if (hint) hint.textContent = 'Joining…';
       try {
         const result = await mpFbJoinRoom(code, mpState.me);
