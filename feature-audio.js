@@ -1,9 +1,10 @@
 // ============================================================
 // Scripture Scholar — Audio System
 // ============================================================
-// Background music plays through the Web Audio API to keep it OUT
-// of the phone's OS media controls / notification shade. SFX use
-// short <audio> elements (too brief for OS to latch onto).
+// Background music AND short SFX all play through a single Web Audio
+// context. This keeps everything OUT of the phone's OS media controls
+// (no notification shade music app) and avoids the autoplay-unlock
+// issues that plague HTML <audio> elements on mobile.
 //
 // Exports (global):
 //   audio                  — the audio state object
@@ -13,6 +14,7 @@
 //   stopBgMusic()          — alias for pauseBgMusic
 //   playSfx('correct'|'wrong')
 //   playLevelUpSfx()
+//   playCompleteSfx()
 //   onToggleBgMusic(bool)  — settings toggle handler
 //   onToggleSfx(bool)
 //   onBgVolumeChange(0-100)
@@ -22,89 +24,69 @@
 // Calls:  saveState() (from main script)
 // ============================================================
 
-  // ============ AUDIO MANAGER ============
-  // Background music plays through the Web Audio API rather than <audio>
-  // elements, which keeps it OUT of the phone's OS media controls and
-  // notification shade. Short SFX (correct, wrong, levelup) still use
-  // <audio> for simplicity — they're too brief for the OS to latch onto.
   const audio = {
-    ctx: null,            // AudioContext (created on first user gesture)
-    bgBuffer: null,       // Decoded AudioBuffer for the loop
+    ctx: null,            // Single shared AudioContext
+    bgBuffer: null,       // Decoded AudioBuffer for the music loop
     bgSource: null,       // Currently playing BufferSource (if any)
-    bgGain: null,         // Gain node for volume control
+    bgGain: null,         // Gain node for music volume control
     bgIsPlaying: false,
     bgPausedByLifecycle: false,
-    correct: null,
-    wrong: null,
-    levelup: null,
+    bgPendingPlay: false,
+    sfxBuffers: {},       // { correct, wrong, levelup, complete } decoded AudioBuffers
+    sfxGain: null,        // Shared gain node for SFX volume
     initialized: false
   };
+
+  // Helper: fetch + decode an audio file into an AudioBuffer.
+  // Returns a promise. Logs errors but doesn't throw.
+  function loadAudioBuffer(url) {
+    return fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return res.arrayBuffer();
+      })
+      .then((buf) => audio.ctx.decodeAudioData(buf))
+      .catch((e) => {
+        console.warn('Failed to load audio:', url, e.message || e);
+        return null;
+      });
+  }
 
   function initAudio() {
     if (audio.initialized) return;
     audio.initialized = true;
     try {
-      // 1. Background music — Web Audio API (silent to OS media controls)
       const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (AudioCtx) {
-        audio.ctx = new AudioCtx();
-        audio.bgGain = audio.ctx.createGain();
-        audio.bgGain.gain.value = (typeof state.audioBgVol === 'number' ? state.audioBgVol : 0.6);
-        audio.bgGain.connect(audio.ctx.destination);
-
-        // Fetch + decode the loop. Once ready, we can start it.
-        fetch('background-music.mp3')
-          .then((res) => res.arrayBuffer())
-          .then((buf) => audio.ctx.decodeAudioData(buf))
-          .then((decoded) => {
-            audio.bgBuffer = decoded;
-            // If playBgMusic was requested before the decode finished, start now
-            if (audio.bgPendingPlay) {
-              audio.bgPendingPlay = false;
-              startBgSource();
-            }
-          })
-          .catch((e) => console.warn('Background music load failed:', e));
+      if (!AudioCtx) {
+        console.warn('Web Audio API not supported');
+        return;
       }
+      audio.ctx = new AudioCtx();
 
-      // 2. Short SFX — stay as <audio> elements
-      audio.correct = new Audio('correct-music.mp3');
-      audio.correct.volume = 0.7;
-      audio.correct.preload = 'auto';
+      // Gain node for background music
+      audio.bgGain = audio.ctx.createGain();
+      audio.bgGain.gain.value = (typeof state.audioBgVol === 'number' ? state.audioBgVol : 0.6);
+      audio.bgGain.connect(audio.ctx.destination);
 
-      audio.wrong = new Audio('wrong-music.mp3');
-      audio.wrong.volume = 0.7;
-      audio.wrong.preload = 'auto';
+      // Gain node for SFX (separate so volume can be controlled independently)
+      audio.sfxGain = audio.ctx.createGain();
+      audio.sfxGain.gain.value = 0.85; // a touch louder than music ceiling
+      audio.sfxGain.connect(audio.ctx.destination);
 
-      audio.levelup = new Audio('levelup-music.mp3');
-      audio.levelup.volume = 0.75;
-      audio.levelup.preload = 'auto';
-
-      [audio.correct, audio.wrong, audio.levelup].forEach((a) => {
-        a.addEventListener('error', () => {
-          console.warn('Audio file failed to load:', a.src);
-        });
-      });
-
-      // "Unlock" the SFX <audio> elements while we have a user gesture.
-      // Mobile browsers block .play() unless triggered by a gesture — but if we
-      // call play() then immediately pause() during the gesture, future programmatic
-      // play() calls will succeed (no gesture required afterward).
-      [audio.correct, audio.wrong, audio.levelup].forEach((a) => {
-        const wasMuted = a.muted;
-        a.muted = true;
-        const p = a.play();
-        if (p && typeof p.then === 'function') {
-          p.then(() => {
-            a.pause();
-            a.currentTime = 0;
-            a.muted = wasMuted;
-          }).catch(() => {
-            // Some browsers may still block — fall back gracefully
-            a.muted = wasMuted;
-          });
+      // Load background music
+      loadAudioBuffer('background-music.mp3').then((buf) => {
+        audio.bgBuffer = buf;
+        if (audio.bgPendingPlay && buf) {
+          audio.bgPendingPlay = false;
+          startBgSource();
         }
       });
+
+      // Load SFX in parallel
+      loadAudioBuffer('correct-music.wav').then((buf) => { audio.sfxBuffers.correct = buf; });
+      loadAudioBuffer('wrong-music.wav').then((buf) => { audio.sfxBuffers.wrong = buf; });
+      loadAudioBuffer('levelup-music.mp3').then((buf) => { audio.sfxBuffers.levelup = buf; });
+      loadAudioBuffer('complete-lesson.mp3').then((buf) => { audio.sfxBuffers.complete = buf; });
     } catch (e) {
       console.warn('Audio init failed:', e);
     }
@@ -114,11 +96,9 @@
   // BufferSources can only play once, so each pause/resume creates a fresh one.
   function startBgSource() {
     if (!audio.ctx || !audio.bgBuffer) return;
-    // Resume the context if it was suspended (mobile policies often suspend on background)
     if (audio.ctx.state === 'suspended') {
       audio.ctx.resume().catch(() => {});
     }
-    // Stop any previous source first
     if (audio.bgSource) {
       try { audio.bgSource.stop(); } catch (e) {}
       audio.bgSource = null;
@@ -144,11 +124,10 @@
     if (!state.audioBg) return;
     if (!audio.ctx) return;
     if (!audio.bgBuffer) {
-      // Decode still in flight — queue a play request
       audio.bgPendingPlay = true;
       return;
     }
-    if (audio.bgIsPlaying) return; // already playing
+    if (audio.bgIsPlaying) return;
     startBgSource();
   }
 
@@ -161,38 +140,38 @@
     pauseBgMusic();
   }
 
-  function playSfx(type) {
-    if (!state.audioSfx) return;
-    const sfx = type === 'correct' ? audio.correct : audio.wrong;
-    if (!sfx) return;
+  // Generic SFX player — plays any loaded buffer through the SFX gain node.
+  // Creates a fresh BufferSource each call (sources can only fire once).
+  function playSfxBuffer(buffer) {
+    if (!audio.ctx || !buffer) return;
+    if (audio.ctx.state === 'suspended') {
+      audio.ctx.resume().catch(() => {});
+    }
     try {
-      // Pause + reset first; some browsers reject overlapping play() calls
-      sfx.pause();
-      sfx.currentTime = 0;
-      const p = sfx.play();
-      if (p && typeof p.then === 'function') {
-        p.catch((e) => console.warn('SFX play rejected:', e.message));
-      }
+      const src = audio.ctx.createBufferSource();
+      src.buffer = buffer;
+      src.connect(audio.sfxGain);
+      src.start(0);
     } catch (e) {
       console.warn('SFX play failed:', e);
     }
   }
 
-  function playLevelUpSfx() {
+  function playSfx(type) {
     if (!state.audioSfx) return;
-    if (!audio.levelup) return;
-    try {
-      audio.levelup.pause();
-      audio.levelup.currentTime = 0;
-      const p = audio.levelup.play();
-      if (p && typeof p.then === 'function') {
-        p.catch((e) => console.warn('Level-up SFX rejected:', e.message));
-      }
-    } catch (e) {
-      console.warn('Level-up SFX failed:', e);
-    }
+    const buffer = type === 'correct' ? audio.sfxBuffers.correct : audio.sfxBuffers.wrong;
+    playSfxBuffer(buffer);
   }
 
+  function playLevelUpSfx() {
+    if (!state.audioSfx) return;
+    playSfxBuffer(audio.sfxBuffers.levelup);
+  }
+
+  function playCompleteSfx() {
+    if (!state.audioSfx) return;
+    playSfxBuffer(audio.sfxBuffers.complete);
+  }
 
   // ============ AUDIO LIFECYCLE ============
   // Stops the background music when the app is closed, backgrounded,
@@ -211,8 +190,6 @@
     }
   }
 
-  // visibilitychange: fires when tab/app is hidden or shown.
-  // On Android, this fires when the user switches apps OR locks the phone.
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
       pauseBgForLifecycle();
@@ -221,30 +198,22 @@
     }
   });
 
-  // pagehide: fires when navigating away or the page is being unloaded.
   window.addEventListener('pagehide', () => {
     pauseBgMusic();
-    if (audio.correct) audio.correct.pause();
-    if (audio.wrong) audio.wrong.pause();
-    if (audio.levelup) audio.levelup.pause();
   });
 
-  // freeze: newer event for when page is put into back-forward cache.
   if ('onfreeze' in document) {
     document.addEventListener('freeze', () => {
       pauseBgMusic();
     });
   }
 
-  // Settings toggle handlers
+  // ============ SETTINGS HANDLERS ============
   function onToggleBgMusic(enabled) {
     state.audioBg = enabled;
+    if (enabled) playBgMusic();
+    else pauseBgMusic();
     saveState();
-    if (enabled) {
-      playBgMusic();
-    } else {
-      stopBgMusic();
-    }
   }
 
   function onToggleSfx(enabled) {
@@ -253,7 +222,6 @@
   }
 
   function onBgVolumeChange(val) {
-    // val is 0-100, convert to 0-1
     const v = Math.max(0, Math.min(1, parseInt(val, 10) / 100));
     state.audioBgVol = v;
     if (audio.bgGain) audio.bgGain.gain.value = v;

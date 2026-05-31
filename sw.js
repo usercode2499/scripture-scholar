@@ -4,7 +4,7 @@
 
 // Bump this version when you push significant content updates,
 // so installed PWAs pick up the new cache. e.g. 'v2', 'v3', etc.
-const CACHE_VERSION = 'scripture-scholar-v4';
+const CACHE_VERSION = 'scripture-scholar-v6';
 
 // Files that make up the app shell (everything needed for first paint).
 const APP_SHELL = [
@@ -15,9 +15,10 @@ const APP_SHELL = [
   './icon-512.png',
   './apple-touch-icon.png',
   './background-music.mp3',
-  './correct-music.mp3',
-  './wrong-music.mp3',
+  './correct-music.wav',
+  './wrong-music.wav',
   './levelup-music.mp3',
+  './complete-lesson.mp3',
   './data-lessons.js',
   './feature-audio.js',
   './feature-effects.js',

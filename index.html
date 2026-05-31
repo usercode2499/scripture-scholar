@@ -4200,6 +4200,11 @@
       }, 500);
     } else {
       callout.classList.add('hidden');
+      // No level-up — play the standard lesson-complete chime instead
+      // (so every finish gets some audio feedback, but they don't overlap)
+      setTimeout(() => {
+        if (typeof playCompleteSfx === 'function') playCompleteSfx();
+      }, 500);
     }
 
     // Dynamic completion text
