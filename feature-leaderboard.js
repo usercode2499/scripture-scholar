@@ -112,13 +112,12 @@
     const badge = (level, size) => (typeof renderBadgeSVG === 'function')
       ? renderBadgeSVG(level, size || 38, false) : '';
 
-    const rowHtml = rows.map((r, i) => {
-      const rankNum = i + 1;
-      const rankClass = i === 0 ? 'gold' : (i === 1 ? 'silver' : (i === 2 ? 'bronze' : ''));
+    // Builds a standard leaderboard row for a given rank (1-indexed).
+    const buildRow = (r, rankNum) => {
+      const rankClass = rankNum === 1 ? 'gold' : (rankNum === 2 ? 'silver' : (rankNum === 3 ? 'bronze' : ''));
       const rankIcon = (typeof rankTrophy === 'function')
         ? rankTrophy(rankNum, 38)
         : `<span>${rankNum}</span>`;
-      // Build an avatar (preset or photo) with the badge overlaid; tappable to reveal name
       let avatarHtml;
       if (typeof renderAvatar === 'function') {
         const av = r.avatar || { type: 'preset', preset: 'scroll' };
@@ -140,7 +139,36 @@
           <div class="lb-xp"><strong>${r.xp.toLocaleString()}</strong><span>XP</span></div>
         </div>
       `;
-    }).join('');
+    };
+
+    // Champion card for rank 1 — big, crowned, gold.
+    const champ = rows[0];
+    let championHtml = '';
+    if (champ) {
+      let champAvatar;
+      if (typeof renderAvatar === 'function') {
+        const av = champ.avatar || { type: 'preset', preset: 'scroll' };
+        champAvatar = renderAvatar({
+          avatar: av, level: champ.level, size: 84, showBadge: true, badgeSize: 34,
+          badgeOnclick: `revealBadgeName('champ', ${champ.level}, event)`
+        });
+      } else {
+        champAvatar = badge(champ.level, 72);
+      }
+      championHtml = `
+        <div class="lb-champion${champ.isMe ? ' me' : ''}">
+          <div class="lb-champion-crown">👑</div>
+          <div class="lb-champion-label">Top Scholar</div>
+          <div class="lb-champion-avatar">${champAvatar}</div>
+          <div class="lb-champion-name serif">${escapeHtmlLb(champ.name)}${champ.isMe ? ' <span class="lb-you">you</span>' : ''}</div>
+          <div class="lb-champion-sub">Lv ${champ.level} · ${escapeHtmlLb(champ.badgeName)}</div>
+          <div class="lb-champion-xp">${champ.xp.toLocaleString()} <span>XP</span></div>
+        </div>
+      `;
+    }
+
+    // Ranks 2+ go in the list (where rank 1 used to be).
+    const restHtml = rows.slice(1).map((r, i) => buildRow(r, i + 2)).join('');
 
     c.innerHTML = `
       <div class="lb-header-card">
@@ -148,7 +176,8 @@
         <div class="lb-subtitle">All-time rankings by total XP</div>
         ${myRank ? `<div class="lb-myrank">You're <strong>#${myRank}</strong> of ${rows.length}</div>` : ''}
       </div>
-      <div class="lb-list">${rowHtml}</div>
+      ${championHtml}
+      ${restHtml ? `<div class="lb-list">${restHtml}</div>` : ''}
       <button class="lb-refresh" onclick="openLeaderboard()">↻ Refresh</button>
       <p class="lb-note">Rankings update when players open this screen. Keep learning to climb! 📖</p>
     `;

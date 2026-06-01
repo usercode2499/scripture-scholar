@@ -61,6 +61,9 @@
     NUM_QUESTIONS: 10,
     categories: [],        // host-selected category ids (empty = all)
     countdownInterval: null,
+    bannerInterval: null,
+    _timerAudio: null,
+    _tickPlayed: false,
     botTimers: [],
     lastStatus: null,     // track room status transitions (firebase mode)
     committing: false,
@@ -99,7 +102,12 @@
   function mpReset() {
     if (mpState.timerInterval) clearInterval(mpState.timerInterval);
     if (mpState.countdownInterval) clearInterval(mpState.countdownInterval);
+    if (mpState.bannerInterval) clearInterval(mpState.bannerInterval);
     mpState.countdownInterval = null;
+    mpState.bannerInterval = null;
+    if (typeof mpStopTimerSound === 'function') mpStopTimerSound();
+    const banner = document.getElementById('mpBannerOverlay');
+    if (banner) banner.classList.add('hidden');
     mpState.botTimers.forEach(t => clearTimeout(t));
     mpState.botTimers = [];
     if (typeof mpFbStopWatching === 'function') mpFbStopWatching();
@@ -721,25 +729,117 @@
   function mpShowQuestionLive() {
     const q = mpState.questions[mpState.currentIdx];
     if (!q) return;
+
+    // Decide whether to show a pre-question banner overlay:
+    //  • game start (first question)  → "The game will start in"
+    //  • entering the last 3 (Q8)     → "Last 3 questions!"
+    //  • the final question (Q10)     → "Final question!"
+    const total = mpState.questions.length;
+    const num = mpState.currentIdx + 1;        // 1-indexed
+    const isFirst = mpState.currentIdx === 0;
+    const isLast = num === total;
+    const isLastThreeStart = (total >= 3) && (num === total - 2);
+
+    let banner = null;
+    if (isFirst) {
+      banner = { caption: 'The game will start in', seconds: 3, kind: 'start' };
+    } else if (isLast) {
+      banner = { caption: 'Final question!', seconds: 3, kind: 'final' };
+    } else if (isLastThreeStart) {
+      banner = { caption: 'Last 3 questions!', seconds: 3, kind: 'lastthree' };
+    }
+
+    if (banner) {
+      mpShowBanner(banner.caption, banner.seconds, banner.kind, () => mpRunQuestionTimer(q));
+    } else {
+      mpRunQuestionTimer(q);
+    }
+  }
+
+  // Renders the question and starts the per-question timer.
+  function mpRunQuestionTimer(q) {
     mpState.timeLeft = mpState.QUESTION_SECONDS;
     mpRenderQuestion(q);
-    // Local countdown synced to server start time
     if (mpState.timerInterval) clearInterval(mpState.timerInterval);
+    mpState._tickPlayed = false;
     mpState.timerInterval = setInterval(() => {
-      // Compute remaining from server start if we have it
       mpState.timeLeft -= 0.1;
       const fill = document.getElementById('mpTimerFill');
       const tnum = document.getElementById('mpTimer');
       if (fill) fill.style.width = Math.max(0, (mpState.timeLeft / mpState.QUESTION_SECONDS) * 100) + '%';
       if (tnum) tnum.textContent = Math.ceil(Math.max(0, mpState.timeLeft));
+      // Final-3-seconds timer sound (looped via the audio element until time ends)
+      if (!mpState._tickPlayed && mpState.timeLeft <= 3 && mpState.timeLeft > 0) {
+        mpState._tickPlayed = true;
+        mpPlayTimerSound();
+      }
       if (mpState.timeLeft <= 0) {
         clearInterval(mpState.timerInterval);
-        // Host triggers the reveal for everyone when time runs out
+        mpStopTimerSound();
         if (mpState.mode === 'host' && typeof mpFbReveal === 'function') {
           mpFbReveal(mpState.roomCode);
         }
       }
     }, 100);
+  }
+
+  // ===== Full-screen banner overlay (game start / last-3 / final) =====
+  function mpShowBanner(caption, seconds, kind, done) {
+    // Build (or reuse) the overlay element appended to the container.
+    let overlay = document.getElementById('mpBannerOverlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'mpBannerOverlay';
+      overlay.className = 'mp-banner-overlay';
+      document.body.appendChild(overlay);
+    }
+    overlay.className = 'mp-banner-overlay mp-banner-' + (kind || 'start');
+    overlay.innerHTML = `
+      <div class="mp-banner-inner">
+        <div class="mp-banner-caption">${caption}</div>
+        <div class="mp-banner-num" id="mpBannerNum">${seconds}</div>
+      </div>
+    `;
+    overlay.classList.remove('hidden');
+    let remaining = seconds;
+    const numEl = document.getElementById('mpBannerNum');
+    if (numEl) mpPulseCountdown(numEl);
+    if (mpState.bannerInterval) clearInterval(mpState.bannerInterval);
+    mpState.bannerInterval = setInterval(() => {
+      remaining -= 1;
+      const el = document.getElementById('mpBannerNum');
+      if (remaining > 0) {
+        if (el) { el.textContent = remaining; mpPulseCountdown(el); }
+      } else {
+        clearInterval(mpState.bannerInterval);
+        mpState.bannerInterval = null;
+        overlay.classList.add('hidden');
+        if (typeof done === 'function') done();
+      }
+    }, 1000);
+  }
+
+  // ===== Per-question final-seconds timer sound =====
+  function mpPlayTimerSound() {
+    try {
+      if (typeof state !== 'undefined' && state && state.audioSfx === false) return;
+      let a = mpState._timerAudio;
+      if (!a) {
+        a = new Audio('3-seconds.mp3');
+        a.loop = true;
+        mpState._timerAudio = a;
+      }
+      a.currentTime = 0;
+      const v = (typeof state !== 'undefined' && state && typeof state.audioSfxVol === 'number') ? state.audioSfxVol : 0.7;
+      a.volume = v;
+      a.play().catch(() => {});
+    } catch (e) {}
+  }
+  function mpStopTimerSound() {
+    try {
+      const a = mpState._timerAudio;
+      if (a) { a.pause(); a.currentTime = 0; }
+    } catch (e) {}
   }
 
   // Host-only: if everyone has answered, reveal early
