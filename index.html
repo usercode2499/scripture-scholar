@@ -2902,7 +2902,8 @@
     font-size: 16px; font-weight: 800; color: var(--ink-soft);
   }
   .lb-rank.gold, .lb-rank.silver, .lb-rank.bronze { font-size: 22px; }
-  .lb-badge { flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+  .lb-badge { flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: none; border: none; padding: 0; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .lb-badge:active { transform: scale(0.9); }
   .lb-info { flex: 1; min-width: 0; }
   .lb-name { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .lb-you { font-size: 10px; background: var(--gold); color: var(--ink); padding: 1px 7px; border-radius: 100px; font-weight: 800; vertical-align: middle; margin-left: 4px; }

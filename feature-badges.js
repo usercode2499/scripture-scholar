@@ -21,34 +21,35 @@
 //   renderBadgeSVG(level, size) -> SVG markup string
 // ============================================================
 
-  // Badge names per level. User-specified where given; rest are themed
-  // placeholders that can be renamed anytime.
+  // Badge names per level — Book of Mormon artifacts and objects.
+  // Levels 20–25 are fixed (the great sacred relics). Levels 1–19 progress
+  // through everyday-to-significant objects found across the Book of Mormon.
   const BADGE_NAMES = [
-    'Basic Scroll',            // 1  (bronze)
-    "Nephi's Wooden Bow",      // 2
-    'Clay Oil Lamp',           // 3
-    'Olive Branch',            // 4
-    'Stone Altar',             // 5
-    'Shepherd\u2019s Staff',   // 6
-    'Wax Seal',                // 7
-    'Reed Pen',                // 8
-    'Woven Sandals',           // 9
-    'Silver Cup',              // 10 (silver)
-    'Bronze Compass',          // 11
-    'Engraved Ring',           // 12
-    'Oil Flask',               // 13
-    'Bound Codex',             // 14
-    'Temple Veil',             // 15
-    'Crown of Olive',          // 16
-    'Silver Trumpet',          // 17
-    'Anointing Horn',          // 18
-    'Pillar of Stone',         // 19
-    'Brass Plates',            // 20 (gold)
-    'Liahona',                 // 21
-    'Sword of Laban',          // 22
-    "Seer\u2019s Stone",       // 23
-    'Gold Plates',             // 24
-    'Sealed Plates'            // 25
+    'Bronze Scroll',               // 1  (bronze)
+    "Nephi\u2019s Wooden Bow",     // 2
+    'Iron Rod',                    // 3
+    'Mustard Seed',                // 4
+    'Bronze Liahona',              // 5
+    "Ammon\u2019s Slingshot",      // 6
+    'Watchman',                    // 7
+    'Trumpet',                     // 8
+    'Bronze Tree of Life',         // 9
+    'Silver Scroll',               // 10 (silver)
+    'Pillar of Fire',              // 11
+    'Breastplate of Righteousness',// 12
+    'Sword of the Spirit',         // 13
+    'Silver Liahona',              // 14
+    'Helmet of Salvation',         // 15
+    'Shield of Faith',             // 16
+    'Ensign of Truth',             // 17
+    'Silver Tree of Life',         // 18
+    'Title of Liberty',            // 19
+    'Brass Plates',                // 20 (gold)
+    'Liahona',                     // 21
+    'Sword of Laban',              // 22
+    "Seer\u2019s Stone",           // 23
+    'Gold Plates',                 // 24
+    'Sealed Plates'                // 25
   ];
 
   function getBadgeTier(level) {
@@ -72,25 +73,44 @@
   // within x/y 28-72. Uses currentColor (set to the tier's emblem color).
   // Kept simple/iconographic — placeholders for richer art later.
   const BADGE_EMBLEMS = {
-    1: '<g><rect x="34" y="34" width="32" height="32" rx="3" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="34" cy="34" r="4" fill="currentColor"/><circle cx="66" cy="66" r="4" fill="currentColor"/><line x1="40" y1="44" x2="60" y2="44" stroke="currentColor" stroke-width="2.5"/><line x1="40" y1="52" x2="60" y2="52" stroke="currentColor" stroke-width="2.5"/></g>',
-    2: '<g><path d="M 38,30 Q 64,50 38,70" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><line x1="38" y1="30" x2="38" y2="70" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/><polygon points="58,46 66,50 58,54" fill="currentColor"/></g>',
-    3: '<g><ellipse cx="50" cy="56" rx="16" ry="9" fill="none" stroke="currentColor" stroke-width="3"/><path d="M 58,52 Q 68,48 64,40" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M 64,40 Q 62,36 66,34" fill="currentColor" stroke="currentColor" stroke-width="2"/></g>',
-    4: '<g><path d="M 50,68 Q 50,44 50,34" fill="none" stroke="currentColor" stroke-width="3"/><path d="M 50,46 Q 40,40 34,44 Q 42,48 50,48" fill="currentColor"/><path d="M 50,54 Q 60,48 66,52 Q 58,56 50,56" fill="currentColor"/><path d="M 50,40 Q 44,34 40,36 Q 46,40 50,42" fill="currentColor"/></g>',
-    5: '<g><rect x="34" y="50" width="32" height="14" rx="2" fill="currentColor"/><rect x="38" y="42" width="24" height="10" rx="2" fill="currentColor" opacity="0.8"/><rect x="42" y="36" width="16" height="8" rx="2" fill="currentColor" opacity="0.6"/></g>',
-    6: '<g><path d="M 44,32 Q 36,32 36,40 L 36,44" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><line x1="44" y1="32" x2="58" y2="70" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></g>',
-    7: '<g><circle cx="50" cy="50" r="15" fill="currentColor"/><path d="M 50,42 L 53,50 L 50,58 L 47,50 Z" fill="#7a4a1e"/></g>',
-    8: '<g><line x1="40" y1="64" x2="62" y2="38" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><path d="M 62,38 L 66,34 L 64,42 Z" fill="currentColor"/><line x1="38" y1="66" x2="44" y2="62" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></g>',
-    9: '<g><path d="M 38,42 L 62,42 L 58,64 L 42,64 Z" fill="none" stroke="currentColor" stroke-width="3"/><line x1="44" y1="42" x2="44" y2="36" stroke="currentColor" stroke-width="2.5"/><line x1="56" y1="42" x2="56" y2="36" stroke="currentColor" stroke-width="2.5"/></g>',
-    10: '<g><path d="M 40,40 L 60,40 L 56,58 Q 50,64 44,58 Z" fill="currentColor"/><line x1="50" y1="64" x2="50" y2="70" stroke="currentColor" stroke-width="3"/><line x1="42" y1="70" x2="58" y2="70" stroke="currentColor" stroke-width="3"/></g>',
-    11: '<g><circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" stroke-width="3"/><polygon points="50,38 54,50 50,62 46,50" fill="currentColor"/><circle cx="50" cy="50" r="3" fill="currentColor"/></g>',
-    12: '<g><circle cx="50" cy="50" r="13" fill="none" stroke="currentColor" stroke-width="3.5"/><rect x="46" y="30" width="8" height="10" rx="2" fill="currentColor"/></g>',
-    13: '<g><path d="M 44,36 L 56,36 L 56,42 Q 64,48 64,58 Q 64,68 50,68 Q 36,68 36,58 Q 36,48 44,42 Z" fill="none" stroke="currentColor" stroke-width="3"/></g>',
-    14: '<g><rect x="36" y="36" width="28" height="30" rx="2" fill="none" stroke="currentColor" stroke-width="3"/><line x1="50" y1="36" x2="50" y2="66" stroke="currentColor" stroke-width="2.5"/><line x1="42" y1="44" x2="46" y2="44" stroke="currentColor" stroke-width="2"/><line x1="54" y1="44" x2="58" y2="44" stroke="currentColor" stroke-width="2"/></g>',
-    15: '<g><path d="M 36,34 L 64,34 L 64,40 Q 50,46 36,40 Z" fill="currentColor"/><path d="M 38,40 Q 50,46 62,40 L 60,68 L 40,68 Z" fill="none" stroke="currentColor" stroke-width="3"/></g>',
-    16: '<g><path d="M 34,58 L 38,42 L 46,52 L 50,36 L 54,52 L 62,42 L 66,58 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><circle cx="50" cy="36" r="2.5" fill="currentColor"/></g>',
-    17: '<g><path d="M 34,46 L 56,40 L 56,60 L 34,54 Z" fill="currentColor"/><rect x="56" y="44" width="12" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="3"/></g>',
-    18: '<g><path d="M 38,40 Q 60,40 64,60 Q 50,58 42,66 Q 40,52 38,40 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></g>',
-    19: '<g><rect x="42" y="34" width="16" height="32" fill="none" stroke="currentColor" stroke-width="3"/><rect x="38" y="30" width="24" height="6" fill="currentColor"/><rect x="38" y="66" width="24" height="6" fill="currentColor"/></g>',
+    // 1: Bronze Scroll — a rolled scroll
+    1: '<g><rect x="38" y="36" width="24" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="3"/><line x1="43" y1="44" x2="57" y2="44" stroke="currentColor" stroke-width="2"/><line x1="43" y1="50" x2="57" y2="50" stroke="currentColor" stroke-width="2"/><line x1="43" y1="56" x2="53" y2="56" stroke="currentColor" stroke-width="2"/><path d="M 38,36 Q 34,40 38,44 M 62,56 Q 66,60 62,64" stroke="currentColor" stroke-width="2.5" fill="none"/></g>',
+    // 2: Nephi's Wooden Bow — a bow and arrow
+    2: '<g><path d="M 40,30 Q 64,50 40,70" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><line x1="40" y1="30" x2="40" y2="70" stroke="currentColor" stroke-width="2"/><line x1="38" y1="50" x2="66" y2="50" stroke="currentColor" stroke-width="2.5"/><polygon points="66,50 60,46 60,54" fill="currentColor"/></g>',
+    // 3: Iron Rod — a straight rod
+    3: '<g><line x1="36" y1="64" x2="64" y2="36" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><circle cx="64" cy="36" r="4" fill="currentColor"/><circle cx="36" cy="64" r="4" fill="currentColor"/></g>',
+    // 4: Mustard Seed — a small seed sprouting
+    4: '<g><circle cx="50" cy="58" r="7" fill="currentColor"/><path d="M 50,52 Q 50,40 44,36 M 50,52 Q 50,42 58,38" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><ellipse cx="42" cy="35" rx="4" ry="2.5" fill="currentColor" transform="rotate(-30 42 35)"/><ellipse cx="59" cy="37" rx="4" ry="2.5" fill="currentColor" transform="rotate(30 59 37)"/></g>',
+    // 5: Bronze Liahona — a round ball with spindles
+    5: '<g><circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="32" r="2.5" fill="currentColor"/><polygon points="50,42 53,50 50,58 47,50" fill="currentColor"/><polygon points="42,50 50,47 58,50 50,53" fill="currentColor" opacity="0.6"/></g>',
+    // 6: Ammon's Slingshot — a sling with stone
+    6: '<g><path d="M 34,36 Q 50,54 66,36" fill="none" stroke="currentColor" stroke-width="2.5"/><line x1="34" y1="36" x2="44" y2="58" stroke="currentColor" stroke-width="2.5"/><line x1="66" y1="36" x2="56" y2="58" stroke="currentColor" stroke-width="2.5"/><circle cx="50" cy="50" r="5" fill="currentColor"/></g>',
+    // 7: Watchman — a watchtower
+    7: '<g><path d="M 42,66 L 44,44 L 56,44 L 58,66 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M 40,44 L 50,34 L 60,44 Z" fill="currentColor"/><rect x="47" y="52" width="6" height="8" fill="currentColor"/></g>',
+    // 8: Trumpet — a horn trumpet
+    8: '<g><path d="M 34,46 L 56,46 Q 66,46 66,40 L 66,60 Q 66,54 56,54 L 34,54 Z" fill="currentColor"/><rect x="30" y="44" width="5" height="12" rx="2" fill="currentColor"/></g>',
+    // 9: Bronze Tree of Life — a tree
+    9: '<g><line x1="50" y1="50" x2="50" y2="70" stroke="currentColor" stroke-width="3.5"/><circle cx="50" cy="42" r="14" fill="currentColor"/><circle cx="40" cy="48" r="8" fill="currentColor"/><circle cx="60" cy="48" r="8" fill="currentColor"/></g>',
+    // 10: Silver Scroll — a scroll (silver tier)
+    10: '<g><rect x="38" y="36" width="24" height="28" rx="2" fill="none" stroke="currentColor" stroke-width="3"/><line x1="43" y1="44" x2="57" y2="44" stroke="currentColor" stroke-width="2"/><line x1="43" y1="50" x2="57" y2="50" stroke="currentColor" stroke-width="2"/><line x1="43" y1="56" x2="53" y2="56" stroke="currentColor" stroke-width="2"/><path d="M 38,36 Q 34,40 38,44 M 62,56 Q 66,60 62,64" stroke="currentColor" stroke-width="2.5" fill="none"/></g>',
+    // 11: Pillar of Fire — rising flame
+    11: '<g><path d="M 50,32 Q 42,44 46,54 Q 40,52 42,62 Q 44,70 50,70 Q 56,70 58,62 Q 60,52 54,54 Q 58,44 50,32 Z" fill="currentColor"/></g>',
+    // 12: Breastplate of Righteousness — armor
+    12: '<g><path d="M 38,36 L 62,36 L 60,58 Q 50,68 40,58 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><line x1="50" y1="40" x2="50" y2="62" stroke="currentColor" stroke-width="2"/><line x1="44" y1="46" x2="56" y2="46" stroke="currentColor" stroke-width="2"/></g>',
+    // 13: Sword of the Spirit — upright sword
+    13: '<g><line x1="50" y1="30" x2="50" y2="60" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><line x1="40" y1="60" x2="60" y2="60" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><line x1="50" y1="60" x2="50" y2="70" stroke="currentColor" stroke-width="3"/></g>',
+    // 14: Silver Liahona — round ball with spindles (silver)
+    14: '<g><circle cx="50" cy="50" r="16" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="32" r="2.5" fill="currentColor"/><polygon points="50,42 53,50 50,58 47,50" fill="currentColor"/><polygon points="42,50 50,47 58,50 50,53" fill="currentColor" opacity="0.6"/></g>',
+    // 15: Helmet of Salvation
+    15: '<g><path d="M 36,56 Q 36,36 50,36 Q 64,36 64,56 L 58,56 L 58,48 Q 58,42 50,42 Q 42,42 42,48 L 42,56 Z" fill="currentColor"/><rect x="34" y="56" width="32" height="6" rx="2" fill="currentColor"/></g>',
+    // 16: Shield of Faith — a shield
+    16: '<g><path d="M 50,32 L 66,38 Q 66,60 50,70 Q 34,60 34,38 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/><path d="M 50,40 L 50,62" stroke="currentColor" stroke-width="2"/><path d="M 40,50 L 60,50" stroke="currentColor" stroke-width="2"/></g>',
+    // 17: Ensign of Truth — banner raised high
+    17: '<g><line x1="38" y1="30" x2="38" y2="70" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M 38,32 L 66,32 L 60,42 L 66,52 L 38,52 Z" fill="currentColor"/><circle cx="38" cy="30" r="3" fill="currentColor"/></g>',
+    // 18: Silver Tree of Life — a tree (silver)
+    18: '<g><line x1="50" y1="50" x2="50" y2="70" stroke="currentColor" stroke-width="3.5"/><circle cx="50" cy="42" r="14" fill="currentColor"/><circle cx="40" cy="48" r="8" fill="currentColor"/><circle cx="60" cy="48" r="8" fill="currentColor"/></g>',
+    // 19: Title of Liberty — banner on a pole
+    19: '<g><line x1="40" y1="30" x2="40" y2="70" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M 40,32 L 66,36 L 60,43 L 66,50 L 40,46 Z" fill="currentColor"/></g>',
     20: '<g><rect x="36" y="34" width="13" height="34" rx="2" fill="currentColor"/><rect x="51" y="34" width="13" height="34" rx="2" fill="currentColor" opacity="0.85"/><line x1="42" y1="42" x2="44" y2="42" stroke="#6b5018" stroke-width="2"/><line x1="42" y1="50" x2="44" y2="50" stroke="#6b5018" stroke-width="2"/></g>',
     21: '<g><circle cx="50" cy="52" r="16" fill="none" stroke="currentColor" stroke-width="3"/><circle cx="50" cy="32" r="3" fill="currentColor"/><line x1="50" y1="35" x2="50" y2="38" stroke="currentColor" stroke-width="2"/><rect x="34" y="49" width="32" height="6" fill="currentColor"/><polygon points="50,44 53,52 50,60 47,52" fill="#6b5018"/></g>',
     22: '<g><line x1="50" y1="30" x2="50" y2="62" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><line x1="40" y1="60" x2="60" y2="60" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/><line x1="46" y1="66" x2="54" y2="66" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><polygon points="50,28 53,34 47,34" fill="currentColor"/></g>',

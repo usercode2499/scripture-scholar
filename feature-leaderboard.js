@@ -115,7 +115,7 @@
       return `
         <div class="lb-row${r.isMe ? ' me' : ''}">
           <div class="lb-rank ${rankClass}">${medal}</div>
-          <div class="lb-badge">${badge(r.level, 40)}</div>
+          <button class="lb-badge" onclick="revealBadgeName('list', ${r.level}, event)" aria-label="Show badge name">${badge(r.level, 40)}</button>
           <div class="lb-info">
             <div class="lb-name">${escapeHtmlLb(r.name)}${r.isMe ? ' <span class="lb-you">you</span>' : ''}</div>
             <div class="lb-sub">Lv ${r.level} · ${escapeHtmlLb(r.badgeName)} · ${r.chapters} chapter${r.chapters === 1 ? '' : 's'}</div>
