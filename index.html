@@ -2686,6 +2686,111 @@
   .mp-answered-count { text-align: center; font-size: 13px; color: var(--ink-soft); font-weight: 600; }
   body.dark-mode .mp-option { background: var(--card); }
 
+  /* --- Category picker (lobby) --- */
+  .mp-cat-head { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); margin: 22px 0 10px; }
+  .mp-cat-hint { font-weight: 500; text-transform: none; letter-spacing: 0; color: var(--ink-faint); font-size: 12px; }
+  .mp-cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 10px; }
+  .mp-cat-chip {
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    padding: 14px 8px; background: var(--card);
+    border: 1px solid var(--border); border-bottom: 3px solid var(--border);
+    border-radius: 14px; cursor: pointer; font-family: inherit;
+    transition: background 0.15s ease, border-color 0.2s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mp-cat-chip:active { transform: scale(0.97); }
+  .mp-cat-chip.selected { background: var(--gold-glow); border-color: var(--gold); border-bottom-color: var(--gold-dark); }
+  .mp-cat-icon { font-size: 24px; }
+  .mp-cat-label { font-size: 12.5px; font-weight: 700; color: var(--ink); text-align: center; line-height: 1.2; }
+  .mp-cat-random {
+    width: 100%; background: transparent; border: 1px dashed var(--gold);
+    color: var(--gold-dark); font-family: inherit; font-size: 13px; font-weight: 700;
+    padding: 10px; border-radius: 12px; cursor: pointer; margin-bottom: 18px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mp-cat-random:active { background: var(--gold-glow); }
+  body.dark-mode .mp-cat-chip { background: var(--card); }
+
+  /* --- Category tag (in-question) --- */
+  .mp-cat-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; color: var(--gold-dark); background: var(--gold-glow); padding: 4px 10px; border-radius: 100px; margin-bottom: 14px; }
+  .mp-question-label { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 10px; }
+  .mp-quote { font-style: italic; }
+  .mp-option-ref { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 700; }
+
+  /* --- Complete the verse: prompt + word cards --- */
+  .mp-verse-prompt {
+    font-size: 19px; line-height: 1.6; color: var(--ink);
+    background: var(--card); border: 1px solid var(--border-soft);
+    border-radius: 14px; padding: 18px; margin-bottom: 18px;
+  }
+  .mp-blank {
+    display: inline-block; min-width: 70px; text-align: center;
+    color: var(--gold-dark); font-weight: 700; border-bottom: 2px solid var(--gold);
+    padding: 0 6px;
+  }
+  .mp-blank.filled { font-style: normal; }
+  .mp-blank.blank-correct { color: var(--green); border-color: var(--green); }
+  .mp-blank.blank-wrong { color: var(--red); border-color: var(--red); }
+  .mp-word-cards { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 18px; }
+  .mp-word-card {
+    padding: 12px 20px; background: var(--card);
+    border: 1px solid var(--border); border-bottom: 3px solid var(--border);
+    border-radius: 12px; font-size: 16px; font-weight: 700; font-family: 'Cormorant Garamond', serif;
+    color: var(--ink); cursor: pointer; transition: background 0.15s ease, transform 0.1s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .mp-word-card:active:not(:disabled) { transform: scale(0.96); }
+  .mp-word-card.selected { background: var(--gold-glow); border-color: var(--gold); border-bottom-color: var(--gold-dark); color: var(--gold-dark); }
+  .mp-word-card.picked-correct { background: rgba(107,142,61,0.16); border-color: var(--green); border-bottom-color: var(--green); color: var(--green); }
+  .mp-word-card.picked-wrong { background: rgba(196,82,60,0.14); border-color: var(--red); border-bottom-color: var(--red); color: var(--red); }
+  .mp-word-card:disabled { cursor: default; }
+  body.dark-mode .mp-verse-prompt, body.dark-mode .mp-word-card { background: var(--card); }
+
+  /* --- Result reference + countdown --- */
+  .mp-result-ref { text-align: center; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 14px; color: var(--gold-dark); margin-bottom: 10px; }
+  .mp-countdown-label {
+    text-align: center; font-size: 13px; color: var(--ink-faint);
+    padding: 14px 0 4px; font-weight: 600; font-style: italic;
+  }
+
+  /* Floating countdown overlay — big number over the (still-visible) results */
+  .mp-countdown-overlay {
+    position: fixed;
+    left: 0; right: 0; top: 0; bottom: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px;
+    background: rgba(20, 12, 6, 0.32);
+    backdrop-filter: blur(1.5px);
+    -webkit-backdrop-filter: blur(1.5px);
+    z-index: 1400;
+    pointer-events: none;
+    animation: mpCdFade 0.3s ease;
+  }
+  @keyframes mpCdFade { from { opacity: 0; } to { opacity: 1; } }
+  .mp-countdown-overlay.mp-countdown-go { opacity: 0; transition: opacity 0.25s ease; }
+  .mp-countdown-ring {
+    width: 120px; height: 120px; border-radius: 50%;
+    background: radial-gradient(circle at 50% 40%, var(--gold-light), var(--gold) 70%, var(--gold-dark));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 12px 40px rgba(200, 155, 60, 0.5), 0 0 0 6px rgba(255,255,255,0.25);
+  }
+  .mp-countdown-big {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 68px; font-weight: 700; color: #fff; line-height: 1;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  }
+  .mp-countdown-big.mp-tick { animation: mpTickPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes mpTickPop {
+    0% { transform: scale(0.5); opacity: 0.3; }
+    50% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .mp-countdown-caption {
+    color: #fff; font-size: 15px; font-weight: 700; letter-spacing: 1px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    background: rgba(0,0,0,0.25); padding: 6px 16px; border-radius: 100px;
+  }
+
   /* Results / leaderboard */
   .mp-result-banner { text-align: center; font-size: 17px; font-weight: 700; padding: 14px; border-radius: 12px; margin-bottom: 12px; animation: cmScaleIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
   .mp-result-correct { background: rgba(107,142,61,0.16); color: var(--green); }
@@ -4208,12 +4313,12 @@
           <!-- Slide 2: Announcements -->
           <div class="info-slide">
             <div class="info-slide-eyebrow">📢 Announcements</div>
-            <h3 class="info-slide-title serif">Live Group Trivia!</h3>
+            <h3 class="info-slide-title serif">4 Ways to Play Trivia!</h3>
             <p class="info-slide-text">
-              <strong>Group Trivia</strong> now plays live across phones — host a room, share the code, and everyone races up the leaderboard together in real time.
+              <strong>Group Trivia</strong> now has four question types — guess the speaker, find the verse, fill in the blank, and complete the verse. The host picks up to 3 categories, or go random!
             </p>
             <p class="info-slide-text">
-              Plus the <strong>Verse Quiz</strong> and <strong>Fact Game</strong> are always ready in the 🎮 menu. The course now covers <strong>15 chapters</strong>, with more on the way.
+              Questions auto-advance with a countdown, so the game flows on its own. Gather the family and play live across phones. 🎮
             </p>
           </div>
 
@@ -4682,6 +4787,7 @@
 <script src="feature-mini-games.js"></script>
 <script src="feature-verse-quiz.js"></script>
 <script src="feature-fact-game.js"></script>
+<script src="data-trivia-bank.js"></script>
 <!-- Firebase compat SDK (classic scripts, attaches global `firebase`) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -6103,9 +6209,21 @@
   // full list appears in the history modal.
   const CHANGELOG = [
     {
-      version: 'Day 2 — Update 10',
+      version: 'Day 3 — Update 1',
       date: 'Latest',
       title: "What's New",
+      changes: [
+        'Group Trivia now has 4 question types!',
+        'Fill in the blank, Who Spoke It, Where\u2019s the Verse, Complete the Verse',
+        'Host picks up to 3 categories — or go random',
+        'Questions auto-advance with a 5-second countdown',
+        'Bigger, carefully-checked question bank'
+      ]
+    },
+    {
+      version: 'Day 2 — Update 10',
+      date: 'Earlier',
+      title: 'Live Multiplayer',
       changes: [
         'Group Trivia is now LIVE across phones — real multiplayer!',
         'Answer with a Submit button (select, then confirm)',
