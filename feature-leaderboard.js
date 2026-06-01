@@ -49,6 +49,8 @@
     let ok = false;
     if (typeof lbInit === 'function') {
       ok = await lbInit();
+    } else if (typeof LB !== 'undefined') {
+      LB.lastError = 'leaderboard module not loaded';
     }
     if (!ok) {
       renderLeaderboardOffline();

@@ -3499,8 +3499,16 @@
   .avatar-section-label { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: var(--ink-soft); margin: 16px 0 10px; }
   .avatar-photo-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .avatar-photo-current { flex-shrink: 0; }
-  .avatar-photo-btn { flex: 1; min-width: 140px; }
+  .avatar-photo-btn { flex: 1; min-width: 140px; text-align: center; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; }
   .avatar-photo-remove { background: none; border: none; color: var(--red); font-family: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; -webkit-tap-highlight-color: transparent; }
+  /* Visually hidden but still interactive so the <label> can trigger it on all devices */
+  .avatar-file-input {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0,0,0,0);
+    white-space: nowrap; border: 0;
+  }
   .avatar-photo-note { font-size: 11.5px; color: var(--ink-faint); line-height: 1.5; margin-top: 8px; }
   .avatar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
   .avatar-choice {

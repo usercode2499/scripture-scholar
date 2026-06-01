@@ -138,12 +138,12 @@
         ${photoSelected
           ? `<div class="avatar-photo-current">${renderAvatar({ avatar: current, level: level, size: 64, showBadge: false })}</div>`
           : ''}
-        <button class="btn btn-ghost avatar-photo-btn" onclick="document.getElementById('avatarFileInput').click()">
+        <label class="btn btn-ghost avatar-photo-btn" for="avatarFileInput">
           ${photoSelected ? 'Change photo' : 'Upload a photo'}
-        </button>
+        </label>
         ${photoSelected ? `<button class="avatar-photo-remove" onclick="removeAvatarPhoto()">Remove</button>` : ''}
       </div>
-      <input type="file" id="avatarFileInput" accept="image/*" style="display:none" onchange="handleAvatarPhotoPick(event)"/>
+      <input type="file" id="avatarFileInput" accept="image/*" class="avatar-file-input" onchange="handleAvatarPhotoPick(event)"/>
       <div class="avatar-photo-note">Photos stay small and are shown on the leaderboard. Choose something appropriate for your ward. 🙏</div>
 
       <div class="avatar-section-label">✨ Or pick an icon</div>
