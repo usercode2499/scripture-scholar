@@ -11,16 +11,16 @@
 
   const NAV_ICON_EMBLEMS = {
     // Game controller
-    practice: '<rect x="32" y="42" width="36" height="20" rx="10" fill="none" stroke="#fff" stroke-width="3.4"/><line x1="42" y1="48" x2="42" y2="56" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><line x1="38" y1="52" x2="46" y2="52" stroke="#fff" stroke-width="3.4" stroke-linecap="round"/><circle cx="59" cy="50" r="2.4" fill="#fff"/><circle cx="64" cy="55" r="2.4" fill="#fff"/>',
+    practice: '<rect x="30" y="40" width="40" height="22" rx="11" fill="none" stroke="#fff" stroke-width="4.2"/><line x1="42" y1="47" x2="42" y2="55" stroke="#fff" stroke-width="4" stroke-linecap="round"/><line x1="38" y1="51" x2="46" y2="51" stroke="#fff" stroke-width="4" stroke-linecap="round"/><circle cx="59" cy="49" r="2.8" fill="#fff"/><circle cx="64" cy="54" r="2.8" fill="#fff"/>',
     // Flame
-    streak: '<path d="M50 30 C46 40 38 42 38 53 C38 62 44 68 50 68 C56 68 62 62 62 53 C62 47 58 44 56 40 C55 46 52 47 52 47 C53 41 51 35 50 30 Z" fill="#fff"/>',
+    streak: '<path d="M50 28 C45 39 36 42 36 54 C36 64 43 70 50 70 C57 70 64 64 64 54 C64 47 59 43 57 38 C56 45 52 47 52 47 C53 40 51 34 50 28 Z" fill="#fff"/>',
     // Trophy / leaderboard
-    leaderboard: '<path d="M40 34 h20 v8 a10 10 0 0 1 -20 0 z" fill="#fff"/><path d="M40 36 h-5 a5 5 0 0 0 5 6 z M60 36 h5 a5 5 0 0 1 -5 6 z" fill="#fff"/><rect x="47" y="50" width="6" height="8" fill="#fff"/><rect x="42" y="58" width="16" height="5" rx="1.5" fill="#fff"/>',
+    leaderboard: '<path d="M38 32 h24 v9 a12 12 0 0 1 -24 0 z" fill="#fff"/><path d="M38 35 h-6 a6 6 0 0 0 6 7 z M62 35 h6 a6 6 0 0 1 -6 7 z" fill="#fff"/><rect x="46.5" y="50" width="7" height="9" fill="#fff"/><rect x="40" y="59" width="20" height="6" rx="2" fill="#fff"/>',
     // Gear
-    settings: '<g fill="#fff"><circle cx="50" cy="50" r="6" fill="none" stroke="#fff" stroke-width="3.2"/>' +
-      [0,45,90,135,180,225,270,315].map(function(a){var r=a*Math.PI/180;var x=50+Math.cos(r)*13;var y=50+Math.sin(r)*13;return '<rect x="'+(x-2).toFixed(1)+'" y="'+(y-2).toFixed(1)+'" width="4" height="4" rx="1"/>';}).join('') + '</g>',
+    settings: '<g fill="#fff"><circle cx="50" cy="50" r="7" fill="none" stroke="#fff" stroke-width="4"/>' +
+      [0,45,90,135,180,225,270,315].map(function(a){var r=a*Math.PI/180;var x=50+Math.cos(r)*14;var y=50+Math.sin(r)*14;return '<rect x="'+(x-2.6).toFixed(1)+'" y="'+(y-2.6).toFixed(1)+'" width="5.2" height="5.2" rx="1.5"/>';}).join('') + '</g>',
     // Lightbulb (hints)
-    hints: '<path d="M50 32 a12 12 0 0 1 7 21 c-2 2 -3 3 -3 6 h-8 c0 -3 -1 -4 -3 -6 a12 12 0 0 1 7 -21 z" fill="#fff"/><rect x="45" y="62" width="10" height="3.5" rx="1.6" fill="#fff"/><rect x="46.5" y="66.5" width="7" height="3" rx="1.5" fill="#fff"/>'
+    hints: '<path d="M50 30 a13 13 0 0 1 8 23 c-2 2 -3.5 3.5 -3.5 6.5 h-9 c0 -3 -1.5 -4.5 -3.5 -6.5 a13 13 0 0 1 8 -23 z" fill="#fff"/><rect x="44" y="62" width="12" height="4" rx="2" fill="#fff"/><rect x="46" y="67" width="8" height="3.5" rx="1.7" fill="#fff"/>'
   };
 
   function navIcon(name, size) {
@@ -61,9 +61,9 @@
     ];
     map.forEach(m => {
       const el = document.getElementById(m.id);
-      if (el) el.innerHTML = navIcon(m.name, 26);
+      if (el) el.innerHTML = navIcon(m.name, 40);
     });
     // Hints icon in the profile/journey section
     const hintIcon = document.getElementById('journeyHintsIcon');
-    if (hintIcon) hintIcon.innerHTML = navIcon('hints', 28);
+    if (hintIcon) hintIcon.innerHTML = navIcon('hints', 32);
   }

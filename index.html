@@ -2059,13 +2059,14 @@
   }
   /* Nav medallions (badge-style SVG icons) */
   .nav-medallion { display: inline-flex; align-items: center; justify-content: center; }
-  .topbar-icon-btn.nav-medallion { background: transparent; border: none; box-shadow: none; width: 34px; height: 34px; }
+  .topbar-icon-btn.nav-medallion { background: transparent; border: none; box-shadow: none; width: 42px; height: 42px; }
   .topbar-icon-btn.nav-medallion:hover { transform: translateY(-1px); }
-  .nav-icon-svg { display: block; filter: drop-shadow(0 1px 2px rgba(120,85,20,0.3)); transition: transform 0.15s ease; }
+  .nav-icon-svg { display: block; filter: drop-shadow(0 1px 3px rgba(120,85,20,0.35)); transition: transform 0.15s ease; }
   .topbar-icon-btn.nav-medallion:active .nav-icon-svg { transform: scale(0.92); }
-  .nav-medallion-stat { background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 4px 11px 4px 5px; display: inline-flex; align-items: center; gap: 5px; box-shadow: var(--shadow); cursor: pointer; }
+  .nav-medallion-stat { background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 4px 12px 4px 5px; display: inline-flex; align-items: center; gap: 5px; box-shadow: var(--shadow); cursor: pointer; }
   .nav-medallion-stat .nav-medallion { margin-right: 0; }
-  .nav-medallion-stat .nav-icon-svg { width: 22px; height: 22px; }
+  .nav-medallion-stat .nav-icon-svg { width: 30px; height: 30px; }
+  .nav-medallion-stat #streakCount { font-size: 15px; font-weight: 700; }
   .topbar-settings:hover {
     color: var(--ink);
     transform: rotate(45deg);
