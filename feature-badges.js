@@ -133,6 +133,14 @@
     // Effect class drives the CSS animation by tier
     const fxClass = fx ? ('badge-fx-' + tier) : '';
 
+    // Emblem color + small sparkle accents (animated for silver/gold via CSS)
+    const sparkles = `
+      <g class="badge-sparkles">
+        <g class="badge-spark badge-spark-1"><path d="M0,-4 L1,-1 L4,0 L1,1 L0,4 L-1,1 L-4,0 L-1,-1 Z" fill="#ffffff"/></g>
+        <g class="badge-spark badge-spark-2"><path d="M0,-3 L0.8,-0.8 L3,0 L0.8,0.8 L0,3 L-0.8,0.8 L-3,0 L-0.8,-0.8 Z" fill="#ffffff"/></g>
+        <g class="badge-spark badge-spark-3"><path d="M0,-2.4 L0.7,-0.7 L2.4,0 L0.7,0.7 L0,2.4 L-0.7,0.7 L-2.4,0 L-0.7,-0.7 Z" fill="#ffffff"/></g>
+      </g>`;
+
     return `
       <svg class="badge-svg ${fxClass}" viewBox="0 0 100 100" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Level ${level} badge">
         <defs>
@@ -146,10 +154,17 @@
             <stop offset="50%" stop-color="#ffffff" stop-opacity="0.55"/>
             <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
           </linearGradient>
+          <radialGradient id="${uid}_halo" cx="50%" cy="50%" r="50%">
+            <stop offset="60%" stop-color="${c.light}" stop-opacity="0"/>
+            <stop offset="100%" stop-color="${c.light}" stop-opacity="0.5"/>
+          </radialGradient>
           <clipPath id="${uid}_clip">
             <circle cx="50" cy="50" r="44"/>
           </clipPath>
         </defs>
+
+        <!-- Glow halo (animated for gold) -->
+        <circle class="badge-halo" cx="50" cy="50" r="48" fill="url(#${uid}_halo)"/>
 
         <!-- Outer rim -->
         <circle cx="50" cy="50" r="47" fill="${c.rim}"/>
@@ -171,6 +186,9 @@
         <g color="${c.emblem}" style="color:${c.emblem}">
           ${emblem}
         </g>
+
+        <!-- Sparkle accents (silver/gold) -->
+        ${sparkles}
 
         <!-- Shine sweep (animated for silver/gold via CSS) -->
         <g clip-path="url(#${uid}_clip)">

@@ -3224,27 +3224,63 @@
   /* =================================== */
   /* === LEVEL BADGES === */
   /* =================================== */
-  .badge-svg { display: block; }
+  .badge-svg { display: block; overflow: visible; }
   .badge-shine { opacity: 0; }
+  .badge-halo { opacity: 0; }
+  .badge-sparkles { opacity: 0; }
+  .badge-spark { transform-box: fill-box; transform-origin: center; }
 
-  /* Bronze: static, no animation, hide the shine entirely */
-  .badge-fx-bronze .badge-shine { display: none; }
+  /* Position the three sparkles around the badge */
+  .badge-spark-1 { transform: translate(72px, 26px); }
+  .badge-spark-2 { transform: translate(24px, 30px); }
+  .badge-spark-3 { transform: translate(68px, 70px); }
 
-  /* Silver: mild periodic shimmer sweep */
+  /* ---------- BRONZE: subtle slow gleam so it feels alive ---------- */
+  .badge-fx-bronze .badge-shine {
+    display: block;
+    opacity: 1;
+    animation: badgeShine 7s ease-in-out infinite;
+    animation-delay: 1s;
+  }
+
+  /* ---------- SILVER: shimmer sweep + gentle breathe + faint sparkle ---------- */
+  .badge-fx-silver {
+    animation: badgeBreathe 4s ease-in-out infinite;
+  }
   .badge-fx-silver .badge-shine {
     opacity: 1;
     animation: badgeShine 4.5s ease-in-out infinite;
   }
+  .badge-fx-silver .badge-sparkles {
+    opacity: 0.75;
+    animation: badgeSparkleFade 4.5s ease-in-out infinite;
+  }
+  .badge-fx-silver .badge-spark { animation: badgeSparkleTwinkle 2.4s ease-in-out infinite; }
+  .badge-fx-silver .badge-spark-2 { animation-delay: 0.8s; }
+  .badge-fx-silver .badge-spark-3 { animation-delay: 1.6s; }
 
-  /* Gold: faster shine sweep + a soft glow pulse on the whole badge */
+  /* ---------- GOLD: glow pulse + halo + faster shine + lively sparkles + breathe ---------- */
   .badge-fx-gold {
-    animation: badgeGlow 2.8s ease-in-out infinite;
     border-radius: 50%;
+    animation: badgeGlow 2.8s ease-in-out infinite, badgeBreathe 3.4s ease-in-out infinite;
+  }
+  .badge-fx-gold .badge-halo {
+    opacity: 1;
+    animation: badgeHaloPulse 2.8s ease-in-out infinite;
   }
   .badge-fx-gold .badge-shine {
     opacity: 1;
     animation: badgeShine 3s ease-in-out infinite;
   }
+  .badge-fx-gold .badge-sparkles {
+    opacity: 1;
+    animation: badgeSparkleSpin 6s linear infinite;
+    transform-box: view-box;
+    transform-origin: 50px 50px;
+  }
+  .badge-fx-gold .badge-spark { animation: badgeSparkleTwinkle 1.6s ease-in-out infinite; }
+  .badge-fx-gold .badge-spark-2 { animation-delay: 0.5s; }
+  .badge-fx-gold .badge-spark-3 { animation-delay: 1.0s; }
 
   @keyframes badgeShine {
     0%   { transform: translateX(0) rotate(20deg); opacity: 0; }
@@ -3254,12 +3290,47 @@
   }
   @keyframes badgeGlow {
     0%, 100% { filter: drop-shadow(0 0 3px rgba(212, 163, 44, 0.4)); }
-    50%      { filter: drop-shadow(0 0 12px rgba(252, 224, 120, 0.85)); }
+    50%      { filter: drop-shadow(0 0 14px rgba(252, 224, 120, 0.9)); }
   }
+  @keyframes badgeHaloPulse {
+    0%, 100% { opacity: 0.35; }
+    50%      { opacity: 0.8; }
+  }
+  @keyframes badgeBreathe {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.035); }
+  }
+  @keyframes badgeSparkleFade {
+    0%, 100% { opacity: 0; }
+    40%, 60% { opacity: 0.8; }
+  }
+  @keyframes badgeSparkleSpin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes badgeSparkleTwinkle {
+    0%, 100% { transform: scale(0.3); opacity: 0.2; }
+    50%      { transform: scale(1); opacity: 1; }
+  }
+
+  /* Tap feedback — quick wobble/pop when a badge button is pressed */
+  .badge-tap-pop { animation: badgeTapPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes badgeTapPop {
+    0%   { transform: scale(1) rotate(0deg); }
+    35%  { transform: scale(1.18) rotate(-5deg); }
+    65%  { transform: scale(0.96) rotate(4deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
+    .badge-fx-bronze .badge-shine,
     .badge-fx-silver .badge-shine,
     .badge-fx-gold .badge-shine { animation: none; opacity: 0; }
-    .badge-fx-gold { animation: none; }
+    .badge-fx-silver, .badge-fx-gold { animation: none; }
+    .badge-fx-gold .badge-halo,
+    .badge-fx-silver .badge-sparkles,
+    .badge-fx-gold .badge-sparkles { animation: none; opacity: 0; }
+    .badge-tap-pop { animation: none; }
   }
 
   /* =================================== */
@@ -3284,14 +3355,59 @@
     align-items: center;
     text-align: center;
   }
-  .levelup-badge-wrap {
+  .levelup-badge-stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-bottom: 22px;
-    animation: luBadgePop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .levelup-rays {
+    position: absolute;
+    width: 260px; height: 260px;
+    left: 50%; top: 50%;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(
+      rgba(252,224,120,0.0) 0deg, rgba(252,224,120,0.35) 6deg, rgba(252,224,120,0.0) 12deg,
+      rgba(252,224,120,0.0) 30deg, rgba(252,224,120,0.30) 36deg, rgba(252,224,120,0.0) 42deg,
+      rgba(252,224,120,0.0) 60deg, rgba(252,224,120,0.35) 66deg, rgba(252,224,120,0.0) 72deg,
+      rgba(252,224,120,0.0) 90deg, rgba(252,224,120,0.30) 96deg, rgba(252,224,120,0.0) 102deg,
+      rgba(252,224,120,0.0) 120deg, rgba(252,224,120,0.35) 126deg, rgba(252,224,120,0.0) 132deg,
+      rgba(252,224,120,0.0) 150deg, rgba(252,224,120,0.30) 156deg, rgba(252,224,120,0.0) 162deg,
+      rgba(252,224,120,0.0) 180deg, rgba(252,224,120,0.35) 186deg, rgba(252,224,120,0.0) 192deg,
+      rgba(252,224,120,0.0) 210deg, rgba(252,224,120,0.30) 216deg, rgba(252,224,120,0.0) 222deg,
+      rgba(252,224,120,0.0) 240deg, rgba(252,224,120,0.35) 246deg, rgba(252,224,120,0.0) 252deg,
+      rgba(252,224,120,0.0) 270deg, rgba(252,224,120,0.30) 276deg, rgba(252,224,120,0.0) 282deg,
+      rgba(252,224,120,0.0) 300deg, rgba(252,224,120,0.35) 306deg, rgba(252,224,120,0.0) 312deg,
+      rgba(252,224,120,0.0) 330deg, rgba(252,224,120,0.30) 336deg, rgba(252,224,120,0.0) 342deg
+    );
+    border-radius: 50%;
+    -webkit-mask-image: radial-gradient(circle, #000 30%, transparent 72%);
+    mask-image: radial-gradient(circle, #000 30%, transparent 72%);
+    opacity: 0;
+    animation: luRaysIn 0.7s ease-out forwards, luRaysSpin 14s linear infinite;
+  }
+  @keyframes luRaysIn {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  }
+  @keyframes luRaysSpin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to   { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  .levelup-badge-wrap {
+    position: relative;
+    z-index: 1;
+    animation: luBadgePop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes luBadgePop {
     0% { opacity: 0; transform: scale(0.3) rotate(-25deg); }
     60% { transform: scale(1.15) rotate(8deg); }
     100% { opacity: 1; transform: scale(1) rotate(0deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .levelup-rays { animation: none; opacity: 0.5; }
+    .levelup-badge-wrap { animation: none; }
   }
   .levelup-badge-name {
     font-size: 30px;
@@ -4837,7 +4953,10 @@
 <div class="levelup-overlay hidden" id="levelUpOverlay">
   <!-- Stage 1: the badge reveal -->
   <div class="levelup-stage" id="luStageBadge" onclick="advanceLevelUpStage()">
-    <div class="levelup-badge-wrap" id="luBadgeWrap"><!-- badge SVG injected --></div>
+    <div class="levelup-badge-stage">
+      <div class="levelup-rays" id="luRays" aria-hidden="true"></div>
+      <div class="levelup-badge-wrap" id="luBadgeWrap"><!-- badge SVG injected --></div>
+    </div>
     <div class="levelup-badge-name serif" id="luBadgeName">Basic Scroll</div>
     <div class="levelup-badge-tier" id="luBadgeTier">Bronze Badge</div>
     <div class="levelup-tap-hint">tap to continue</div>
@@ -5257,8 +5376,19 @@
     const tierLabel = tier ? (tier.charAt(0).toUpperCase() + tier.slice(1) + ' badge') : '';
     const msg = `🏅 ${name}${tierLabel ? ' — ' + tierLabel : ''}`;
     const anchor = evt && (evt.currentTarget || evt.target);
-    if (anchor) showIconPopover(anchor, msg);
-    else showToast(msg);
+    // Quick wobble/pop on the tapped badge for tactile feedback
+    if (anchor) {
+      const svg = anchor.querySelector ? anchor.querySelector('.badge-svg') : null;
+      const target = svg || anchor;
+      if (target && target.classList) {
+        target.classList.remove('badge-tap-pop');
+        void target.offsetWidth; // restart animation
+        target.classList.add('badge-tap-pop');
+      }
+      showIconPopover(anchor, msg);
+    } else {
+      showToast(msg);
+    }
   }
 
   function renderLevelModal() {
