@@ -174,7 +174,7 @@
       // Real room
       const questions = mpGetQuestions(mpState.NUM_QUESTIONS);
       try {
-        mpState.myId = await mpFbCreateRoom(mpState.roomCode, mpState.me, questions);
+        mpState.myId = await mpFbCreateRoom(mpState.roomCode, mpState.me, questions, mpMyAvatarThumb());
         mpWatchRoomLive();
         renderMpLobby();
       } catch (e) {
@@ -189,7 +189,7 @@
 
   function mpHostGameMock() {
     mpState.online = false;
-    mpState.players = [{ name: mpState.me, score: 0, lastDelta: 0, answered: false, isMe: true, isHost: true }];
+    mpState.players = [{ name: mpState.me, score: 0, lastDelta: 0, answered: false, isMe: true, isHost: true, ready: true, avatar: mpMyAvatarThumb() }];
     mpState.currentIdx = -1;
     renderMpLobby();
     mpSimulatePlayersJoining();
@@ -198,11 +198,19 @@
   function mpSimulatePlayersJoining() {
     const joinCount = 2 + Math.floor(Math.random() * 2);
     const names = MP_FAKE_NAMES.slice().sort(() => Math.random() - 0.5).slice(0, joinCount);
+    const presets = ['temple', 'star', 'tree', 'dove', 'sun', 'fish', 'crown', 'heart'];
     names.forEach((name, i) => {
       const t = setTimeout(() => {
-        mpState.players.push({ name, score: 0, lastDelta: 0, answered: false });
+        const preset = presets[Math.floor(Math.random() * presets.length)];
+        mpState.players.push({ name, score: 0, lastDelta: 0, answered: false, ready: false, avatar: { type: 'preset', preset: preset } });
         renderMpLobby();
         if (typeof playSfx === 'function') playSfx('correct');
+        // Bot readies up a moment after joining
+        const rt = setTimeout(() => {
+          const bot = mpState.players.find(pp => pp.name === name && !pp.isHost);
+          if (bot) { bot.ready = true; renderMpLobby(); }
+        }, 1400 + Math.random() * 1600);
+        mpState.botTimers.push(rt);
       }, 1200 * (i + 1));
       mpState.botTimers.push(t);
     });
@@ -249,7 +257,7 @@
     if (canUseFirebase && typeof mpFbJoinRoom === 'function') {
       if (hint) hint.textContent = 'Joining…';
       try {
-        const result = await mpFbJoinRoom(code, mpState.me);
+        const result = await mpFbJoinRoom(code, mpState.me, mpMyAvatarThumb());
         if (result === 'notfound') {
           if (hint) hint.textContent = 'No room found with that code.';
           return;
@@ -311,7 +319,9 @@
           answeredIdx: p.answeredIdx,
           answeredAt: p.answeredAt || 0,
           isMe: pid === mpState.myId,
-          isHost: !!p.isHost
+          isHost: !!p.isHost,
+          avatar: p.avatar || null,
+          ready: !!p.ready
         };
       });
       mpState.questions = room.questions || [];
@@ -391,11 +401,23 @@
             const rankBadge = (rank && typeof rankTrophy === 'function')
               ? `<span class="mp-player-rank" title="Leaderboard rank">${rankTrophy(rank, 26)}</span>`
               : '';
+            // Profile picture (preset/photo). Host wears a small crown corner mark.
+            let avatarHtml;
+            if (typeof renderAvatar === 'function') {
+              const av = p.avatar || { type: 'preset', preset: 'scroll' };
+              avatarHtml = renderAvatar({ avatar: av, level: 1, size: 38, showBadge: false });
+            } else {
+              avatarHtml = `<span style="font-size:20px;">${p.isHost ? '👑' : '🙂'}</span>`;
+            }
+            const readyTag = p.isHost
+              ? `<span class="mp-ready-tag host">👑 Host</span>`
+              : (p.ready ? `<span class="mp-ready-tag ready">✓ Ready</span>` : `<span class="mp-ready-tag waiting">Not ready</span>`);
             return `
             <div class="mp-player-chip${p.isMe ? ' me' : ''}">
-              <span class="mp-player-avatar">${p.isHost ? '👑' : '🙂'}</span>
+              <span class="mp-player-avatar mp-player-pfp">${avatarHtml}</span>
               <span class="mp-player-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
               ${rankBadge}
+              ${readyTag}
             </div>
           `;}).join('')}
         </div>
@@ -412,16 +434,49 @@
           </div>
           <button class="mp-cat-random" onclick="mpRandomCategories()">🎲 Random of 3</button>
         ` : ''}
-        ${isHost ? `
-          <button class="btn btn-gold mp-start-btn" onclick="mpStartGame()" ${enoughPlayers ? '' : 'disabled'}>
-            ${enoughPlayers ? 'Start Game →' : 'Waiting for players…'}
-          </button>
-        ` : `
-          <div class="mp-waiting-spinner">⏳ Waiting for host…</div>
-        `}
+        ${mpLobbyActions(isHost, enoughPlayers)}
         <button class="mp-leave-link" onclick="mpConfirmLeave()">Leave room</button>
       </div>
     `;
+  }
+
+  // Lobby action button(s): joiners get a Ready toggle; host gets Start
+  // (disabled until every joiner is ready and there are at least 2 players).
+  function mpLobbyActions(isHost, enoughPlayers) {
+    if (isHost) {
+      const joiners = mpState.players.filter(p => !p.isHost);
+      const allReady = joiners.length > 0 && joiners.every(p => p.ready);
+      const canStart = enoughPlayers && allReady;
+      let label;
+      if (!enoughPlayers) label = 'Waiting for players…';
+      else if (!allReady) label = 'Waiting for players to ready up…';
+      else label = 'Start Game →';
+      return `<button class="btn btn-gold mp-start-btn" onclick="mpStartGame()" ${canStart ? '' : 'disabled'}>${label}</button>`;
+    } else {
+      const me = mpState.players.find(p => p.isMe);
+      const isReady = me && me.ready;
+      return `
+        <button class="btn ${isReady ? 'btn-ghost' : 'btn-gold'} mp-ready-btn" onclick="mpToggleReady()">
+          ${isReady ? '✓ Ready — tap to cancel' : "I'm Ready"}
+        </button>
+        <div class="mp-waiting-spinner">${isReady ? 'Waiting for the host to start…' : 'Tap “I’m Ready” when you’re set'}</div>
+      `;
+    }
+  }
+
+  // Joiner toggles their ready state.
+  async function mpToggleReady() {
+    const me = mpState.players.find(p => p.isMe);
+    const newReady = !(me && me.ready);
+    if (typeof playTapSfx === 'function') playTapSfx();
+    if (mpState.online && typeof mpFbSetReady === 'function') {
+      try { await mpFbSetReady(mpState.roomCode, newReady); } catch (e) {}
+      // The room listener will re-render with the new state
+    } else {
+      // Mock mode: flip locally and re-render
+      if (me) me.ready = newReady;
+      renderMpLobby();
+    }
   }
 
   // Host toggles a category on/off (max 3)
@@ -497,6 +552,12 @@
     if (!mpState.globalRanks) return null;
     const key = String(name || '').trim().toLowerCase();
     return mpState.globalRanks[key] || null;
+  }
+
+  // My avatar thumbnail (preset id or tiny photo) to store in the room.
+  function mpMyAvatarThumb() {
+    if (typeof avatarThumbForLeaderboard === 'function') return avatarThumbForLeaderboard();
+    return null;
   }
 
   // ================= START =================

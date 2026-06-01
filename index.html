@@ -234,6 +234,8 @@
     gap: 9px;
     padding: 5px 12px 5px 5px;
     min-width: 0;
+    max-width: 62vw;
+    overflow: hidden;
     border: 1px solid var(--gold);
     background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
   }
@@ -2665,9 +2667,16 @@
   .mp-player-chip.me { border-color: var(--gold); background: var(--gold-glow); }
   @keyframes mpChipIn { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: translateX(0); } }
   .mp-player-avatar { font-size: 20px; }
-  .mp-player-name { font-size: 15px; font-weight: 600; color: var(--ink); flex: 1; }
+  .mp-player-pfp { width: 38px; height: 38px; flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center; }
+  .mp-player-pfp .avatar-wrap { width: 38px !important; height: 38px !important; }
+  .mp-player-name { font-size: 15px; font-weight: 600; color: var(--ink); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .mp-player-rank { flex-shrink: 0; display: inline-flex; align-items: center; }
   .mp-player-rank .rank-trophy { display: block; }
+  .mp-ready-tag { flex-shrink: 0; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 100px; }
+  .mp-ready-tag.host { background: var(--gold-glow); color: var(--gold-dark); }
+  .mp-ready-tag.ready { background: rgba(107,142,61,0.16); color: var(--green); }
+  .mp-ready-tag.waiting { background: var(--bg); color: var(--ink-faint); border: 1px solid var(--border); }
+  .mp-ready-btn { width: 100%; }
   .mp-start-btn { width: 100%; }
   .mp-waiting-spinner { text-align: center; color: var(--ink-soft); font-size: 14px; padding: 14px; font-style: italic; }
 
@@ -3444,6 +3453,17 @@
 
   /* Level modal hero edit pencil */
   .level-modal-badge-btn { position: relative; }
+  /* Proud badge showcase below the name */
+  .level-modal-badge-showcase {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 4px; margin: 6px 0 20px; padding: 18px 0 16px;
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .lm-showcase-badge { cursor: pointer; line-height: 0; -webkit-tap-highlight-color: transparent; }
+  .lm-showcase-badge:active { transform: scale(0.95); }
+  .lm-showcase-name { font-size: 22px; font-weight: 700; color: var(--ink); margin-top: 6px; }
+  .lm-showcase-tier { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; }
   .lm-avatar-edit {
     position: absolute; left: -6px; top: -6px;
     width: 26px; height: 26px; border-radius: 50%;
@@ -4514,7 +4534,6 @@
             <div class="stat-level-fill" id="topbarLevelFill" style="width: 0%"></div>
           </div>
         </div>
-        <div class="stat-level-badge" id="navLevelBadge"></div>
       </div>
       <!-- Flexible spacer so the right-side group stays anchored right -->
       <div class="topbar-spacer"></div>
@@ -4999,6 +5018,13 @@
       </div>
     </div>
 
+    <!-- Proud badge display: large badge below the name, above progress -->
+    <div class="level-modal-badge-showcase" id="lmBadgeShowcase">
+      <div class="lm-showcase-badge" id="lmShowcaseBadge"><!-- large badge SVG --></div>
+      <div class="lm-showcase-name serif" id="lmShowcaseName">Bronze Scroll</div>
+      <div class="lm-showcase-tier" id="lmShowcaseTier">Bronze Badge</div>
+    </div>
+
     <!-- All-levels list (hidden by default, expanded by tapping the title) -->
     <div class="level-list hidden" id="lmLevelList">
       <div class="level-list-title">All Ranks (Level 1 – 25)</div>
@@ -5260,11 +5286,6 @@
     if (navBadge && typeof renderAvatar === 'function') {
       navBadge.innerHTML = renderAvatar({ avatar: getMyAvatar(), level: lvl, size: 38, showBadge: false });
     }
-    // Right (after "Lv N"): the full level badge at proper size, tappable to reveal name
-    const navLevelBadge = document.getElementById('navLevelBadge');
-    if (navLevelBadge && typeof renderBadgeSVG === 'function') {
-      navLevelBadge.innerHTML = renderBadgeSVG(lvl, 34, true);
-    }
     updateLevelProgress();
   }
   function updateLevelProgress() {
@@ -5510,15 +5531,26 @@
     // Hero
     document.getElementById('lmLevel').textContent = level;
     document.getElementById('lmTitle').textContent = getLevelTitle(level);
-    // Show the user's avatar with the level badge overlaid; tap badge reveals name
+    // Hero avatar (no badge overlay) with an edit pencil
     const badgeIcon = document.getElementById('lmBadgeIcon');
     if (badgeIcon && typeof renderAvatar === 'function') {
       badgeIcon.innerHTML = renderAvatar({
-        avatar: getMyAvatar(), level: level, size: 80, showBadge: true, badgeSize: 36,
-        badgeOnclick: "revealBadgeName('modal', null, event)"
+        avatar: getMyAvatar(), level: level, size: 80, showBadge: false
       }) + '<span class="lm-avatar-edit" onclick="openAvatarPicker()" aria-label="Edit profile picture">✎</span>';
-    } else if (badgeIcon && typeof renderBadgeSVG === 'function') {
-      badgeIcon.innerHTML = renderBadgeSVG(level, 72, true);
+    }
+
+    // Proud badge showcase — large badge below the name, above progress
+    const showcaseBadge = document.getElementById('lmShowcaseBadge');
+    if (showcaseBadge && typeof renderBadgeSVG === 'function') {
+      showcaseBadge.innerHTML = renderBadgeSVG(level, 110, true);
+      showcaseBadge.onclick = function (e) { revealBadgeName('modal', null, e); };
+    }
+    const showcaseName = document.getElementById('lmShowcaseName');
+    if (showcaseName && typeof getBadgeName === 'function') showcaseName.textContent = getBadgeName(level);
+    const showcaseTier = document.getElementById('lmShowcaseTier');
+    if (showcaseTier && typeof getBadgeTier === 'function') {
+      const t = getBadgeTier(level);
+      showcaseTier.textContent = t.charAt(0).toUpperCase() + t.slice(1) + ' Badge';
     }
 
     // Progress

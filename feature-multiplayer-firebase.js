@@ -70,7 +70,7 @@
 
   // ---- Room operations ----
 
-  async function mpFbCreateRoom(code, hostName, questions) {
+  async function mpFbCreateRoom(code, hostName, questions, avatar) {
     const id = mpFbClientId();
     const roomData = {
       status: 'lobby',
@@ -80,7 +80,7 @@
       startedAt: 0,
       questions: questions,
       players: {
-        [id]: { name: hostName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: true }
+        [id]: { name: hostName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: true, avatar: avatar || null, ready: true }
       }
     };
     MP_FB.roomRef = MP_FB.db.ref('rooms/' + code);
@@ -91,7 +91,7 @@
   }
 
   // Returns 'ok' | 'notfound' | 'started'
-  async function mpFbJoinRoom(code, playerName) {
+  async function mpFbJoinRoom(code, playerName, avatar) {
     const roomRef = MP_FB.db.ref('rooms/' + code);
     const snap = await roomRef.get();
     if (!snap.exists()) return 'notfound';
@@ -99,10 +99,16 @@
     if (room.status !== 'lobby') return 'started';
     const id = mpFbClientId();
     const meRef = MP_FB.db.ref('rooms/' + code + '/players/' + id);
-    await meRef.set({ name: playerName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: false });
+    await meRef.set({ name: playerName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: false, avatar: avatar || null, ready: false });
     try { meRef.onDisconnect().remove(); } catch (e) {}
     MP_FB.roomRef = roomRef;
     return 'ok';
+  }
+
+  // Toggle a player's ready state in the lobby.
+  async function mpFbSetReady(code, ready) {
+    const id = mpFbClientId();
+    try { await MP_FB.db.ref('rooms/' + code + '/players/' + id + '/ready').set(!!ready); } catch (e) {}
   }
 
   function mpFbWatchRoom(code, callback) {
@@ -147,6 +153,36 @@
 
   async function mpFbFinish(code) {
     await MP_FB.db.ref('rooms/' + code).update({ status: 'finished' });
+  }
+
+  // Host: reset the room back to the lobby for another round, reusing the SAME
+  // code. Clears scores/answers for all players and loads a fresh question set.
+  async function mpFbResetToLobby(code, players, questions) {
+    const updates = {
+      status: 'lobby',
+      currentIdx: -1,
+      startedAt: 0,
+      questions: questions
+    };
+    Object.keys(players || {}).forEach(pid => {
+      updates['players/' + pid + '/score'] = 0;
+      updates['players/' + pid + '/answeredIdx'] = -1;
+      updates['players/' + pid + '/answeredAt'] = 0;
+      updates['players/' + pid + '/lastDelta'] = 0;
+      // Host stays ready; joiners must ready-up again
+      updates['players/' + pid + '/ready'] = (pid === MP_FB.hostId) ? true : false;
+    });
+    // Track host id so we can keep them ready
+    if (MP_FB.roomRef) {
+      try {
+        const hs = await MP_FB.db.ref('rooms/' + code + '/hostId').get();
+        const hostId = hs.val();
+        Object.keys(players || {}).forEach(pid => {
+          updates['players/' + pid + '/ready'] = (pid === hostId) ? true : false;
+        });
+      } catch (e) {}
+    }
+    await MP_FB.db.ref('rooms/' + code).update(updates);
   }
 
   async function mpFbSubmitAnswer(code, idx, delta) {
