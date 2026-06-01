@@ -95,7 +95,7 @@
       note: 'The Lord commanded Nephi to build a ship to carry his family across the great waters to the promised land.'
     },
     {
-      q: 'How many plates make up the records Joseph Smith translated?',
+      q: 'What plates did Joseph Smith translate the Book of Mormon from?',
       options: ['Brass plates only', 'The gold plates', 'Silver plates', 'Stone tablets'],
       correct: 1,
       ref: 'Title Page',

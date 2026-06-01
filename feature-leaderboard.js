@@ -111,8 +111,11 @@
       ? renderBadgeSVG(level, size || 38, false) : '';
 
     const rowHtml = rows.map((r, i) => {
+      const rankNum = i + 1;
       const rankClass = i === 0 ? 'gold' : (i === 1 ? 'silver' : (i === 2 ? 'bronze' : ''));
-      const medal = i === 0 ? '🥇' : (i === 1 ? '🥈' : (i === 2 ? '🥉' : (i + 1)));
+      const rankIcon = (typeof rankTrophy === 'function')
+        ? rankTrophy(rankNum, 38)
+        : `<span>${rankNum}</span>`;
       // Build an avatar (preset or photo) with the badge overlaid; tappable to reveal name
       let avatarHtml;
       if (typeof renderAvatar === 'function') {
@@ -126,7 +129,7 @@
       }
       return `
         <div class="lb-row${r.isMe ? ' me' : ''}">
-          <div class="lb-rank ${rankClass}">${medal}</div>
+          <div class="lb-rank ${rankClass}">${rankIcon}</div>
           <div class="lb-avatar">${avatarHtml}</div>
           <div class="lb-info">
             <div class="lb-name">${escapeHtmlLb(r.name)}${r.isMe ? ' <span class="lb-you">you</span>' : ''}</div>

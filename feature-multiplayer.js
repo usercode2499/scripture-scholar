@@ -63,7 +63,9 @@
     countdownInterval: null,
     botTimers: [],
     lastStatus: null,     // track room status transitions (firebase mode)
-    committing: false
+    committing: false,
+    _xpAwarded: false,
+    globalRanks: null   // { nameLower: rank } cache for lobby display
   };
 
   function mpRandomCode() {
@@ -108,6 +110,7 @@
     mpState.myAnswerIdx = null;
     mpState.lastStatus = null;
     mpState.committing = false;
+    mpState.globalRanks = null;
     // categories intentionally preserved across reset so host keeps their pick
   }
 
@@ -323,6 +326,9 @@
 
       // Route to the right screen
       if (status === 'lobby') {
+        // Returning to lobby (new game or after a finished game) — reset guards.
+        mpState._xpAwarded = false;
+        mpState.committing = false;
         renderMpLobby();
       } else if (status === 'playing') {
         // New question? (status change into playing, or index changed)
@@ -362,6 +368,9 @@
   function renderMpLobby() {
     const c = document.getElementById('multiplayerContainer');
     if (!c) return;
+    // Kick off a one-time global-rank fetch so we can show each player's
+    // all-time leaderboard standing next to their name.
+    mpEnsureGlobalRanks();
     const isHost = mpState.mode === 'host';
     const enoughPlayers = mpState.players.length >= 2;
     const cats = (typeof TRIVIA_CATEGORIES !== 'undefined') ? TRIVIA_CATEGORIES : [];
@@ -377,12 +386,18 @@
           <span class="mp-players-count">${mpState.players.length}</span>
         </div>
         <div class="mp-players-list" id="mpPlayersList">
-          ${mpState.players.map(p => `
+          ${mpState.players.map(p => {
+            const rank = mpGlobalRankFor(p.name);
+            const rankBadge = (rank && typeof rankTrophy === 'function')
+              ? `<span class="mp-player-rank" title="Leaderboard rank">${rankTrophy(rank, 26)}</span>`
+              : '';
+            return `
             <div class="mp-player-chip${p.isMe ? ' me' : ''}">
               <span class="mp-player-avatar">${p.isHost ? '👑' : '🙂'}</span>
               <span class="mp-player-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
+              ${rankBadge}
             </div>
-          `).join('')}
+          `;}).join('')}
         </div>
         ${isHost && cats.length ? `
           <div class="mp-cat-head">Categories <span class="mp-cat-hint">(pick up to 3, or random)</span></div>
@@ -441,6 +456,47 @@
     });
     if (typeof playTapSfx === 'function') playTapSfx();
     if (typeof showToast === 'function') showToast('🎲 Picked 3 random categories');
+  }
+
+  // ===== Global leaderboard rank in the lobby =====
+  // Fetch the global board once per lobby session and build a name->rank map.
+  // Matching is by display name (case-insensitive), since that's what the
+  // room stores for each player. Re-renders the lobby when ranks arrive.
+  let mpRanksFetching = false;
+  async function mpEnsureGlobalRanks() {
+    if (mpState.globalRanks || mpRanksFetching) return;
+    if (typeof lbInit !== 'function' || typeof lbFetchGlobal !== 'function') return;
+    mpRanksFetching = true;
+    try {
+      const ok = await lbInit();
+      if (!ok) { mpRanksFetching = false; return; }
+      const rows = await lbFetchGlobal(0); // all rows, already sorted by XP
+      if (rows && rows.length) {
+        const map = {};
+        rows.forEach((r, i) => {
+          const key = String(r.name || '').trim().toLowerCase();
+          // keep the best (first / highest) rank if names collide
+          if (key && map[key] === undefined) map[key] = i + 1;
+        });
+        mpState.globalRanks = map;
+        // Re-render the lobby if we're still in it
+        if (mpState.lastStatus === 'lobby' || mpState.mode) {
+          const c = document.getElementById('multiplayerContainer');
+          if (c && c.querySelector('.mp-lobby')) renderMpLobby();
+        }
+      } else {
+        mpState.globalRanks = {}; // mark as fetched (empty board)
+      }
+    } catch (e) {
+      // leave globalRanks null so it can retry next lobby
+    }
+    mpRanksFetching = false;
+  }
+
+  function mpGlobalRankFor(name) {
+    if (!mpState.globalRanks) return null;
+    const key = String(name || '').trim().toLowerCase();
+    return mpState.globalRanks[key] || null;
   }
 
   // ================= START =================
@@ -737,7 +793,7 @@
         <div class="mp-leaderboard">
           ${sorted.map((p, i) => `
             <div class="mp-lb-row${p.isMe ? ' me' : ''}">
-              <span class="mp-lb-rank">${i + 1}</span>
+              <span class="mp-lb-rank">${(typeof rankTrophy === 'function') ? rankTrophy(i + 1, 30) : (i + 1)}</span>
               <span class="mp-lb-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
               ${p.lastDelta > 0 ? `<span class="mp-lb-delta">+${p.lastDelta}</span>` : ''}
               <span class="mp-lb-score">${p.score}</span>
@@ -751,7 +807,7 @@
       <!-- Floating countdown overlay — hidden until the 2s results pause ends -->
       <div class="mp-countdown-overlay hidden" id="mpCountdownOverlay">
         <div class="mp-countdown-ring">
-          <div class="mp-countdown-big" id="mpCountdownNum">5</div>
+          <div class="mp-countdown-big" id="mpCountdownNum">3</div>
         </div>
         <div class="mp-countdown-caption">Next question</div>
       </div>
@@ -778,7 +834,7 @@
       } else {
         mpStartCountdown();
       }
-    }, 2000);
+    }, 5000);
     mpState.botTimers.push(pause);
   }
 
@@ -787,7 +843,7 @@
     const overlay = document.getElementById('mpCountdownOverlay');
     if (overlay) overlay.classList.remove('hidden');
     if (mpState.countdownInterval) clearInterval(mpState.countdownInterval);
-    let remaining = 5;
+    let remaining = 3;
     const numEl = () => document.getElementById('mpCountdownNum');
     const first = numEl();
     if (first) { first.textContent = remaining; mpPulseCountdown(first); }
@@ -836,10 +892,18 @@
   // ================= PODIUM =================
   function mpShowPodium() {
     if (mpState.timerInterval) clearInterval(mpState.timerInterval);
+    if (mpState.countdownInterval) clearInterval(mpState.countdownInterval);
     const sorted = mpState.players.slice().sort((a, b) => b.score - a.score);
     const me = mpState.players.find(p => p.isMe);
     const myRank = sorted.findIndex(p => p.isMe) + 1;
     const top3 = sorted.slice(0, 3);
+
+    // Rank-based XP bonus: 1st=100, 2nd=50, 3rd=25, everyone else=10 for playing.
+    let myBonus = 10;
+    if (myRank === 1) myBonus = 100;
+    else if (myRank === 2) myBonus = 50;
+    else if (myRank === 3) myBonus = 25;
+
     const c = document.getElementById('multiplayerContainer');
     if (!c) return;
     c.innerHTML = `
@@ -865,18 +929,19 @@
           </div>` : ''}
         </div>
         <div class="mp-your-result">You finished <strong>#${myRank}</strong> of ${sorted.length} with <strong>${me ? me.score : 0}</strong> points</div>
+        <div class="mp-bonus-badge">🎁 +${myBonus} XP bonus${myRank <= 3 ? ` &middot; Rank ${myRank}!` : ''}</div>
         <div class="mp-full-standings">
           ${sorted.map((p, i) => `
             <div class="mp-lb-row${p.isMe ? ' me' : ''}">
-              <span class="mp-lb-rank">${i + 1}</span>
+              <span class="mp-lb-rank">${(typeof rankTrophy === 'function') ? rankTrophy(i + 1, 30) : (i + 1)}</span>
               <span class="mp-lb-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
               <span class="mp-lb-score">${p.score}</span>
             </div>
           `).join('')}
         </div>
         <div class="mp-podium-actions">
-          <button class="btn btn-gold" onclick="mpPlayAgain()">${mpState.mode === 'host' ? 'New Game' : 'Back to Lobby'}</button>
-          <button class="btn btn-ghost" onclick="mpExit()">Back to Home</button>
+          <button class="btn btn-gold" onclick="mpReturnToLobby()">Back to Lobby</button>
+          <button class="btn btn-ghost" onclick="mpExit()">Leave Game</button>
         </div>
       </div>
     `;
@@ -884,19 +949,49 @@
     if (typeof playWinnerSfx === 'function') playWinnerSfx();
     if (typeof fireConfetti === 'function') {
       fireConfetti();
-      // a second burst shortly after for a fuller celebration
       setTimeout(() => { if (typeof fireConfetti === 'function') fireConfetti(); }, 600);
     }
-    if (typeof awardXp === 'function' && me) {
-      const bonus = Math.min(50, Math.max(10, Math.round((me.score || 0) / 100)));
-      awardXp(bonus);
+    // Award the rank bonus ONCE per game (guard against podium re-renders).
+    if (typeof awardXp === 'function' && me && !mpState._xpAwarded) {
+      mpState._xpAwarded = true;
+      awardXp(myBonus);
     }
   }
 
-  function mpPlayAgain() {
-    // Leave current room and start fresh from the home screen
-    mpExitNoRedirect();
-    openMultiplayer();
+  // Return to the lobby reusing the SAME room code (no new code generated).
+  async function mpReturnToLobby() {
+    // Reset the per-game guard so the next game can award XP again.
+    mpState._xpAwarded = false;
+    mpState.myAnswerIdx = null;
+    mpState.mySelectedIdx = null;
+    mpState.myTypedAnswer = '';
+
+    if (mpState.online && mpState.mode === 'host' && typeof mpFbResetToLobby === 'function') {
+      // Host rebuilds a fresh question set and resets the room to lobby.
+      const questions = mpGetQuestions(mpState.NUM_QUESTIONS);
+      const playersObj = {};
+      mpState.players.forEach(p => { playersObj[p.id] = true; });
+      try {
+        await mpFbResetToLobby(mpState.roomCode, playersObj, questions);
+        // The room listener will route everyone (host + players) back to lobby.
+      } catch (e) {
+        console.warn('Reset to lobby failed:', e && e.message);
+        renderMpLobby();
+      }
+    } else if (mpState.online && mpState.mode === 'join') {
+      // Joiner can't reset the room. Show a waiting lobby; when the host resets,
+      // the room listener will refresh everyone. If the host already reset,
+      // we're effectively already back in the lobby.
+      mpState.players.forEach(p => { p.score = 0; p.lastDelta = 0; p.answered = false; });
+      mpState.currentIdx = -1;
+      renderMpLobby();
+    } else {
+      // Mock mode: rebuild a local lobby with the same code.
+      mpState.players.forEach(p => { p.score = 0; p.lastDelta = 0; p.answered = false; });
+      mpState.questions = [];
+      mpState.currentIdx = -1;
+      renderMpLobby();
+    }
   }
 
   // ================= MOCK GAMEPLAY (offline fallback) =================

@@ -159,7 +159,7 @@
             <stop offset="100%" stop-color="${c.light}" stop-opacity="0.5"/>
           </radialGradient>
           <clipPath id="${uid}_clip">
-            <circle cx="50" cy="50" r="44"/>
+            <circle cx="50" cy="50" r="42"/>
           </clipPath>
         </defs>
 
@@ -190,9 +190,9 @@
         <!-- Sparkle accents (silver/gold) -->
         ${sparkles}
 
-        <!-- Shine sweep (animated for silver/gold via CSS) -->
+        <!-- Shine sweep — tall/wide band fully inside the plate clip so no edges show -->
         <g clip-path="url(#${uid}_clip)">
-          <rect class="badge-shine" x="-60" y="-10" width="40" height="120" fill="url(#${uid}_shine)" transform="rotate(20 50 50)"/>
+          <rect class="badge-shine" x="-50" y="-40" width="34" height="180" fill="url(#${uid}_shine)" transform="rotate(20 50 50)"/>
         </g>
       </svg>`;
   }

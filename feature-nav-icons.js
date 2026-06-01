@@ -67,3 +67,54 @@
     const hintIcon = document.getElementById('journeyHintsIcon');
     if (hintIcon) hintIcon.innerHTML = navIcon('hints', 32);
   }
+
+  // ============ RANK TROPHY ICONS ============
+  // An art trophy with a rank number inside the cup. Colored by placement:
+  //   1 = gold, 2 = silver, 3 = bronze, 4+ = neutral stone.
+  // Used in the leaderboard and the multiplayer lobby/results.
+  const RANK_TROPHY_COLORS = {
+    gold:   { light: '#fce078', base: '#e0b552', dark: '#b8862c', rim: '#9a6f24', num: '#7a5414' },
+    silver: { light: '#eef2f7', base: '#c2cad6', dark: '#94a0b0', rim: '#76828f', num: '#56606b' },
+    bronze: { light: '#e8b98a', base: '#c08043', dark: '#8f5a28', rim: '#6f4720', num: '#5a3818' },
+    stone:  { light: '#e9e2d2', base: '#cbbfa6', dark: '#a89a7d', rim: '#8a7c62', num: '#6a5e48' }
+  };
+
+  function rankTier(rank) {
+    if (rank === 1) return 'gold';
+    if (rank === 2) return 'silver';
+    if (rank === 3) return 'bronze';
+    return 'stone';
+  }
+
+  // rank: 1-based placement. size: px. Returns an SVG trophy with the number inside.
+  function rankTrophy(rank, size) {
+    size = size || 34;
+    const tier = rankTier(rank);
+    const c = RANK_TROPHY_COLORS[tier];
+    const uid = 'trophy_' + rank + '_' + Math.floor(Math.random() * 100000);
+    const num = String(rank);
+    // Smaller font for 2-digit numbers
+    const fontSize = num.length > 1 ? 20 : 26;
+
+    return `
+      <svg class="rank-trophy rank-trophy-${tier}" viewBox="0 0 100 100" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Rank ${rank}">
+        <defs>
+          <linearGradient id="${uid}_cup" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${c.light}"/>
+            <stop offset="55%" stop-color="${c.base}"/>
+            <stop offset="100%" stop-color="${c.dark}"/>
+          </linearGradient>
+        </defs>
+        <!-- Handles -->
+        <path d="M28 30 Q14 30 16 44 Q18 54 32 52" fill="none" stroke="${c.dark}" stroke-width="5" stroke-linecap="round"/>
+        <path d="M72 30 Q86 30 84 44 Q82 54 68 52" fill="none" stroke="${c.dark}" stroke-width="5" stroke-linecap="round"/>
+        <!-- Cup bowl -->
+        <path d="M28 26 L72 26 L70 46 Q66 62 50 64 Q34 62 30 46 Z" fill="url(#${uid}_cup)" stroke="${c.rim}" stroke-width="2" stroke-linejoin="round"/>
+        <!-- Stem + base -->
+        <rect x="46" y="64" width="8" height="10" fill="${c.base}"/>
+        <path d="M38 74 L62 74 L64 80 L36 80 Z" fill="${c.dark}"/>
+        <rect x="32" y="80" width="36" height="5" rx="2" fill="${c.rim}"/>
+        <!-- Rank number inside the cup -->
+        <text x="50" y="49" font-size="${fontSize}" fill="${c.num}" text-anchor="middle" font-family="'Cormorant Garamond', Georgia, serif" font-weight="700">${num}</text>
+      </svg>`;
+  }
