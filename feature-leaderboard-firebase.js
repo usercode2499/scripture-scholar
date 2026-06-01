@@ -70,6 +70,7 @@
         level: stats.level || 1,
         badgeName: stats.badgeName || '',
         chapters: stats.chapters || 0,
+        avatar: stats.avatar || null,
         updatedAt: firebase.database.ServerValue.TIMESTAMP
       });
       return true;
@@ -96,6 +97,7 @@
           level: v.level || 1,
           badgeName: v.badgeName || '',
           chapters: v.chapters || 0,
+          avatar: v.avatar || null,
           isMe: child.key === LB.uid
         });
       });

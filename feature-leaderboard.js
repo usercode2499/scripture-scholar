@@ -23,7 +23,8 @@
       xp: xp,
       level: level,
       badgeName: badgeName,
-      chapters: lbMyChapters()
+      chapters: lbMyChapters(),
+      avatar: (typeof avatarThumbForLeaderboard === 'function') ? avatarThumbForLeaderboard() : null
     };
   }
 
@@ -112,10 +113,21 @@
     const rowHtml = rows.map((r, i) => {
       const rankClass = i === 0 ? 'gold' : (i === 1 ? 'silver' : (i === 2 ? 'bronze' : ''));
       const medal = i === 0 ? '🥇' : (i === 1 ? '🥈' : (i === 2 ? '🥉' : (i + 1)));
+      // Build an avatar (preset or photo) with the badge overlaid; tappable to reveal name
+      let avatarHtml;
+      if (typeof renderAvatar === 'function') {
+        const av = r.avatar || { type: 'preset', preset: 'scroll' };
+        avatarHtml = renderAvatar({
+          avatar: av, level: r.level, size: 46, showBadge: true, badgeSize: 22,
+          badgeOnclick: `revealBadgeName('list', ${r.level}, event)`
+        });
+      } else {
+        avatarHtml = `<button class="lb-badge" onclick="revealBadgeName('list', ${r.level}, event)">${badge(r.level, 40)}</button>`;
+      }
       return `
         <div class="lb-row${r.isMe ? ' me' : ''}">
           <div class="lb-rank ${rankClass}">${medal}</div>
-          <button class="lb-badge" onclick="revealBadgeName('list', ${r.level}, event)" aria-label="Show badge name">${badge(r.level, 40)}</button>
+          <div class="lb-avatar">${avatarHtml}</div>
           <div class="lb-info">
             <div class="lb-name">${escapeHtmlLb(r.name)}${r.isMe ? ' <span class="lb-you">you</span>' : ''}</div>
             <div class="lb-sub">Lv ${r.level} · ${escapeHtmlLb(r.badgeName)} · ${r.chapters} chapter${r.chapters === 1 ? '' : 's'}</div>

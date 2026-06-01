@@ -3409,6 +3409,79 @@
     .levelup-rays { animation: none; opacity: 0.5; }
     .levelup-badge-wrap { animation: none; }
   }
+
+  /* =================================== */
+  /* === PROFILE AVATARS === */
+  /* =================================== */
+  .avatar-wrap { position: relative; display: inline-flex; align-items: center; justify-content: center; vertical-align: middle; }
+  .avatar-disc {
+    width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+    display: block; box-shadow: 0 2px 8px rgba(90,60,20,0.22);
+    background: var(--card);
+  }
+  .avatar-disc .avatar-preset-svg, .avatar-disc .avatar-photo { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .avatar-badge {
+    position: absolute; right: -4px; bottom: -4px;
+    display: inline-flex; cursor: pointer; line-height: 0;
+    filter: drop-shadow(0 1px 3px rgba(120,85,20,0.4));
+    -webkit-tap-highlight-color: transparent;
+  }
+  .avatar-badge:active { transform: scale(0.9); }
+
+  /* Level modal hero edit pencil */
+  .level-modal-badge-btn { position: relative; }
+  .lm-avatar-edit {
+    position: absolute; left: -6px; top: -6px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--gold); color: #fff; font-size: 13px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+    -webkit-tap-highlight-color: transparent; z-index: 2;
+  }
+  .lm-avatar-edit:active { transform: scale(0.9); }
+
+  /* Leaderboard avatar cell */
+  .lb-avatar { flex-shrink: 0; width: 46px; height: 46px; display: flex; align-items: center; justify-content: center; }
+
+  /* Avatar picker modal */
+  .avatar-picker-overlay {
+    position: fixed; inset: 0; z-index: 1700;
+    background: rgba(20,12,6,0.55); backdrop-filter: blur(3px);
+    display: flex; align-items: flex-end; justify-content: center;
+    animation: cmFade 0.25s ease;
+  }
+  .avatar-picker-card {
+    background: var(--card); width: 100%; max-width: 460px;
+    border-radius: 22px 22px 0 0; padding: 22px 20px 30px;
+    max-height: 88vh; overflow-y: auto; position: relative;
+    animation: cmSlideUp 0.3s cubic-bezier(0.16,1,0.3,1);
+  }
+  @media (min-width: 520px) { .avatar-picker-overlay { align-items: center; } .avatar-picker-card { border-radius: 22px; } }
+  .avatar-picker-close {
+    position: absolute; right: 14px; top: 14px; width: 32px; height: 32px;
+    border-radius: 50%; border: none; background: var(--bg); color: var(--ink-soft);
+    font-size: 20px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .avatar-picker-title { font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 16px; text-align: center; }
+  .avatar-preview-row { text-align: center; margin-bottom: 18px; }
+  .avatar-preview-hint { font-size: 12.5px; color: var(--ink-soft); margin-top: 8px; }
+  .avatar-section-label { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: var(--ink-soft); margin: 16px 0 10px; }
+  .avatar-photo-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .avatar-photo-current { flex-shrink: 0; }
+  .avatar-photo-btn { flex: 1; min-width: 140px; }
+  .avatar-photo-remove { background: none; border: none; color: var(--red); font-family: inherit; font-size: 13px; cursor: pointer; text-decoration: underline; -webkit-tap-highlight-color: transparent; }
+  .avatar-photo-note { font-size: 11.5px; color: var(--ink-faint); line-height: 1.5; margin-top: 8px; }
+  .avatar-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .avatar-choice {
+    aspect-ratio: 1; border-radius: 50%; border: 3px solid transparent;
+    background: none; padding: 0; cursor: pointer; overflow: hidden;
+    transition: transform 0.1s ease, border-color 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .avatar-choice svg { display: block; width: 100%; height: 100%; }
+  .avatar-choice:active { transform: scale(0.94); }
+  .avatar-choice.selected { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold-glow); }
+  .avatar-picker-done { width: 100%; margin-top: 20px; }
   .levelup-badge-name {
     font-size: 30px;
     font-weight: 700;
@@ -4883,15 +4956,25 @@
   </div>
 </div>
 
+<!-- AVATAR PICKER MODAL -->
+<div class="avatar-picker-overlay hidden" id="avatarPickerModal" onclick="if(event.target===this)closeAvatarPicker()">
+  <div class="avatar-picker-card" onclick="event.stopPropagation()">
+    <button class="avatar-picker-close" onclick="closeAvatarPicker()" aria-label="Close">×</button>
+    <div class="avatar-picker-title serif">Profile Picture</div>
+    <div class="avatar-picker-body" id="avatarPickerBody"></div>
+    <button class="btn btn-gold avatar-picker-done" onclick="closeAvatarPicker()">Done</button>
+  </div>
+</div>
+
 <!-- LEVEL INFO MODAL -->
 <div class="level-modal-overlay hidden" id="levelModal" onclick="closeLevelModal(event)">
   <div class="level-modal-card" onclick="event.stopPropagation()">
     <button class="level-modal-close" onclick="closeLevelModal()" aria-label="Close">×</button>
 
     <div class="level-modal-hero">
-      <button class="level-modal-badge-btn" id="lmBadgeBtn" onclick="revealBadgeName('modal', null, event)" aria-label="Show badge name">
+      <div class="level-modal-badge-btn" id="lmBadgeBtn">
         <div class="level-modal-icon" id="lmBadgeIcon">📜</div>
-      </button>
+      </div>
       <div class="level-modal-hero-text">
         <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
         <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
@@ -5027,6 +5110,7 @@
 <script src="feature-leaderboard.js"></script>
 <script src="feature-multiplayer.js"></script>
 <script src="feature-badges.js"></script>
+<script src="feature-avatars.js"></script>
 <script src="feature-nav-icons.js"></script>
 
 <script>
@@ -5093,6 +5177,7 @@
     hints: 3, // welcome gift
     lastDate: null,
     completedLessons: [],
+    avatar: { type: 'preset', preset: 'scroll', photo: '' },
     // session-only:
     currentLessonId: null,
     currentQ: 0,
@@ -5118,6 +5203,10 @@
       if (typeof state.audioBgVol !== 'number') state.audioBgVol = 0.6;
       // Theme preference — default OFF (light mode)
       if (typeof state.darkMode !== 'boolean') state.darkMode = false;
+      // Avatar — default preset if missing/malformed
+      if (!state.avatar || typeof state.avatar !== 'object' || !state.avatar.type) {
+        state.avatar = { type: 'preset', preset: 'scroll', photo: '' };
+      }
     } catch(e) {}
     // Apply theme as early as possible
     if (typeof applyTheme === 'function') applyTheme();
@@ -5133,6 +5222,7 @@
         hints: state.hints,
         lastDate: state.lastDate,
         completedLessons: state.completedLessons,
+        avatar: state.avatar,
         audioBg: state.audioBg,
         audioSfx: state.audioSfx,
         audioBgVol: state.audioBgVol,
@@ -5150,9 +5240,11 @@
     // Show the user's name in the profile pill (if set)
     const nameEl = document.getElementById('navUsername');
     if (nameEl) nameEl.textContent = state.username || '';
-    // Show the current level's badge in the navbar profile pill
+    // Show the user's avatar (preset/photo) with the level badge overlaid
     const navBadge = document.getElementById('navBadgeAvatar');
-    if (navBadge && typeof renderBadgeSVG === 'function') {
+    if (navBadge && typeof renderAvatar === 'function') {
+      navBadge.innerHTML = renderAvatar({ avatar: getMyAvatar(), level: lvl, size: 38, showBadge: true, badgeSize: 18 });
+    } else if (navBadge && typeof renderBadgeSVG === 'function') {
       navBadge.innerHTML = renderBadgeSVG(lvl, 30, false);
     }
     updateLevelProgress();
@@ -5400,9 +5492,14 @@
     // Hero
     document.getElementById('lmLevel').textContent = level;
     document.getElementById('lmTitle').textContent = getLevelTitle(level);
-    // Show the badge for the current level instead of the static scroll emoji
+    // Show the user's avatar with the level badge overlaid; tap badge reveals name
     const badgeIcon = document.getElementById('lmBadgeIcon');
-    if (badgeIcon && typeof renderBadgeSVG === 'function') {
+    if (badgeIcon && typeof renderAvatar === 'function') {
+      badgeIcon.innerHTML = renderAvatar({
+        avatar: getMyAvatar(), level: level, size: 80, showBadge: true, badgeSize: 36,
+        badgeOnclick: "revealBadgeName('modal', null, event)"
+      }) + '<span class="lm-avatar-edit" onclick="openAvatarPicker()" aria-label="Edit profile picture">✎</span>';
+    } else if (badgeIcon && typeof renderBadgeSVG === 'function') {
       badgeIcon.innerHTML = renderBadgeSVG(level, 72, true);
     }
 
@@ -5483,6 +5580,13 @@
     const confirmModal = document.getElementById('confirmModal');
     if (confirmModal && !confirmModal.classList.contains('hidden')) {
       closeConfirmModal(false);
+      history.pushState({ s: 'app' }, '', location.href);
+      return;
+    }
+    // Avatar picker open? Back closes it.
+    const avatarModal = document.getElementById('avatarPickerModal');
+    if (avatarModal && !avatarModal.classList.contains('hidden')) {
+      closeAvatarPicker();
       history.pushState({ s: 'app' }, '', location.href);
       return;
     }

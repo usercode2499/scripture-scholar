@@ -4,7 +4,7 @@
 
 // Bump this version when you push significant content updates,
 // so installed PWAs pick up the new cache. e.g. 'v2', 'v3', etc.
-const CACHE_VERSION = 'scripture-scholar-v30';
+const CACHE_VERSION = 'scripture-scholar-v31';
 
 // Files that make up the app shell (everything needed for first paint).
 const APP_SHELL = [
@@ -33,6 +33,7 @@ const APP_SHELL = [
   './feature-multiplayer-firebase.js',
   './data-trivia-bank.js',
   './feature-nav-icons.js',
+  './feature-avatars.js',
   './feature-leaderboard-firebase.js',
   './feature-leaderboard.js'
 ];
