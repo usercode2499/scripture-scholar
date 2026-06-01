@@ -268,6 +268,146 @@
       ref: 'Moroni 7:47',
       note: 'Mormon\'s sermon on charity, recorded by his son Moroni.'
     },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"I, Nephi, having been born of goodly parents, therefore I was taught somewhat in all the learning of my father..."',
+      options: ['1 Nephi 1:1', '2 Nephi 1:1', 'Mosiah 1:1', 'Alma 1:1'], correct: 0,
+      ref: '1 Nephi 1:1',
+      note: 'The opening verse of the Book of Mormon.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"And when ye shall receive these things... ask God, the Eternal Father, in the name of Christ, if these things are not true..."',
+      options: ['Moroni 10:4', 'Moroni 7:47', '2 Nephi 33:1', 'Ether 12:6'], correct: 0,
+      ref: 'Moroni 10:4',
+      note: 'Moroni\'s promise — the invitation to ask God about the truth of the Book of Mormon.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"And by the power of the Holy Ghost ye may know the truth of all things."',
+      options: ['Moroni 10:5', 'Moroni 10:4', '1 Nephi 10:19', 'Alma 5:46'], correct: 0,
+      ref: 'Moroni 10:5',
+      note: 'The companion to Moroni\'s promise in the verse just before it.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...wickedness never was happiness."',
+      options: ['Alma 41:10', 'Alma 5:10', 'Mosiah 2:41', 'Helaman 13:38'], correct: 0,
+      ref: 'Alma 41:10',
+      note: 'Alma counseling his son Corianton.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"And charity suffereth long, and is kind, and envieth not... beareth all things, believeth all things, hopeth all things, endureth all things."',
+      options: ['Moroni 7:45', 'Moroni 7:47', '1 Nephi 11:22', 'Mosiah 4:11'], correct: 0,
+      ref: 'Moroni 7:45',
+      note: 'Mormon\'s description of the qualities of charity, echoed by the Apostle Paul in 1 Corinthians 13.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...I give unto men weakness that they may be humble... then will I make weak things become strong unto them."',
+      options: ['Ether 12:27', 'Ether 12:6', 'Alma 32:21', 'Moroni 7:33'], correct: 0,
+      ref: 'Ether 12:27',
+      note: 'The Lord speaking to Moroni about the purpose of weakness.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...faith is things which are hoped for and not seen; wherefore, dispute not because ye see not, for ye receive no witness until after the trial of your faith."',
+      options: ['Ether 12:6', 'Alma 32:21', 'Moroni 7:26', 'Hebrews 11:1'], correct: 0,
+      ref: 'Ether 12:6',
+      note: 'Moroni teaching that faith is tested before its reward.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"Therefore I would that ye should be perfect even as I, or your Father who is in heaven is perfect."',
+      options: ['3 Nephi 12:48', 'Moroni 10:32', '2 Nephi 31:20', 'Matthew 5:48'], correct: 0,
+      ref: '3 Nephi 12:48',
+      note: 'The risen Christ teaching the Nephites, paralleling the Sermon on the Mount.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...see that ye refrain from your iniquities... go no more after the lusts of your eyes..."',
+      options: ['Alma 39:9', 'Alma 38:12', 'Mosiah 4:30', 'Jacob 2:28'], correct: 0,
+      ref: 'Alma 39:9',
+      note: 'Alma\'s counsel to his son Corianton to turn from sin.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...ye must press forward with a steadfastness in Christ, having a perfect brightness of hope..."',
+      options: ['2 Nephi 31:20', 'Moroni 7:47', 'Alma 32:21', 'Mosiah 4:11'], correct: 0,
+      ref: '2 Nephi 31:20',
+      note: 'Nephi describing the doctrine of Christ and the path to eternal life.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...he will take upon him the pains and the sicknesses of his people."',
+      options: ['Alma 7:11', 'Mosiah 3:19', '2 Nephi 9:21', 'Isaiah 53:4'], correct: 0,
+      ref: 'Alma 7:11',
+      note: 'Alma prophesying of the Savior\'s atonement at Gideon.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"O remember, remember, my sons, the words which king Benjamin spake unto his people..."',
+      options: ['Helaman 5:9', 'Mosiah 2:17', 'Alma 37:35', '3 Nephi 5:13'], correct: 0,
+      ref: 'Helaman 5:9',
+      note: 'Helaman reminding his sons of King Benjamin\'s teaching about salvation through Christ.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...learn wisdom in thy youth; yea, learn in thy youth to keep the commandments of God."',
+      options: ['Alma 37:35', 'Alma 37:6', 'Mosiah 4:15', 'Proverbs 22:6'], correct: 0,
+      ref: 'Alma 37:35',
+      note: 'Alma\'s counsel to his son Helaman.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"And now, my son, I would say... see that ye refrain from idleness."',
+      options: ['Alma 38:12', 'Alma 37:35', 'Mosiah 2:17', '2 Nephi 5:17'], correct: 0,
+      ref: 'Alma 38:12',
+      note: 'Alma\'s counsel to his son Shiblon, also teaching to "bridle all your passions."'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"Behold, I am Jesus Christ, whom the prophets testified shall come into the world."',
+      options: ['3 Nephi 11:10', '3 Nephi 9:15', '1 Nephi 11:7', 'Mosiah 3:8'], correct: 0,
+      ref: '3 Nephi 11:10',
+      note: 'The risen Christ introducing Himself to the Nephites at the temple in Bountiful.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...there is no other name given whereby salvation cometh; therefore... take upon you the name of Christ..."',
+      options: ['Mosiah 5:8', 'Mosiah 3:17', '2 Nephi 25:23', 'Acts 4:12'], correct: 0,
+      ref: 'Mosiah 5:8',
+      note: 'King Benjamin\'s people covenanting to take upon them the name of Christ.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...for we know that it is by grace that we are saved, after all we can do."',
+      options: ['2 Nephi 25:23', 'Moroni 10:32', 'Alma 24:11', 'Ephesians 2:8'], correct: 0,
+      ref: '2 Nephi 25:23',
+      note: 'Nephi teaching about grace and the labor of the Nephites to persuade their children to believe in Christ.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...come unto Christ, and be perfected in him, and deny yourselves of all ungodliness..."',
+      options: ['Moroni 10:32', 'Moroni 7:47', '3 Nephi 12:48', '2 Nephi 31:20'], correct: 0,
+      ref: 'Moroni 10:32',
+      note: 'Moroni\'s closing invitation near the very end of the Book of Mormon.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...watch yourselves, and your thoughts, and your words, and your deeds..."',
+      options: ['Mosiah 4:30', 'Alma 37:35', 'Mosiah 2:17', '3 Nephi 18:15'], correct: 0,
+      ref: 'Mosiah 4:30',
+      note: 'King Benjamin\'s closing counsel to his people.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"For behold, this life is the time for men to prepare to meet God..."',
+      options: ['Alma 34:32', 'Alma 5:28', '2 Nephi 9:27', 'Mosiah 3:19'], correct: 0,
+      ref: 'Alma 34:32',
+      note: 'Amulek preaching to the Zoramites about not procrastinating repentance.'
+    },
 
     // ============ CATEGORY: COMPLETE THE VERSE ============
     {
