@@ -2057,6 +2057,15 @@
     flex-shrink: 0;
     -webkit-tap-highlight-color: transparent;
   }
+  /* Nav medallions (badge-style SVG icons) */
+  .nav-medallion { display: inline-flex; align-items: center; justify-content: center; }
+  .topbar-icon-btn.nav-medallion { background: transparent; border: none; box-shadow: none; width: 34px; height: 34px; }
+  .topbar-icon-btn.nav-medallion:hover { transform: translateY(-1px); }
+  .nav-icon-svg { display: block; filter: drop-shadow(0 1px 2px rgba(120,85,20,0.3)); transition: transform 0.15s ease; }
+  .topbar-icon-btn.nav-medallion:active .nav-icon-svg { transform: scale(0.92); }
+  .nav-medallion-stat { background: var(--card); border: 1px solid var(--border); border-radius: 100px; padding: 4px 11px 4px 5px; display: inline-flex; align-items: center; gap: 5px; box-shadow: var(--shadow); cursor: pointer; }
+  .nav-medallion-stat .nav-medallion { margin-right: 0; }
+  .nav-medallion-stat .nav-icon-svg { width: 22px; height: 22px; }
   .topbar-settings:hover {
     color: var(--ink);
     transform: rotate(45deg);
@@ -2836,6 +2845,91 @@
   .mp-podium-3 { height: 54px; background: linear-gradient(180deg, #d49a6a, #b87333); }
   .mp-podium-score { font-size: 15px; font-weight: 700; color: var(--gold-dark); margin-top: 6px; }
   .mp-your-result { font-size: 15px; color: var(--ink); margin-bottom: 20px; line-height: 1.5; }
+  .mp-bonus-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #fdf2cf, #f3d98a);
+    border: 1px solid var(--gold);
+    color: var(--gold-dark);
+    font-weight: 800; font-size: 15px;
+    padding: 10px 20px; border-radius: 100px;
+    margin: 0 auto 22px; 
+    box-shadow: 0 4px 14px rgba(200,155,60,0.25);
+    animation: mpBonusPop 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  @keyframes mpBonusPop { 0% { transform: scale(0.6); opacity: 0; } 60% { transform: scale(1.1); } 100% { transform: scale(1); opacity: 1; } }
+  body.dark-mode .mp-bonus-badge { background: linear-gradient(135deg, #4a3a1a, #5c4824); }
+
+  /* =================================== */
+  /* === LEADERBOARD === */
+  /* =================================== */
+  #leaderboardContainer { padding: 4px 0 40px; }
+  .lb-loading { text-align: center; padding: 60px 20px; color: var(--ink-soft); }
+  .lb-spinner {
+    width: 40px; height: 40px; margin: 0 auto 16px;
+    border: 3px solid var(--border); border-top-color: var(--gold);
+    border-radius: 50%; animation: lbSpin 0.8s linear infinite;
+  }
+  @keyframes lbSpin { to { transform: rotate(360deg); } }
+  .lb-offline { text-align: center; padding: 50px 24px; }
+  .lb-offline-icon { font-size: 48px; margin-bottom: 12px; }
+  .lb-offline h3 { font-size: 22px; color: var(--ink); margin: 0 0 8px; }
+  .lb-offline p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin: 0 auto 8px; max-width: 300px; }
+  .lb-offline-reason { font-size: 11px; opacity: 0.6; }
+  .lb-offline .btn { margin-top: 14px; }
+
+  .lb-header-card {
+    text-align: center;
+    background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
+    border: 1px solid var(--gold); border-radius: 18px;
+    padding: 20px; margin-bottom: 18px;
+  }
+  body.dark-mode .lb-header-card { background: linear-gradient(135deg, #3a2a18 0%, #2a1d10 100%); }
+  .lb-title { font-size: 24px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .lb-subtitle { font-size: 13px; color: var(--ink-soft); }
+  .lb-myrank { margin-top: 10px; font-size: 14px; color: var(--gold-dark); font-weight: 600; }
+  .lb-myrank strong { font-size: 16px; }
+
+  .lb-list { display: flex; flex-direction: column; gap: 9px; }
+  .lb-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 14px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 14px;
+  }
+  .lb-row.me { border-color: var(--gold); background: var(--gold-glow); box-shadow: 0 2px 10px rgba(200,155,60,0.15); }
+  .lb-rank {
+    width: 30px; flex-shrink: 0; text-align: center;
+    font-size: 16px; font-weight: 800; color: var(--ink-soft);
+  }
+  .lb-rank.gold, .lb-rank.silver, .lb-rank.bronze { font-size: 22px; }
+  .lb-badge { flex-shrink: 0; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+  .lb-info { flex: 1; min-width: 0; }
+  .lb-name { font-size: 15px; font-weight: 700; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-you { font-size: 10px; background: var(--gold); color: var(--ink); padding: 1px 7px; border-radius: 100px; font-weight: 800; vertical-align: middle; margin-left: 4px; }
+  .lb-sub { font-size: 12px; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .lb-xp { flex-shrink: 0; text-align: right; display: flex; flex-direction: column; line-height: 1.1; }
+  .lb-xp strong { font-size: 17px; color: var(--gold-dark); font-family: 'Cormorant Garamond', serif; }
+  .lb-xp span { font-size: 10px; color: var(--ink-faint); letter-spacing: 1px; }
+  .lb-refresh {
+    display: block; margin: 18px auto 0; background: transparent;
+    border: 1px solid var(--border); color: var(--ink-soft);
+    font-family: inherit; font-size: 13px; padding: 8px 20px;
+    border-radius: 100px; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .lb-note { text-align: center; font-size: 12px; color: var(--ink-faint); margin-top: 14px; line-height: 1.5; }
+
+  /* Journey hints (moved from navbar into the level modal) */
+  .journey-hints {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 14px; padding: 12px 14px;
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 12px; cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .journey-hints:active { transform: scale(0.99); }
+  .journey-hints-icon { flex-shrink: 0; display: inline-flex; }
+  .journey-hints-text { flex: 1; font-size: 14px; color: var(--ink); }
+  .journey-hints-text strong { color: var(--gold-dark); font-size: 16px; }
+  .journey-hints-info { color: var(--ink-faint); font-size: 15px; }
   .mp-your-result strong { color: var(--gold-dark); }
   .mp-full-standings { margin-bottom: 24px; text-align: left; }
   .mp-podium-actions { display: flex; flex-direction: column; gap: 10px; }
@@ -4218,10 +4312,10 @@
       </div>
       <!-- Flexible spacer so the right-side group stays anchored right -->
       <div class="topbar-spacer"></div>
-      <div class="stat stat-hints" onclick="showStatLabel('hints', event)"><span class="stat-icon">💡</span><span id="hintsCount">3</span></div>
-      <button class="topbar-icon-btn" onclick="openMiniGames()" aria-label="Practice">🎮</button>
-      <div class="stat stat-streak" onclick="showStatLabel('streak', event)"><span class="stat-icon">🔥</span><span id="streakCount">0</span></div>
-      <button class="topbar-settings" onclick="openSettings()" aria-label="Settings">⚙</button>
+      <button class="topbar-icon-btn nav-medallion" id="navIconPractice" onclick="openMiniGames()" aria-label="Practice"></button>
+      <button class="topbar-icon-btn nav-medallion" id="navIconLeaderboard" onclick="openLeaderboard()" aria-label="Leaderboard"></button>
+      <div class="stat stat-streak nav-medallion-stat" onclick="showStatLabel('streak', event)"><span class="nav-medallion" id="navIconStreak"></span><span id="streakCount">0</span></div>
+      <button class="topbar-icon-btn nav-medallion" id="navIconSettings" onclick="openSettings()" aria-label="Settings"></button>
     </div>
     <div class="topbar-brand" id="topbarBrand">
       <div class="topbar-brand-logo">
@@ -4483,6 +4577,15 @@
     <div id="multiplayerContainer"></div>
   </div>
 
+  <!-- LEADERBOARD -->
+  <div class="screen hidden" id="screen-leaderboard">
+    <div class="detail-header">
+      <button class="back-btn" onclick="goHome()" aria-label="Back">←</button>
+      <span class="detail-eyebrow-bar">Leaderboard</span>
+    </div>
+    <div id="leaderboardContainer"></div>
+  </div>
+
   <div class="screen hidden" id="screen-settings">
     <div class="detail-header">
       <button class="back-btn" onclick="closeSettings()" aria-label="Back">←</button>
@@ -4718,6 +4821,12 @@
           <div class="level-modal-stat-lbl">Day Streak</div>
         </div>
       </div>
+      <!-- Hints — moved here from the navbar; tap for info, same function -->
+      <div class="journey-hints" onclick="showStatLabel('hints', event)">
+        <span class="journey-hints-icon" id="journeyHintsIcon"></span>
+        <span class="journey-hints-text"><strong id="hintsCount">3</strong> hints available</span>
+        <span class="journey-hints-info">ⓘ</span>
+      </div>
     </div>
   </div>
 </div>
@@ -4791,9 +4900,13 @@
 <!-- Firebase compat SDK (classic scripts, attaches global `firebase`) -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script src="feature-multiplayer-firebase.js"></script>
+<script src="feature-leaderboard-firebase.js"></script>
+<script src="feature-leaderboard.js"></script>
 <script src="feature-multiplayer.js"></script>
 <script src="feature-badges.js"></script>
+<script src="feature-nav-icons.js"></script>
 
 <script>
   // Lesson data is loaded from data-lessons.js (loaded before this script)
@@ -6494,6 +6607,7 @@
 
   // ============ INIT ============
   loadState();
+  if (typeof applyNavIcons === 'function') applyNavIcons();
   renderHome();
   renderLatestUpdate();
   initInfoCarousel();
