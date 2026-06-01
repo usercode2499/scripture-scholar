@@ -64,6 +64,7 @@
     bannerInterval: null,
     _timerAudio: null,
     _tickPlayed: false,
+    _answered: false,
     botTimers: [],
     lastStatus: null,     // track room status transitions (firebase mode)
     committing: false,
@@ -762,14 +763,16 @@
     mpRenderQuestion(q);
     if (mpState.timerInterval) clearInterval(mpState.timerInterval);
     mpState._tickPlayed = false;
+    mpState._answered = false;
+    mpStopTimerSound();
     mpState.timerInterval = setInterval(() => {
       mpState.timeLeft -= 0.1;
       const fill = document.getElementById('mpTimerFill');
       const tnum = document.getElementById('mpTimer');
       if (fill) fill.style.width = Math.max(0, (mpState.timeLeft / mpState.QUESTION_SECONDS) * 100) + '%';
       if (tnum) tnum.textContent = Math.ceil(Math.max(0, mpState.timeLeft));
-      // Final-3-seconds timer sound (looped via the audio element until time ends)
-      if (!mpState._tickPlayed && mpState.timeLeft <= 3 && mpState.timeLeft > 0) {
+      // Final-3-seconds timer sound — only if the player hasn't answered yet.
+      if (!mpState._tickPlayed && !mpState._answered && mpState.timeLeft <= 3 && mpState.timeLeft > 0) {
         mpState._tickPlayed = true;
         mpPlayTimerSound();
       }
@@ -980,6 +983,8 @@
       if (i === choiceIdx) el.classList.add(correct ? 'picked-correct' : 'picked-wrong');
     });
     mpLockSubmit();
+    mpState._answered = true;
+    mpStopTimerSound();
     if (typeof playSfx === 'function') playSfx(correct ? 'correct' : 'wrong');
     await mpCommitMyAnswer(choiceIdx, delta, correct);
   }
@@ -1004,6 +1009,8 @@
     const blank = document.getElementById('mpBlank');
     if (blank) blank.classList.add(correct ? 'blank-correct' : 'blank-wrong');
     mpLockSubmit();
+    mpState._answered = true;
+    mpStopTimerSound();
     if (typeof playSfx === 'function') playSfx(correct ? 'correct' : 'wrong');
     await mpCommitMyAnswer(1, delta, correct);
   }
@@ -1044,6 +1051,7 @@
   // ================= REVEAL (LIVE) =================
   async function mpRevealResultsLive() {
     if (mpState.timerInterval) clearInterval(mpState.timerInterval);
+    mpStopTimerSound();
     // Host commits this round's scores once
     if (mpState.mode === 'host' && !mpState.committing && typeof mpFbCommitScores === 'function') {
       mpState.committing = true;
@@ -1334,6 +1342,7 @@
 
   function mpRevealResultsMock() {
     if (mpState.timerInterval) clearInterval(mpState.timerInterval);
+    mpStopTimerSound();
     mpState.players.forEach(p => { p.score += (p.lastDelta || 0); });
     // In mock mode, simulate bot final answers scoring too (already added above).
     mpRenderResults();
