@@ -88,6 +88,7 @@
       loadAudioBuffer('levelup-music.mp3').then((buf) => { audio.sfxBuffers.levelup = buf; });
       loadAudioBuffer('complete-lesson.mp3').then((buf) => { audio.sfxBuffers.complete = buf; });
       loadAudioBuffer('tap.mp3').then((buf) => { audio.sfxBuffers.tap = buf; });
+      loadAudioBuffer('winner-result.mp3').then((buf) => { audio.sfxBuffers.winner = buf; });
     } catch (e) {
       console.warn('Audio init failed:', e);
     }
@@ -172,6 +173,12 @@
   function playCompleteSfx() {
     if (!state.audioSfx) return;
     playSfxBuffer(audio.sfxBuffers.complete);
+  }
+
+  // Winner fanfare — used on the multiplayer final-results podium.
+  function playWinnerSfx() {
+    if (!state.audioSfx) return;
+    playSfxBuffer(audio.sfxBuffers.winner);
   }
 
   // Tap SFX — throttled so rapid taps don't stack into noise.

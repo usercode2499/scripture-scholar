@@ -57,7 +57,7 @@
     myAnswerIdx: null,
     timerInterval: null,
     timeLeft: 0,
-    QUESTION_SECONDS: 15,
+    QUESTION_SECONDS: 20,
     NUM_QUESTIONS: 10,
     categories: [],        // host-selected category ids (empty = all)
     countdownInterval: null,
@@ -745,30 +745,50 @@
           `).join('')}
         </div>
         <div class="mp-countdown-label" id="mpCountdownLabel">
-          ${isLast ? 'Final results coming up…' : 'Next question coming up…'}
+          ${isLast ? 'Final results coming up…' : 'Get ready for the next question…'}
         </div>
       </div>
-      <!-- Floating countdown overlay — big number over the dimmed-but-visible results -->
-      <div class="mp-countdown-overlay" id="mpCountdownOverlay">
+      <!-- Floating countdown overlay — hidden until the 2s results pause ends -->
+      <div class="mp-countdown-overlay hidden" id="mpCountdownOverlay">
         <div class="mp-countdown-ring">
           <div class="mp-countdown-big" id="mpCountdownNum">5</div>
         </div>
-        <div class="mp-countdown-caption">${isLast ? 'Final results' : 'Next question'}</div>
+        <div class="mp-countdown-caption">Next question</div>
       </div>
     `;
 
-    // Auto-advance countdown — shows for everyone. The HOST actually triggers
-    // the advance when it hits 0 (others just watch and get synced by Firebase).
-    mpStartCountdown(isLast);
+    // Flow: show the result for 2 seconds first. Then —
+    //  • last question  → go straight to the final results (no countdown)
+    //  • otherwise       → reveal the 5-second countdown overlay and advance
+    mpScheduleAdvance(isLast);
+  }
+
+  // After a 2s pause on the results, either finish (last question) or run the
+  // 5-second countdown overlay.
+  function mpScheduleAdvance(isLast) {
+    if (mpState.countdownInterval) clearInterval(mpState.countdownInterval);
+    // Use the bot-timer bucket so leaving the screen cancels these too
+    const pause = setTimeout(() => {
+      if (isLast) {
+        // Skip the countdown entirely — go straight to final results.
+        if (mpState.mode === 'host' || !mpState.online) {
+          mpNextQuestion(); // nextIdx >= length → finish/podium
+        }
+        // joiners get routed to podium by the room 'finished' status
+      } else {
+        mpStartCountdown();
+      }
+    }, 2000);
+    mpState.botTimers.push(pause);
   }
 
   // 5-second countdown overlay, then host advances the room.
-  function mpStartCountdown(isLast) {
+  function mpStartCountdown() {
+    const overlay = document.getElementById('mpCountdownOverlay');
+    if (overlay) overlay.classList.remove('hidden');
     if (mpState.countdownInterval) clearInterval(mpState.countdownInterval);
     let remaining = 5;
     const numEl = () => document.getElementById('mpCountdownNum');
-    const overlay = document.getElementById('mpCountdownOverlay');
-    // Pop the first number immediately
     const first = numEl();
     if (first) { first.textContent = remaining; mpPulseCountdown(first); }
     mpState.countdownInterval = setInterval(() => {
@@ -860,7 +880,13 @@
         </div>
       </div>
     `;
-    if (typeof fireConfetti === 'function' && myRank === 1) fireConfetti();
+    // Final-results celebration: winner fanfare + confetti for everyone.
+    if (typeof playWinnerSfx === 'function') playWinnerSfx();
+    if (typeof fireConfetti === 'function') {
+      fireConfetti();
+      // a second burst shortly after for a fuller celebration
+      setTimeout(() => { if (typeof fireConfetti === 'function') fireConfetti(); }, 600);
+    }
     if (typeof awardXp === 'function' && me) {
       const bonus = Math.min(50, Math.max(10, Math.round((me.score || 0) / 100)));
       awardXp(bonus);

@@ -4,7 +4,7 @@
 
 // Bump this version when you push significant content updates,
 // so installed PWAs pick up the new cache. e.g. 'v2', 'v3', etc.
-const CACHE_VERSION = 'scripture-scholar-v24';
+const CACHE_VERSION = 'scripture-scholar-v25';
 
 // Files that make up the app shell (everything needed for first paint).
 const APP_SHELL = [
@@ -20,6 +20,7 @@ const APP_SHELL = [
   './levelup-music.mp3',
   './complete-lesson.mp3',
   './tap.mp3',
+  './winner-result.mp3',
   './data-lessons.js',
   './feature-audio.js',
   './feature-effects.js',
