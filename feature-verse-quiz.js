@@ -315,7 +315,12 @@
     const isCorrect = q.answers.every((ans, i) =>
       (vqState.selectedTiles[i] || '').toLowerCase().trim() === ans.toLowerCase().trim()
     );
-    const xpReward = isCorrect ? Math.min(q.answers.length <= 1 ? 10 : (q.answers.length === 2 ? 25 : 40), 50) : 0;
+    // Correct answers earn XP scaled by difficulty, with a hard floor of 10.
+    let xpReward = 0;
+    if (isCorrect) {
+      const base = q.answers.length <= 1 ? 10 : (q.answers.length === 2 ? 25 : 40);
+      xpReward = Math.max(10, Math.min(base, 50));
+    }
     let levelResult = null;
     if (isCorrect) {
       vqState.answeredCorrectly++;

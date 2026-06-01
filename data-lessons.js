@@ -1532,12 +1532,853 @@
           explanation: "Jacob counsels the pure in heart to 'look unto God with firmness of mind, and pray unto him with exceeding faith' — and He will console them in their afflictions."
         }
       ]
+    },
+
+    ch16: {
+      id: 'ch16',
+      chapter: 16,
+      range: 'Jacob 5–7',
+      title: "The Allegory of the Olive Trees",
+      subtitle: "The Lord's long labor to gather Israel",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-16?lang=eng',
+      reading: {
+        body: [
+          "Jacob preserved a prophecy of Zenos — the allegory of the tame and wild olive trees — one of the longest and richest parables in all scripture.",
+          "In the allegory, the master of a vineyard labors again and again to save a decaying tame olive tree (the house of Israel). He prunes it, grafts in wild branches (the Gentiles), digs about it, and nourishes it. Branches are scattered to far parts of the vineyard and later gathered again. Through it all, the Lord of the vineyard weeps over the tree and asks, 'What could I have done more for my vineyard?'",
+          "The allegory teaches the scattering and gathering of Israel across the long span of history, and above all the Savior's patient, persistent love for His people. He does not give up on the tree.",
+          "Jacob closes his record by recounting his encounter with Sherem, an anti-Christ who denied that Christ would come. Sherem was confounded and confessed the truth before he died. Jacob's people, the Nephites, lived out their days seeking to persuade men to come unto Christ."
+        ],
+        principles: [
+          "The allegory of the olive trees teaches the scattering and gathering of Israel",
+          "The Lord labors patiently and repeatedly to save His people",
+          "The Lord asks, 'What could I have done more for my vineyard?'",
+          "We are invited to labor in the vineyard with Him"
+        ]
+      },
+      reflection: '"How have you seen the Lord patiently labor to bless and gather you, even when you wandered?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'In the allegory of Jacob 5, what does the tame olive tree represent?',
+          options: ['The Gentiles', 'The house of Israel', 'The city of Jerusalem', 'The Nephites only'],
+          correct: 1,
+          reference: 'Jacob 5:3',
+          explanation: "Zenos likened the house of Israel to a tame olive tree that began to decay, which the Lord of the vineyard labored to save."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did the Lord of the vineyard do to try to save the decaying tree?',
+          options: ['He cut it down immediately', 'He pruned, dug about, grafted, and nourished it', 'He ignored it', 'He sold the vineyard'],
+          correct: 1,
+          reference: 'Jacob 5:4–11',
+          explanation: "The master pruned, dug about, grafted in branches, and nourished the tree again and again — a symbol of the Lord's tireless effort to save Israel."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete the Lord of the vineyard\'s sorrowful question:\n"What could I have done more for my ______?"',
+          answer: 'vineyard',
+          acceptable: ['vineyard'],
+          reference: 'Jacob 5:41',
+          explanation: "The Lord of the vineyard wept and asked what more He could have done — a tender image of the Savior's love for His people."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What do the wild branches grafted into the tame tree represent?',
+          options: ['The Gentiles', 'Fallen angels', 'The Lamanites only', 'The Jaredites'],
+          correct: 0,
+          reference: 'Jacob 5',
+          explanation: "Grafting wild branches into the tame tree represents the Gentiles being brought into the covenant house of Israel."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Who was the anti-Christ that Jacob confronted, who denied that Christ would come?',
+          options: ['Korihor', 'Nehor', 'Sherem', 'Zeezrom'],
+          correct: 2,
+          reference: 'Jacob 7:1–2',
+          explanation: "Sherem sought to lead away the people and denied Christ; he was confounded and confessed the truth before he died."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How did the allegory describe the Lord\'s feelings toward the vineyard as it decayed?',
+          options: ['Indifferent', 'He wept over it and labored to save it', 'He abandoned it', 'He was amused'],
+          correct: 1,
+          reference: 'Jacob 5:41',
+          explanation: "The Lord of the vineyard wept, showing the Savior's deep, persistent love even when His people wander."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Jacob invited the people to "come unto Christ" by laboring where?\n"...labor with our might in the ______ of the Lord."',
+          answer: 'vineyard',
+          acceptable: ['vineyard'],
+          reference: 'Jacob 5:71–75',
+          explanation: "The servants labored with their might in the vineyard, and we are likewise invited to help gather Israel in our day."
+        }
+      ]
+    },
+
+    ch17: {
+      id: 'ch17',
+      chapter: 17,
+      range: 'Enos – Words of Mormon',
+      title: "For a Wise Purpose",
+      subtitle: "Enos's mighty prayer and the small plates",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-17-enos-words-of-mormon?lang=eng',
+      reading: {
+        body: [
+          "Enos, the son of Jacob, went to hunt in the forest, but the words of his father about eternal life sank deep into his heart. He knelt and prayed all day and into the night, wrestling before God in mighty prayer.",
+          "The voice of the Lord came into his mind: 'Thy sins are forgiven thee.' Enos then prayed not only for himself, but for the Nephites, and even for his enemies the Lamanites — that the records might be preserved for them in a future day. His prayer reveals a heart enlarged by charity.",
+          "The short books of Jarom and Omni carry the record across many generations, written by faithful keepers who passed the small plates from father to son. Through Omni we learn how the Nephites under King Mosiah discovered the people of Zarahemla.",
+          "The Words of Mormon explain that Mormon included the small plates 'for a wise purpose' known to the Lord. Centuries later, when the first 116 pages of translation were lost, these very plates preserved the record — a quiet testimony that the Lord knows all things from the beginning."
+        ],
+        principles: [
+          "Sincere, mighty prayer brings forgiveness and peace",
+          "A converted heart desires the salvation of others",
+          "Faithful record-keepers preserved the word across generations",
+          "The Lord prepares for our needs 'for a wise purpose'"
+        ]
+      },
+      reflection: '"When has heartfelt prayer brought you the peace that your sins were forgiven, or turned your heart toward others?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'What was Enos doing when his soul hungered and he knelt to pray?',
+          options: ['Farming', 'Hunting beasts in the forest', 'Keeping records', 'Traveling by ship'],
+          correct: 1,
+          reference: 'Enos 1:3–4',
+          explanation: "Enos went to hunt, but his father's words about eternal life sank into his heart, leading him to pray mightily."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete the voice of the Lord to Enos:\n"Enos, thy sins are ______ thee."',
+          answer: 'forgiven',
+          acceptable: ['forgiven'],
+          reference: 'Enos 1:5',
+          explanation: "After Enos's all-day prayer, the Lord's voice assured him his sins were forgiven, and his guilt was swept away."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'After praying for himself, for whom else did Enos pray?',
+          options: ['Only his family', 'The Nephites and even his enemies the Lamanites', 'No one else', 'The Jaredites'],
+          correct: 1,
+          reference: 'Enos 1:9–13',
+          explanation: "Enos's converted heart led him to pray for the welfare of the Nephites and even the Lamanites, asking that the records be preserved."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How long did Enos describe his soul wrestling before God in prayer?',
+          options: ['A few minutes', 'All the day long, and into the night', 'Three days', 'One week'],
+          correct: 1,
+          reference: 'Enos 1:4',
+          explanation: "Enos wrestled in mighty prayer all the day long, and when night came he still raised his voice high to the heavens."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Mormon wrote that he included the small plates for a "______ purpose."',
+          answer: 'wise',
+          acceptable: ['wise'],
+          reference: 'Words of Mormon 1:7',
+          explanation: "Mormon said he kept the small plates 'for a wise purpose' known to the Lord — later fulfilled when the 116 manuscript pages were lost."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In the book of Omni, what group did the Nephites under Mosiah discover?',
+          options: ['The Jaredites', 'The people of Zarahemla (Mulekites)', 'The lost tribes', 'The Lamanites'],
+          correct: 1,
+          reference: 'Omni 1:14–19',
+          explanation: "Mosiah's people discovered the people of Zarahemla, who had come from Jerusalem and united with the Nephites."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What does Enos\'s experience teach about the power of prayer?',
+          options: ['Prayer must be silent', 'Sincere, mighty prayer brings forgiveness and changes hearts', 'Only prophets can pray', 'Prayer changes nothing'],
+          correct: 1,
+          reference: 'Enos 1:1–8',
+          explanation: "Enos's mighty, sincere prayer brought a remission of sins and turned his heart outward in love for others."
+        }
+      ]
+    },
+
+    ch18: {
+      id: 'ch18',
+      chapter: 18,
+      range: 'Mosiah 1–3',
+      title: "King Benjamin's Address",
+      subtitle: "In the service of your God",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-18?lang=eng',
+      reading: {
+        body: [
+          "King Benjamin, grown old, gathered his people to the temple to give his final address. So many came that they could not all be taught within the temple walls, so a tower was built, and his words were also written and sent among them.",
+          "Benjamin testified that though he was their king, he had labored with his own hands to serve them and had not sought riches. He taught the great principle: 'When ye are in the service of your fellow beings ye are only in the service of your God.'",
+          "He then shared the words of an angel, prophesying of Jesus Christ, who would come in a 'tabernacle of clay,' work mighty miracles, and suffer 'blood coming from every pore' as He atoned for the sins of the world. There is no other name given whereby salvation comes.",
+          "The angel taught how to put off the 'natural man' — an enemy to God — and become a saint through the Atonement of Christ: becoming as a child, submissive, meek, humble, patient, and full of love."
+        ],
+        principles: [
+          "When we serve others, we are serving God",
+          "Salvation comes only in and through the name of Christ",
+          "Christ would atone with blood coming from every pore",
+          "We put off the natural man and become saints through the Atonement"
+        ]
+      },
+      reflection: '"What does it mean to you that when you serve others, you are serving God?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'Why did King Benjamin gather his people to the temple?',
+          options: ['To crown a new king and give his final address', 'To declare war', 'To collect taxes', 'To build a city'],
+          correct: 0,
+          reference: 'Mosiah 1:10; 2:1',
+          explanation: "Benjamin gathered his people to give his final address and to proclaim his son Mosiah as the new king."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete King Benjamin\'s teaching:\n"...when ye are in the service of your fellow beings ye are only in the service of your ______."',
+          answer: 'God',
+          acceptable: ['God'],
+          reference: 'Mosiah 2:17',
+          explanation: "This beloved verse teaches that service to others is service to God — one of the central messages of Benjamin's address."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Though he was king, how did Benjamin say he had treated his people?',
+          options: ['He demanded riches and taxes', 'He labored to serve them with his own hands', 'He ruled from afar', 'He enslaved them'],
+          correct: 1,
+          reference: 'Mosiah 2:12–14',
+          explanation: "Benjamin labored with his own hands to serve his people and did not seek gold or riches from them."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to the angel, how would Christ suffer as He atoned for the sins of the world?',
+          options: ['Without any pain', 'With blood coming from every pore', 'Only briefly', 'In a vision only'],
+          correct: 1,
+          reference: 'Mosiah 3:7',
+          explanation: "The angel prophesied that Christ's anguish would be so great that blood would come from every pore as He suffered for our sins."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Complete the angel\'s teaching:\n"For the natural man is an ______ to God..."',
+          answer: 'enemy',
+          acceptable: ['enemy'],
+          reference: 'Mosiah 3:19',
+          explanation: "We overcome the natural man and become saints by yielding to the Holy Spirit and the Atonement of Christ."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to King Benjamin, by what name does salvation come?',
+          options: ['By many names', 'Only in and through the name of Christ', 'By the law of Moses alone', 'By the king\'s decree'],
+          correct: 1,
+          reference: 'Mosiah 3:17',
+          explanation: "There is no other name nor means whereby salvation comes, only in and through the name of Christ, the Lord Omnipotent."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'To become a saint, the angel said we should become as what?',
+          options: ['A mighty warrior', 'A child — submissive, meek, humble, patient, full of love', 'A wealthy ruler', 'A learned scholar'],
+          correct: 1,
+          reference: 'Mosiah 3:19',
+          explanation: "We become saints through the Atonement by becoming as a child: submissive, meek, humble, patient, and full of love."
+        }
+      ]
+    },
+
+    ch19: {
+      id: 'ch19',
+      chapter: 19,
+      range: 'Mosiah 4–6',
+      title: "Children of Christ",
+      subtitle: "A mighty change of heart",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-19?lang=eng',
+      reading: {
+        body: [
+          "Overcome by the Spirit, King Benjamin's people fell to the earth and cried out for the atoning blood of Christ to be applied that they might receive forgiveness. The Spirit came upon them, and they were filled with joy, having received a remission of their sins.",
+          "Benjamin taught them how to retain a remission of their sins: by remembering the greatness of God, calling on His name daily, standing steadfast in faith, and caring for the poor — imparting of their substance to those in need, for 'are we not all beggars' before God?",
+          "He taught that we must not let the beggar petition in vain, and that all things must be done in wisdom and order. We are not required to run faster than we have strength, but we should be diligent.",
+          "The people entered a covenant to do God's will and be obedient. Because of the covenant, Benjamin said they would be called the children of Christ — spiritually begotten, with the name of Christ written in their hearts."
+        ],
+        principles: [
+          "The Atonement brings a remission of sins and great joy",
+          "We retain a remission by remembering God and caring for the poor",
+          "'Are we not all beggars?' before God",
+          "Through covenant we become the children of Christ"
+        ]
+      },
+      reflection: '"How do you retain the joy and peace that come from the Savior\'s forgiveness in your daily life?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'What happened to King Benjamin\'s people after they heard his words?',
+          options: ['They rebelled', 'They fell to the earth and cried for the atoning blood of Christ', 'They left the city', 'They demanded a new king'],
+          correct: 1,
+          reference: 'Mosiah 4:1–2',
+          explanation: "Overcome by the Spirit, the people fell to the earth and pleaded for Christ's atoning blood to cleanse them."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'After pleading for mercy, what did the people receive?',
+          options: ['Riches', 'A remission of their sins and great joy', 'A new kingdom', 'Nothing'],
+          correct: 1,
+          reference: 'Mosiah 4:3',
+          explanation: "The Spirit came upon them and they were filled with joy, having received a remission of their sins through faith in Christ."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'King Benjamin taught humility by asking:\n"...are we not all ______?" (before God)',
+          answer: 'beggars',
+          acceptable: ['beggars'],
+          reference: 'Mosiah 4:19',
+          explanation: "Benjamin reminded the people that since we all depend on God, we should freely give to those in need."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How did Benjamin say the people could retain a remission of their sins?',
+          options: ['By doing nothing', 'By remembering God and caring for the poor', 'By becoming wealthy', 'By building temples only'],
+          correct: 1,
+          reference: 'Mosiah 4:11–26',
+          explanation: "They were to remember God's greatness, call on Him daily, and impart of their substance to the poor."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Benjamin taught that all things should be done in what manner?',
+          options: ['As fast as possible', 'In wisdom and order, not faster than we have strength', 'Only by the rich', 'Without any effort'],
+          correct: 1,
+          reference: 'Mosiah 4:27',
+          explanation: "We are not required to run faster than we have strength; all things should be done in wisdom and order, yet with diligence."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Because of their covenant, the people would be called the children of ______.',
+          answer: 'Christ',
+          acceptable: ['Christ'],
+          reference: 'Mosiah 5:7',
+          explanation: "Through their covenant, the people were spiritually begotten and became the sons and daughters — the children — of Christ."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Benjamin say should be written in the hearts of the people?',
+          options: ['The law of Moses', 'The name of Christ', 'Their family history', 'The king\'s laws'],
+          correct: 1,
+          reference: 'Mosiah 5:12',
+          explanation: "Benjamin urged the people to take upon them the name of Christ and keep it written always in their hearts."
+        }
+      ]
+    },
+
+    ch20: {
+      id: 'ch20',
+      chapter: 20,
+      range: 'Mosiah 7–11',
+      title: "A Seer and a Wicked King",
+      subtitle: "Limhi's people and the reign of Noah",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-20?lang=eng',
+      reading: {
+        body: [
+          "King Mosiah sent Ammon to learn the fate of a group of Nephites who had returned years earlier to the land of Nephi. Ammon found them in bondage to the Lamanites, ruled by King Limhi.",
+          "Limhi rejoiced to learn that Mosiah was a seer who could translate ancient records. Ammon taught that a seer is greater than a prophet — 'a seer is a revelator and a prophet also,' and by seership hidden things are brought to light. This was great news, for Limhi's people had found the records of a destroyed people (the Jaredites).",
+          "The record explained how this bondage came about. Zeniff had led a group back to the land of Nephi. His son Noah, however, became a wicked king — he taxed the people heavily, surrounded himself with corrupt priests, and lived in riotous luxury.",
+          "Noah's wickedness set the stage for the coming of the prophet Abinadi, who would call the king and his people to repentance."
+        ],
+        principles: [
+          "A seer is a great benefit to his fellow beings",
+          "Sin and pride lead a people into bondage",
+          "The Lord raises up prophets to call people to repentance",
+          "Wicked leaders bring suffering on their people"
+        ]
+      },
+      reflection: '"How have living prophets and seers been a benefit and a guide in your life?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'Why did King Mosiah send Ammon to the land of Nephi?',
+          options: ['To wage war', 'To learn the fate of a group of Nephites who had gone there', 'To collect gold', 'To build a temple'],
+          correct: 1,
+          reference: 'Mosiah 7:1–2',
+          explanation: "Ammon was sent to discover what had happened to the people who left Zarahemla years before to return to the land of Nephi."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In what condition did Ammon find King Limhi\'s people?',
+          options: ['Wealthy and free', 'In bondage to the Lamanites', 'Living in Zarahemla', 'Scattered in the wilderness'],
+          correct: 1,
+          reference: 'Mosiah 7:21–22',
+          explanation: "Limhi's people were in bondage, paying heavy tribute to the Lamanites because of past wickedness."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Ammon taught that "a seer is a revelator and a ______ also."',
+          answer: 'prophet',
+          acceptable: ['prophet'],
+          reference: 'Mosiah 8:16',
+          explanation: "Ammon explained that a seer can know things past and future and is a great benefit to his fellow beings."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Who led the first group back to the land of Nephi?',
+          options: ['Noah', 'Zeniff', 'Limhi', 'Abinadi'],
+          correct: 1,
+          reference: 'Mosiah 9:1–3',
+          explanation: "Zeniff led a group back to the land of Nephi, beginning the account that Limhi's people preserved."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How is King Noah, Zeniff\'s son, described?',
+          options: ['A righteous king', 'A wicked king who taxed heavily and lived in luxury', 'A humble servant', 'A prophet'],
+          correct: 1,
+          reference: 'Mosiah 11:1–15',
+          explanation: "Noah was wicked: he taxed his people, surrounded himself with corrupt priests, and lived in riotous, idolatrous luxury."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What ancient record had Limhi\'s people discovered?',
+          options: ['The brass plates', 'The records of a destroyed people (the Jaredites)', 'The Bible', 'No records'],
+          correct: 1,
+          reference: 'Mosiah 8:9–12',
+          explanation: "Limhi's people found 24 gold plates — the record of the Jaredites — which a seer like Mosiah could translate."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Ammon taught that a seer is what to his fellow beings?',
+          options: ['A burden', 'A great benefit', 'A danger', 'Unimportant'],
+          correct: 1,
+          reference: 'Mosiah 8:18',
+          explanation: "The Lord provides seers as a great benefit, bringing hidden truths to light for the good of His people."
+        }
+      ]
+    },
+
+    ch21: {
+      id: 'ch21',
+      chapter: 21,
+      range: 'Mosiah 12–17',
+      title: "The Courage of Abinadi",
+      subtitle: "Sealing his testimony with his life",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-21?lang=eng',
+      reading: {
+        body: [
+          "The prophet Abinadi came among the people of King Noah, calling them to repentance. They bound him and brought him before the king and his priests, who tried to trap him with questions about the scriptures.",
+          "Filled with the Spirit, Abinadi's face shone, and the priests could not lay their hands on him until he had delivered his message. He boldly taught the Ten Commandments, the prophecies of Isaiah about the suffering Messiah, and that God Himself would come down to redeem His people.",
+          "One young priest named Alma believed Abinadi's words. He pleaded with the king to spare the prophet — and for this, Alma was cast out and hunted. He hid and wrote down the words Abinadi had spoken.",
+          "King Noah commanded that Abinadi be put to death. Abinadi suffered death by fire, but he would not deny his testimony, sealing the truth of his words by his death. His courage planted the seeds of a great work through Alma."
+        ],
+        principles: [
+          "Prophets boldly testify of Christ, even at great cost",
+          "God Himself came down to redeem His people",
+          "One believing heart can change the course of history",
+          "Truth is worth more than comfort, acceptance, or life itself"
+        ]
+      },
+      reflection: '"What helps you stand for truth even when it is unpopular or costly?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'Why did Abinadi come among the people of King Noah?',
+          options: ['To become king', 'To call them to repentance', 'To collect taxes', 'To build a temple'],
+          correct: 1,
+          reference: 'Mosiah 12:1',
+          explanation: "Abinadi came as a prophet to warn King Noah's people and call them to repent of their wickedness."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What happened to Abinadi\'s face as he testified, so the priests could not seize him?',
+          options: ['It became pale', 'It shone with the Spirit', 'It was covered', 'Nothing unusual'],
+          correct: 1,
+          reference: 'Mosiah 13:5',
+          explanation: "Abinadi was filled with the Spirit and his face shone, and no one could harm him until he had finished his message."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Which young priest believed Abinadi\'s words?',
+          options: ['Amulon', 'Alma', 'Limhi', 'Gideon'],
+          correct: 1,
+          reference: 'Mosiah 17:2',
+          explanation: "Alma, a young priest, believed Abinadi and pleaded for his life, then was cast out and hunted by the king."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Alma do after he was cast out for believing Abinadi?',
+          options: ['He gave up', 'He hid and wrote down Abinadi\'s words', 'He joined King Noah', 'He left forever'],
+          correct: 1,
+          reference: 'Mosiah 17:3–4',
+          explanation: "Alma hid himself and wrote the words of Abinadi, preserving the prophet's testimony of Christ."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Abinadi suffered death by ______ rather than deny his testimony.',
+          answer: 'fire',
+          acceptable: ['fire'],
+          reference: 'Mosiah 17:20',
+          explanation: "Abinadi sealed the truth of his words by his death, suffering death by fire rather than recalling his testimony."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What central truth did Abinadi teach about God and redemption?',
+          options: ['That no Savior would come', 'That God Himself would come down to redeem His people', 'That the law of Moses alone saves', 'That riches bring salvation'],
+          correct: 1,
+          reference: 'Mosiah 15:1',
+          explanation: "Abinadi testified that God Himself — Jesus Christ — would come down among men to redeem His people."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Abinadi\'s courage ultimately lead to?',
+          options: ['Nothing', 'The conversion of Alma and a great work among the people', 'The fall of Zarahemla', 'The end of the records'],
+          correct: 1,
+          reference: 'Mosiah 17:1–4',
+          explanation: "Though Abinadi died, his testimony converted Alma, who would go on to establish the Lord's church among the people."
+        }
+      ]
+    },
+
+    ch22: {
+      id: 'ch22',
+      chapter: 22,
+      range: 'Mosiah 18–24',
+      title: "Deliverance from Bondage",
+      subtitle: "The waters of Mormon and the Lord's power",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-22?lang=eng',
+      reading: {
+        body: [
+          "Alma, now hiding from King Noah, began to teach the words of Abinadi privately. At a place called the waters of Mormon, he gathered believers and taught them the covenant of baptism: to bear one another's burdens, to mourn with those that mourn, and to stand as witnesses of God at all times.",
+          "About 450 souls were baptized and formed into the Lord's church. When the king discovered them, Alma and his people fled into the wilderness.",
+          "Both Limhi's people and Alma's people were in bondage to the Lamanites. Limhi's people escaped by getting the Lamanite guards drunk and slipping away. Alma's people, oppressed by the cruel Amulon, cried to the Lord — and He eased their burdens so they could bear them, then delivered them.",
+          "The Lord told Alma's people He would ease the burdens on their backs that they could not even feel them, that they might know He visits His people in their afflictions. Both groups were reunited with the Nephites in Zarahemla."
+        ],
+        principles: [
+          "Baptism is a covenant to bear one another's burdens",
+          "We covenant to stand as witnesses of God at all times",
+          "The Lord eases our burdens so we can bear them",
+          "God visits and delivers His people in their afflictions"
+        ]
+      },
+      reflection: '"When has the Lord eased a burden for you — perhaps not removing it, but making it bearable?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'Where did Alma gather and baptize believers?',
+          options: ['The temple in Zarahemla', 'The waters of Mormon', 'The river Jordan', 'The land of Nephi'],
+          correct: 1,
+          reference: 'Mosiah 18:8–16',
+          explanation: "At the waters of Mormon, Alma taught the gospel and baptized about 450 believers into the Lord's church."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Part of the baptismal covenant is to "bear one another\'s ______."',
+          answer: 'burdens',
+          acceptable: ['burdens'],
+          reference: 'Mosiah 18:8',
+          explanation: "Alma taught that those baptized covenant to bear one another's burdens, mourn with those that mourn, and comfort those in need."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Those baptized covenanted to stand as witnesses of God when?',
+          options: ['Only on Sundays', 'At all times and in all things and places', 'Only in the temple', 'Only when convenient'],
+          correct: 1,
+          reference: 'Mosiah 18:9',
+          explanation: "The covenant is to stand as witnesses of God at all times and in all things, and in all places, even until death."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'How did Limhi\'s people escape the Lamanites?',
+          options: ['By fighting a great battle', 'By getting the guards drunk and slipping away', 'By building ships', 'They never escaped'],
+          correct: 1,
+          reference: 'Mosiah 22:6–11',
+          explanation: "Following Gideon's plan, Limhi's people gave extra wine to the Lamanite guards and escaped while they slept."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did the Lord do for Alma\'s people in bondage to Amulon?',
+          options: ['Ignored them', 'Eased their burdens so they could bear them, then delivered them', 'Made the burdens heavier', 'Sent them away'],
+          correct: 1,
+          reference: 'Mosiah 24:14–15',
+          explanation: "The Lord strengthened Alma's people so their burdens felt light, then delivered them from bondage."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'The Lord promised to ease the burdens so that they could not even ______ them on their backs.',
+          answer: 'feel',
+          acceptable: ['feel'],
+          reference: 'Mosiah 24:14',
+          explanation: "The Lord promised to strengthen them so the burdens would feel light, that they might be witnesses He visits His people."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Why did the Lord allow His people to be tried, then deliver them?',
+          options: ['To punish them forever', 'That they might know He visits His people in their afflictions', 'For no reason', 'To abandon them'],
+          correct: 1,
+          reference: 'Mosiah 24:14',
+          explanation: "The Lord delivered them so they would stand as witnesses that He is mindful of and visits His covenant people."
+        }
+      ]
+    },
+
+    ch23: {
+      id: 'ch23',
+      chapter: 23,
+      range: 'Mosiah 25–29',
+      title: "A Mighty Change",
+      subtitle: "The conversion of Alma the Younger",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-23?lang=eng',
+      reading: {
+        body: [
+          "The people were united in Zarahemla, and Alma established the church of God throughout the land. But his son, Alma the Younger, along with the four sons of Mosiah, went about secretly seeking to destroy the church and lead believers away.",
+          "As they were doing this, an angel appeared and spoke with a voice that shook the earth. Alma the Younger was struck dumb and helpless, falling to the earth. The angel called him to repent, even if he sought to destroy the church no more.",
+          "For three days and nights Alma could not move or speak, racked with the torment of his sins. Then he remembered his father's teachings about Jesus Christ, cried out to Him for mercy, and was filled with joy as exquisite as his pain had been bitter — a mighty change of heart.",
+          "Alma and the sons of Mosiah became powerful missionaries, eager to share the gospel. Near the end of his life, King Mosiah established a system of judges so the people would govern themselves by righteous law rather than be ruled by kings."
+        ],
+        principles: [
+          "Even the lost can experience a mighty change of heart",
+          "Sincere repentance turns bitter pain into exquisite joy",
+          "Remembering Christ is the key to redemption",
+          "The converted desire to share the gospel with others"
+        ]
+      },
+      reflection: '"Have you experienced or witnessed a \'mighty change of heart\' through Jesus Christ?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'What were Alma the Younger and the sons of Mosiah doing before the angel appeared?',
+          options: ['Preaching the gospel', 'Seeking to destroy the church', 'Building temples', 'Keeping records'],
+          correct: 1,
+          reference: 'Mosiah 27:8–10',
+          explanation: "Alma the Younger and the sons of Mosiah were rebellious, secretly working to lead away members of the church."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What happened when the angel appeared to them?',
+          options: ['Nothing', 'The angel spoke with a voice that shook the earth, and Alma fell down', 'They ran away', 'They laughed'],
+          correct: 1,
+          reference: 'Mosiah 27:11–12',
+          explanation: "The angel's voice shook the earth, and Alma the Younger fell to the earth, unable to move or speak."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'For how many days and nights was Alma the Younger unable to speak or move?\n"...for the space of ______ days and three nights."',
+          answer: 'three',
+          acceptable: ['three', '3'],
+          reference: 'Mosiah 27:23',
+          explanation: "Alma was helpless for three days and nights, racked with torment for his sins, until he called upon Christ."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Alma remember that led to his deliverance?',
+          options: ['His wealth', 'His father\'s teachings about Jesus Christ and the Atonement', 'His own strength', 'His friends'],
+          correct: 1,
+          reference: 'Alma 36:17–18',
+          explanation: "Alma remembered hearing his father prophesy of Jesus Christ, and cried out to Him for mercy."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'After crying to Christ, what did Alma feel?',
+          options: ['More pain', 'Joy as exquisite as his pain had been bitter', 'Nothing', 'Anger'],
+          correct: 1,
+          reference: 'Alma 36:20–21',
+          explanation: "Alma's bitter torment was replaced with joy as exquisite and sweet — a mighty change of heart through Christ."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Alma and the sons of Mosiah become after their conversion?',
+          options: ['Kings', 'Powerful missionaries eager to share the gospel', 'Soldiers', 'Merchants'],
+          correct: 1,
+          reference: 'Mosiah 27:32–37',
+          explanation: "Once converted, they zealously sought to repair the harm they had done and to bring others to Christ."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What system did King Mosiah establish before his death?',
+          options: ['A line of kings', 'A system of judges to govern by righteous law', 'A council of priests', 'No government'],
+          correct: 1,
+          reference: 'Mosiah 29:11, 25',
+          explanation: "Mosiah established judges chosen by the voice of the people, so they would govern themselves by righteous law."
+        }
+      ]
+    },
+
+    ch24: {
+      id: 'ch24',
+      chapter: 24,
+      range: 'Alma 1–4',
+      title: "Standing for the Faith",
+      subtitle: "Priestcraft, pride, and the church of God",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-24?lang=eng',
+      reading: {
+        body: [
+          "In the first year of the reign of the judges, a man named Nehor introduced priestcraft — preaching for money and teaching that all would be saved regardless of how they lived. He killed the righteous Gideon, who withstood him, and was executed for his crime. But the false idea of priestcraft spread.",
+          "Alma the Younger now served as both the chief judge and the high priest over the church. He faced Amlici, an ambitious man who sought to be king and led a rebellion. The Nephites defeated the Amlicites in great battles, but at heavy cost.",
+          "The greatest threat to the church was not war but pride. Many members began to set their hearts on riches and fine clothing, looking down on others. This pride caused great contention and led many to leave the church.",
+          "Seeing that the law could not reach the people's hearts, Alma gave up the judgment seat to devote himself wholly to preaching — believing the word of God would do more to change the people than the sword or anything else."
+        ],
+        principles: [
+          "Priestcraft and pride endanger the people of God",
+          "Riches and vanity can harden hearts against others",
+          "The word of God changes hearts more than the sword",
+          "True leaders prioritize preaching the gospel"
+        ]
+      },
+      reflection: '"How can pride or comparison creep in, and how does the word of God soften our hearts?"',
+      questions: [
+        {
+          type: 'multiple_choice',
+          prompt: 'What false practice did Nehor introduce?',
+          options: ['Honest farming', 'Priestcraft — preaching for money', 'Record keeping', 'Temple building'],
+          correct: 1,
+          reference: 'Alma 1:3–6',
+          explanation: "Nehor preached priestcraft — setting himself up for gain and teaching that everyone would be saved regardless of conduct."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Whom did Nehor kill when his false teaching was withstood?',
+          options: ['Alma', 'The righteous Gideon', 'King Mosiah', 'Abinadi'],
+          correct: 1,
+          reference: 'Alma 1:7–9',
+          explanation: "Nehor killed Gideon, an aged and faithful servant of God, after Gideon withstood his words."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What two roles did Alma the Younger hold at the start of the reign of the judges?',
+          options: ['King and soldier', 'Chief judge and high priest', 'Merchant and scribe', 'Farmer and teacher'],
+          correct: 1,
+          reference: 'Alma 4:18',
+          explanation: "Alma served as both the chief judge over the people and the high priest over the church."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Who led a rebellion seeking to be made king?',
+          options: ['Nehor', 'Amlici', 'Gideon', 'Korihor'],
+          correct: 1,
+          reference: 'Alma 2:1–2',
+          explanation: "Amlici, a cunning and ambitious man, sought to be king and led the Amlicites in war against the Nephites."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What became the greatest internal threat to the church?',
+          options: ['Famine', 'Pride — setting hearts on riches and fine clothing', 'Weather', 'Lack of records'],
+          correct: 1,
+          reference: 'Alma 4:6–8',
+          explanation: "Members grew proud over their riches and fine apparel, looking down on others, which caused contention in the church."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Alma believed the ______ of God had a more powerful effect on the people than anything else.',
+          answer: 'word',
+          acceptable: ['word'],
+          reference: 'Alma 31:5',
+          explanation: "Alma trusted that preaching the word of God would do more to change hearts than the sword or any other thing."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'Why did Alma give up the judgment seat?',
+          options: ['He was defeated', 'To devote himself wholly to preaching the word of God', 'He retired', 'He became king'],
+          correct: 1,
+          reference: 'Alma 4:19',
+          explanation: "Alma stepped down as chief judge so he could bear pure testimony and reclaim the people through the word of God."
+        }
+      ]
+    },
+
+    ch25: {
+      id: 'ch25',
+      chapter: 25,
+      range: 'Alma 5–7',
+      title: "His Image in Your Countenance",
+      subtitle: "A call to spiritual rebirth",
+      available: true,
+      xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-25?lang=eng',
+      reading: {
+        body: [
+          "Having given up the judgment seat, Alma went among the people preaching. In the city of Zarahemla he delivered a searching sermon, asking the members of the church penetrating questions to help them examine their own hearts.",
+          "He reminded them how their fathers had been delivered from bondage and experienced a mighty change of heart. Then he asked: 'Have ye spiritually been born of God? Have ye received his image in your countenances? Have ye experienced this mighty change in your hearts?'",
+          "Alma invited everyone to come unto Christ, to be humble and submissive, and to bring forth good works. He warned against pride, envy, and mockery, and testified that the good shepherd calls his sheep, who hear his voice and follow him.",
+          "Traveling to the city of Gideon, Alma taught of the coming of Jesus Christ, who would 'take upon him the pains and the sicknesses of his people,' and 'take upon him their infirmities,' so His mercy would know how to succor His people. He invited all to prepare the way and walk in the paths of righteousness."
+        ],
+        principles: [
+          "We are invited to be spiritually born of God",
+          "Christ's image can be reflected in our countenance",
+          "The good shepherd calls, and His sheep know His voice",
+          "Christ took upon Himself our pains so He could succor us"
+        ]
+      },
+      reflection: '"What helps you keep \'His image in your countenance\' — Christ reflected in how you live and treat others?"',
+      questions: [
+        {
+          type: 'fill_blank',
+          prompt: 'Complete Alma\'s searching question:\n"Have ye received his ______ in your countenances?"',
+          answer: 'image',
+          acceptable: ['image'],
+          reference: 'Alma 5:14',
+          explanation: "Alma asked the people whether they had been spiritually reborn and reflected Christ's image in their lives."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What kind of change did Alma ask the people if they had experienced?',
+          options: ['A change of clothing', 'A mighty change in their hearts', 'A change of location', 'A change of rulers'],
+          correct: 1,
+          reference: 'Alma 5:14',
+          explanation: "Alma asked if they had experienced the mighty change of heart that comes through being born of God."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'In Alma\'s teaching, what do the sheep of the good shepherd do?',
+          options: ['Ignore his voice', 'Hear his voice and follow him', 'Run away', 'Follow strangers'],
+          correct: 1,
+          reference: 'Alma 5:38–41',
+          explanation: "Alma taught that the good shepherd calls his people, and those who are his hear his voice and follow him."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What did Alma warn the people against?',
+          options: ['Service and humility', 'Pride, envy, and mockery', 'Prayer and fasting', 'Reading scripture'],
+          correct: 1,
+          reference: 'Alma 5:53–56',
+          explanation: "Alma warned against pride, envy, persecution, and mockery, calling the people to repent and be humble."
+        },
+        {
+          type: 'fill_blank',
+          prompt: 'Alma prophesied that Christ would "take upon him the pains and the ______ of his people."',
+          answer: 'sicknesses',
+          acceptable: ['sicknesses'],
+          reference: 'Alma 7:11',
+          explanation: "Alma taught in Gideon that Christ would take upon Himself our pains, sicknesses, and infirmities through the Atonement."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'According to Alma 7:11–12, why would Christ take upon Himself our infirmities?',
+          options: ['To punish us', 'That He might know how to succor (help) His people', 'For no reason', 'To remain distant'],
+          correct: 1,
+          reference: 'Alma 7:12',
+          explanation: "Christ took upon Himself our pains and infirmities so that His mercy would know how to succor His people in their afflictions."
+        },
+        {
+          type: 'multiple_choice',
+          prompt: 'What was the main invitation of Alma\'s sermon?',
+          options: ['To gather riches', 'To come unto Christ and be spiritually born of God', 'To wage war', 'To leave Zarahemla'],
+          correct: 1,
+          reference: 'Alma 5:33–35',
+          explanation: "Alma's central invitation was to repent, come unto Christ, and experience a mighty change of heart by being born of God."
+        }
+      ]
     }
+
 
   };
 
   // Order in which lessons appear on the path
-  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15'];
+  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16', 'ch17', 'ch18', 'ch19', 'ch20', 'ch21', 'ch22', 'ch23', 'ch24', 'ch25'];
 
   // ============ DAILY VERSES ============
   // 14 verses that rotate daily based on day-of-year
