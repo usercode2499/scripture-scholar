@@ -33,7 +33,7 @@
       title: 'Group Trivia',
       description: 'Play live with friends, family, or your class — everyone answers the same questions and races up the leaderboard.',
       icon: '🎮',
-      xpRange: 'Multiplayer · Preview',
+      xpRange: 'Live multiplayer',
       launch: 'openMultiplayer',
       badge: 'NEW'
     },
@@ -51,7 +51,8 @@
       description: 'Match doctrinal statements to their scripture references. Build navigation skill.',
       icon: '🎯',
       xpRange: '+3 XP per correct',
-      comingSoon: true
+      launch: 'openReferenceMatch',
+      badge: 'NEW'
     }
   ];
 
@@ -76,6 +77,12 @@
       }
       if (game.id === 'fact_game' && typeof hasFactGameInProgress === 'function' && hasFactGameInProgress()) {
         const pos = (typeof getFactGamePosition === 'function') ? getFactGamePosition() : null;
+        resumeTag = pos
+          ? `<span class="minigame-resume-pill">Resume · Q${pos.current}/${pos.total}</span>`
+          : `<span class="minigame-resume-pill">Resume</span>`;
+      }
+      if (game.id === 'reference_match' && typeof hasReferenceMatchInProgress === 'function' && hasReferenceMatchInProgress()) {
+        const pos = (typeof getReferenceMatchPosition === 'function') ? getReferenceMatchPosition() : null;
         resumeTag = pos
           ? `<span class="minigame-resume-pill">Resume · Q${pos.current}/${pos.total}</span>`
           : `<span class="minigame-resume-pill">Resume</span>`;
