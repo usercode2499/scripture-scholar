@@ -145,7 +145,7 @@
   .topbar-stats {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
   }
   .topbar-spacer {
     flex: 1;
@@ -234,8 +234,7 @@
     gap: 9px;
     padding: 5px 12px 5px 5px;
     min-width: 0;
-    max-width: 62vw;
-    overflow: hidden;
+    flex: 0 1 auto;
     border: 1px solid var(--gold);
     background: linear-gradient(135deg, #fdf8eb 0%, #f7ecc9 100%);
   }
@@ -264,8 +263,8 @@
   /* Full level badge shown after "Lv N" — proper size, not cropped */
   .stat-level-badge {
     flex-shrink: 0;
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -273,19 +272,17 @@
   }
   .stat-level-badge .badge-svg { display: block; }
   .stat-level-info {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     gap: 3px;
-    min-width: 48px;
+    flex: 0 0 auto;
+    width: auto;
   }
   .stat-level-name {
     font-size: 11px;
     font-weight: 700;
     color: var(--ink);
     line-height: 1;
-    max-width: 90px;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
   }
   .stat-level-name:empty { display: none; }
@@ -2071,7 +2068,7 @@
   }
   /* Nav medallions (badge-style SVG icons) */
   .nav-medallion { display: inline-flex; align-items: center; justify-content: center; }
-  .topbar-icon-btn.nav-medallion { background: transparent; border: none; box-shadow: none; width: 42px; height: 42px; }
+  .topbar-icon-btn.nav-medallion { background: transparent; border: none; box-shadow: none; width: 36px; height: 36px; }
   .topbar-icon-btn.nav-medallion:hover { transform: translateY(-1px); }
   .nav-icon-svg { display: block; filter: drop-shadow(0 1px 3px rgba(120,85,20,0.35)); transition: transform 0.15s ease; }
   .topbar-icon-btn.nav-medallion:active .nav-icon-svg { transform: scale(0.92); }
@@ -3783,6 +3780,15 @@
     min-width: 0;
     text-align: left;
   }
+  .level-modal-username {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 4px;
+    word-break: break-word;
+  }
+  .level-modal-username:empty { display: none; }
 
   .level-modal-num {
     font-size: 13px;
@@ -4534,6 +4540,7 @@
             <div class="stat-level-fill" id="topbarLevelFill" style="width: 0%"></div>
           </div>
         </div>
+        <div class="stat-level-badge" id="navLevelBadge"></div>
       </div>
       <!-- Flexible spacer so the right-side group stays anchored right -->
       <div class="topbar-spacer"></div>
@@ -5010,6 +5017,7 @@
         <div class="level-modal-icon" id="lmBadgeIcon">📜</div>
       </div>
       <div class="level-modal-hero-text">
+        <div class="level-modal-username serif" id="lmUsername"></div>
         <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
         <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
           <span class="level-modal-title" id="lmTitle">Initiate</span>
@@ -5278,13 +5286,24 @@
     const lvl = getLevel(state.xp);
     document.getElementById('levelNum').textContent = lvl;
     document.getElementById('hintsCount').textContent = state.hints;
-    // Show the user's name in the profile pill (if set)
+    // Show the user's name in the profile pill — cap at 12 chars with an
+    // ellipsis so longer names stay tidy; the full name shows in the profile.
     const nameEl = document.getElementById('navUsername');
-    if (nameEl) nameEl.textContent = state.username || '';
+    if (nameEl) {
+      const full = state.username || '';
+      const shown = full.length > 12 ? (full.slice(0, 12).trimEnd() + '…') : full;
+      nameEl.textContent = shown;
+      if (full) nameEl.title = full; else nameEl.removeAttribute('title');
+    }
     // Left: the user's avatar (preset/photo) WITHOUT the badge overlay
     const navBadge = document.getElementById('navBadgeAvatar');
     if (navBadge && typeof renderAvatar === 'function') {
       navBadge.innerHTML = renderAvatar({ avatar: getMyAvatar(), level: lvl, size: 38, showBadge: false });
+    }
+    // Right (after "Lv N"): the full level badge at proper size
+    const navLevelBadge = document.getElementById('navLevelBadge');
+    if (navLevelBadge && typeof renderBadgeSVG === 'function') {
+      navLevelBadge.innerHTML = renderBadgeSVG(lvl, 32, true);
     }
     updateLevelProgress();
   }
@@ -5531,6 +5550,12 @@
     // Hero
     document.getElementById('lmLevel').textContent = level;
     document.getElementById('lmTitle').textContent = getLevelTitle(level);
+    // Full username (never truncated here — the profile has room)
+    const lmUser = document.getElementById('lmUsername');
+    if (lmUser) {
+      lmUser.textContent = state.username || '';
+      lmUser.style.display = state.username ? '' : 'none';
+    }
     // Hero avatar (no badge overlay) with an edit pencil
     const badgeIcon = document.getElementById('lmBadgeIcon');
     if (badgeIcon && typeof renderAvatar === 'function') {
