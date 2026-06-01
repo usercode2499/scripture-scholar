@@ -166,6 +166,27 @@
       ref: 'Moroni 10:4',
       note: 'Moroni promises that if we ask God in faith, "with a sincere heart, with real intent," the Holy Ghost will reveal its truth.'
     },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What did Captain Moroni write upon the title of liberty?',
+      options: ['A battle plan', 'In memory of our God, our religion, and freedom', 'A list of laws', 'A prayer of thanks'], correct: 1,
+      ref: 'Alma 46:12',
+      note: 'Moroni tore his coat and wrote on it to rally the Nephites to defend their faith and freedom.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'How many Nephites and Lamanites were converted and buried their weapons, becoming the people of Ammon?',
+      options: ['The anti-Nephi-Lehies', 'The Gadianton robbers', 'The Mulekites', 'The Zoramites'], correct: 0,
+      ref: 'Alma 23–24',
+      note: 'The converted Lamanites called themselves Anti-Nephi-Lehies and buried their weapons, vowing never to shed blood again.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who was the wicked king that had the prophet Abinadi put to death?',
+      options: ['King Noah', 'King Laman', 'King Lamoni', 'King Mosiah'], correct: 0,
+      ref: 'Mosiah 17',
+      note: 'King Noah condemned Abinadi to death by fire, but one priest, Alma, believed and fled to record his words.'
+    },
 
     // ============ CATEGORY: WHO SPOKE THESE WORDS ============
     {
@@ -209,6 +230,69 @@
       options: ['Jesus Christ', 'An angel', 'Nephi', 'Moroni'], correct: 0,
       ref: '3 Nephi 11:10',
       note: 'The resurrected Savior declared this as He descended to the Nephites at the temple in Bountiful.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"O remember, remember, my sons... that it is upon the rock of our Redeemer... that ye must build your foundation."',
+      options: ['Helaman', 'Alma', 'Nephi', 'King Benjamin'], correct: 0,
+      ref: 'Helaman 5:12',
+      note: 'Helaman counseled his sons Nephi and Lehi to build their foundation on Christ.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...this life is the time for men to prepare to meet God..."',
+      options: ['Amulek', 'Alma', 'Abinadi', 'Mosiah'], correct: 0,
+      ref: 'Alma 34:32',
+      note: 'Amulek preached this to the Zoramites, pleading with them not to procrastinate repentance.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...I give unto men weakness that they may be humble... then will I make weak things become strong unto them."',
+      options: ['The Lord (to Moroni)', 'Mormon', 'Ether', 'Nephi'], correct: 0,
+      ref: 'Ether 12:27',
+      note: 'The Lord spoke these words to Moroni, teaching the purpose of human weakness.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"In memory of our God, our religion, and freedom, and our peace, our wives, and our children." (written on a banner)',
+      options: ['Captain Moroni', 'Helaman', 'Teancum', 'Pahoran'], correct: 0,
+      ref: 'Alma 46:12',
+      note: 'Captain Moroni wrote this on the title of liberty to rally the Nephites to defend their freedom.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...God himself shall come down among the children of men, and shall redeem his people." (spoken before a wicked king)',
+      options: ['Abinadi', 'Alma', 'Nephi', 'Samuel the Lamanite'], correct: 0,
+      ref: 'Mosiah 15:1',
+      note: 'Abinadi boldly testified of Christ before King Noah, sealing his witness with his life.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...ye shall have eternal life." (the voice of the Lord, after a mighty all-day prayer in the forest)',
+      options: ['Enos', 'Jacob', 'Jarom', 'Omni'], correct: 0,
+      ref: 'Enos 1:5–8',
+      note: 'Enos wrestled in mighty prayer and received forgiveness and the assurance of eternal life.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...we will be true at all times and in whatsoever things he shall command us." (spoken by young warriors)',
+      options: ['The stripling warriors', 'The sons of Mosiah', 'The Nephite elders', 'The people of Ammon'], correct: 0,
+      ref: 'Alma 53:20 / 56:47',
+      note: 'Helaman\'s 2,000 stripling warriors had been taught faith by their mothers and did not doubt.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"I know that he loveth his children; nevertheless, I do not know the meaning of all things." (answering an angel)',
+      options: ['Nephi', 'Lehi', 'Jacob', 'Sam'], correct: 0,
+      ref: '1 Nephi 11:17',
+      note: 'Nephi answered the Spirit with humble faith while being shown the vision of the tree of life.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"I know that I am nothing; as to my strength I am weak... but I will boast of my God, for in his strength I can do all things."',
+      options: ['Ammon', 'Aaron', 'Alma', 'Nephi'], correct: 0,
+      ref: 'Alma 26:12',
+      note: 'Ammon rejoiced after the great Lamanite conversions, giving all glory to God rather than himself.'
     },
 
     // ============ CATEGORY: WHERE IS THIS VERSE FOUND ============
@@ -489,6 +573,86 @@
       distractors: ['strength', 'sins', 'hearts'],
       ref: 'Ether 12:27',
       note: 'The Lord taught Moroni that weak things can become strong through humility and grace.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And charity suffereth long, and is',
+      after: ', and envieth not...',
+      answer: 'kind',
+      acceptable: ['kind'],
+      distractors: ['meek', 'gentle', 'patient'],
+      ref: 'Moroni 7:45',
+      note: 'Mormon\'s description of the qualities of charity, the pure love of Christ.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'For the natural man is an enemy to God... and will be, forever and ever, unless he yields to the enticings of the Holy',
+      after: '.',
+      answer: 'Spirit',
+      acceptable: ['spirit'],
+      distractors: ['Ghost', 'word', 'voice'],
+      ref: 'Mosiah 3:19',
+      note: 'King Benjamin taught how to put off the natural man and become a saint through Christ.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'Wickedness never was',
+      after: '.',
+      answer: 'happiness',
+      acceptable: ['happiness'],
+      distractors: ['righteousness', 'peace', 'joy'],
+      ref: 'Alma 41:10',
+      note: 'Alma corrected his son Corianton\'s mistaken thinking about sin and happiness.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: '...press forward with a steadfastness in Christ, having a perfect brightness of',
+      after: ', and a love of God and of all men.',
+      answer: 'hope',
+      acceptable: ['hope'],
+      distractors: ['faith', 'light', 'joy'],
+      ref: '2 Nephi 31:20',
+      note: 'Nephi describing the path to eternal life through the doctrine of Christ.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: '...if ye do not watch yourselves, and your thoughts, and your words, and your',
+      after: ', and observe the commandments of God... ye must perish.',
+      answer: 'deeds',
+      acceptable: ['deeds'],
+      distractors: ['ways', 'works', 'hearts'],
+      ref: 'Mosiah 4:30',
+      note: 'King Benjamin\'s closing counsel to watch ourselves in thought, word, and deed.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: '...feast upon the words of Christ; for behold, the words of Christ will tell you all things what ye should',
+      after: '.',
+      answer: 'do',
+      acceptable: ['do'],
+      distractors: ['know', 'say', 'seek'],
+      ref: '2 Nephi 32:3',
+      note: 'Nephi taught his people to feast upon the words of Christ for guidance.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'For behold, this life is the time for men to prepare to meet',
+      after: '.',
+      answer: 'God',
+      acceptable: ['god'],
+      distractors: ['Christ', 'death', 'judgment'],
+      ref: 'Alma 34:32',
+      note: 'Amulek pleaded with the Zoramites not to procrastinate the day of their repentance.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: '...I will not boast of myself, but I will boast of my God, for in his strength I can do all',
+      after: '.',
+      answer: 'things',
+      acceptable: ['things'],
+      distractors: ['miracles', 'works', 'good'],
+      ref: 'Alma 26:12',
+      note: 'Ammon\'s declaration of faith after the great Lamanite conversions.'
     }
 
   ];
