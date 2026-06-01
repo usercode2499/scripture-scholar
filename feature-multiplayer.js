@@ -65,7 +65,8 @@
     lastStatus: null,     // track room status transitions (firebase mode)
     committing: false,
     _xpAwarded: false,
-    globalRanks: null   // { nameLower: rank } cache for lobby display
+    globalRanks: null,   // { nameLower: rank } cache for lobby display
+    messages: []         // lobby chat messages
   };
 
   function mpRandomCode() {
@@ -111,6 +112,7 @@
     mpState.lastStatus = null;
     mpState.committing = false;
     mpState.globalRanks = null;
+    mpState.messages = [];
     // categories intentionally preserved across reset so host keeps their pick
   }
 
@@ -328,6 +330,13 @@
       mpState.currentIdx = (typeof room.currentIdx === 'number') ? room.currentIdx : -1;
       mpState.questionStartedAt = room.startedAt || 0;
 
+      // Chat messages (lobby). Convert the pushed-keys object into a sorted array.
+      const msgsObj = room.messages || {};
+      mpState.messages = Object.keys(msgsObj).map(k => {
+        const m = msgsObj[k];
+        return { id: k, senderId: m.senderId, name: m.name, text: m.text, avatar: m.avatar || null, at: m.at || 0 };
+      }).sort((a, b) => (a.at || 0) - (b.at || 0));
+
       const status = room.status;
       const statusChanged = status !== mpState.lastStatus;
       const idxChanged = mpState._lastIdx !== mpState.currentIdx;
@@ -339,7 +348,15 @@
         // Returning to lobby (new game or after a finished game) — reset guards.
         mpState._xpAwarded = false;
         mpState.committing = false;
-        renderMpLobby();
+        // If the lobby is already on screen, refresh players + chat in place so
+        // we don't wipe what someone is typing. Otherwise do a full render.
+        const lobbyShown = document.querySelector('#multiplayerContainer .mp-lobby');
+        if (lobbyShown) {
+          mpRefreshLobbyPlayers();
+          mpRenderChatMessages();
+        } else {
+          renderMpLobby();
+        }
       } else if (status === 'playing') {
         // New question? (status change into playing, or index changed)
         if (statusChanged || idxChanged) {
@@ -396,30 +413,7 @@
           <span class="mp-players-count">${mpState.players.length}</span>
         </div>
         <div class="mp-players-list" id="mpPlayersList">
-          ${mpState.players.map(p => {
-            const rank = mpGlobalRankFor(p.name);
-            const rankBadge = (rank && typeof rankTrophy === 'function')
-              ? `<span class="mp-player-rank" title="Leaderboard rank">${rankTrophy(rank, 26)}</span>`
-              : '';
-            // Profile picture (preset/photo). Host wears a small crown corner mark.
-            let avatarHtml;
-            if (typeof renderAvatar === 'function') {
-              const av = p.avatar || { type: 'preset', preset: 'scroll' };
-              avatarHtml = renderAvatar({ avatar: av, level: 1, size: 38, showBadge: false });
-            } else {
-              avatarHtml = `<span style="font-size:20px;">${p.isHost ? '👑' : '🙂'}</span>`;
-            }
-            const readyTag = p.isHost
-              ? `<span class="mp-ready-tag host">👑 Host</span>`
-              : (p.ready ? `<span class="mp-ready-tag ready">✓ Ready</span>` : `<span class="mp-ready-tag waiting">Not ready</span>`);
-            return `
-            <div class="mp-player-chip${p.isMe ? ' me' : ''}">
-              <span class="mp-player-avatar mp-player-pfp">${avatarHtml}</span>
-              <span class="mp-player-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
-              ${rankBadge}
-              ${readyTag}
-            </div>
-          `;}).join('')}
+          ${mpRenderPlayerChips()}
         </div>
         ${isHost && cats.length ? `
           <div class="mp-cat-head">Categories <span class="mp-cat-hint">(pick up to 3, or random)</span></div>
@@ -434,10 +428,70 @@
           </div>
           <button class="mp-cat-random" onclick="mpRandomCategories()">🎲 Random of 3</button>
         ` : ''}
-        ${mpLobbyActions(isHost, enoughPlayers)}
+        <div id="mpLobbyActions">${mpLobbyActions(isHost, enoughPlayers)}</div>
+
+        <!-- Lobby chat -->
+        <div class="mp-chat">
+          <div class="mp-chat-head">
+            <span>💬 Lobby Chat</span>
+            ${isHost ? `<button class="mp-chat-clear" onclick="mpClearChat()">Clear</button>` : ''}
+          </div>
+          <div class="mp-chat-messages" id="mpChatMessages">${mpRenderChatMessagesHtml()}</div>
+          <div class="mp-chat-input-row">
+            <input type="text" id="mpChatInput" class="mp-chat-input" maxlength="200"
+                   placeholder="Say something kind…" autocomplete="off"
+                   onkeydown="if(event.key==='Enter'){mpSendChat();}">
+            <button class="mp-chat-send" onclick="mpSendChat()" aria-label="Send">Send</button>
+          </div>
+        </div>
+
         <button class="mp-leave-link" onclick="mpConfirmLeave()">Leave room</button>
       </div>
     `;
+    // Scroll chat to the newest message after render
+    setTimeout(mpScrollChatToBottom, 30);
+  }
+
+  // ===== Player chips (extracted so the lobby can refresh in place) =====
+  function mpRenderPlayerChips() {
+    return mpState.players.map(p => {
+      const rank = mpGlobalRankFor(p.name);
+      const rankBadge = (rank && typeof rankTrophy === 'function')
+        ? `<span class="mp-player-rank" title="Leaderboard rank">${rankTrophy(rank, 26)}</span>`
+        : '';
+      let avatarHtml;
+      if (typeof renderAvatar === 'function') {
+        const av = p.avatar || { type: 'preset', preset: 'scroll' };
+        avatarHtml = renderAvatar({ avatar: av, level: 1, size: 38, showBadge: false });
+      } else {
+        avatarHtml = `<span style="font-size:20px;">${p.isHost ? '👑' : '🙂'}</span>`;
+      }
+      const readyTag = p.isHost
+        ? `<span class="mp-ready-tag host">👑 Host</span>`
+        : (p.ready ? `<span class="mp-ready-tag ready">✓ Ready</span>` : `<span class="mp-ready-tag waiting">Not ready</span>`);
+      return `
+        <div class="mp-player-chip${p.isMe ? ' me' : ''}">
+          <span class="mp-player-avatar mp-player-pfp">${avatarHtml}</span>
+          <span class="mp-player-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
+          ${rankBadge}
+          ${readyTag}
+        </div>`;
+    }).join('');
+  }
+
+  // Refresh just the players list + the action buttons without rebuilding chat.
+  function mpRefreshLobbyPlayers() {
+    const list = document.getElementById('mpPlayersList');
+    if (list) list.innerHTML = mpRenderPlayerChips();
+    const countEl = document.querySelector('.mp-players-count');
+    if (countEl) countEl.textContent = mpState.players.length;
+    // Re-evaluate the host's Start button / joiner Ready button state
+    const actionsHost = (mpState.mode === 'host');
+    const enough = mpState.players.length >= 2;
+    const actionsEl = document.querySelector('.mp-start-btn, .mp-ready-btn');
+    // Simplest reliable approach: replace the action area via a wrapper if present
+    const wrap = document.getElementById('mpLobbyActions');
+    if (wrap) wrap.innerHTML = mpLobbyActions(actionsHost, enough);
   }
 
   // Lobby action button(s): joiners get a Ready toggle; host gets Start
@@ -476,6 +530,92 @@
       // Mock mode: flip locally and re-render
       if (me) me.ready = newReady;
       renderMpLobby();
+    }
+  }
+
+  // ================= LOBBY CHAT =================
+  // A light-touch filter for a youth/ward setting. Catches a small set of
+  // obvious profanity; not exhaustive, but keeps casual chat tidy. Replaces
+  // matched words with a gentle placeholder rather than blocking the message.
+  const MP_CHAT_BLOCKLIST = ['damn', 'hell', 'crap', 'ass', 'bitch', 'bastard', 'shit', 'fuck', 'piss', 'dick'];
+  function mpCleanChatText(text) {
+    let t = String(text || '').trim();
+    if (!t) return '';
+    // Collapse excessive whitespace and cap length
+    t = t.replace(/\s+/g, ' ').slice(0, 200);
+    // Soft profanity filter (whole-word, case-insensitive)
+    MP_CHAT_BLOCKLIST.forEach(w => {
+      const re = new RegExp('\\b' + w + '\\b', 'gi');
+      t = t.replace(re, '—');
+    });
+    return t;
+  }
+
+  function mpRenderChatMessagesHtml() {
+    const msgs = mpState.messages || [];
+    if (!msgs.length) {
+      return `<div class="mp-chat-empty">No messages yet — say hello! 👋</div>`;
+    }
+    return msgs.map(m => {
+      const mine = m.senderId === mpState.myId;
+      let avatarHtml;
+      if (typeof renderAvatar === 'function') {
+        const av = m.avatar || { type: 'preset', preset: 'scroll' };
+        avatarHtml = renderAvatar({ avatar: av, level: 1, size: 28, showBadge: false });
+      } else {
+        avatarHtml = '🙂';
+      }
+      return `
+        <div class="mp-chat-msg${mine ? ' mine' : ''}">
+          <span class="mp-chat-avatar">${avatarHtml}</span>
+          <div class="mp-chat-bubble">
+            <div class="mp-chat-name">${escapeHtmlMp(m.name || 'Player')}</div>
+            <div class="mp-chat-text">${escapeHtmlMp(m.text || '')}</div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // Update only the messages container (preserves the input field + focus).
+  function mpRenderChatMessages() {
+    const box = document.getElementById('mpChatMessages');
+    if (!box) return;
+    const wasNearBottom = (box.scrollHeight - box.scrollTop - box.clientHeight) < 60;
+    box.innerHTML = mpRenderChatMessagesHtml();
+    if (wasNearBottom) mpScrollChatToBottom();
+  }
+
+  function mpScrollChatToBottom() {
+    const box = document.getElementById('mpChatMessages');
+    if (box) box.scrollTop = box.scrollHeight;
+  }
+
+  async function mpSendChat() {
+    const input = document.getElementById('mpChatInput');
+    if (!input) return;
+    const cleaned = mpCleanChatText(input.value);
+    if (!cleaned) { input.value = ''; return; }
+    input.value = '';
+    input.focus();
+    if (typeof playTapSfx === 'function') playTapSfx();
+    if (mpState.online && typeof mpFbSendChat === 'function') {
+      try { await mpFbSendChat(mpState.roomCode, mpState.me, cleaned, mpMyAvatarThumb()); } catch (e) {}
+      // The room listener will refresh the messages in place.
+    } else {
+      // Mock/offline mode: append locally so the user still sees their message.
+      mpState.messages = mpState.messages || [];
+      mpState.messages.push({ id: 'local_' + Date.now(), senderId: mpState.myId, name: mpState.me, text: cleaned, avatar: mpMyAvatarThumb(), at: Date.now() });
+      mpRenderChatMessages();
+      mpScrollChatToBottom();
+    }
+  }
+
+  function mpClearChat() {
+    if (mpState.online && typeof mpFbClearChat === 'function') {
+      mpFbClearChat(mpState.roomCode);
+    } else {
+      mpState.messages = [];
+      mpRenderChatMessages();
     }
   }
 

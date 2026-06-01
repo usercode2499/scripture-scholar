@@ -111,6 +111,26 @@
     try { await MP_FB.db.ref('rooms/' + code + '/players/' + id + '/ready').set(!!ready); } catch (e) {}
   }
 
+  // Send a chat message into the room. Messages live under rooms/<code>/messages
+  // and arrive via the existing room listener. We cap stored length defensively.
+  async function mpFbSendChat(code, name, text, avatar) {
+    if (!text) return;
+    const id = mpFbClientId();
+    const msg = {
+      senderId: id,
+      name: (name || 'Player').slice(0, 20),
+      text: String(text).slice(0, 200),
+      avatar: avatar || null,
+      at: mpFbServerTime()
+    };
+    try { await MP_FB.db.ref('rooms/' + code + '/messages').push(msg); } catch (e) {}
+  }
+
+  // Host can clear the lobby chat.
+  async function mpFbClearChat(code) {
+    try { await MP_FB.db.ref('rooms/' + code + '/messages').remove(); } catch (e) {}
+  }
+
   function mpFbWatchRoom(code, callback) {
     const roomRef = MP_FB.db.ref('rooms/' + code);
     MP_FB.roomRef = roomRef;
