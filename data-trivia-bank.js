@@ -653,16 +653,140 @@
       distractors: ['miracles', 'works', 'good'],
       ref: 'Alma 26:12',
       note: 'Ammon\'s declaration of faith after the great Lamanite conversions.'
+    },
+
+    // ============ CATEGORY: REFERENCE MATCH (statement → reference) ============
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: Nephi pledges "I will go and do the things which the Lord hath commanded."',
+      options: ['1 Nephi 3:7', 'Mosiah 2:17', 'Alma 32:21', 'Moroni 10:4'], correct: 0,
+      ref: '1 Nephi 3:7', note: 'Nephi\u2019s pledge of obedience.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Adam fell that men might be; and men are, that they might have joy."',
+      options: ['2 Nephi 2:25', '1 Nephi 1:1', 'Alma 41:10', 'Ether 12:27'], correct: 0,
+      ref: '2 Nephi 2:25', note: 'Lehi teaching Jacob about the purpose of mortality.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "When ye are in the service of your fellow beings ye are only in the service of your God."',
+      options: ['Mosiah 2:17', 'Alma 37:6', 'Helaman 5:12', '3 Nephi 11:10'], correct: 0,
+      ref: 'Mosiah 2:17', note: 'King Benjamin\u2019s address.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "By small and simple things are great things brought to pass."',
+      options: ['Alma 37:6', '1 Nephi 3:7', 'Mosiah 4:11', 'Ether 12:27'], correct: 0,
+      ref: 'Alma 37:6', note: 'Alma to his son Helaman.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Charity is the pure love of Christ, and it endureth forever."',
+      options: ['Moroni 7:47', 'Alma 7:11', '2 Nephi 31:20', 'Mosiah 4:11'], correct: 0,
+      ref: 'Moroni 7:47', note: 'Mormon\u2019s sermon on charity.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Ask God, the Eternal Father, in the name of Christ, if these things are not true."',
+      options: ['Moroni 10:4', 'Moroni 7:47', 'Ether 12:6', '2 Nephi 33:1'], correct: 0,
+      ref: 'Moroni 10:4', note: 'Moroni\u2019s promise.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "By the power of the Holy Ghost ye may know the truth of all things."',
+      options: ['Moroni 10:5', 'Moroni 10:4', '1 Nephi 10:19', 'Alma 5:46'], correct: 0,
+      ref: 'Moroni 10:5', note: 'The companion to Moroni\u2019s promise.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Wickedness never was happiness."',
+      options: ['Alma 41:10', 'Alma 5:10', 'Mosiah 2:41', 'Helaman 13:38'], correct: 0,
+      ref: 'Alma 41:10', note: 'Alma counseling his son Corianton.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "The natural man is an enemy to God."',
+      options: ['Mosiah 3:19', 'Mosiah 2:17', 'Alma 41:10', '2 Nephi 2:25'], correct: 0,
+      ref: 'Mosiah 3:19', note: 'From King Benjamin\u2019s address, quoting an angel.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "I will make weak things become strong unto them."',
+      options: ['Ether 12:27', 'Ether 12:6', 'Alma 32:21', 'Moroni 7:33'], correct: 0,
+      ref: 'Ether 12:27', note: 'The Lord speaking to Moroni.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Ye receive no witness until after the trial of your faith."',
+      options: ['Ether 12:6', 'Alma 32:21', 'Moroni 7:26', 'Mosiah 3:19'], correct: 0,
+      ref: 'Ether 12:6', note: 'Moroni teaching that faith is tested before its reward.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Faith is not to have a perfect knowledge of things."',
+      options: ['Alma 32:21', 'Ether 12:6', 'Moroni 7:47', '2 Nephi 31:20'], correct: 0,
+      ref: 'Alma 32:21', note: 'Alma\u2019s sermon on faith to the Zoramites.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Build your foundation upon the rock of our Redeemer."',
+      options: ['Helaman 5:12', 'Mosiah 2:17', 'Alma 37:6', '3 Nephi 11:39'], correct: 0,
+      ref: 'Helaman 5:12', note: 'Helaman\u2019s counsel to his sons.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Press forward with a steadfastness in Christ, having a perfect brightness of hope."',
+      options: ['2 Nephi 31:20', 'Moroni 7:47', 'Alma 32:21', 'Mosiah 4:11'], correct: 0,
+      ref: '2 Nephi 31:20', note: 'Nephi on the doctrine of Christ.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: Christ "will take upon him the pains and the sicknesses of his people."',
+      options: ['Alma 7:11', 'Mosiah 3:19', '2 Nephi 9:21', 'Moroni 8:8'], correct: 0,
+      ref: 'Alma 7:11', note: 'Alma prophesying of the Atonement at Gideon.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "This life is the time for men to prepare to meet God."',
+      options: ['Alma 34:32', 'Alma 5:28', '2 Nephi 9:27', 'Mosiah 3:19'], correct: 0,
+      ref: 'Alma 34:32', note: 'Amulek preaching to the Zoramites.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "It is by grace that we are saved, after all we can do."',
+      options: ['2 Nephi 25:23', 'Moroni 10:32', 'Alma 24:11', 'Mosiah 3:17'], correct: 0,
+      ref: '2 Nephi 25:23', note: 'Nephi teaching about grace.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Come unto Christ, and be perfected in him."',
+      options: ['Moroni 10:32', 'Moroni 7:47', '3 Nephi 12:48', '2 Nephi 31:20'], correct: 0,
+      ref: 'Moroni 10:32', note: 'Moroni\u2019s closing invitation.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "In his strength I can do all things." (spoken after the Lamanite conversions)',
+      options: ['Alma 26:12', 'Mosiah 2:17', 'Alma 36:3', 'Philippians 4:13'], correct: 0,
+      ref: 'Alma 26:12', note: 'Ammon rejoicing in the Lord.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Feast upon the words of Christ; for behold, the words of Christ will tell you all things."',
+      options: ['2 Nephi 32:3', '2 Nephi 31:20', 'Moroni 10:4', 'Alma 37:35'], correct: 0,
+      ref: '2 Nephi 32:3', note: 'Nephi teaching his people to feast on the word.'
     }
 
   ];
+
 
   // Category metadata for the UI
   const TRIVIA_CATEGORIES = [
     { id: 'facts',          label: 'Facts & Events',   icon: '📖', desc: 'People, places, and events' },
     { id: 'who_spoke',      label: 'Who Spoke It?',    icon: '🗣️', desc: 'Identify who said the words' },
     { id: 'verse_location', label: 'Where\u2019s the Verse?', icon: '🔎', desc: 'Find the reference' },
-    { id: 'complete_verse', label: 'Complete the Verse', icon: '✍️', desc: 'Fill in the missing word' }
+    { id: 'complete_verse', label: 'Complete the Verse', icon: '✍️', desc: 'Fill in the missing word' },
+    { id: 'reference_match', label: 'Reference Match', icon: '🎯', desc: 'Match the statement to its reference' }
   ];
 
   // Build a randomized set of questions for a game, drawing only from the

@@ -31,23 +31,63 @@
       title: 'Complete a lesson',
       description: 'Finish any chapter (review or new)',
       icon: '📖',
-      xp: 50
+      xp: 50,
+      action: 'lesson'
     },
     {
       id: 'read_verse',
       title: 'Read the daily verse',
       description: 'Tap the Verse of the Day to view its reference',
       icon: '📜',
-      xp: 15
+      xp: 15,
+      action: 'verse'
     },
     {
       id: 'streak_keep',
       title: 'Keep your streak',
       description: 'Maintain your day streak',
       icon: '🔥',
-      xp: 25
+      xp: 25,
+      action: 'lesson'
     }
   ];
+
+  // Routes a tapped daily task to the relevant part of the app.
+  function goToDailyTask(taskId) {
+    const task = DAILY_TASKS.find(t => t.id === taskId);
+    if (!task) return;
+    if (typeof playTapSfx === 'function') playTapSfx();
+    switch (task.action) {
+      case 'lesson':
+        // Open the next unfinished lesson, or scroll to the path to pick one.
+        if (typeof continueFromDashboard === 'function') continueFromDashboard();
+        else scrollToLearningPath();
+        break;
+      case 'verse':
+        scrollToVerseOfDay();
+        break;
+      case 'minigame':
+        if (typeof openMiniGames === 'function') openMiniGames();
+        break;
+      default:
+        break;
+    }
+  }
+
+  // Helpers to scroll to home sections if a direct opener isn't available.
+  function scrollToLearningPath() {
+    const el = document.getElementById('lessonPath');
+    if (el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function scrollToVerseOfDay() {
+    const el = document.getElementById('dailyVerse');
+    if (el && el.scrollIntoView) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      // Briefly highlight it so the user sees where they landed.
+      el.classList.add('daily-verse-highlight');
+      setTimeout(() => el.classList.remove('daily-verse-highlight'), 1600);
+    }
+  }
 
   // Returns today's progress object. Initializes if it's a new day.
   function getDailyTasksProgress() {
@@ -112,14 +152,16 @@
       <div class="daily-tasks-list">
         ${DAILY_TASKS.map(task => {
           const done = progress.completed.includes(task.id);
+          const tappable = !!task.action && !done;
+          const onclick = tappable ? `onclick="goToDailyTask('${task.id}')"` : '';
           return `
-            <div class="daily-task ${done ? 'done' : ''}">
+            <div class="daily-task ${done ? 'done' : ''} ${tappable ? 'tappable' : ''}" ${onclick}>
               <div class="daily-task-icon">${done ? '✓' : task.icon}</div>
               <div class="daily-task-body">
                 <div class="daily-task-title">${task.title}</div>
                 <div class="daily-task-desc">${task.description}</div>
               </div>
-              <div class="daily-task-xp">+${task.xp}</div>
+              ${tappable ? '<div class="daily-task-go">›</div>' : `<div class="daily-task-xp">+${task.xp}</div>`}
             </div>
           `;
         }).join('')}

@@ -1,7 +1,7 @@
 // ============================================================
 // Scripture Scholar — Leaderboard UI (Phase 4)
 // ============================================================
-// Global, all-time ward leaderboard ranked by total XP. Opens from
+// Global, all-time district leaderboard ranked by total XP. Opens from
 // the nav menu. On open: ensure anonymous auth, publish my current
 // stats, fetch the board, and render it (name, chapters, level +
 // badge, total XP). Falls back to a friendly offline state.
@@ -40,7 +40,7 @@
     c.innerHTML = `
       <div class="lb-loading">
         <div class="lb-spinner"></div>
-        <p>Loading the ward leaderboard…</p>
+        <p>Loading the district leaderboard…</p>
       </div>
     `;
   }
@@ -172,7 +172,7 @@
 
     c.innerHTML = `
       <div class="lb-header-card">
-        <div class="lb-title serif">🏆 Ward Leaderboard</div>
+        <div class="lb-title serif">🏆 District Leaderboard</div>
         <div class="lb-subtitle">All-time rankings by total XP</div>
         ${myRank ? `<div class="lb-myrank">You're <strong>#${myRank}</strong> of ${rows.length}</div>` : ''}
       </div>

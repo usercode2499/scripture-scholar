@@ -8,7 +8,7 @@
 //
 // All references are drawn from the Book of Mormon and were verified
 // against official sources (they mirror the verified verse_location
-// trivia bank). +3 XP per correct answer.
+// trivia bank). +10 XP per correct answer (min 10 floor).
 //
 // Exports (global):
 //   REFERENCE_MATCH_DATA        — array of questions
@@ -140,7 +140,7 @@
     c.innerHTML = `
       <div class="rm-progress-row">
         <span class="rm-qnum">Question ${num} of ${total}</span>
-        <span class="rm-xp-hint">⭐ +3 XP</span>
+        <span class="rm-xp-hint">⭐ +10 XP</span>
       </div>
       <div class="rm-progress-bar"><div class="rm-progress-fill" style="width:${progress}%"></div></div>
       <div class="rm-prompt-label">Where is this found?</div>
@@ -184,7 +184,7 @@
     rmState.submitted = true;
     if (correct) {
       rmState.correctCount++;
-      if (typeof awardXp === 'function') awardXp(3);
+      if (typeof awardXp === 'function') awardXp(10);
       if (typeof playSfx === 'function') playSfx('correct');
     } else {
       if (typeof playSfx === 'function') playSfx('wrong');

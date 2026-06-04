@@ -144,7 +144,7 @@
         ${photoSelected ? `<button class="avatar-photo-remove" onclick="removeAvatarPhoto()">Remove</button>` : ''}
       </div>
       <input type="file" id="avatarFileInput" accept="image/*" class="avatar-file-input" onchange="handleAvatarPhotoPick(event)"/>
-      <div class="avatar-photo-note">Photos stay small and are shown on the leaderboard. Choose something appropriate for your ward. 🙏</div>
+      <div class="avatar-photo-note">Photos stay small and are shown on the leaderboard. Choose something appropriate for your district. 🙏</div>
 
       <div class="avatar-section-label">✨ Or pick an icon</div>
       <div class="avatar-grid">${presetGrid}</div>

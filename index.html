@@ -113,7 +113,15 @@
     font-family: 'DM Sans', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE/old Edge */
   }
+  /* Hide the scrollbar visually app-wide (scrolling still works) */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  .app::-webkit-scrollbar { width: 0; height: 0; display: none; }
+  * { scrollbar-width: none; }
+  *::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
   body {
     min-height: 100vh;
@@ -3188,6 +3196,16 @@
     opacity: 0.7;
     background: rgba(107, 142, 61, 0.12);
   }
+  .daily-task.tappable { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .daily-task.tappable:active { transform: scale(0.99); background: var(--gold-glow); }
+  .daily-task-go {
+    flex-shrink: 0; font-size: 24px; font-weight: 700; color: var(--gold-dark);
+    line-height: 1; padding: 0 4px; opacity: 0.7;
+  }
+  .daily-verse-highlight {
+    box-shadow: 0 0 0 3px var(--gold), 0 8px 24px rgba(200,155,60,0.4) !important;
+    transition: box-shadow 0.3s ease;
+  }
   .daily-task-icon {
     font-size: 20px;
     line-height: 1;
@@ -3426,44 +3444,44 @@
     animation-delay: 1s;
   }
 
-  /* ---------- SILVER: shimmer sweep + gentle breathe + faint sparkle ---------- */
+  /* ---------- SILVER: shimmer sweep + breathe + livelier sparkles + soft glow ---------- */
   .badge-fx-silver {
-    animation: badgeBreathe 4s ease-in-out infinite;
+    animation: badgeBreathe 3.6s ease-in-out infinite, badgeSilverGlow 4s ease-in-out infinite;
   }
   .badge-fx-silver .badge-shine {
     opacity: 1;
-    animation: badgeShine 4.5s ease-in-out infinite;
+    animation: badgeShine 3.8s ease-in-out infinite;
   }
   .badge-fx-silver .badge-sparkles {
-    opacity: 0.75;
-    animation: badgeSparkleFade 4.5s ease-in-out infinite;
+    opacity: 0.9;
+    animation: badgeSparkleFade 3.8s ease-in-out infinite;
   }
-  .badge-fx-silver .badge-spark { animation: badgeSparkleTwinkle 2.4s ease-in-out infinite; }
-  .badge-fx-silver .badge-spark-2 { animation-delay: 0.8s; }
-  .badge-fx-silver .badge-spark-3 { animation-delay: 1.6s; }
+  .badge-fx-silver .badge-spark { animation: badgeSparkleTwinkle 2s ease-in-out infinite; }
+  .badge-fx-silver .badge-spark-2 { animation-delay: 0.6s; }
+  .badge-fx-silver .badge-spark-3 { animation-delay: 1.2s; }
 
-  /* ---------- GOLD: glow pulse + halo + faster shine + lively sparkles + breathe ---------- */
+  /* ---------- GOLD: layered glow + halo + orbiting sparkles + frequent shine + breathe ---------- */
   .badge-fx-gold {
     border-radius: 50%;
-    animation: badgeGlow 2.8s ease-in-out infinite, badgeBreathe 3.4s ease-in-out infinite;
+    animation: badgeGoldGlow 2.4s ease-in-out infinite, badgeBreathe 3s ease-in-out infinite;
   }
   .badge-fx-gold .badge-halo {
     opacity: 1;
-    animation: badgeHaloPulse 2.8s ease-in-out infinite;
+    animation: badgeHaloPulse 2.4s ease-in-out infinite, badgeHaloSpin 14s linear infinite;
   }
   .badge-fx-gold .badge-shine {
     opacity: 1;
-    animation: badgeShine 3s ease-in-out infinite;
+    animation: badgeShine 2.4s ease-in-out infinite;
   }
   .badge-fx-gold .badge-sparkles {
     opacity: 1;
-    animation: badgeSparkleSpin 6s linear infinite;
+    animation: badgeSparkleSpin 5s linear infinite;
     transform-box: view-box;
     transform-origin: 50px 50px;
   }
-  .badge-fx-gold .badge-spark { animation: badgeSparkleTwinkle 1.6s ease-in-out infinite; }
-  .badge-fx-gold .badge-spark-2 { animation-delay: 0.5s; }
-  .badge-fx-gold .badge-spark-3 { animation-delay: 1.0s; }
+  .badge-fx-gold .badge-spark { animation: badgeSparkleTwinkle 1.3s ease-in-out infinite; }
+  .badge-fx-gold .badge-spark-2 { animation-delay: 0.4s; }
+  .badge-fx-gold .badge-spark-3 { animation-delay: 0.85s; }
 
   @keyframes badgeShine {
     0%   { transform: translateX(0) rotate(20deg); opacity: 0; }
@@ -3471,29 +3489,43 @@
     30%  { transform: translateX(150px) rotate(20deg); opacity: 0; }
     100% { transform: translateX(150px) rotate(20deg); opacity: 0; }
   }
+  /* Silver: cool white-blue glow that breathes */
+  @keyframes badgeSilverGlow {
+    0%, 100% { filter: drop-shadow(0 0 2px rgba(200, 210, 225, 0.35)); }
+    50%      { filter: drop-shadow(0 0 11px rgba(225, 233, 245, 0.85)); }
+  }
+  /* Gold: warm layered glow, stronger than the old single-shadow version */
+  @keyframes badgeGoldGlow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(212, 163, 44, 0.5)) drop-shadow(0 0 2px rgba(255,240,180,0.5)); }
+    50%      { filter: drop-shadow(0 0 18px rgba(252, 224, 120, 1)) drop-shadow(0 0 8px rgba(255, 215, 100, 0.8)); }
+  }
   @keyframes badgeGlow {
     0%, 100% { filter: drop-shadow(0 0 3px rgba(212, 163, 44, 0.4)); }
     50%      { filter: drop-shadow(0 0 14px rgba(252, 224, 120, 0.9)); }
   }
   @keyframes badgeHaloPulse {
-    0%, 100% { opacity: 0.35; }
-    50%      { opacity: 0.8; }
+    0%, 100% { opacity: 0.3; transform: scale(0.96); }
+    50%      { opacity: 0.85; transform: scale(1.06); }
+  }
+  @keyframes badgeHaloSpin {
+    from { rotate: 0deg; }
+    to   { rotate: 360deg; }
   }
   @keyframes badgeBreathe {
     0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.035); }
+    50%      { transform: scale(1.045); }
   }
   @keyframes badgeSparkleFade {
     0%, 100% { opacity: 0; }
-    40%, 60% { opacity: 0.8; }
+    40%, 60% { opacity: 0.9; }
   }
   @keyframes badgeSparkleSpin {
     from { transform: rotate(0deg); }
     to   { transform: rotate(360deg); }
   }
   @keyframes badgeSparkleTwinkle {
-    0%, 100% { transform: scale(0.3); opacity: 0.2; }
-    50%      { transform: scale(1); opacity: 1; }
+    0%, 100% { transform: scale(0.25); opacity: 0.15; }
+    50%      { transform: scale(1.1); opacity: 1; }
   }
 
   /* Tap feedback — quick wobble/pop when a badge button is pressed */
@@ -3509,7 +3541,7 @@
     .badge-fx-bronze .badge-shine,
     .badge-fx-silver .badge-shine,
     .badge-fx-gold .badge-shine { animation: none; opacity: 0; }
-    .badge-fx-silver, .badge-fx-gold { animation: none; }
+    .badge-fx-silver, .badge-fx-gold { animation: none; filter: none; }
     .badge-fx-gold .badge-halo,
     .badge-fx-silver .badge-sparkles,
     .badge-fx-gold .badge-sparkles { animation: none; opacity: 0; }
@@ -3970,6 +4002,12 @@
     margin-bottom: 2px;
   }
   .level-modal-num span { color: var(--gold); font-size: 16px; }
+  .level-modal-bonus {
+    display: inline-block; margin-top: 6px;
+    font-size: 12px; font-weight: 700; color: var(--gold-dark);
+    background: var(--gold-glow); border: 1px solid var(--gold);
+    border-radius: 100px; padding: 3px 11px;
+  }
 
   .level-modal-title {
     font-family: 'Cormorant Garamond', serif;
@@ -4608,7 +4646,7 @@
   <div class="landing-particles" id="landingParticles"></div>
   <div class="landing-glow"></div>
   <div class="landing-content">
-    <div class="landing-eyebrow">✦ &nbsp; Welcome &nbsp; ✦</div>
+    <div class="landing-eyebrow">✦ &nbsp; ✦ &nbsp; ✦</div>
     <h1 class="landing-title serif">Scripture<br/>Scholar</h1>
     <div class="landing-divider"></div>
 
@@ -5198,6 +5236,7 @@
       <div class="level-modal-hero-text">
         <div class="level-modal-username serif" id="lmUsername"></div>
         <div class="level-modal-num">Level <span id="lmLevel">1</span></div>
+        <div class="level-modal-bonus" id="lmXpBonus">⚡ +1 XP bonus per earn</div>
         <button class="level-modal-title-btn" id="lmTitleBtn" onclick="toggleLevelList()">
           <span class="level-modal-title" id="lmTitle">Initiate</span>
           <span class="level-modal-title-hint">tap to see all ranks <span class="level-hint-arrow">▾</span></span>
@@ -5579,7 +5618,13 @@
   function awardXp(amount, opts) {
     opts = opts || {};
     const levelBefore = getLevel(state.xp);
-    state.xp += amount;
+    // Level bonus: every level adds +1 XP to each award (Lv 11 → +11 per earn).
+    // Applied to all real earns; pass opts.raw to skip (e.g. internal adjustments).
+    let total = amount;
+    if (!opts.raw && amount > 0) {
+      total = amount + levelBefore;
+    }
+    state.xp += total;
     const levelAfter = getLevel(state.xp);
     const leveledUp = levelAfter > levelBefore;
     if (leveledUp) {
@@ -5592,7 +5637,8 @@
     if (leveledUp && !opts.deferCelebration) {
       showLevelUpCelebration(levelBefore, levelAfter);
     }
-    return { leveledUp, levelBefore, levelAfter };
+    // Return the bonus so callers can show the true earned amount if they wish.
+    return { leveledUp, levelBefore, levelAfter, awarded: total, bonus: total - amount };
   }
 
   // Full-screen level-up celebration — TWO stages:
@@ -5729,6 +5775,8 @@
 
     // Hero
     document.getElementById('lmLevel').textContent = level;
+    const lmBonus = document.getElementById('lmXpBonus');
+    if (lmBonus) lmBonus.textContent = `⚡ +${level} XP bonus on every earn`;
     document.getElementById('lmTitle').textContent = getLevelTitle(level);
     // Full username (never truncated here — the profile has room)
     const lmUser = document.getElementById('lmUsername');
@@ -6660,17 +6708,20 @@
     // a 100 XP bonus; otherwise it scales with how many were answered correctly.
     let earned;
     if (isReview) {
-      earned = 5;
+      earned = 10;
     } else if (perfect) {
       earned = 100;
     } else {
       earned = Math.round((state.correctCount / total) * lesson.xpReward);
     }
+    // Floor: no XP award in the app is ever below 10.
+    earned = Math.max(10, earned);
 
     const levelBefore = getLevel(state.xp);
     const result = awardXp(earned, { deferCelebration: true });
     const levelAfter = result.levelAfter;
     const leveledUp = result.leveledUp;
+    const totalAwarded = result.awarded;   // base + level bonus
 
     // Mark lesson complete if it isn't already
     if (!isReview) {
@@ -6692,14 +6743,15 @@
     updateTopbar();
     saveState();
 
-    document.getElementById('earnedXp').textContent = '+' + earned;
+    document.getElementById('earnedXp').textContent = '+' + totalAwarded;
     document.getElementById('earnedScore').textContent = state.correctCount + '/' + lesson.questions.length;
     document.getElementById('reflectionPrompt').textContent = lesson.reflection;
     // Celebrate a perfect first-time score with a special message + 100 XP bonus note
     const completeSub = document.getElementById('completeSub');
     if (completeSub) {
+      const bonusNote = result.bonus > 0 ? ` (+${result.bonus} level bonus!)` : '';
       if (perfect && !isReview) {
-        completeSub.textContent = 'Perfect score! Every answer correct — 100 XP bonus earned. 🌟';
+        completeSub.textContent = `Perfect score! Every answer correct${bonusNote} 🌟`;
       } else if (isReview) {
         completeSub.textContent = 'Well reviewed. Returning to the word keeps it close to the heart.';
       } else {
@@ -6841,14 +6893,37 @@
   // full list appears in the history modal.
   const CHANGELOG = [
     {
-      version: 'Day 5 — Update 3',
+      version: 'Day 6 — Update 2',
       date: 'Latest',
+      title: 'Level Up Rewards & Reference Match',
+      changes: [
+        'Every level now adds bonus XP to all you earn — Lv 11 = +11 per reward! ⚡',
+        'Reference Match joins Group Trivia as a 5th category 🎯',
+        '20 more verified questions added to the trivia bank',
+        'Daily tasks are now tappable — jump straight to the lesson or verse',
+        'Silver & gold badges shine and sparkle even more ✨'
+      ]
+    },
+    {
+      version: 'Day 6 — Update 1',
+      date: 'Earlier',
+      title: 'District Leaderboard',
+      changes: [
+        'The leaderboard is now the District Leaderboard',
+        'The top scholar gets a crowned champion card 👑',
+        'Cleaner look — tidied the loading screen and hid the scrollbar',
+        'Every XP reward is now at least 10 XP'
+      ]
+    },
+    {
+      version: 'Day 5 — Update 3',
+      date: 'Earlier',
       title: 'Lobby Chat',
       changes: [
         'Chat with everyone in the Group Trivia lobby while you wait! 💬',
         'Messages show each player\u2019s name and profile picture',
         'Host can clear the chat anytime',
-        'Keeps things friendly and ward-appropriate'
+        'Keeps things friendly and district-appropriate'
       ]
     },
     {

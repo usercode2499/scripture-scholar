@@ -17,7 +17,7 @@
       title: 'Verse Quiz',
       description: 'Complete scripture passages by tapping word cards in the correct order. Play one at a time and continue at your own pace.',
       icon: '📜',
-      xpRange: '+5 XP per correct answer',
+      xpRange: '+10 XP per correct answer',
       launch: 'openVerseQuiz'  // function name to call when started
     },
     {
@@ -42,7 +42,7 @@
       title: 'Speed Review',
       description: 'Type the missing word before time runs out. Quick rounds of verse fill-ins.',
       icon: '⚡',
-      xpRange: '+2 XP per correct',
+      xpRange: '+10 XP per correct',
       comingSoon: true
     },
     {
@@ -50,7 +50,7 @@
       title: 'Reference Match',
       description: 'Match doctrinal statements to their scripture references. Build navigation skill.',
       icon: '🎯',
-      xpRange: '+3 XP per correct',
+      xpRange: '+10 XP per correct',
       launch: 'openReferenceMatch',
       badge: 'NEW'
     }
