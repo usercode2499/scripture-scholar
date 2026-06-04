@@ -71,6 +71,8 @@
         xp: stats.xp || 0,
         level: stats.level || 1,
         badgeName: stats.badgeName || '',
+        title: stats.title || '',
+        streak: stats.streak || 0,
         chapters: stats.chapters || 0,
         avatar: stats.avatar || null,
         updatedAt: firebase.database.ServerValue.TIMESTAMP
@@ -98,6 +100,8 @@
           xp: v.xp || 0,
           level: v.level || 1,
           badgeName: v.badgeName || '',
+          title: v.title || '',
+          streak: v.streak || 0,
           chapters: v.chapters || 0,
           avatar: v.avatar || null,
           isMe: child.key === LB.uid
@@ -108,5 +112,46 @@
     } catch (e) {
       LB.lastError = (e && e.message) ? e.message : 'fetch failed';
       return null;
+    }
+  }
+
+  // ============================================================
+  // Profile visitors
+  // ============================================================
+  // Stored under visits/<profileUid>/<visitorUid> = { name, avatar, level, at }.
+  // Keyed by visitor uid so repeat visits update one entry (not spam).
+  // Records a visit by the current user onto another user's profile.
+  async function lbRecordVisit(profileUid) {
+    if (!LB.ready || !LB.uid || !profileUid || profileUid === LB.uid) return false;
+    try {
+      const me = (typeof lbMyStats === 'function') ? lbMyStats() : {};
+      await LB.db.ref('visits/' + profileUid + '/' + LB.uid).set({
+        name: me.name || 'Someone',
+        avatar: me.avatar || null,
+        level: me.level || 1,
+        at: firebase.database.ServerValue.TIMESTAMP
+      });
+      return true;
+    } catch (e) {
+      LB.lastError = (e && e.message) ? e.message : 'visit failed';
+      return false;
+    }
+  }
+
+  // Fetches the list of visitors for a profile uid.
+  async function lbFetchVisitors(profileUid) {
+    if (!LB.ready || !profileUid) return [];
+    try {
+      const snap = await LB.db.ref('visits/' + profileUid).get();
+      if (!snap.exists()) return [];
+      const out = [];
+      snap.forEach(child => {
+        const v = child.val() || {};
+        out.push({ uid: child.key, name: v.name || 'Someone', avatar: v.avatar || null, level: v.level || 1, at: v.at || 0 });
+      });
+      return out;
+    } catch (e) {
+      LB.lastError = (e && e.message) ? e.message : 'fetch visitors failed';
+      return [];
     }
   }
