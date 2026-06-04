@@ -262,20 +262,96 @@
     fgState.answered = false;
     fgState.correctCount = 0;
     fgState.totalXp = 0;
-    // Shuffle question order; keep each question's options in place but shuffle them too
-    fgState.pool = fgShuffle(FACT_GAME_DATA).map(item => {
-      const opts = item.options.map((text, i) => ({ text, isCorrect: i === item.correct }));
-      const shuffledOpts = fgShuffle(opts);
-      return {
-        q: item.q,
-        ref: item.ref,
-        note: item.note,
-        options: shuffledOpts.map(o => o.text),
-        correct: shuffledOpts.findIndex(o => o.isCorrect)
-      };
-    });
+    // Build a fresh set from the 100+ FACT_BANK using the no-repeat tracker,
+    // generating same-type distractors at runtime so answers aren't obvious.
+    const n = (fgState.questionCount && fgState.questionCount >= 5) ? fgState.questionCount : 10;
+    fgState.pool = fgBuildQuestionSet(n, 'factgame');
     if (typeof showScreen === 'function') showScreen('screen-fact-game');
     renderFactGameScreen();
+  }
+
+  // ===== Shared selection engine (used by Fact Game AND multiplayer) =====
+  // Picks `count` questions from FACT_BANK that haven't been shown yet in this
+  // cycle (tracked per scope in localStorage). When the bank is exhausted, the
+  // tracker resets and a new cycle begins. Each question's options are the
+  // correct answer + 3 distinct same-type distractors from the bank, shuffled.
+  function fgBank() {
+    return (typeof FACT_BANK !== 'undefined' && FACT_BANK.length) ? FACT_BANK : null;
+  }
+
+  function fgSeenKey(scope) { return 'scripture-scholar-factseen-' + (scope || 'factgame'); }
+
+  function fgGetSeen(scope) {
+    try { const raw = localStorage.getItem(fgSeenKey(scope)); return raw ? JSON.parse(raw) : []; }
+    catch (e) { return []; }
+  }
+  function fgSetSeen(scope, ids) {
+    try { localStorage.setItem(fgSeenKey(scope), JSON.stringify(ids)); } catch (e) {}
+  }
+
+  // Returns an array of render-ready questions: { q, options[], correct, ref, note }
+  function fgBuildQuestionSet(count, scope) {
+    const bank = fgBank();
+    if (!bank) {
+      // Legacy fallback to the old inline data if the bank file isn't present.
+      return fgShuffle(FACT_GAME_DATA).slice(0, count).map(item => {
+        const opts = item.options.map((text, i) => ({ text, isCorrect: i === item.correct }));
+        const s = fgShuffle(opts);
+        return { q: item.q, ref: item.ref, note: item.note, options: s.map(o => o.text), correct: s.findIndex(o => o.isCorrect) };
+      });
+    }
+
+    // No-repeat: filter out already-seen ids; if not enough remain, reset cycle.
+    let seen = fgGetSeen(scope);
+    let remaining = bank.filter(item => seen.indexOf(item.id) === -1);
+    if (remaining.length < count) {
+      // Exhausted (or nearly) — restart the cycle fresh. To avoid a question
+      // reappearing right across the seam, carry over the most-recently-seen
+      // ids (the tail of the old cycle) and exclude them from this first batch.
+      const carryCount = Math.min(count, Math.max(0, seen.length));
+      const carryOver = seen.slice(-carryCount);   // last `count` ids seen
+      seen = carryOver.slice();                     // new cycle "starts" already knowing these
+      remaining = bank.filter(item => carryOver.indexOf(item.id) === -1);
+    }
+    const chosen = fgShuffle(remaining).slice(0, Math.min(count, remaining.length));
+
+    // Record these as seen for next time.
+    const newSeen = seen.concat(chosen.map(c => c.id));
+    fgSetSeen(scope, newSeen);
+
+    // Build options with same-type distractors pulled from the whole bank.
+    return chosen.map(item => fgMakeRenderQuestion(item, bank));
+  }
+
+  // Builds one render-ready question with 3 same-type distractors.
+  function fgMakeRenderQuestion(item, bank) {
+    // Gather distinct answers of the SAME answerType (excluding the correct one).
+    const pool = [];
+    const seenAns = {};
+    seenAns[item.answer] = true;
+    bank.forEach(b => {
+      if (b.answerType === item.answerType && !seenAns[b.answer]) {
+        seenAns[b.answer] = true;
+        pool.push(b.answer);
+      }
+    });
+    // If somehow too few same-type, top up with any other real answers.
+    if (pool.length < 3) {
+      bank.forEach(b => {
+        if (!seenAns[b.answer]) { seenAns[b.answer] = true; pool.push(b.answer); }
+      });
+    }
+    const distractors = fgShuffle(pool).slice(0, 3);
+    const optionObjs = fgShuffle(
+      [{ text: item.answer, isCorrect: true }].concat(distractors.map(d => ({ text: d, isCorrect: false })))
+    );
+    return {
+      q: item.q,
+      ref: item.ref,
+      note: item.note,
+      options: optionObjs.map(o => o.text),
+      correct: optionObjs.findIndex(o => o.isCorrect)
+    };
   }
 
   function renderFactGameScreen() {

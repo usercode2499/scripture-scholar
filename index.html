@@ -2746,6 +2746,18 @@
     border-radius: 100px; padding: 5px 12px;
   }
   .mp-catbanner-all { font-size: 14px; font-weight: 700; color: var(--ink-soft); }
+  .mp-count-grid { display: flex; gap: 10px; margin-bottom: 4px; }
+  .mp-count-chip {
+    flex: 1; padding: 12px 0; border-radius: 12px;
+    border: 1px solid var(--border); border-bottom: 3px solid var(--border);
+    background: var(--card); color: var(--ink); font-family: inherit;
+    font-size: 18px; font-weight: 800; cursor: pointer;
+    -webkit-tap-highlight-color: transparent; transition: all 0.15s ease;
+  }
+  .mp-count-chip.selected {
+    background: var(--gold-glow); border-color: var(--gold);
+    border-bottom-color: var(--gold-dark); color: var(--gold-dark);
+  }
   /* ===== Lobby chat ===== */
   .mp-chat {
     margin-top: 18px;
@@ -5433,6 +5445,7 @@
 <script src="feature-daily-tasks.js"></script>
 <script src="feature-mini-games.js"></script>
 <script src="feature-verse-quiz.js"></script>
+<script src="data-fact-bank.js"></script>
 <script src="feature-fact-game.js"></script>
 <script src="feature-reference-match.js"></script>
 <script src="data-trivia-bank.js"></script>

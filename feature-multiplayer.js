@@ -16,18 +16,39 @@
   // host's selected categories (mpState.categories). Falls back to the old
   // Fact Game pool if the bank isn't available.
   function mpGetQuestions(count) {
-    if (typeof buildTriviaSet === 'function') {
-      const cats = (mpState.categories && mpState.categories.length) ? mpState.categories : null;
-      const set = buildTriviaSet(count || mpState.NUM_QUESTIONS, cats);
+    const n = count || mpState.NUM_QUESTIONS;
+    // If the host picked specific trivia categories, use the categorized bank.
+    if (mpState.categories && mpState.categories.length && typeof buildTriviaSet === 'function') {
+      const set = buildTriviaSet(n, mpState.categories);
       if (set && set.length) return set;
     }
+    // Otherwise draw from the 100+ FACT_BANK with no-repeat tracking (scope
+    // 'multiplayer'), so questions don't recur until the whole bank is seen.
+    if (typeof fgBuildQuestionSet === 'function' && typeof FACT_BANK !== 'undefined') {
+      const set = fgBuildQuestionSet(n, 'multiplayer');
+      if (set && set.length) {
+        // Convert fact-game render shape → multiplayer question shape.
+        return set.map(item => ({
+          q: item.q,
+          type: 'multiple_choice',
+          options: item.options,
+          correct: item.correct,
+          ref: item.ref,
+          note: item.note
+        }));
+      }
+    }
     // Legacy fallback
+    if (typeof buildTriviaSet === 'function') {
+      const set = buildTriviaSet(n, null);
+      if (set && set.length) return set;
+    }
     const pool = (typeof FACT_GAME_DATA !== 'undefined') ? FACT_GAME_DATA.slice() : [];
     for (let i = pool.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [pool[i], pool[j]] = [pool[j], pool[i]];
     }
-    return pool.slice(0, count || 8).map(item => {
+    return pool.slice(0, n).map(item => {
       const opts = item.options.map((text, i) => ({ text, isCorrect: i === item.correct }));
       for (let i = opts.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -445,6 +466,16 @@
           <button class="mp-cat-random" onclick="mpRandomCategories()">🎲 Random of 3</button>
         ` : ''}
 
+        ${isHost ? `
+          <div class="mp-cat-head">Number of questions</div>
+          <div class="mp-count-grid" id="mpCountGrid">
+            ${[10, 15, 20].map(n => `
+              <button class="mp-count-chip${mpState.NUM_QUESTIONS === n ? ' selected' : ''}"
+                      data-count="${n}" onclick="mpSetQuestionCount(${n})">${n}</button>
+            `).join('')}
+          </div>
+        ` : ''}
+
         <!-- Category banner — visible to ALL players so everyone knows the topics -->
         <div class="mp-catbanner" id="mpCatBanner">${mpCategoryBannerHtml()}</div>
 
@@ -640,6 +671,15 @@
   }
 
   // Host toggles a category on/off (max 3)
+  // Host sets how many questions the game will have (10, 15, or 20).
+  function mpSetQuestionCount(n) {
+    mpState.NUM_QUESTIONS = n;
+    document.querySelectorAll('#mpCountGrid .mp-count-chip').forEach(el => {
+      el.classList.toggle('selected', Number(el.dataset.count) === n);
+    });
+    if (typeof playTapSfx === 'function') playTapSfx();
+  }
+
   function mpToggleCategory(catId) {
     const idx = mpState.categories.indexOf(catId);
     if (idx !== -1) {
