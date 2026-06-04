@@ -5589,9 +5589,10 @@
 
   function getLevelRewards(nextLevel) {
     // Returns the rewards a user gets WHEN reaching nextLevel.
-    // Currently the system grants +1 starting hint per level, plus a new title.
+    // Granting +1 hint per level, a higher XP bonus per earn, plus a new title.
     const rewards = [];
     rewards.push(`+1 hint added to your inventory`);
+    rewards.push(`⚡ +1 XP bonus on every reward (now +${nextLevel} per earn)`);
     rewards.push(`Unlock the title <em>"${getLevelTitle(nextLevel)}"</em>`);
     return rewards;
   }
