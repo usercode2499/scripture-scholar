@@ -3139,8 +3139,16 @@
   .lb-profile-avatar { display: inline-block; margin-bottom: 12px; }
   .lb-profile-name { font-size: 25px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
   .lb-profile-level { font-size: 14px; font-weight: 700; color: var(--gold-dark); margin-bottom: 6px; }
-  .lb-profile-title { font-size: 15px; font-style: italic; color: var(--ink); margin-bottom: 6px; }
-  .lb-profile-badgename { font-size: 14px; color: var(--ink-soft); margin-bottom: 20px; }
+  .lb-profile-title { font-size: 15px; font-style: italic; color: var(--ink); margin-bottom: 14px; }
+  .lb-profile-badge-showcase {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    margin: 4px 0 18px; padding: 16px 0;
+    border-top: 1px solid var(--border-soft);
+    border-bottom: 1px solid var(--border-soft);
+  }
+  .lb-profile-badge { line-height: 0; }
+  .lb-profile-badge-name { font-size: 20px; font-weight: 700; color: var(--ink); margin-top: 8px; }
+  .lb-profile-badge-tier { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold-dark); font-weight: 700; }
   .lb-profile-stats {
     display: flex; justify-content: space-around; gap: 10px;
     padding: 16px 0; border-top: 1px solid var(--border-soft);

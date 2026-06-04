@@ -233,13 +233,17 @@
     let avatarHtml;
     if (typeof renderAvatar === 'function') {
       const av = r.avatar || { type: 'preset', preset: 'scroll' };
-      avatarHtml = renderAvatar({ avatar: av, level: r.level, size: 96, showBadge: true, badgeSize: 38 });
+      avatarHtml = renderAvatar({ avatar: av, level: r.level, size: 96, showBadge: false, badgeSize: 38 });
     } else {
-      avatarHtml = lbProfileBadge(r.level, 90);
+      avatarHtml = '';
     }
 
     const title = r.title || ((typeof getLevelTitle === 'function') ? getLevelTitle(r.level) : '');
     const badgeName = r.badgeName || ((typeof getBadgeName === 'function') ? getBadgeName(r.level) : '');
+    const tier = (typeof getBadgeTier === 'function') ? getBadgeTier(r.level) : '';
+    const tierLabel = tier ? (tier.charAt(0).toUpperCase() + tier.slice(1) + ' Badge') : '';
+    // Big, proud badge display (with animation) — same style as your own profile.
+    const bigBadge = (typeof renderBadgeSVG === 'function') ? renderBadgeSVG(r.level, 104, true) : '';
 
     overlay.innerHTML = `
       <div class="lb-profile-card" onclick="event.stopPropagation()">
@@ -248,7 +252,13 @@
         <div class="lb-profile-name serif">${escapeHtmlLb(r.name)}${r.isMe ? ' <span class="lb-you">you</span>' : ''}</div>
         <div class="lb-profile-level">Level ${r.level}</div>
         ${title ? `<div class="lb-profile-title">${escapeHtmlLb(title)}</div>` : ''}
-        <div class="lb-profile-badgename">🏅 ${escapeHtmlLb(badgeName)}</div>
+
+        <div class="lb-profile-badge-showcase">
+          <div class="lb-profile-badge">${bigBadge}</div>
+          <div class="lb-profile-badge-name serif">${escapeHtmlLb(badgeName)}</div>
+          <div class="lb-profile-badge-tier">${tierLabel}</div>
+        </div>
+
         <div class="lb-profile-stats">
           <div class="lb-profile-stat">
             <div class="lb-profile-stat-num">${(r.xp || 0).toLocaleString()}</div>
