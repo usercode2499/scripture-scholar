@@ -131,7 +131,12 @@
     const fx = includeEffects !== false;
 
     // Effect class drives the CSS animation by tier
-    const fxClass = fx ? ('badge-fx-' + tier) : '';
+    let fxClass = fx ? ('badge-fx-' + tier) : '';
+    // Gold badges (20-25) get CUMULATIVE effects: each level adds a new effect
+    // on top of all previous gold levels. Level 25 also gets a holographic sheen.
+    if (fx && tier === 'gold' && level >= 20) {
+      for (let l = 20; l <= level; l++) fxClass += ' badge-lvl-' + l;
+    }
 
     // Emblem color + small sparkle accents (animated for silver/gold via CSS)
     const sparkles = `
@@ -161,6 +166,13 @@
           <clipPath id="${uid}_clip">
             <circle cx="50" cy="50" r="42"/>
           </clipPath>
+          <linearGradient id="${uid}_holo" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"  stop-color="#ff7eb3" stop-opacity="0.55"/>
+            <stop offset="25%" stop-color="#7afcff" stop-opacity="0.55"/>
+            <stop offset="50%" stop-color="#feff9c" stop-opacity="0.55"/>
+            <stop offset="75%" stop-color="#a6ff8e" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#d98eff" stop-opacity="0.55"/>
+          </linearGradient>
         </defs>
 
         <!-- Glow halo (animated for gold) -->
@@ -193,6 +205,12 @@
         <!-- Shine sweep — tall/wide band fully inside the plate clip so no edges show -->
         <g clip-path="url(#${uid}_clip)">
           <rect class="badge-shine" x="-50" y="-40" width="34" height="180" fill="url(#${uid}_shine)" transform="rotate(20 50 50)"/>
+          <!-- Holographic sheen (level 25 only) -->
+          <rect class="badge-holo" x="8" y="8" width="84" height="84" fill="url(#${uid}_holo)"/>
         </g>
+        <!-- Extra rotating ring glint (gold cumulative effect) -->
+        <circle class="badge-ring-glint" cx="50" cy="50" r="39" fill="none" stroke="#fff6d8" stroke-width="1.5" stroke-dasharray="6 200" opacity="0"/>
+        <!-- Pulsing outer aura (gold cumulative effect) -->
+        <circle class="badge-aura" cx="50" cy="50" r="46" fill="none" stroke="${c.light}" stroke-width="2" opacity="0"/>
       </svg>`;
   }

@@ -2727,6 +2727,25 @@
   .mp-ready-tag.ready { background: rgba(107,142,61,0.16); color: var(--green); }
   .mp-ready-tag.waiting { background: var(--bg); color: var(--ink-faint); border: 1px solid var(--border); }
   .mp-ready-btn { width: 100%; }
+  /* ===== Lobby category banner (visible to all players) ===== */
+  .mp-catbanner {
+    margin: 14px 0 4px;
+    padding: 12px 14px;
+    background: var(--gold-glow);
+    border: 1px solid var(--gold);
+    border-radius: 14px;
+  }
+  .mp-catbanner-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.5px;
+    color: var(--gold-dark); margin-bottom: 8px;
+  }
+  .mp-catbanner-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+  .mp-catbanner-chip {
+    font-size: 13px; font-weight: 700; color: var(--ink);
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 100px; padding: 5px 12px;
+  }
+  .mp-catbanner-all { font-size: 14px; font-weight: 700; color: var(--ink-soft); }
   /* ===== Lobby chat ===== */
   .mp-chat {
     margin-top: 18px;
@@ -3537,6 +3556,52 @@
     100% { transform: scale(1) rotate(0deg); }
   }
 
+  /* ===== CUMULATIVE GOLD EFFECTS (levels 20–25) ===== */
+  /* Hidden by default; each level class turns its effect on. Effects stack
+     because the markup carries every class from 20 up to the badge's level. */
+  .badge-holo { opacity: 0; mix-blend-mode: screen; }
+  .badge-ring-glint { opacity: 0; }
+  .badge-aura { opacity: 0; }
+
+  /* L20 — richer, faster gold glow than the standard gold tier */
+  .badge-lvl-20 { animation: badgeGold20Glow 2s ease-in-out infinite, badgeBreathe 2.8s ease-in-out infinite; }
+  @keyframes badgeGold20Glow {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(212,163,44,0.6)) drop-shadow(0 0 3px rgba(255,240,180,0.6)); }
+    50%      { filter: drop-shadow(0 0 22px rgba(252,224,120,1)) drop-shadow(0 0 12px rgba(255,210,90,0.9)); }
+  }
+  /* L21 — adds a rotating ring glint */
+  .badge-lvl-21 .badge-ring-glint {
+    opacity: 1; transform-box: view-box; transform-origin: 50px 50px;
+    animation: badgeRingGlintSpin 3.5s linear infinite;
+  }
+  @keyframes badgeRingGlintSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  /* L22 — adds a pulsing outer aura ring */
+  .badge-lvl-22 .badge-aura { opacity: 1; animation: badgeAuraPulse 2.2s ease-in-out infinite; }
+  @keyframes badgeAuraPulse {
+    0%, 100% { opacity: 0; transform: scale(0.92); }
+    50%      { opacity: 0.7; transform: scale(1.04); }
+  }
+  /* L23 — adds a slow continuous sway/tilt */
+  .badge-lvl-23 { animation: badgeGold20Glow 2s ease-in-out infinite, badgeBreathe 2.8s ease-in-out infinite, badgeSway 5s ease-in-out infinite; }
+  @keyframes badgeSway {
+    0%, 100% { rotate: -3deg; }
+    50%      { rotate: 3deg; }
+  }
+  /* L24 — supercharged sparkles (faster, brighter) */
+  .badge-lvl-24 .badge-sparkles { opacity: 1; animation: badgeSparkleSpin 3.2s linear infinite; }
+  .badge-lvl-24 .badge-spark { animation: badgeSparkleTwinkle 0.9s ease-in-out infinite; }
+  /* L25 — holographic sheen sweep across the badge */
+  .badge-lvl-25 .badge-holo {
+    opacity: 1;
+    animation: badgeHoloSweep 3.5s linear infinite;
+    transform-box: view-box; transform-origin: 50px 50px;
+  }
+  @keyframes badgeHoloSweep {
+    0%   { opacity: 0.15; transform: translateX(-20px) rotate(0deg); }
+    50%  { opacity: 0.7;  transform: translateX(20px) rotate(180deg); }
+    100% { opacity: 0.15; transform: translateX(-20px) rotate(360deg); }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .badge-fx-bronze .badge-shine,
     .badge-fx-silver .badge-shine,
@@ -3546,6 +3611,8 @@
     .badge-fx-silver .badge-sparkles,
     .badge-fx-gold .badge-sparkles { animation: none; opacity: 0; }
     .badge-tap-pop { animation: none; }
+    .badge-lvl-20, .badge-lvl-23 { animation: none; filter: none; }
+    .badge-holo, .badge-ring-glint, .badge-aura { animation: none; opacity: 0; }
   }
 
   /* =================================== */

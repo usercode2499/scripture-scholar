@@ -339,6 +339,12 @@
       mpState.currentIdx = (typeof room.currentIdx === 'number') ? room.currentIdx : -1;
       mpState.questionStartedAt = room.startedAt || 0;
 
+      // Sync the host's category selection for non-host players (so the lobby
+      // banner shows everyone which categories the questions will come from).
+      if (mpState.mode !== 'host') {
+        mpState.categories = Array.isArray(room.categories) ? room.categories : [];
+      }
+
       // Chat messages (lobby). Convert the pushed-keys object into a sorted array.
       const msgsObj = room.messages || {};
       mpState.messages = Object.keys(msgsObj).map(k => {
@@ -363,6 +369,7 @@
         if (lobbyShown) {
           mpRefreshLobbyPlayers();
           mpRenderChatMessages();
+          mpRenderCategoryBanner();
         } else {
           renderMpLobby();
         }
@@ -437,6 +444,10 @@
           </div>
           <button class="mp-cat-random" onclick="mpRandomCategories()">🎲 Random of 3</button>
         ` : ''}
+
+        <!-- Category banner — visible to ALL players so everyone knows the topics -->
+        <div class="mp-catbanner" id="mpCatBanner">${mpCategoryBannerHtml()}</div>
+
         <div id="mpLobbyActions">${mpLobbyActions(isHost, enoughPlayers)}</div>
 
         <!-- Lobby chat -->
@@ -644,6 +655,7 @@
     document.querySelectorAll('#mpCatGrid .mp-cat-chip').forEach(el => {
       el.classList.toggle('selected', mpState.categories.indexOf(el.dataset.cat) !== -1);
     });
+    mpSyncCategories();
     if (typeof playTapSfx === 'function') playTapSfx();
   }
 
@@ -658,8 +670,40 @@
     document.querySelectorAll('#mpCatGrid .mp-cat-chip').forEach(el => {
       el.classList.toggle('selected', mpState.categories.indexOf(el.dataset.cat) !== -1);
     });
+    mpSyncCategories();
     if (typeof playTapSfx === 'function') playTapSfx();
     if (typeof showToast === 'function') showToast('🎲 Picked 3 random categories');
+  }
+
+  // Writes the host's category selection to the room (online) and refreshes
+  // the lobby's "selected categories" banner that all players see.
+  function mpSyncCategories() {
+    if (mpState.online && typeof mpFbSetCategories === 'function') {
+      mpFbSetCategories(mpState.roomCode, mpState.categories);
+    }
+    mpRenderCategoryBanner();
+  }
+
+  // Builds the human-readable "Categories: …" label.
+  function mpCategoryBannerHtml() {
+    const cats = mpState.categories || [];
+    let inner;
+    if (!cats.length) {
+      inner = '<span class="mp-catbanner-all">All categories (random mix) 🎲</span>';
+    } else {
+      const defs = (typeof TRIVIA_CATEGORIES !== 'undefined') ? TRIVIA_CATEGORIES : [];
+      inner = cats.map(id => {
+        const c = defs.find(x => x.id === id);
+        return c ? `<span class="mp-catbanner-chip">${c.icon} ${c.label}</span>` : '';
+      }).join('');
+    }
+    return `<div class="mp-catbanner-label">📋 Questions from:</div><div class="mp-catbanner-chips">${inner}</div>`;
+  }
+
+  // Updates the lobby category banner in place (for all players).
+  function mpRenderCategoryBanner() {
+    const el = document.getElementById('mpCatBanner');
+    if (el) el.innerHTML = mpCategoryBannerHtml();
   }
 
   // ===== Global leaderboard rank in the lobby =====
@@ -712,7 +756,11 @@
   // ================= START =================
   async function mpStartGame() {
     if (mpState.online && typeof mpFbStartGame === 'function') {
-      try { await mpFbStartGame(mpState.roomCode); } catch (e) { console.warn(e); }
+      // Rebuild the question set NOW using the host's chosen categories, so the
+      // selection actually takes effect (the room's original set was built
+      // before categories were picked). Push it to the room for everyone.
+      const questions = mpGetQuestions(mpState.NUM_QUESTIONS);
+      try { await mpFbStartGame(mpState.roomCode, questions); } catch (e) { console.warn(e); }
       // The room listener will route everyone (including host) to the question
     } else {
       mpStartGameMock();

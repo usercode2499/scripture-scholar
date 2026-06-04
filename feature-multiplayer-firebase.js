@@ -79,6 +79,7 @@
       currentIdx: -1,
       startedAt: 0,
       questions: questions,
+      categories: null,   // host's category selection (null/[] = all/random)
       players: {
         [id]: { name: hostName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: true, avatar: avatar || null, ready: true }
       }
@@ -88,6 +89,11 @@
     const meRef = MP_FB.db.ref('rooms/' + code + '/players/' + id);
     try { meRef.onDisconnect().remove(); } catch (e) {}
     return id;
+  }
+
+  // Host writes their current category selection so all players can see it.
+  async function mpFbSetCategories(code, categories) {
+    try { await MP_FB.db.ref('rooms/' + code + '/categories').set(categories && categories.length ? categories : null); } catch (e) {}
   }
 
   // Returns 'ok' | 'notfound' | 'started'
@@ -145,12 +151,16 @@
     }
   }
 
-  async function mpFbStartGame(code) {
-    await MP_FB.db.ref('rooms/' + code).update({
+  async function mpFbStartGame(code, questions) {
+    const update = {
       status: 'playing',
       currentIdx: 0,
       startedAt: mpFbServerTime()
-    });
+    };
+    // If the host supplied a freshly-built (category-filtered) question set,
+    // write it so all players use the correct questions.
+    if (questions && questions.length) update.questions = questions;
+    await MP_FB.db.ref('rooms/' + code).update(update);
   }
 
   async function mpFbGoToQuestion(code, idx, players) {
