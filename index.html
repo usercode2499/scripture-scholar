@@ -2758,6 +2758,46 @@
     background: var(--gold-glow); border-color: var(--gold);
     border-bottom-color: var(--gold-dark); color: var(--gold-dark);
   }
+  .mp-mode-chip { font-size: 15px; }
+  /* ===== Team buckets (lobby) ===== */
+  .mp-teams { display: flex; flex-direction: column; gap: 10px; }
+  .mp-team {
+    border: 2px solid var(--border); border-left: 5px solid var(--team-color, var(--gold));
+    border-radius: 12px; padding: 12px 14px; background: var(--card);
+  }
+  .mp-team.mine { background: var(--gold-glow); border-color: var(--gold); }
+  .mp-team.full { opacity: 0.85; }
+  .mp-team-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+  .mp-team-name { font-weight: 800; font-size: 15px; color: var(--team-color, var(--ink)); }
+  .mp-team-count { font-size: 13px; font-weight: 700; color: var(--ink-soft); }
+  .mp-team-members { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; min-height: 20px; }
+  .mp-team-member { display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 600; color: var(--ink); background: rgba(0,0,0,0.04); border-radius: 100px; padding: 3px 10px 3px 3px; }
+  .mp-team-member-av { width: 22px; height: 22px; display: inline-block; }
+  .mp-team-empty { font-size: 13px; color: var(--ink-soft); font-style: italic; }
+  .mp-team-join {
+    width: 100%; padding: 9px 0; border-radius: 10px; border: none;
+    background: var(--team-color, var(--gold)); color: #fff; font-weight: 800;
+    font-size: 14px; cursor: pointer; font-family: inherit; -webkit-tap-highlight-color: transparent;
+  }
+  .mp-team-join.leave { background: var(--card); color: var(--ink-soft); border: 1px solid var(--border); }
+  .mp-team-join:disabled { opacity: 0.45; cursor: not-allowed; }
+  /* ===== Team results (podium) ===== */
+  .mp-team-avg-note { font-size: 13px; color: var(--ink-soft); margin-bottom: 12px; }
+  .mp-team-standings { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+  .mp-team-result {
+    border: 1px solid var(--border-soft); border-left: 5px solid var(--team-color, var(--gold));
+    border-radius: 12px; padding: 12px 14px; text-align: left;
+  }
+  .mp-team-result.me { background: var(--gold-glow); }
+  .mp-team-result-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .mp-team-result-rank { flex-shrink: 0; }
+  .mp-team-result-name { flex: 1; font-weight: 800; color: var(--team-color, var(--ink)); }
+  .mp-team-result-avg { font-weight: 800; font-size: 18px; color: var(--ink); }
+  .mp-team-result-avg small { font-size: 11px; color: var(--ink-soft); font-weight: 700; }
+  .mp-team-result-members { display: flex; flex-wrap: wrap; gap: 6px; }
+  .mp-team-result-member { font-size: 12px; color: var(--ink-soft); background: rgba(0,0,0,0.04); border-radius: 100px; padding: 2px 9px; }
+  .mp-team-result-member.me { color: var(--gold-dark); font-weight: 700; }
+  .mp-podium-score small { font-size: 11px; opacity: 0.8; }
   /* ===== Lobby chat ===== */
   .mp-chat {
     margin-top: 18px;

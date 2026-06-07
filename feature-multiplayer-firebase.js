@@ -80,8 +80,11 @@
       startedAt: 0,
       questions: questions,
       categories: null,   // host's category selection (null/[] = all/random)
+      teamMode: false,    // false = solo; true = team play
+      numTeams: 2,        // number of teams when teamMode
+      maxTeamSize: 5,     // max players per team when teamMode
       players: {
-        [id]: { name: hostName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: true, avatar: avatar || null, ready: true }
+        [id]: { name: hostName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: true, avatar: avatar || null, ready: true, team: null }
       }
     };
     MP_FB.roomRef = MP_FB.db.ref('rooms/' + code);
@@ -96,6 +99,33 @@
     try { await MP_FB.db.ref('rooms/' + code + '/categories').set(categories && categories.length ? categories : null); } catch (e) {}
   }
 
+  // Host sets team configuration (mode + counts).
+  async function mpFbSetTeamConfig(code, teamMode, numTeams, maxTeamSize) {
+    try {
+      await MP_FB.db.ref('rooms/' + code).update({
+        teamMode: !!teamMode,
+        numTeams: numTeams || 2,
+        maxTeamSize: maxTeamSize || 5
+      });
+    } catch (e) {}
+  }
+
+  // A player sets (or clears) their own team.
+  async function mpFbSetMyTeam(code, playerId, team) {
+    try { await MP_FB.db.ref('rooms/' + code + '/players/' + playerId + '/team').set(team || null); } catch (e) {}
+  }
+
+  // Host bulk-assigns teams (randomize). teamsById = { playerId: teamNumber }.
+  async function mpFbAssignTeams(code, teamsById) {
+    try {
+      const updates = {};
+      Object.keys(teamsById).forEach(pid => {
+        updates['players/' + pid + '/team'] = teamsById[pid];
+      });
+      await MP_FB.db.ref('rooms/' + code).update(updates);
+    } catch (e) {}
+  }
+
   // Returns 'ok' | 'notfound' | 'started'
   async function mpFbJoinRoom(code, playerName, avatar) {
     const roomRef = MP_FB.db.ref('rooms/' + code);
@@ -105,7 +135,7 @@
     if (room.status !== 'lobby') return 'started';
     const id = mpFbClientId();
     const meRef = MP_FB.db.ref('rooms/' + code + '/players/' + id);
-    await meRef.set({ name: playerName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: false, avatar: avatar || null, ready: false });
+    await meRef.set({ name: playerName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: false, avatar: avatar || null, ready: false, team: null });
     try { meRef.onDisconnect().remove(); } catch (e) {}
     MP_FB.roomRef = roomRef;
     return 'ok';

@@ -81,6 +81,10 @@
     QUESTION_SECONDS: 20,
     NUM_QUESTIONS: 10,
     categories: [],        // host-selected category ids (empty = all)
+    teamMode: false,       // false = solo, true = teams
+    numTeams: 2,           // number of teams (2-5) when teamMode
+    maxTeamSize: 5,        // max players per team (2-5) when teamMode
+    myTeam: null,          // my team number (1..numTeams) or null
     countdownInterval: null,
     bannerInterval: null,
     _timerAudio: null,
@@ -353,12 +357,21 @@
           isMe: pid === mpState.myId,
           isHost: !!p.isHost,
           avatar: p.avatar || null,
-          ready: !!p.ready
+          ready: !!p.ready,
+          team: p.team || null
         };
       });
       mpState.questions = room.questions || [];
       mpState.currentIdx = (typeof room.currentIdx === 'number') ? room.currentIdx : -1;
       mpState.questionStartedAt = room.startedAt || 0;
+
+      // Sync team configuration from the room (host controls it).
+      mpState.teamMode = !!room.teamMode;
+      mpState.numTeams = room.numTeams || 2;
+      mpState.maxTeamSize = room.maxTeamSize || 5;
+      // Track my own team from the room.
+      const meP = playersObj[mpState.myId];
+      mpState.myTeam = meP ? (meP.team || null) : null;
 
       // Sync the host's category selection for non-host players (so the lobby
       // banner shows everyone which categories the questions will come from).
@@ -391,6 +404,16 @@
           mpRefreshLobbyPlayers();
           mpRenderChatMessages();
           mpRenderCategoryBanner();
+          // Live-refresh team buckets and the start/ready button (team membership,
+          // readiness, and team config can all change from other devices).
+          const teamsEl = document.getElementById('mpTeams');
+          if (teamsEl && mpState.teamMode) teamsEl.innerHTML = mpTeamBucketsHtml();
+          const actionsEl = document.getElementById('mpLobbyActions');
+          if (actionsEl) {
+            const isHost = mpState.mode === 'host';
+            const enoughPlayers = mpState.players.length >= 2;
+            actionsEl.innerHTML = mpLobbyActions(isHost, enoughPlayers);
+          }
         } else {
           renderMpLobby();
         }
@@ -476,6 +499,30 @@
           </div>
         ` : ''}
 
+        ${isHost ? `
+          <div class="mp-cat-head">Play mode</div>
+          <div class="mp-count-grid">
+            <button class="mp-count-chip mp-mode-chip${!mpState.teamMode ? ' selected' : ''}" onclick="mpSetTeamMode(false)">👤 Solo</button>
+            <button class="mp-count-chip mp-mode-chip${mpState.teamMode ? ' selected' : ''}" onclick="mpSetTeamMode(true)">👥 Teams</button>
+          </div>
+          ${mpState.teamMode ? `
+            <div class="mp-cat-head">Number of teams</div>
+            <div class="mp-count-grid">
+              ${[2,3,4,5].map(n => `<button class="mp-count-chip${mpState.numTeams === n ? ' selected' : ''}" onclick="mpSetNumTeams(${n})">${n}</button>`).join('')}
+            </div>
+            <div class="mp-cat-head">Max players per team</div>
+            <div class="mp-count-grid">
+              ${[2,3,4,5].map(n => `<button class="mp-count-chip${mpState.maxTeamSize === n ? ' selected' : ''}" onclick="mpSetMaxTeamSize(${n})">${n}</button>`).join('')}
+            </div>
+            <button class="mp-cat-random" onclick="mpRandomizeTeams()">🎲 Randomize teams</button>
+          ` : ''}
+        ` : ''}
+
+        ${mpState.teamMode ? `
+          <div class="mp-cat-head">${isHost ? 'Teams' : 'Pick your team'}</div>
+          <div class="mp-teams" id="mpTeams">${mpTeamBucketsHtml()}</div>
+        ` : ''}
+
         <!-- Category banner — visible to ALL players so everyone knows the topics -->
         <div class="mp-catbanner" id="mpCatBanner">${mpCategoryBannerHtml()}</div>
 
@@ -504,6 +551,37 @@
   }
 
   // ===== Player chips (extracted so the lobby can refresh in place) =====
+  // Renders the team buckets: one card per team, showing members + a join button.
+  function mpTeamBucketsHtml() {
+    let html = '';
+    for (let t = 1; t <= mpState.numTeams; t++) {
+      const members = mpState.players.filter(p => p.team === t);
+      const count = members.length;
+      const full = count >= mpState.maxTeamSize;
+      const mine = mpState.myTeam === t;
+      const color = mpTeamColor(t);
+      const memberHtml = members.map(m => {
+        let av;
+        if (typeof renderAvatar === 'function') {
+          av = renderAvatar({ avatar: m.avatar || { type: 'preset', preset: 'scroll' }, level: 1, size: 30, showBadge: false });
+        } else { av = '🙂'; }
+        return `<span class="mp-team-member"><span class="mp-team-member-av">${av}</span>${escapeHtmlMp(m.name)}${m.isMe ? ' (you)' : ''}</span>`;
+      }).join('');
+      html += `
+        <div class="mp-team${mine ? ' mine' : ''}${full ? ' full' : ''}" style="--team-color:${color}">
+          <div class="mp-team-head">
+            <span class="mp-team-name">Team ${t}</span>
+            <span class="mp-team-count">${count}/${mpState.maxTeamSize}</span>
+          </div>
+          <div class="mp-team-members">${memberHtml || '<span class="mp-team-empty">No players yet</span>'}</div>
+          <button class="mp-team-join${mine ? ' leave' : ''}" onclick="mpJoinTeam(${t})" ${(!mine && full) ? 'disabled' : ''}>
+            ${mine ? 'Leave' : (full ? 'Full' : 'Join')}
+          </button>
+        </div>`;
+    }
+    return html;
+  }
+
   function mpRenderPlayerChips() {
     return mpState.players.map(p => {
       const rank = mpGlobalRankFor(p.name);
@@ -551,18 +629,23 @@
     if (isHost) {
       const joiners = mpState.players.filter(p => !p.isHost);
       const allReady = joiners.length > 0 && joiners.every(p => p.ready);
-      const canStart = enoughPlayers && allReady;
+      // In team mode, every player must be assigned to a team before starting.
+      const allHaveTeams = !mpState.teamMode || mpState.players.every(p => p.team);
+      const canStart = enoughPlayers && allReady && allHaveTeams;
       let label;
       if (!enoughPlayers) label = 'Waiting for players…';
       else if (!allReady) label = 'Waiting for players to ready up…';
+      else if (!allHaveTeams) label = 'Everyone must join a team…';
       else label = 'Start Game →';
       return `<button class="btn btn-gold mp-start-btn" onclick="mpStartGame()" ${canStart ? '' : 'disabled'}>${label}</button>`;
     } else {
       const me = mpState.players.find(p => p.isMe);
       const isReady = me && me.ready;
+      // In team mode, can't ready up until you've joined a team.
+      const needsTeam = mpState.teamMode && !mpState.myTeam;
       return `
-        <button class="btn ${isReady ? 'btn-ghost' : 'btn-gold'} mp-ready-btn" onclick="mpToggleReady()">
-          ${isReady ? '✓ Ready — tap to cancel' : "I'm Ready"}
+        <button class="btn ${isReady ? 'btn-ghost' : 'btn-gold'} mp-ready-btn" onclick="mpToggleReady()" ${needsTeam ? 'disabled' : ''}>
+          ${needsTeam ? 'Join a team first' : (isReady ? '✓ Ready — tap to cancel' : "I'm Ready")}
         </button>
         <div class="mp-waiting-spinner">${isReady ? 'Waiting for the host to start…' : 'Tap “I’m Ready” when you’re set'}</div>
       `;
@@ -678,6 +761,86 @@
       el.classList.toggle('selected', Number(el.dataset.count) === n);
     });
     if (typeof playTapSfx === 'function') playTapSfx();
+  }
+
+  // ===== Team mode controls (host) =====
+  function mpSetTeamMode(isTeams) {
+    mpState.teamMode = !!isTeams;
+    if (mpState.online && typeof mpFbSetTeamConfig === 'function') {
+      mpFbSetTeamConfig(mpState.roomCode, mpState.teamMode, mpState.numTeams, mpState.maxTeamSize);
+    }
+    if (typeof playTapSfx === 'function') playTapSfx();
+    renderMpLobby();
+  }
+  function mpSetNumTeams(n) {
+    mpState.numTeams = n;
+    if (mpState.online && typeof mpFbSetTeamConfig === 'function') {
+      mpFbSetTeamConfig(mpState.roomCode, mpState.teamMode, n, mpState.maxTeamSize);
+    }
+    if (typeof playTapSfx === 'function') playTapSfx();
+    renderMpLobby();
+  }
+  function mpSetMaxTeamSize(n) {
+    mpState.maxTeamSize = n;
+    if (mpState.online && typeof mpFbSetTeamConfig === 'function') {
+      mpFbSetTeamConfig(mpState.roomCode, mpState.teamMode, mpState.numTeams, n);
+    }
+    if (typeof playTapSfx === 'function') playTapSfx();
+    renderMpLobby();
+  }
+
+  // Count players currently on a given team.
+  function mpTeamCount(team) {
+    return mpState.players.filter(p => p.team === team).length;
+  }
+
+  // A player taps a team to join it (blocked if full).
+  function mpJoinTeam(team) {
+    const count = mpTeamCount(team);
+    const alreadyMine = mpState.myTeam === team;
+    if (!alreadyMine && count >= mpState.maxTeamSize) {
+      if (typeof showToast === 'function') showToast('Team ' + team + ' is full — pick another');
+      return;
+    }
+    mpState.myTeam = alreadyMine ? null : team;  // tapping your own team leaves it
+    if (mpState.online && typeof mpFbSetMyTeam === 'function') {
+      mpFbSetMyTeam(mpState.roomCode, mpState.myId, mpState.myTeam);
+    } else {
+      // Mock mode: set my team locally
+      const me = mpState.players.find(p => p.isMe);
+      if (me) me.team = mpState.myTeam;
+    }
+    if (typeof playTapSfx === 'function') playTapSfx();
+    renderMpLobby();
+  }
+
+  // Host randomly distributes all players across the teams as evenly as possible.
+  function mpRandomizeTeams() {
+    const players = mpState.players.slice();
+    // shuffle
+    for (let i = players.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [players[i], players[j]] = [players[j], players[i]];
+    }
+    const teamsById = {};
+    players.forEach((p, i) => {
+      const team = (i % mpState.numTeams) + 1;  // round-robin
+      teamsById[p.id] = team;
+      p.team = team;
+      if (p.isMe) mpState.myTeam = team;
+    });
+    if (mpState.online && typeof mpFbAssignTeams === 'function') {
+      mpFbAssignTeams(mpState.roomCode, teamsById);
+    }
+    if (typeof playTapSfx === 'function') playTapSfx();
+    if (typeof showToast === 'function') showToast('🎲 Players shuffled into teams');
+    renderMpLobby();
+  }
+
+  // Team color palette (1-5)
+  function mpTeamColor(team) {
+    const colors = ['#c0392b', '#2e86c1', '#27ae60', '#8e44ad', '#e67e22'];
+    return colors[(team - 1) % colors.length];
   }
 
   function mpToggleCategory(catId) {
@@ -1290,6 +1453,7 @@
   function mpShowPodium() {
     if (mpState.timerInterval) clearInterval(mpState.timerInterval);
     if (mpState.countdownInterval) clearInterval(mpState.countdownInterval);
+    if (mpState.teamMode) { mpShowTeamPodium(); return; }
     const sorted = mpState.players.slice().sort((a, b) => b.score - a.score);
     const me = mpState.players.find(p => p.isMe);
     const myRank = sorted.findIndex(p => p.isMe) + 1;
@@ -1349,6 +1513,88 @@
       setTimeout(() => { if (typeof fireConfetti === 'function') fireConfetti(); }, 600);
     }
     // Award the rank bonus ONCE per game (guard against podium re-renders).
+    if (typeof awardXp === 'function' && me && !mpState._xpAwarded) {
+      mpState._xpAwarded = true;
+      awardXp(myBonus);
+    }
+  }
+
+  // ================= TEAM PODIUM =================
+  function mpShowTeamPodium() {
+    // Compute each team's average = sum(member scores) / member count.
+    const teams = [];
+    for (let t = 1; t <= mpState.numTeams; t++) {
+      const members = mpState.players.filter(p => p.team === t);
+      if (!members.length) continue;
+      const total = members.reduce((sum, p) => sum + (p.score || 0), 0);
+      const avg = Math.round(total / members.length);
+      teams.push({ team: t, members, total, avg, color: mpTeamColor(t) });
+    }
+    teams.sort((a, b) => b.avg - a.avg);
+
+    const me = mpState.players.find(p => p.isMe);
+    const myTeamNum = mpState.myTeam;
+    const myTeam = teams.find(t => t.team === myTeamNum);
+    const myTeamRank = teams.findIndex(t => t.team === myTeamNum) + 1;
+
+    // Rank-based XP bonus by TEAM placement.
+    let myBonus = 10;
+    if (myTeamRank === 1) myBonus = 100;
+    else if (myTeamRank === 2) myBonus = 50;
+    else if (myTeamRank === 3) myBonus = 25;
+
+    const top3 = teams.slice(0, 3);
+    const podiumCol = (tm, rank) => tm ? `
+      <div class="mp-podium-col ${rank === 1 ? 'gold' : rank === 2 ? 'silver' : 'bronze'}">
+        ${rank === 1 ? '<div class="mp-podium-crown">👑</div>' : ''}
+        <div class="mp-podium-name" style="color:${tm.color}">Team ${tm.team}</div>
+        <div class="mp-podium-bar mp-podium-${rank}"><span>${rank}</span></div>
+        <div class="mp-podium-score">${tm.avg}<small> avg</small></div>
+      </div>` : '';
+
+    const c = document.getElementById('multiplayerContainer');
+    if (!c) return;
+    c.innerHTML = `
+      <div class="mp-podium-screen">
+        <div class="mp-podium-icon">🏆</div>
+        <h2 class="mp-podium-title serif">Team Results</h2>
+        <div class="mp-podium">
+          ${podiumCol(top3[1], 2)}
+          ${podiumCol(top3[0], 1)}
+          ${podiumCol(top3[2], 3)}
+        </div>
+        ${myTeam ? `
+          <div class="mp-your-result">Your <strong style="color:${myTeam.color}">Team ${myTeam.team}</strong> finished <strong>#${myTeamRank}</strong> of ${teams.length}</div>
+          <div class="mp-team-avg-note">Your team averaged <strong>${myTeam.avg}</strong> points (${myTeam.total} total ÷ ${myTeam.members.length} player${myTeam.members.length === 1 ? '' : 's'})</div>
+        ` : ''}
+        <div class="mp-bonus-badge">🎁 +${myBonus} XP bonus${myTeamRank <= 3 ? ` &middot; Team rank ${myTeamRank}!` : ''}</div>
+        <div class="mp-team-standings">
+          ${teams.map((tm, i) => `
+            <div class="mp-team-result${tm.team === myTeamNum ? ' me' : ''}" style="--team-color:${tm.color}">
+              <div class="mp-team-result-head">
+                <span class="mp-team-result-rank">${(typeof rankTrophy === 'function') ? rankTrophy(i + 1, 28) : (i + 1)}</span>
+                <span class="mp-team-result-name">Team ${tm.team}</span>
+                <span class="mp-team-result-avg">${tm.avg} <small>avg</small></span>
+              </div>
+              <div class="mp-team-result-members">
+                ${tm.members.slice().sort((a,b)=>b.score-a.score).map(m => `
+                  <span class="mp-team-result-member${m.isMe ? ' me' : ''}">${escapeHtmlMp(m.name)}${m.isMe ? ' (you)' : ''} · ${m.score}</span>
+                `).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="mp-podium-actions">
+          <button class="btn btn-gold" onclick="mpReturnToLobby()">Back to Lobby</button>
+          <button class="btn btn-ghost" onclick="mpExit()">Leave Game</button>
+        </div>
+      </div>
+    `;
+    if (typeof playWinnerSfx === 'function') playWinnerSfx();
+    if (typeof fireConfetti === 'function') {
+      fireConfetti();
+      setTimeout(() => { if (typeof fireConfetti === 'function') fireConfetti(); }, 600);
+    }
     if (typeof awardXp === 'function' && me && !mpState._xpAwarded) {
       mpState._xpAwarded = true;
       awardXp(myBonus);
