@@ -235,6 +235,21 @@
     sortedKeys.forEach(k => {
       pool = pool.concat(shuffleArray(tiers[k]));
     });
+    // Make sure the quiz doesn't OPEN with the same question two games running.
+    let lastFirst = null;
+    try { lastFirst = localStorage.getItem('scripture-scholar-vq-lastfirst'); } catch (e) {}
+    if (pool.length > 1 && lastFirst !== null && pool[0] && pool[0].reference === lastFirst) {
+      // find another question in the same easiest tier to lead with, if possible
+      const sameTier = tiers[sortedKeys[0]];
+      if (sameTier && sameTier.length > 1) {
+        const alt = sameTier.find(q => q.reference !== lastFirst);
+        if (alt) {
+          const altIdx = pool.indexOf(alt);
+          if (altIdx > 0) { [pool[0], pool[altIdx]] = [pool[altIdx], pool[0]]; }
+        }
+      }
+    }
+    try { if (pool[0]) localStorage.setItem('scripture-scholar-vq-lastfirst', pool[0].reference); } catch (e) {}
     return pool;
   }
 

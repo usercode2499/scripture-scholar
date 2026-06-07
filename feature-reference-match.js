@@ -81,8 +81,24 @@
     return a;
   }
 
+  // Shuffles the question order but ensures the game doesn't OPEN with the same
+  // question as last time (so consecutive games feel fresh from the very first card).
+  function rmFreshOrder() {
+    let lastFirst = null;
+    try { lastFirst = localStorage.getItem('scripture-scholar-rm-lastfirst'); } catch (e) {}
+    let order = rmShuffle(REFERENCE_MATCH_DATA.map((_, i) => i));
+    // If more than one question exists and we'd repeat the opener, re-roll the front.
+    if (REFERENCE_MATCH_DATA.length > 1 && lastFirst !== null && String(order[0]) === String(lastFirst)) {
+      // swap the first item with a random later one
+      const j = 1 + Math.floor(Math.random() * (order.length - 1));
+      [order[0], order[j]] = [order[j], order[0]];
+    }
+    try { localStorage.setItem('scripture-scholar-rm-lastfirst', String(order[0])); } catch (e) {}
+    return order;
+  }
+
   function startNewReferenceMatch() {
-    const order = rmShuffle(REFERENCE_MATCH_DATA.map((_, i) => i));
+    const order = rmFreshOrder();
     rmState = { order: order, idx: 0, correctCount: 0, selected: null, submitted: false, optOrder: null };
     rmSave();
     rmRenderQuestion();
@@ -93,7 +109,7 @@
     if (existing && existing.order && existing.idx < existing.order.length) {
       rmState = existing;
     } else {
-      const order = rmShuffle(REFERENCE_MATCH_DATA.map((_, i) => i));
+      const order = rmFreshOrder();
       rmState = { order: order, idx: 0, correctCount: 0, selected: null, submitted: false, optOrder: null };
       rmSave();
     }
