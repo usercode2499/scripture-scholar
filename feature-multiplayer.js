@@ -1322,6 +1322,39 @@
     mpRenderResults();
   }
 
+  // ===== Shared team-standings computation (used by interim results AND podium) =====
+  // Returns teams sorted by average points desc:
+  //   [{ team, members[], total, avg, color }]
+  function mpComputeTeams() {
+    const teamNums = [];
+    mpState.players.forEach(p => { if (p.team && teamNums.indexOf(p.team) === -1) teamNums.push(p.team); });
+    teamNums.sort((a, b) => a - b);
+    const teams = [];
+    teamNums.forEach(t => {
+      const members = mpState.players.filter(p => p.team === t);
+      if (!members.length) return;
+      const total = members.reduce((sum, p) => sum + (p.score || 0), 0);
+      const avg = Math.round(total / members.length);
+      teams.push({ team: t, members, total, avg, color: mpTeamColor(t) });
+    });
+    teams.sort((a, b) => b.avg - a.avg);
+    return teams;
+  }
+
+  // Compact team standings shown BETWEEN questions (team + running average).
+  function mpInterimTeamStandingsHtml() {
+    const teams = mpComputeTeams();
+    if (!teams.length) return '<div class="mp-lb-row"><span class="mp-lb-name">No teams yet</span></div>';
+    const myTeamNum = mpState.myTeam;
+    return teams.map((tm, i) => `
+      <div class="mp-lb-row mp-lb-team${tm.team === myTeamNum ? ' me' : ''}" style="--team-color:${tm.color}">
+        <span class="mp-lb-rank">${(typeof rankTrophy === 'function') ? rankTrophy(i + 1, 30) : (i + 1)}</span>
+        <span class="mp-lb-name"><span class="mp-lb-team-dot" style="background:${tm.color}"></span>Team ${tm.team}${tm.team === myTeamNum ? ' (yours)' : ''} <small>· ${tm.members.length}p</small></span>
+        <span class="mp-lb-score">${tm.avg}<small> avg</small></span>
+      </div>
+    `).join('');
+  }
+
   function mpRenderResults() {
     const q = mpState.questions[mpState.currentIdx];
     const sorted = mpState.players.slice().sort((a, b) => b.score - a.score);
@@ -1357,9 +1390,9 @@
         <div class="mp-correct-answer">Answer: <strong>${escapeHtmlMp(answerText)}</strong></div>
         ${q.ref ? `<div class="mp-result-ref">${escapeHtmlMp(q.ref)}</div>` : ''}
         <div class="mp-note">${escapeHtmlMp(q.note || '')}</div>
-        <div class="mp-leaderboard-title">Leaderboard</div>
+        <div class="mp-leaderboard-title">${mpState.teamMode ? 'Team Standings' : 'Leaderboard'}</div>
         <div class="mp-leaderboard">
-          ${sorted.map((p, i) => `
+          ${mpState.teamMode ? mpInterimTeamStandingsHtml() : sorted.map((p, i) => `
             <div class="mp-lb-row${p.isMe ? ' me' : ''}">
               <span class="mp-lb-rank">${(typeof rankTrophy === 'function') ? rankTrophy(i + 1, 30) : (i + 1)}</span>
               <span class="mp-lb-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
@@ -1402,7 +1435,7 @@
       } else {
         mpStartCountdown();
       }
-    }, 5000);
+    }, 7000);
     mpState.botTimers.push(pause);
   }
 
@@ -1529,21 +1562,9 @@
 
   // ================= TEAM PODIUM =================
   function mpShowTeamPodium() {
-    // Compute each team's average = sum(member scores) / member count.
-    // Derive the set of teams from actual player assignments (robust even if
-    // numTeams is stale), capped at a sensible max.
-    const teamNums = [];
-    mpState.players.forEach(p => { if (p.team && teamNums.indexOf(p.team) === -1) teamNums.push(p.team); });
-    teamNums.sort((a, b) => a - b);
-    const teams = [];
-    teamNums.forEach(t => {
-      const members = mpState.players.filter(p => p.team === t);
-      if (!members.length) return;
-      const total = members.reduce((sum, p) => sum + (p.score || 0), 0);
-      const avg = Math.round(total / members.length);
-      teams.push({ team: t, members, total, avg, color: mpTeamColor(t) });
-    });
-    teams.sort((a, b) => b.avg - a.avg);
+    // Compute each team's average via the shared helper (same logic the interim
+    // between-question standings use, so they always agree).
+    const teams = mpComputeTeams();
 
     // Safety: if team mode is on but nobody actually has a team, fall back to
     // the normal (solo) podium so players still see a meaningful result.
