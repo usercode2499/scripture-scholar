@@ -401,18 +401,26 @@
         // we don't wipe what someone is typing. Otherwise do a full render.
         const lobbyShown = document.querySelector('#multiplayerContainer .mp-lobby');
         if (lobbyShown) {
-          mpRefreshLobbyPlayers();
-          mpRenderChatMessages();
-          mpRenderCategoryBanner();
-          // Live-refresh team buckets and the start/ready button (team membership,
-          // readiness, and team config can all change from other devices).
+          // If the team section's presence doesn't match the current teamMode
+          // (e.g. host just switched Solo↔Teams), the in-place patch can't add a
+          // section that was never rendered — do a full re-render instead.
           const teamsEl = document.getElementById('mpTeams');
-          if (teamsEl && mpState.teamMode) teamsEl.innerHTML = mpTeamBucketsHtml();
-          const actionsEl = document.getElementById('mpLobbyActions');
-          if (actionsEl) {
-            const isHost = mpState.mode === 'host';
-            const enoughPlayers = mpState.players.length >= 2;
-            actionsEl.innerHTML = mpLobbyActions(isHost, enoughPlayers);
+          const teamSectionMismatch = (!!teamsEl) !== (!!mpState.teamMode);
+          if (teamSectionMismatch) {
+            renderMpLobby();
+          } else {
+            mpRefreshLobbyPlayers();
+            mpRenderChatMessages();
+            mpRenderCategoryBanner();
+            // Live-refresh team buckets and the start/ready button (team
+            // membership, readiness, and config can change from other devices).
+            if (teamsEl && mpState.teamMode) teamsEl.innerHTML = mpTeamBucketsHtml();
+            const actionsEl = document.getElementById('mpLobbyActions');
+            if (actionsEl) {
+              const isHost = mpState.mode === 'host';
+              const enoughPlayers = mpState.players.length >= 2;
+              actionsEl.innerHTML = mpLobbyActions(isHost, enoughPlayers);
+            }
           }
         } else {
           renderMpLobby();
@@ -1522,15 +1530,28 @@
   // ================= TEAM PODIUM =================
   function mpShowTeamPodium() {
     // Compute each team's average = sum(member scores) / member count.
+    // Derive the set of teams from actual player assignments (robust even if
+    // numTeams is stale), capped at a sensible max.
+    const teamNums = [];
+    mpState.players.forEach(p => { if (p.team && teamNums.indexOf(p.team) === -1) teamNums.push(p.team); });
+    teamNums.sort((a, b) => a - b);
     const teams = [];
-    for (let t = 1; t <= mpState.numTeams; t++) {
+    teamNums.forEach(t => {
       const members = mpState.players.filter(p => p.team === t);
-      if (!members.length) continue;
+      if (!members.length) return;
       const total = members.reduce((sum, p) => sum + (p.score || 0), 0);
       const avg = Math.round(total / members.length);
       teams.push({ team: t, members, total, avg, color: mpTeamColor(t) });
-    }
+    });
     teams.sort((a, b) => b.avg - a.avg);
+
+    // Safety: if team mode is on but nobody actually has a team, fall back to
+    // the normal (solo) podium so players still see a meaningful result.
+    if (!teams.length) {
+      mpState.teamMode = false;
+      mpShowPodium();
+      return;
+    }
 
     const me = mpState.players.find(p => p.isMe);
     const myTeamNum = mpState.myTeam;
