@@ -37,7 +37,16 @@
 
   function mpFbClientId() {
     if (!MP_FB.clientId) {
-      MP_FB.clientId = 'c_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+      // Persist the device id so a page refresh keeps the SAME identity —
+      // this is what lets a player reconnect to their spot after refreshing.
+      let stored = null;
+      try { stored = localStorage.getItem('scripture-scholar-deviceid'); } catch (e) {}
+      if (stored) {
+        MP_FB.clientId = stored;
+      } else {
+        MP_FB.clientId = 'c_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+        try { localStorage.setItem('scripture-scholar-deviceid', MP_FB.clientId); } catch (e) {}
+      }
     }
     return MP_FB.clientId;
   }
@@ -89,8 +98,10 @@
     };
     MP_FB.roomRef = MP_FB.db.ref('rooms/' + code);
     await MP_FB.roomRef.set(roomData);
-    const meRef = MP_FB.db.ref('rooms/' + code + '/players/' + id);
-    try { meRef.onDisconnect().remove(); } catch (e) {}
+    // NOTE: we intentionally do NOT set onDisconnect().remove() here. Players
+    // (and the host) stay in the room when they background the app, lock the
+    // screen, or briefly lose connection. They leave only by deliberately
+    // leaving or by the host removing them. Refresh → reconnect to the same id.
     return id;
   }
 
@@ -126,17 +137,28 @@
     } catch (e) {}
   }
 
-  // Returns 'ok' | 'notfound' | 'started'
+  // Returns 'ok' | 'notfound' | 'started' | 'rejoined'
   async function mpFbJoinRoom(code, playerName, avatar) {
     const roomRef = MP_FB.db.ref('rooms/' + code);
     const snap = await roomRef.get();
     if (!snap.exists()) return 'notfound';
     const room = snap.val();
-    if (room.status !== 'lobby') return 'started';
     const id = mpFbClientId();
+    const players = room.players || {};
+
+    // RECONNECT: if this device id is already a player in the room, slot back
+    // into the existing spot (keep score, team, ready) instead of creating a
+    // new one or resetting. Works even if the game is already in progress.
+    if (players[id]) {
+      MP_FB.roomRef = roomRef;
+      return 'rejoined';
+    }
+
+    // New player can only join while still in the lobby.
+    if (room.status !== 'lobby') return 'started';
     const meRef = MP_FB.db.ref('rooms/' + code + '/players/' + id);
     await meRef.set({ name: playerName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: false, avatar: avatar || null, ready: false, team: null });
-    try { meRef.onDisconnect().remove(); } catch (e) {}
+    // No onDisconnect auto-removal — see note in mpFbCreateRoom.
     MP_FB.roomRef = roomRef;
     return 'ok';
   }
@@ -145,6 +167,30 @@
   async function mpFbSetReady(code, ready) {
     const id = mpFbClientId();
     try { await MP_FB.db.ref('rooms/' + code + '/players/' + id + '/ready').set(!!ready); } catch (e) {}
+  }
+
+  // Host removes (kicks) a player from the room by their id.
+  async function mpFbKickPlayer(code, playerId) {
+    try {
+      await MP_FB.db.ref('rooms/' + code + '/players/' + playerId).remove();
+      // Flag the kick so the removed player's app can show a message and exit.
+      await MP_FB.db.ref('rooms/' + code + '/kicked/' + playerId).set(mpFbServerTime());
+    } catch (e) {}
+  }
+
+  // Checks whether this device already belongs to a room (for the rejoin prompt).
+  // Returns { code, room } if found and still active, else null.
+  async function mpFbCheckReconnect(code) {
+    if (!code) return null;
+    try {
+      const id = mpFbClientId();
+      const snap = await MP_FB.db.ref('rooms/' + code).get();
+      if (!snap.exists()) return null;
+      const room = snap.val();
+      const players = room.players || {};
+      if (players[id]) return { code: code, room: room };
+      return null;
+    } catch (e) { return null; }
   }
 
   // Send a chat message into the room. Messages live under rooms/<code>/messages

@@ -114,6 +114,73 @@
   }
 
   // ================= ENTRY =================
+  // ===== Active-room persistence (for rejoin-after-refresh) =====
+  function mpSaveActiveRoom() {
+    if (!mpState.online || !mpState.roomCode) return;
+    try {
+      localStorage.setItem('scripture-scholar-mproom', JSON.stringify({
+        code: mpState.roomCode,
+        mode: mpState.mode,
+        at: Date.now()
+      }));
+    } catch (e) {}
+  }
+  function mpClearActiveRoom() {
+    try { localStorage.removeItem('scripture-scholar-mproom'); } catch (e) {}
+  }
+  function mpGetActiveRoom() {
+    try {
+      const raw = localStorage.getItem('scripture-scholar-mproom');
+      if (!raw) return null;
+      const data = JSON.parse(raw);
+      // Only offer a rejoin for a reasonably recent room (e.g. last 2 hours).
+      if (!data || !data.code || (Date.now() - (data.at || 0)) > 2 * 60 * 60 * 1000) {
+        mpClearActiveRoom();
+        return null;
+      }
+      return data;
+    } catch (e) { return null; }
+  }
+
+  // Called on app load: if this device was in a room, offer to rejoin it.
+  async function mpMaybeOfferReconnect() {
+    const saved = mpGetActiveRoom();
+    if (!saved) return;
+    // Need Firebase to verify the room still has us in it.
+    let canUseFirebase = mpState.online;
+    if (!canUseFirebase && typeof mpFbInit === 'function') {
+      canUseFirebase = await mpFbInit();
+      mpState.online = canUseFirebase;
+    }
+    if (!canUseFirebase || typeof mpFbCheckReconnect !== 'function') return;
+    const found = await mpFbCheckReconnect(saved.code);
+    if (!found) { mpClearActiveRoom(); return; }   // room gone or we were removed
+
+    if (typeof showConfirm === 'function') {
+      const ok = await showConfirm({
+        icon: '🔄', title: 'Rejoin your game?',
+        message: 'You were in room ' + saved.code + '. Rejoin where you left off?',
+        okText: 'Rejoin', cancelText: 'Not now'
+      });
+      if (ok) mpReconnectToRoom(saved.code, saved.mode);
+      else mpClearActiveRoom();
+    }
+  }
+
+  // Reconnect this device to a room it already belongs to.
+  async function mpReconnectToRoom(code, mode) {
+    if (typeof showScreen === 'function') showScreen('screen-multiplayer');
+    mpReset();
+    mpState.mode = mode || 'join';
+    mpState.me = mpMyName();
+    mpState.roomCode = code;
+    mpState.myId = (typeof mpFbClientId === 'function') ? mpFbClientId() : null;
+    mpState.online = true;
+    mpSaveActiveRoom();
+    mpWatchRoomLive();   // the room watcher will route us to lobby / question / podium
+    if (typeof showToast === 'function') showToast('Reconnected to room ' + code);
+  }
+
   function openMultiplayer() {
     mpReset();
     renderMpHome();
@@ -211,6 +278,7 @@
       const questions = mpGetQuestions(mpState.NUM_QUESTIONS);
       try {
         mpState.myId = await mpFbCreateRoom(mpState.roomCode, mpState.me, questions, mpMyAvatarThumb());
+        mpSaveActiveRoom();   // remember this room so we can offer to rejoin after a refresh
         mpWatchRoomLive();
         renderMpLobby();
       } catch (e) {
@@ -303,6 +371,7 @@
           return;
         }
         mpState.myId = mpFbClientId();
+        mpSaveActiveRoom();   // remember for rejoin-after-refresh
         mpWatchRoomLive();
         renderMpLobby();
       } catch (e) {
@@ -344,6 +413,17 @@
       }
       // Build players array from the room
       const playersObj = room.players || {};
+
+      // KICKED? If I'm a joiner and my id is no longer in the room (or appears
+      // in the kicked list), the host removed me — show a message and exit.
+      if (mpState.mode === 'join' && mpState.myId) {
+        const kicked = room.kicked || {};
+        if (!playersObj[mpState.myId] || kicked[mpState.myId]) {
+          mpShowKicked();
+          return;
+        }
+      }
+
       mpState.players = Object.keys(playersObj).map(pid => {
         const p = playersObj[pid];
         return {
@@ -452,6 +532,25 @@
         <div class="mp-intro-icon">📭</div>
         <h2 class="mp-intro-title serif">Room Closed</h2>
         <p class="mp-intro-sub">The host ended the game or left the room.</p>
+      </div>
+      <div class="mp-home-actions">
+        <button class="btn btn-gold mp-big-btn" onclick="openMultiplayer()"><span class="mp-big-btn-text"><strong>Back to Group Trivia</strong></span></button>
+      </div>
+    `;
+  }
+
+  function mpShowKicked() {
+    if (mpState.timerInterval) clearInterval(mpState.timerInterval);
+    if (mpState.countdownInterval) clearInterval(mpState.countdownInterval);
+    if (typeof mpFbStopWatching === 'function') mpFbStopWatching();
+    mpClearActiveRoom();
+    const c = document.getElementById('multiplayerContainer');
+    if (!c) return;
+    c.innerHTML = `
+      <div class="mp-intro">
+        <div class="mp-intro-icon">👋</div>
+        <h2 class="mp-intro-title serif">Removed from Game</h2>
+        <p class="mp-intro-sub">The host removed you from this game. You can join another room anytime.</p>
       </div>
       <div class="mp-home-actions">
         <button class="btn btn-gold mp-big-btn" onclick="openMultiplayer()"><span class="mp-big-btn-text"><strong>Back to Group Trivia</strong></span></button>
@@ -606,14 +705,44 @@
       const readyTag = p.isHost
         ? `<span class="mp-ready-tag host">👑 Host</span>`
         : (p.ready ? `<span class="mp-ready-tag ready">✓ Ready</span>` : `<span class="mp-ready-tag waiting">Not ready</span>`);
+      // Host sees a remove (kick) button next to each OTHER player.
+      const iAmHost = (mpState.mode === 'host');
+      const kickBtn = (iAmHost && !p.isHost && p.id)
+        ? `<button class="mp-kick-btn" onclick="mpKickPlayer('${p.id}', '${escapeHtmlMp(p.name).replace(/'/g, "\\'")}')" aria-label="Remove ${escapeHtmlMp(p.name)}">✕</button>`
+        : '';
       return `
         <div class="mp-player-chip${p.isMe ? ' me' : ''}">
           <span class="mp-player-avatar mp-player-pfp">${avatarHtml}</span>
           <span class="mp-player-name">${escapeHtmlMp(p.name)}${p.isMe ? ' (you)' : ''}</span>
           ${rankBadge}
           ${readyTag}
+          ${kickBtn}
         </div>`;
     }).join('');
+  }
+
+  // Host removes a player from the lobby (with a quick confirm).
+  function mpKickPlayer(playerId, playerName) {
+    if (mpState.mode !== 'host' || !playerId) return;
+    const doKick = () => {
+      if (mpState.online && typeof mpFbKickPlayer === 'function') {
+        mpFbKickPlayer(mpState.roomCode, playerId);
+      } else {
+        // Mock mode: remove locally
+        mpState.players = mpState.players.filter(p => p.id !== playerId);
+        renderMpLobby();
+      }
+      if (typeof showToast === 'function') showToast('Removed ' + (playerName || 'player'));
+    };
+    if (typeof showConfirm === 'function') {
+      showConfirm({
+        icon: '👋', title: 'Remove player?',
+        message: 'Remove ' + (playerName || 'this player') + ' from the game?',
+        okText: 'Remove', cancelText: 'Cancel', destructive: true
+      }).then(ok => { if (ok) doKick(); });
+    } else {
+      doKick();
+    }
   }
 
   // Refresh just the players list + the action buttons without rebuilding chat.
@@ -1742,6 +1871,8 @@
     if (mpState.online && typeof mpFbLeaveRoom === 'function' && mpState.roomCode) {
       mpFbLeaveRoom(mpState.roomCode, mpState.mode === 'host');
     }
+    // Deliberately leaving clears the saved room so we don't offer to rejoin it.
+    mpClearActiveRoom();
     mpReset();
   }
 
