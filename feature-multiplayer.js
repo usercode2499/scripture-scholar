@@ -222,6 +222,8 @@
     mpState.committing = false;
     mpState.globalRanks = null;
     mpState.messages = [];
+    mpState._chatSeenCount = 0;        // how many chat messages we've already seen
+    mpState._chatNotifiedId = null;    // last message id we notified on
     // categories intentionally preserved across reset so host keeps their pick
   }
 
@@ -480,6 +482,17 @@
       const idxChanged = mpState._lastIdx !== mpState.currentIdx;
       mpState.lastStatus = status;
       mpState._lastIdx = mpState.currentIdx;
+
+      // New chat message notification (lobby only — chat is a lobby feature, and
+      // we don't want pings interrupting an active question). Plays a sound +
+      // shows a top banner since the chatbox is often scrolled out of view.
+      if (status === 'lobby') {
+        mpMaybeNotifyChat();
+      } else {
+        // Keep the seen-count in sync so returning to lobby doesn't ping for
+        // messages that arrived mid-game.
+        mpState._chatSeenCount = (mpState.messages || []).length;
+      }
 
       // Route to the right screen
       if (status === 'lobby') {
@@ -863,6 +876,66 @@
     const wasNearBottom = (box.scrollHeight - box.scrollTop - box.clientHeight) < 60;
     box.innerHTML = mpRenderChatMessagesHtml();
     if (wasNearBottom) mpScrollChatToBottom();
+  }
+
+  // Fires when the room watcher refreshes messages. If a NEW message arrived
+  // from someone else (not us), play a ping and show a top banner — the chatbox
+  // is often scrolled out of view, so a banner makes sure the message is seen.
+  function mpMaybeNotifyChat() {
+    const msgs = mpState.messages || [];
+    const prevCount = mpState._chatSeenCount || 0;
+    // First time we see the list (e.g. on join), just record the baseline — no ping.
+    if (prevCount === 0 && msgs.length > 0 && mpState._chatNotifiedId === null) {
+      mpState._chatSeenCount = msgs.length;
+      mpState._chatNotifiedId = msgs[msgs.length - 1].id;
+      return;
+    }
+    if (msgs.length > prevCount) {
+      const latest = msgs[msgs.length - 1];
+      // Only notify for messages from OTHER players, and not one we already pinged.
+      if (latest && latest.senderId !== mpState.myId && latest.id !== mpState._chatNotifiedId) {
+        if (typeof playNotificationSfx === 'function') playNotificationSfx();
+        mpShowChatBanner(latest.name, latest.text);
+        mpState._chatNotifiedId = latest.id;
+      }
+    }
+    mpState._chatSeenCount = msgs.length;
+  }
+
+  // Shows a brief banner at the top of the multiplayer view announcing a new
+  // chat message. Tapping it scrolls the chatbox into view.
+  function mpShowChatBanner(name, text) {
+    const container = document.getElementById('multiplayerContainer');
+    if (!container) return;
+    let banner = document.getElementById('mpChatBanner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'mpChatBanner';
+      banner.className = 'mp-chat-banner';
+      banner.setAttribute('onclick', 'mpScrollToChat()');
+      container.appendChild(banner);
+    }
+    const safeName = escapeHtmlMp(name || 'Someone');
+    const safeText = escapeHtmlMp((text || '').slice(0, 80));
+    banner.innerHTML = `<span class="mp-chat-banner-icon">💬</span><span class="mp-chat-banner-text"><strong>${safeName}:</strong> ${safeText}</span>`;
+    banner.classList.remove('hide');
+    // Force reflow so the show animation restarts even on rapid messages.
+    void banner.offsetWidth;
+    banner.classList.add('show');
+    clearTimeout(mpState._chatBannerTimer);
+    mpState._chatBannerTimer = setTimeout(() => {
+      banner.classList.remove('show');
+      banner.classList.add('hide');
+    }, 4000);
+  }
+
+  // Scrolls the lobby chat into view and clears the banner.
+  function mpScrollToChat() {
+    const box = document.getElementById('mpChatMessages');
+    if (box && box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    mpScrollChatToBottom();
+    const banner = document.getElementById('mpChatBanner');
+    if (banner) { banner.classList.remove('show'); banner.classList.add('hide'); }
   }
 
   function mpScrollChatToBottom() {
@@ -1882,6 +1955,10 @@
     }
     // Deliberately leaving clears the saved room so we don't offer to rejoin it.
     mpClearActiveRoom();
+    // Remove any lingering chat banner.
+    clearTimeout(mpState._chatBannerTimer);
+    const banner = document.getElementById('mpChatBanner');
+    if (banner && banner.parentNode) banner.parentNode.removeChild(banner);
     mpReset();
   }
 

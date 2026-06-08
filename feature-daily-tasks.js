@@ -53,18 +53,29 @@
   ];
 
   // Routes a tapped daily task to the relevant part of the app.
+  // The tasks live on the mini-games screen, but the verse and lesson path are
+  // on the HOME screen — so we must switch home FIRST, then scroll/open, or the
+  // scroll targets a hidden screen and nothing appears to happen.
   function goToDailyTask(taskId) {
     const task = DAILY_TASKS.find(t => t.id === taskId);
     if (!task) return;
     if (typeof playTapSfx === 'function') playTapSfx();
     switch (task.action) {
       case 'lesson':
-        // Open the next unfinished lesson, or scroll to the path to pick one.
-        if (typeof continueFromDashboard === 'function') continueFromDashboard();
-        else scrollToLearningPath();
+        // Open the next unfinished lesson directly; if there's a current lesson
+        // this opens its detail (its own screen). Otherwise go home and show the path.
+        if (typeof getCurrentLessonId === 'function' && typeof openDetail === 'function') {
+          const id = getCurrentLessonId();
+          if (id) { openDetail(id); break; }
+        }
+        // No current lesson — go home and scroll to the path to pick one to review.
+        if (typeof goHome === 'function') goHome();
+        setTimeout(() => scrollToLearningPath(), 250);
         break;
       case 'verse':
-        scrollToVerseOfDay();
+        // Switch to home first, then scroll to (and highlight) the verse.
+        if (typeof goHome === 'function') goHome();
+        setTimeout(() => scrollToVerseOfDay(), 250);
         break;
       case 'minigame':
         if (typeof openMiniGames === 'function') openMiniGames();

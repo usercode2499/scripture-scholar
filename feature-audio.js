@@ -89,6 +89,7 @@
       loadAudioBuffer('complete-lesson.mp3').then((buf) => { audio.sfxBuffers.complete = buf; });
       loadAudioBuffer('tap.mp3').then((buf) => { audio.sfxBuffers.tap = buf; });
       loadAudioBuffer('winner-result.mp3').then((buf) => { audio.sfxBuffers.winner = buf; });
+      loadAudioBuffer('notification.mp3').then((buf) => { audio.sfxBuffers.notification = buf; }).catch(() => {});
     } catch (e) {
       console.warn('Audio init failed:', e);
     }
@@ -179,6 +180,12 @@
   function playWinnerSfx() {
     if (!state.audioSfx) return;
     playSfxBuffer(audio.sfxBuffers.winner);
+  }
+
+  // Chat / notification ping — used when a new lobby chat message arrives.
+  function playNotificationSfx() {
+    if (!state.audioSfx) return;
+    playSfxBuffer(audio.sfxBuffers.notification);
   }
 
   // Tap SFX — throttled so rapid taps don't stack into noise.
