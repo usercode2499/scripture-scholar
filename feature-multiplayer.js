@@ -109,6 +109,14 @@
     return (typeof state !== 'undefined' && state.username) ? state.username : 'You';
   }
 
+  // The player's current level, so their badge can be shown to others in the room.
+  function mpMyLevel() {
+    if (typeof state !== 'undefined' && typeof getLevel === 'function') {
+      return getLevel(state.xp || 0);
+    }
+    return 1;
+  }
+
   function escapeHtmlMp(s) {
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
@@ -277,7 +285,7 @@
       // Real room
       const questions = mpGetQuestions(mpState.NUM_QUESTIONS);
       try {
-        mpState.myId = await mpFbCreateRoom(mpState.roomCode, mpState.me, questions, mpMyAvatarThumb());
+        mpState.myId = await mpFbCreateRoom(mpState.roomCode, mpState.me, questions, mpMyAvatarThumb(), mpMyLevel());
         mpSaveActiveRoom();   // remember this room so we can offer to rejoin after a refresh
         mpWatchRoomLive();
         renderMpLobby();
@@ -361,7 +369,7 @@
     if (canUseFirebase && typeof mpFbJoinRoom === 'function') {
       if (hint) hint.textContent = 'Joining…';
       try {
-        const result = await mpFbJoinRoom(code, mpState.me, mpMyAvatarThumb());
+        const result = await mpFbJoinRoom(code, mpState.me, mpMyAvatarThumb(), mpMyLevel());
         if (result === 'notfound') {
           if (hint) hint.textContent = 'No room found with that code.';
           return;
@@ -437,6 +445,7 @@
           isMe: pid === mpState.myId,
           isHost: !!p.isHost,
           avatar: p.avatar || null,
+          level: p.level || 1,
           ready: !!p.ready,
           team: p.team || null
         };
@@ -698,7 +707,7 @@
       let avatarHtml;
       if (typeof renderAvatar === 'function') {
         const av = p.avatar || { type: 'preset', preset: 'scroll' };
-        avatarHtml = renderAvatar({ avatar: av, level: 1, size: 38, showBadge: false });
+        avatarHtml = renderAvatar({ avatar: av, level: p.level || 1, size: 38, showBadge: true });
       } else {
         avatarHtml = `<span style="font-size:20px;">${p.isHost ? '👑' : '🙂'}</span>`;
       }

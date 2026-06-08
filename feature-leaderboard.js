@@ -119,7 +119,7 @@
     const myRank = myIdx >= 0 ? myIdx + 1 : null;
 
     const badge = (level, size) => (typeof renderBadgeSVG === 'function')
-      ? renderBadgeSVG(level, size || 38, false) : '';
+      ? renderBadgeSVG(level, size || 38, true) : '';
 
     // Builds a standard leaderboard row for a given rank (1-indexed).
     const buildRow = (r, rankNum) => {

@@ -79,7 +79,7 @@
 
   // ---- Room operations ----
 
-  async function mpFbCreateRoom(code, hostName, questions, avatar) {
+  async function mpFbCreateRoom(code, hostName, questions, avatar, level) {
     const id = mpFbClientId();
     const roomData = {
       status: 'lobby',
@@ -93,7 +93,7 @@
       numTeams: 2,        // number of teams when teamMode
       maxTeamSize: 5,     // max players per team when teamMode
       players: {
-        [id]: { name: hostName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: true, avatar: avatar || null, ready: true, team: null }
+        [id]: { name: hostName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: true, avatar: avatar || null, level: level || 1, ready: true, team: null }
       }
     };
     MP_FB.roomRef = MP_FB.db.ref('rooms/' + code);
@@ -138,7 +138,7 @@
   }
 
   // Returns 'ok' | 'notfound' | 'started' | 'rejoined'
-  async function mpFbJoinRoom(code, playerName, avatar) {
+  async function mpFbJoinRoom(code, playerName, avatar, level) {
     const roomRef = MP_FB.db.ref('rooms/' + code);
     const snap = await roomRef.get();
     if (!snap.exists()) return 'notfound';
@@ -157,7 +157,7 @@
     // New player can only join while still in the lobby.
     if (room.status !== 'lobby') return 'started';
     const meRef = MP_FB.db.ref('rooms/' + code + '/players/' + id);
-    await meRef.set({ name: playerName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: false, avatar: avatar || null, ready: false, team: null });
+    await meRef.set({ name: playerName, score: 0, answeredIdx: -1, answeredAt: 0, lastDelta: 0, isHost: false, avatar: avatar || null, level: level || 1, ready: false, team: null });
     // No onDisconnect auto-removal — see note in mpFbCreateRoom.
     MP_FB.roomRef = roomRef;
     return 'ok';

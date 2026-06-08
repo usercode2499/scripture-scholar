@@ -72,8 +72,12 @@
 
     const clickAttr = opts.onclick ? ` onclick="${opts.onclick}"` : '';
     const badgeClickAttr = opts.badgeOnclick ? ` onclick="${opts.badgeOnclick}"` : '';
+    // Show the live tier effects (glow/shine/sparkle) on the mini badge too, so
+    // players see their badge "alive" everywhere — not just in the profile.
+    // Can be turned off per-call via opts.badgeEffects === false (e.g. very dense lists).
+    const badgeFx = opts.badgeEffects !== false;
     const badgeHtml = showBadge && typeof renderBadgeSVG === 'function'
-      ? `<span class="avatar-badge"${badgeClickAttr}>${renderBadgeSVG(level, badgeSize, false)}</span>`
+      ? `<span class="avatar-badge"${badgeClickAttr}>${renderBadgeSVG(level, badgeSize, badgeFx)}</span>`
       : '';
 
     return `

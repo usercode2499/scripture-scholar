@@ -3573,10 +3573,14 @@
   .badge-sparkles { opacity: 0; }
   .badge-spark { transform-box: fill-box; transform-origin: center; }
 
-  /* Position the three sparkles around the badge */
+  /* Position the sparkles around the badge */
   .badge-spark-1 { transform: translate(72px, 26px); }
   .badge-spark-2 { transform: translate(24px, 30px); }
   .badge-spark-3 { transform: translate(68px, 70px); }
+  /* Extra diamond glints (gold tier) for a richer, shinier sparkle */
+  .badge-spark-4 { transform: translate(30px, 64px); }
+  .badge-spark-5 { transform: translate(50px, 18px); }
+  .badge-spark-6 { transform: translate(80px, 50px); }
 
   /* ---------- BRONZE: subtle slow gleam so it feels alive ---------- */
   .badge-fx-bronze .badge-shine {
@@ -3601,6 +3605,13 @@
   .badge-fx-silver .badge-spark { animation: badgeSparkleTwinkle 2s ease-in-out infinite; }
   .badge-fx-silver .badge-spark-2 { animation-delay: 0.6s; }
   .badge-fx-silver .badge-spark-3 { animation-delay: 1.2s; }
+  /* The extra diamond glints are a gold-tier treat — hide them on silver/bronze */
+  .badge-fx-silver .badge-spark-4,
+  .badge-fx-silver .badge-spark-5,
+  .badge-fx-silver .badge-spark-6,
+  .badge-fx-bronze .badge-spark-4,
+  .badge-fx-bronze .badge-spark-5,
+  .badge-fx-bronze .badge-spark-6 { display: none; }
 
   /* ---------- GOLD: layered glow + halo + orbiting sparkles + frequent shine + breathe ---------- */
   .badge-fx-gold {
@@ -3621,9 +3632,23 @@
     transform-box: view-box;
     transform-origin: 50px 50px;
   }
-  .badge-fx-gold .badge-spark { animation: badgeSparkleTwinkle 1.3s ease-in-out infinite; }
-  .badge-fx-gold .badge-spark-2 { animation-delay: 0.4s; }
-  .badge-fx-gold .badge-spark-3 { animation-delay: 0.85s; }
+  .badge-fx-gold .badge-spark {
+    animation: badgeDiamondTwinkle 1.3s ease-in-out infinite;
+    filter: drop-shadow(0 0 2.5px rgba(255,255,255,0.95)) drop-shadow(0 0 5px rgba(255,240,170,0.7));
+  }
+  .badge-fx-gold .badge-spark-2 { animation-delay: 0.35s; }
+  .badge-fx-gold .badge-spark-3 { animation-delay: 0.7s; }
+  .badge-fx-gold .badge-spark-4 { animation-delay: 1.0s; }
+  .badge-fx-gold .badge-spark-5 { animation-delay: 0.55s; }
+  .badge-fx-gold .badge-spark-6 { animation-delay: 0.9s; }
+
+  /* Diamond twinkle: a sharp flare that scales and rotates slightly, like a
+     facet catching light — brighter and snappier than the plain fade. */
+  @keyframes badgeDiamondTwinkle {
+    0%, 100% { opacity: 0.15; transform: scale(0.5) rotate(0deg); }
+    45%      { opacity: 1;    transform: scale(1.35) rotate(25deg); }
+    60%      { opacity: 0.85; transform: scale(1.1) rotate(35deg); }
+  }
 
   @keyframes badgeShine {
     0%   { transform: translateX(0) rotate(20deg); opacity: 0; }
@@ -5969,7 +5994,9 @@
       let stateClass = 'locked';
       if (isCurrent) stateClass = 'current';
       else if (isReached) stateClass = 'reached';
-      const badge = (typeof renderBadgeSVG === 'function') ? renderBadgeSVG(lvl, 40, false) : lvl;
+      // Animate the badges the player has actually reached so they feel earned;
+      // locked (future) badges stay static to keep the long list light.
+      const badge = (typeof renderBadgeSVG === 'function') ? renderBadgeSVG(lvl, 40, isReached) : lvl;
       const badgeName = (typeof getBadgeName === 'function') ? getBadgeName(lvl) : '';
       return `
         <button class="level-list-item ${stateClass}" onclick="revealBadgeName('list', ${lvl}, event)">

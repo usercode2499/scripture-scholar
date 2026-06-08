@@ -144,6 +144,9 @@
         <g class="badge-spark badge-spark-1"><path d="M0,-4 L1,-1 L4,0 L1,1 L0,4 L-1,1 L-4,0 L-1,-1 Z" fill="#ffffff"/></g>
         <g class="badge-spark badge-spark-2"><path d="M0,-3 L0.8,-0.8 L3,0 L0.8,0.8 L0,3 L-0.8,0.8 L-3,0 L-0.8,-0.8 Z" fill="#ffffff"/></g>
         <g class="badge-spark badge-spark-3"><path d="M0,-2.4 L0.7,-0.7 L2.4,0 L0.7,0.7 L0,2.4 L-0.7,0.7 L-2.4,0 L-0.7,-0.7 Z" fill="#ffffff"/></g>
+        <g class="badge-spark badge-spark-4"><path d="M0,-3.4 L0.9,-0.9 L3.4,0 L0.9,0.9 L0,3.4 L-0.9,0.9 L-3.4,0 L-0.9,-0.9 Z" fill="#ffffff"/></g>
+        <g class="badge-spark badge-spark-5"><path d="M0,-2.6 L0.7,-0.7 L2.6,0 L0.7,0.7 L0,2.6 L-0.7,0.7 L-2.6,0 L-0.7,-0.7 Z" fill="#ffffff"/></g>
+        <g class="badge-spark badge-spark-6"><path d="M0,-2 L0.6,-0.6 L2,0 L0.6,0.6 L0,2 L-0.6,0.6 L-2,0 L-0.6,-0.6 Z" fill="#ffffff"/></g>
       </g>`;
 
     return `
