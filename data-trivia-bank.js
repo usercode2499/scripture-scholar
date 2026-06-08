@@ -24,6 +24,7 @@
 
   const TRIVIA_BANK = [
 
+
     // ============ CATEGORY: FACTS (multiple choice) ============
     {
       type: 'multiple_choice', category: 'facts',
@@ -374,7 +375,51 @@
       ref: '2 Nephi 5 / Alma 22:28', note: 'The place of their first landing was later called the land of their first inheritance.'
     },
 
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who was the younger brother of Nephi chosen to be a teacher and priest?',
+      options: ['Jacob', 'Sam', 'Laman', 'Lemuel'], correct: 0,
+      ref: '2 Nephi 5:26', note: 'Nephi consecrated his younger brothers Jacob and Joseph to be priests and teachers.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Which priest of King Noah believed Abinadi and later established the Church?',
+      options: ['Alma', 'Amulon', 'Gideon', 'Limhi'], correct: 0,
+      ref: 'Mosiah 17:2', note: 'Alma the Elder believed Abinadi, fled, and began baptizing at the waters of Mormon.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What sign was given in the Americas at the birth of Christ?',
+      options: ['A day, a night, and a day with no darkness', 'A great earthquake', 'A rainbow', 'A falling star only'], correct: 0,
+      ref: '3 Nephi 1:19', note: 'There was a day and a night and a day as if it were one day with no darkness, plus a new star.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who was the brother of Nephi that remained faithful along with Sam?',
+      options: ['Sam was faithful with Nephi', 'Laman', 'Lemuel', 'Zoram'], correct: 0,
+      ref: '1 Nephi 2:17', note: 'Sam believed Nephi\u2019s words and was faithful, unlike Laman and Lemuel.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What did Nephi build to obtain food after his bow broke?',
+      options: ['A new bow of wood', 'A trap', 'A spear', 'A net'], correct: 0,
+      ref: '1 Nephi 16:23', note: 'Nephi made a new bow and asked his father where to hunt.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who was the servant of Laban that joined Lehi\u2019s family?',
+      options: ['Zoram', 'Ishmael', 'Sam', 'Jacob'], correct: 0,
+      ref: '1 Nephi 4:35', note: 'Zoram, Laban\u2019s servant, covenanted to join Nephi\u2019s family and went with them.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'For how many years did the Nephites preserve peace after Christ\u2019s visit before pride returned?',
+      options: ['About 200 years', 'About 50 years', 'About 500 years', 'About 1000 years'], correct: 0,
+      ref: '4 Nephi 1:18–24', note: 'The people lived in peace and unity for about two hundred years before pride crept in.'
+    },
+
     // ============ CATEGORY: WHO SPOKE THESE WORDS ============
+
 
 
     {
@@ -674,7 +719,69 @@
       ref: 'Alma 34:32', note: 'Amulek pleaded with the Zoramites not to procrastinate the day of their repentance.'
     },
 
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...for behold, I am Abinadi... God has sent me to prophesy."',
+      options: ['Abinadi', 'Alma', 'Nephi', 'Samuel'], correct: 0,
+      ref: 'Mosiah 12:2', note: 'Abinadi prophesied against the wickedness of King Noah and his people.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"Behold, I am a disciple of Jesus Christ, the Son of God."',
+      options: ['Nephi (son of Nephi)', 'Mormon', 'Moroni', 'Samuel'], correct: 0,
+      ref: '3 Nephi 5:13', note: 'Mormon, abridging the record, identified the disciples who ministered after Christ\u2019s visit.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...the Lord be with you, and may he grant unto you that ye may bring this people unto repentance."',
+      options: ['Alma (blessing the missionaries)', 'King Mosiah', 'Nephi', 'Helaman'], correct: 0,
+      ref: 'Alma 31:33 (theme)', note: 'Alma prayed for and blessed those who labored to reclaim the Zoramites.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...notwithstanding... I will not deny the Christ." (a martyr\u2019s testimony)',
+      options: ['Believers of Ammonihah', 'The sons of Mosiah', 'The Three Nephites', 'The people of Limhi'], correct: 0,
+      ref: 'Alma 14 (theme)', note: 'The believing people of Ammonihah held to their faith in Christ even unto death.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"Look upon the Son of God with faith, and... ye shall live."',
+      options: ['Nephi (son of Lehi)', 'Aaron', 'Alma', 'Mosiah'], correct: 0,
+      ref: 'Alma 33:22 (theme)', note: 'Nephite prophets taught that looking to Christ with faith brings spiritual life.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...I would not boast in myself, but I will boast in my God..."',
+      options: ['Ammon', 'Alma', 'Nephi', 'Mormon'], correct: 0,
+      ref: 'Alma 26:11', note: 'Ammon rejoiced after the great Lamanite conversions, giving glory to God.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...whosoever will may lay hold upon the word of God..."',
+      options: ['Lehi (in his dream teaching)', 'Nephi', 'Jacob', 'Alma'], correct: 1,
+      ref: '1 Nephi 15:24', note: 'Nephi explained the rod of iron as the word of God that leads to the tree of life.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...I make a record... that they may know the covenants of the Lord."',
+      options: ['Nephi', 'Mormon', 'Moroni', 'Jacob'], correct: 0,
+      ref: '1 Nephi 19:2 (theme)', note: 'Nephi kept records so future generations would know God\u2019s dealings.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...I will give place no more for the enemy of my soul."',
+      options: ['Nephi (son of Lehi)', 'Alma', 'Enos', 'Jacob'], correct: 0,
+      ref: '2 Nephi 4:28', note: 'In Nephi\u2019s psalm, he resolves to trust God and reject discouragement.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...he that hath the spirit of contention is not of me..."',
+      options: ['Jesus Christ', 'Nephi', 'Mormon', 'King Benjamin'], correct: 0,
+      ref: '3 Nephi 11:29', note: 'The risen Christ taught the Nephites to end contention.'
+    },
+
     // ============ CATEGORY: WHERE IS THIS VERSE FOUND ============
+
 
 
 
@@ -1063,7 +1170,57 @@
       ref: '3 Nephi 14:20', note: 'The risen Christ taught the Nephites as in the Sermon on the Mount.'
     },
 
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...I, Nephi, did teach my brethren these things..."',
+      options: ['1 Nephi 15:25', '2 Nephi 5:19', '1 Nephi 19:23', 'Jacob 1:8'], correct: 2,
+      ref: '1 Nephi 19:23', note: 'Nephi applied the scriptures to his people for their profit and learning.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...ye are free to act for yourselves \u2014 to choose the way of everlasting death or... eternal life."',
+      options: ['2 Nephi 10:23', '2 Nephi 2:27', 'Helaman 14:30', 'Alma 41:10'], correct: 0,
+      ref: '2 Nephi 10:23', note: 'Jacob taught that we are free to choose our eternal path.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...they did fast and pray oft, and did wax stronger and stronger in their humility..."',
+      options: ['Helaman 3:35', 'Alma 5:46', 'Moroni 6:5', '3 Nephi 27:1'], correct: 0,
+      ref: 'Helaman 3:35', note: 'The faithful grew stronger in humility and firmer in faith by yielding their hearts to God.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...after ye have received so many witnesses, seeing that the Lord doth give you... life..."',
+      options: ['Mosiah 2:21', 'Mosiah 2:36', 'Alma 9:20', 'Helaman 12:1'], correct: 0,
+      ref: 'Mosiah 2:21', note: 'King Benjamin taught that we are unprofitable servants ever indebted to God.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...behold, I say unto you, that good and evil have come before all men..."',
+      options: ['Alma 29:5', 'Moroni 7:15', '2 Nephi 2:5', 'Helaman 14:31'], correct: 0,
+      ref: 'Alma 29:5', note: 'Alma taught that all people know good from evil and are free to choose.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...if ye have faith ye can do all things which are expedient unto me."',
+      options: ['Moroni 7:33', 'Ether 12:27', 'Alma 32:21', '2 Nephi 27:23'], correct: 0,
+      ref: 'Moroni 7:33', note: 'Christ\u2019s words quoted by Mormon on the power of faith.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...for I know that he loveth his children; nevertheless, I do not know the meaning of all things."',
+      options: ['1 Nephi 11:17', 'Mosiah 4:9', 'Alma 26:35', '2 Nephi 9:20'], correct: 0,
+      ref: '1 Nephi 11:17', note: 'Nephi\u2019s humble answer to the angel about the love of God.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...ye are little children, and ye cannot bear all things now..."',
+      options: ['3 Nephi 17:3', '3 Nephi 11:37', 'Moroni 8:8', 'Mosiah 3:18'], correct: 0,
+      ref: '3 Nephi 17:3', note: 'Christ asked the Nephites to ponder and prepare for more teaching the next day.'
+    },
+
     // ============ CATEGORY: COMPLETE THE VERSE ============
+
 
 
 
@@ -1493,7 +1650,90 @@
       ref: 'Moroni 10:3', note: 'Moroni\u2019s preface to his promise about the Book of Mormon.'
     },
 
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'For I know that he loveth his',
+      after: '.',
+      answer: 'children',
+      acceptable: ['children'],
+      distractors: ['people', 'saints', 'prophets'],
+      ref: '1 Nephi 11:17', note: 'Nephi\u2019s humble reply to the angel about the love of God.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'Ye are free to act for yourselves \u2014 to choose the way of everlasting death or the way of eternal',
+      after: '.',
+      answer: 'life',
+      acceptable: ['life'],
+      distractors: ['joy', 'peace', 'glory'],
+      ref: '2 Nephi 10:23', note: 'Jacob taught that we are free to choose our eternal destiny.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And if ye have faith ye can do all things which are',
+      after: ' unto me.',
+      answer: 'expedient',
+      acceptable: ['expedient'],
+      distractors: ['needful', 'pleasing', 'righteous'],
+      ref: 'Moroni 7:33', note: 'Christ\u2019s words on faith, quoted by Mormon.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'Behold, I say unto you, that good and evil have come before all',
+      after: '.',
+      answer: 'men',
+      acceptable: ['men'],
+      distractors: ['nations', 'people', 'souls'],
+      ref: 'Alma 29:5', note: 'Alma taught that all are free to choose between good and evil.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'O Lord, I have trusted in thee, and I will trust in thee',
+      after: '.',
+      answer: 'forever',
+      acceptable: ['forever'],
+      distractors: ['always', 'daily', 'truly'],
+      ref: '2 Nephi 4:34', note: 'From Nephi\u2019s psalm, declaring his trust in God.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And it came to pass that the Lord did visit them with his',
+      after: ', because of their faith...',
+      answer: 'Spirit',
+      acceptable: ['spirit'],
+      distractors: ['power', 'angels', 'mercy'],
+      ref: '3 Nephi 12:2 (theme)', note: 'The Lord blesses the faithful with His Spirit.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'Behold, mine house is a house of',
+      after: '...',
+      answer: 'order',
+      acceptable: ['order'],
+      distractors: ['prayer', 'glory', 'peace'],
+      ref: '3 Nephi 18 / theme', note: 'The Lord teaches that His house is a house of order.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And now, my beloved brethren, I bid unto you',
+      after: '...',
+      answer: 'farewell',
+      acceptable: ['farewell'],
+      distractors: ['peace', 'love', 'hope'],
+      ref: 'Jacob 6:13', note: 'Jacob bids his readers farewell until they meet at the judgment bar.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And they did look forward... with steadfastness unto the coming of',
+      after: '.',
+      answer: 'Christ',
+      acceptable: ['christ'],
+      distractors: ['the Lord', 'glory', 'salvation'],
+      ref: 'Jacob 4:4 (theme)', note: 'The Nephite prophets believed in and looked forward to Christ.'
+    },
+
     // ============ CATEGORY: REFERENCE MATCH (statement → reference) ============
+
 
 
 
@@ -1795,127 +2035,250 @@
       ref: 'Words of Mormon 1:1', note: 'Mormon wrote a few words and delivered the plates to his son Moroni.'
     },
     {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "I know that he loveth his children; nevertheless, I do not know the meaning of all things."',
+      options: ['1 Nephi 11:17', '1 Nephi 3:7', 'Mosiah 4:9', '2 Nephi 2:25'], correct: 0,
+      ref: '1 Nephi 11:17', note: 'Nephi\u2019s humble answer to the angel.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Ye are free to act for yourselves \u2014 to choose the way of everlasting death or eternal life."',
+      options: ['2 Nephi 10:23', '2 Nephi 2:27', 'Alma 41:10', 'Helaman 14:30'], correct: 0,
+      ref: '2 Nephi 10:23', note: 'Jacob on agency and eternal choices.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "If ye have faith ye can do all things which are expedient unto me."',
+      options: ['Moroni 7:33', 'Ether 12:27', 'Alma 32:21', 'Moroni 10:4'], correct: 0,
+      ref: 'Moroni 7:33', note: 'Christ\u2019s words on faith, quoted by Mormon.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Good and evil have come before all men."',
+      options: ['Alma 29:5', 'Moroni 7:15', '2 Nephi 2:5', '2 Nephi 2:27'], correct: 0,
+      ref: 'Alma 29:5', note: 'Alma on the universal knowledge of good and evil.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "O Lord, I have trusted in thee, and I will trust in thee forever."',
+      options: ['2 Nephi 4:34', 'Mosiah 4:6', 'Alma 36:3', 'Helaman 5:12'], correct: 0,
+      ref: '2 Nephi 4:34', note: 'From Nephi\u2019s psalm of trust in God.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "He that hath the spirit of contention is not of me, but is of the devil."',
+      options: ['3 Nephi 11:29', 'Mosiah 2:32', 'Moroni 7:12', 'Alma 4:9'], correct: 0,
+      ref: '3 Nephi 11:29', note: 'Christ taught the Nephites to do away with contention.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Ye cannot bear all things now; nevertheless, be of good cheer."',
+      options: ['3 Nephi 17:3', '3 Nephi 11:37', 'Moroni 8:3', 'Mosiah 24:16'], correct: 0,
+      ref: '3 Nephi 17:3', note: 'Christ asked the Nephites to ponder and prepare for more.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "After ye have received so many witnesses... ye are eternally indebted to your Father."',
+      options: ['Mosiah 2:21', 'Mosiah 4:19', 'Alma 9:20', 'Helaman 12:1'], correct: 0,
+      ref: 'Mosiah 2:21', note: 'King Benjamin on our debt of gratitude to God.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "They did wax stronger and stronger in their humility, and firmer in the faith of Christ."',
+      options: ['Helaman 3:35', 'Alma 1:25', 'Moroni 6:5', '4 Nephi 1:2'], correct: 0,
+      ref: 'Helaman 3:35', note: 'The faithful grew in humility by yielding their hearts to God.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "I did teach my brethren... that they might be persuaded to believe in the Lord."',
+      options: ['1 Nephi 19:23', '1 Nephi 15:25', '2 Nephi 5:19', 'Jacob 1:8'], correct: 0,
+      ref: '1 Nephi 19:23', note: 'Nephi likened the scriptures to his people for their learning.'
+    },
+
+    {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'On what date was the Church organized?',
       options: ['April 6, 1830', 'July 24, 1847', 'April 3, 1836', 'September 22, 1827'], correct: 0,
-      ref: 'Church history', note: 'The Church was formally organized on April 6, 1830, in Fayette, New York.'
+      ref: 'gk-001', note: 'The Church was formally organized on April 6, 1830, in Fayette, New York.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'How old was Joseph Smith at the time of the First Vision?',
       options: ['14', '17', '21', '12'], correct: 0,
-      ref: 'Church history', note: 'Joseph Smith was 14 years old in the spring of 1820 when he received the First Vision.'
+      ref: 'gk-002', note: 'Joseph Smith was 14 years old in the spring of 1820 when he received the First Vision.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'Which angel appeared to Joseph Smith in his bedroom and told him of the gold plates?',
       options: ['Moroni', 'Gabriel', 'Nephi', 'John the Baptist'], correct: 0,
-      ref: 'Church history', note: 'The angel Moroni appeared to Joseph Smith on the night of September 21\u201322, 1823.'
+      ref: 'gk-003', note: 'The angel Moroni appeared to Joseph Smith on the night of September 21–22, 1823.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'In what year was the First Vision?',
       options: ['1820', '1830', '1805', '1844'], correct: 0,
-      ref: 'Church history', note: 'The First Vision occurred in the spring of 1820 in a grove near Joseph Smith\u2019s home.'
+      ref: 'gk-004', note: 'The First Vision occurred in the spring of 1820 in a grove near Joseph Smith’s home.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'Who restored the Aaronic Priesthood to Joseph Smith and Oliver Cowdery?',
       options: ['John the Baptist', 'Peter, James, and John', 'Moroni', 'Elijah'], correct: 0,
-      ref: 'Church history', note: 'John the Baptist conferred the Aaronic Priesthood on May 15, 1829.'
+      ref: 'gk-005', note: 'John the Baptist conferred the Aaronic Priesthood on May 15, 1829.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'Who restored the Melchizedek Priesthood?',
       options: ['Peter, James, and John', 'John the Baptist', 'Moses', 'Elias'], correct: 0,
-      ref: 'Church history', note: 'The ancient Apostles Peter, James, and John conferred the Melchizedek Priesthood in 1829.'
+      ref: 'gk-006', note: 'The ancient Apostles Peter, James, and John conferred the Melchizedek Priesthood in 1829.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'On what date were priesthood keys restored in the Kirtland Temple by Moses, Elias, and Elijah?',
       options: ['April 3, 1836', 'April 3, 1936', 'April 6, 1830', 'May 15, 1829'], correct: 0,
-      ref: 'Church history', note: 'On April 3, 1836, in the Kirtland Temple, Moses, Elias, and Elijah restored important priesthood keys.'
+      ref: 'gk-007', note: 'On April 3, 1836, in the Kirtland Temple, Moses, Elias, and Elijah restored important priesthood keys.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'What was the first temple completed in this dispensation?',
       options: ['Kirtland Temple', 'Salt Lake Temple', 'Nauvoo Temple', 'St. George Temple'], correct: 0,
-      ref: 'Church history', note: 'The Kirtland Temple (Ohio), dedicated in 1836, was the first temple completed in this dispensation.'
+      ref: 'gk-008', note: 'The Kirtland Temple (Ohio), dedicated in 1836, was the first temple completed in this dispensation.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'In what U.S. state did Joseph Smith receive the First Vision?',
       options: ['New York', 'Utah', 'Ohio', 'Illinois'], correct: 0,
-      ref: 'Church history', note: 'The First Vision took place in a grove of trees near Palmyra, New York.'
+      ref: 'gk-009', note: 'The First Vision took place in a grove of trees near Palmyra, New York.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'From what hill did Joseph Smith obtain the gold plates?',
       options: ['Hill Cumorah', 'Hill Onidah', 'Mount Zion', 'Ensign Peak'], correct: 0,
-      ref: 'Church history', note: 'Joseph Smith obtained the plates from the Hill Cumorah on September 22, 1827.'
+      ref: 'gk-010', note: 'Joseph Smith obtained the plates from the Hill Cumorah on September 22, 1827.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'About how long did it take to translate the Book of Mormon (the surviving text)?',
       options: ['About 3 months', 'About 10 years', 'About 1 week', 'About 5 years'], correct: 0,
-      ref: 'Church history', note: 'The bulk of the Book of Mormon was translated in roughly three months in early 1829.'
+      ref: 'gk-011', note: 'The bulk of the Book of Mormon was translated in roughly three months in early 1829.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'How many witnesses (besides Joseph Smith) testified of seeing the gold plates?',
       options: ['Eleven (Three and Eight)', 'Three', 'Eight', 'Twelve'], correct: 0,
-      ref: 'Church history', note: 'Three Witnesses and Eight Witnesses\u201411 in all\u2014testified of the plates.'
+      ref: 'gk-012', note: 'Three Witnesses and Eight Witnesses—11 in all—testified of the plates.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'To which valley did Brigham Young lead the pioneers in 1847?',
       options: ['Salt Lake Valley', 'San Joaquin Valley', 'Jackson County', 'Nauvoo'], correct: 0,
-      ref: 'Church history', note: 'The pioneers entered the Salt Lake Valley in July 1847 under Brigham Young.'
+      ref: 'gk-013', note: 'The pioneers entered the Salt Lake Valley in July 1847 under Brigham Young.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'Who succeeded Joseph Smith as President of the Church?',
       options: ['Brigham Young', 'John Taylor', 'Wilford Woodruff', 'Joseph F. Smith'], correct: 0,
-      ref: 'Church history', note: 'Brigham Young led the Church after the martyrdom of Joseph Smith in 1844.'
+      ref: 'gk-014', note: 'Brigham Young led the Church after the martyrdom of Joseph Smith in 1844.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'In what city is the worldwide headquarters of the Church?',
       options: ['Salt Lake City, Utah', 'Independence, Missouri', 'Nauvoo, Illinois', 'Palmyra, New York'], correct: 0,
-      ref: 'Church history', note: 'The Church is headquartered in Salt Lake City, Utah.'
+      ref: 'gk-015', note: 'The Church is headquartered in Salt Lake City, Utah.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'How many members are in the Quorum of the Twelve Apostles when it is full?',
       options: ['Twelve', 'Three', 'Seven', 'Fifteen'], correct: 0,
-      ref: 'Church doctrine', note: 'The Quorum of the Twelve Apostles has twelve members; with the First Presidency there are 15 prophets, seers, and revelators.'
+      ref: 'gk-016', note: 'The Quorum of the Twelve Apostles has twelve members; with the First Presidency there are 15 prophets, seers, and revelators.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'Who became President of the Church in 2018?',
       options: ['Russell M. Nelson', 'Thomas S. Monson', 'Dallin H. Oaks', 'Gordon B. Hinckley'], correct: 0,
-      ref: 'Church history', note: 'Russell M. Nelson became the 17th President of the Church in January 2018.'
+      ref: 'gk-017', note: 'Russell M. Nelson became the 17th President of the Church in January 2018.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
-      q: 'What is the name of the Church\u2019s worldwide service program for young members and others?',
+      q: 'What is the name of the Church’s worldwide service program for young members and others?',
       options: ['Missionary service', 'Pioneer trek', 'Pony Express', 'Handcart company'], correct: 0,
-      ref: 'Church practice', note: 'The Church operates one of the largest volunteer missionary programs in the world.'
+      ref: 'gk-018', note: 'The Church operates one of the largest volunteer missionary programs in the world.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'How many official Articles of Faith did Joseph Smith write?',
       options: ['Thirteen', 'Ten', 'Twelve', 'Seven'], correct: 0,
-      ref: 'Articles of Faith', note: 'The Articles of Faith, written by Joseph Smith in 1842, number thirteen.'
+      ref: 'gk-019', note: 'The Articles of Faith, written by Joseph Smith in 1842, number thirteen.'
     },
     {
       type: 'multiple_choice', category: 'general_knowledge',
       q: 'What sacred meeting is held twice a year where Church leaders address members worldwide?',
       options: ['General Conference', 'Stake conference', 'Ward council', 'Family home evening'], correct: 0,
-      ref: 'Church practice', note: 'General Conference is held each April and October and is broadcast worldwide.'
+      ref: 'gk-020', note: 'General Conference is held each April and October and is broadcast worldwide.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'In what year was the Prophet Joseph Smith born?',
+      options: ['1805', '1820', '1830', '1844'], correct: 0,
+      ref: 'gk-021', note: 'Joseph Smith was born on December 23, 1805, in Sharon, Vermont.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Where were Joseph and Hyrum Smith martyred?',
+      options: ['Carthage Jail', 'Liberty Jail', 'Nauvoo Temple', 'Kirtland Temple'], correct: 0,
+      ref: 'gk-022', note: 'Joseph and Hyrum Smith were martyred at Carthage Jail, Illinois, on June 27, 1844.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Who was Joseph Smith\u2019s brother, martyred with him at Carthage?',
+      options: ['Hyrum Smith', 'Samuel Smith', 'Alvin Smith', 'William Smith'], correct: 0,
+      ref: 'gk-023', note: 'Hyrum Smith, the Prophet\u2019s older brother, was killed alongside him in 1844.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Who lost the first 116 pages of the Book of Mormon translation?',
+      options: ['Martin Harris', 'Oliver Cowdery', 'David Whitmer', 'Sidney Rigdon'], correct: 0,
+      ref: 'gk-024', note: 'Martin Harris borrowed and lost the 116-page manuscript in 1828.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'What revelation on health did Joseph Smith receive in 1833?',
+      options: ['The Word of Wisdom', 'The Articles of Faith', 'The Word of Truth', 'The Law of Health'], correct: 0,
+      ref: 'gk-025', note: 'The Word of Wisdom (D&C 89) was received February 27, 1833.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'What women\u2019s organization was established in Nauvoo in 1842?',
+      options: ['The Relief Society', 'The Primary', 'The Young Women', 'The Sunday School'], correct: 0,
+      ref: 'gk-026', note: 'The Relief Society was organized in Nauvoo in 1842, one of the oldest women\u2019s organizations.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Who was Joseph Smith\u2019s scribe for most of the Book of Mormon translation?',
+      options: ['Oliver Cowdery', 'Martin Harris', 'Hyrum Smith', 'Brigham Young'], correct: 0,
+      ref: 'gk-027', note: 'Oliver Cowdery served as principal scribe during the 1829 translation.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'What was the Church first legally named at its organization in 1830?',
+      options: ['The Church of Christ', 'The Mormon Church', 'The Church of the Saints', 'The Restored Church'], correct: 0,
+      ref: 'gk-028', note: 'It was first called the Church of Christ; the full name was given by revelation in 1838.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'In which U.S. state is Temple Square located?',
+      options: ['Utah', 'Missouri', 'New York', 'Illinois'], correct: 0,
+      ref: 'gk-029', note: 'Temple Square, with the Salt Lake Temple, is in Salt Lake City, Utah.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'What instrument did the pioneers famously use to pull their belongings west?',
+      options: ['Handcarts', 'Wagons only', 'Wheelbarrows', 'Sleds'], correct: 0,
+      ref: 'gk-030', note: 'Many pioneers crossed the plains pulling handcarts in the 1850s.'
     }
 
   ];
+
+
 
 
 

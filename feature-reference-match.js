@@ -40,7 +40,16 @@
     { statement: '"It is by grace that we are saved, after all we can do."', options: ['2 Nephi 25:23', 'Moroni 10:32', 'Alma 24:11', 'Mosiah 3:17'], correct: 0, note: 'Nephi teaching about grace.' },
     { statement: '"Come unto Christ, and be perfected in him, and deny yourselves of all ungodliness."', options: ['Moroni 10:32', 'Moroni 7:47', '3 Nephi 12:48', '2 Nephi 31:20'], correct: 0, note: 'Moroni\u2019s closing invitation.' },
     { statement: '"This life is the time for men to prepare to meet God."', options: ['Alma 34:32', 'Alma 5:28', '2 Nephi 9:27', 'Mosiah 3:19'], correct: 0, note: 'Amulek preaching to the Zoramites.' },
-    { statement: '"There is no other name given whereby salvation cometh... take upon you the name of Christ."', options: ['Mosiah 5:8', 'Mosiah 3:17', '2 Nephi 25:23', 'Helaman 5:9'], correct: 0, note: 'King Benjamin\u2019s people covenanting.' }
+    { statement: '"There is no other name given whereby salvation cometh... take upon you the name of Christ."', options: ['Mosiah 5:8', 'Mosiah 3:17', '2 Nephi 25:23', 'Helaman 5:9'], correct: 0, note: 'King Benjamin\u2019s people covenanting.' },
+    { statement: '"Ye cannot bear all things now; nevertheless, be of good cheer."', options: ['3 Nephi 17:3', '3 Nephi 11:37', 'Mosiah 24:16', 'Moroni 8:3'], correct: 0, note: 'The risen Christ to the Nephites.' },
+    { statement: '"They did wax stronger and stronger in their humility, and firmer in the faith of Christ."', options: ['Helaman 3:35', 'Alma 1:25', '4 Nephi 1:2', 'Moroni 6:5'], correct: 0, note: 'The faithful Nephites growing in humility.' },
+    { statement: '"Whatsoever thing persuadeth men to do good is of me."', options: ['Ether 4:12', 'Moroni 7:16', 'Alma 5:40', '2 Nephi 33:10'], correct: 0, note: 'The Lord on all good coming from Him.' },
+    { statement: '"Ye are free to act for yourselves \u2014 to choose the way of everlasting death or eternal life."', options: ['2 Nephi 10:23', '2 Nephi 2:27', 'Alma 41:10', 'Helaman 14:30'], correct: 0, note: 'Jacob on agency.' },
+    { statement: '"He that hath the spirit of contention is not of me, but is of the devil."', options: ['3 Nephi 11:29', 'Mosiah 2:32', 'Moroni 7:12', 'Alma 4:9'], correct: 0, note: 'The risen Christ teaching the Nephites.' },
+    { statement: '"Are we not all beggars?"', options: ['Mosiah 4:19', 'Mosiah 2:17', 'Alma 34:32', 'Moroni 7:47'], correct: 0, note: 'King Benjamin on our dependence on God.' },
+    { statement: '"Inasmuch as ye shall keep my commandments ye shall prosper in the land."', options: ['2 Nephi 1:20', '1 Nephi 2:20', 'Mosiah 1:7', 'Alma 9:13'], correct: 0, note: 'A recurring promise to Lehi\u2019s descendants.' },
+    { statement: '"If ye have faith ye can do all things which are expedient unto me."', options: ['Moroni 7:33', 'Ether 12:27', 'Alma 32:21', 'Moroni 10:4'], correct: 0, note: 'Christ\u2019s words on faith, quoted by Mormon.' },
+    { statement: '"O Lord, I have trusted in thee, and I will trust in thee forever."', options: ['2 Nephi 4:34', 'Mosiah 4:6', 'Alma 36:3', 'Helaman 5:12'], correct: 0, note: 'From Nephi\u2019s psalm.' }
   ];
 
   // ----- state -----

@@ -158,6 +158,76 @@
       prompt: 'Let us remember him, and lay aside our sins, and not hang down our heads, for we are not ___ off.',
       answers: ['cast'],
       distractors: ['put', 'thrown', 'sent', 'taken', 'driven']
+    },
+    {
+      id: 'vq21',
+      reference: 'Mosiah 2:17',
+      prompt: 'When ye are in the ___ of your fellow beings ye are only in the ___ of your God.',
+      answers: ['service', 'service'],
+      distractors: ['care', 'sight', 'presence', 'name']
+    },
+    {
+      id: 'vq22',
+      reference: 'Mosiah 3:19',
+      prompt: 'For the natural man is an ___ to God, and has been from the ___ of Adam.',
+      answers: ['enemy', 'fall'],
+      distractors: ['offense', 'stranger', 'time', 'day', 'birth']
+    },
+    {
+      id: 'vq23',
+      reference: 'Alma 32:21',
+      prompt: 'Faith is not to have a perfect ___ of things; therefore if ye have faith ye ___ for things which are not seen, which are true.',
+      answers: ['knowledge', 'hope'],
+      distractors: ['vision', 'sense', 'wish', 'long', 'ask']
+    },
+    {
+      id: 'vq24',
+      reference: 'Alma 37:6',
+      prompt: 'By small and ___ things are great things brought to ___.',
+      answers: ['simple', 'pass'],
+      distractors: ['humble', 'quiet', 'light', 'be', 'rest']
+    },
+    {
+      id: 'vq25',
+      reference: 'Alma 41:10',
+      prompt: 'Do not suppose, because it has been spoken concerning restoration, that ye shall be restored from sin to happiness. Behold, I say unto you, ___ never was ___.',
+      answers: ['wickedness', 'happiness'],
+      distractors: ['sin', 'evil', 'joy', 'peace', 'goodness']
+    },
+    {
+      id: 'vq26',
+      reference: 'Helaman 5:12',
+      prompt: 'It is upon the ___ of our Redeemer, who is Christ, the Son of God, that ye must build your ___.',
+      answers: ['rock', 'foundation'],
+      distractors: ['word', 'name', 'house', 'faith', 'hope']
+    },
+    {
+      id: 'vq27',
+      reference: '3 Nephi 11:29',
+      prompt: 'He that hath the spirit of ___ is not of me, but is of the ___, who is the father of contention.',
+      answers: ['contention', 'devil'],
+      distractors: ['anger', 'pride', 'enemy', 'world', 'wicked']
+    },
+    {
+      id: 'vq28',
+      reference: 'Ether 12:27',
+      prompt: 'If men come unto me I will show unto them their ___; for if they humble themselves... and have faith in me, then will I make ___ things become strong unto them.',
+      answers: ['weakness', 'weak'],
+      distractors: ['sins', 'errors', 'small', 'lost', 'broken']
+    },
+    {
+      id: 'vq29',
+      reference: 'Moroni 7:47',
+      prompt: 'Charity is the pure ___ of Christ, and it ___ forever.',
+      answers: ['love', 'endureth'],
+      distractors: ['gift', 'light', 'remaineth', 'liveth', 'standeth']
+    },
+    {
+      id: 'vq30',
+      reference: 'Moroni 10:4',
+      prompt: 'Ask God... if these things are not true; and if ye shall ask with a ___ heart, with real ___, having faith in Christ, he will manifest the truth of it unto you.',
+      answers: ['sincere', 'intent'],
+      distractors: ['pure', 'broken', 'purpose', 'desire', 'faith']
     }
   ];
 

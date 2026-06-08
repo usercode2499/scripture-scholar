@@ -3786,6 +3786,49 @@
     50%      { opacity: 1; transform: scale(1.08); }
   }
 
+  /* ============ MINI BADGES (lists, lobby, avatar corners) ============ */
+  /* Small badges appear MANY at once, so we strip the expensive bits — the
+     animated drop-shadow glows (per-frame blur repaints), holographic layers,
+     rotating rays/halo — and keep only cheap, GPU-friendly transforms: a gentle
+     breathe + a couple of light sparkles. A single STATIC glow keeps them pretty. */
+  .badge-mini.badge-fx-gold,
+  .badge-mini.badge-fx-silver,
+  .badge-mini.badge-lvl-20,
+  .badge-mini.badge-lvl-21,
+  .badge-mini.badge-lvl-22,
+  .badge-mini.badge-lvl-23,
+  .badge-mini.badge-lvl-24,
+  .badge-mini.badge-lvl-25 {
+    animation: badgeBreathe 3.4s ease-in-out infinite !important;
+    filter: drop-shadow(0 0 3px rgba(255, 215, 110, 0.55)) !important;
+  }
+  .badge-mini.badge-fx-silver {
+    filter: drop-shadow(0 0 3px rgba(210, 222, 238, 0.5)) !important;
+  }
+  /* Turn off the heavy layered effects entirely on mini badges */
+  .badge-mini .badge-halo,
+  .badge-mini .badge-holo,
+  .badge-mini .badge-holo2,
+  .badge-mini .badge-rays,
+  .badge-mini .badge-ring-glint,
+  .badge-mini .badge-aura,
+  .badge-mini .badge-aura2,
+  .badge-mini .badge-shine {
+    animation: none !important;
+    opacity: 0 !important;
+  }
+  /* Keep just three light sparkles twinkling (cheap opacity/scale only) */
+  .badge-mini .badge-sparkles { opacity: 1; animation: none !important; }
+  .badge-mini .badge-spark-4,
+  .badge-mini .badge-spark-5,
+  .badge-mini .badge-spark-6 { display: none !important; }
+  .badge-mini .badge-spark {
+    animation: badgeSparkleTwinkle 2.4s ease-in-out infinite !important;
+    filter: none !important;
+  }
+  .badge-mini .badge-spark-2 { animation-delay: 0.8s !important; }
+  .badge-mini .badge-spark-3 { animation-delay: 1.6s !important; }
+
   @media (prefers-reduced-motion: reduce) {
     .badge-fx-bronze .badge-shine,
     .badge-fx-silver .badge-shine,

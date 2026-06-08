@@ -132,6 +132,10 @@
 
     // Effect class drives the CSS animation by tier
     let fxClass = fx ? ('badge-fx-' + tier) : '';
+    // Small badges (lists, lobby, avatar corners) use a lighter "mini" effect
+    // set — no animated drop-shadow glow or holographic layers — so many of
+    // them can render at once without lag. Big showcase badges keep everything.
+    if (fx && size <= 56) fxClass += ' badge-mini';
     // Gold badges (20-25) get CUMULATIVE effects: each level adds a new effect
     // on top of all previous gold levels. Level 25 also gets a holographic sheen.
     if (fx && tier === 'gold' && level >= 20) {

@@ -160,5 +160,17 @@
     { id: 'g018', q: 'What worldwide meeting is held each April and October for members?', answer: 'General Conference', answerType: 'gk_thing', ref: 'Church practice', note: 'General Conference is broadcast worldwide twice a year.' },
     { id: 'g019', q: 'In what year did Joseph Smith obtain the gold plates from the hill?', answer: '1827', answerType: 'gk_date', ref: 'Church history', note: 'Joseph received the plates on September 22, 1827.' },
     { id: 'g020', q: 'What book was published in 1830 as another testament of Jesus Christ?', answer: 'The Book of Mormon', answerType: 'gk_thing', ref: 'Church history', note: 'About 5,000 copies of the Book of Mormon were printed in Palmyra in March 1830.' }
+,
+    // ---------- ADDED: more verified Book of Mormon facts ----------
+    { id: 'f101', q: 'Who was the Lamanite servant of Laban that joined Lehi\u2019s family in the wilderness?', answer: 'Zoram', answerType: 'person', ref: '1 Nephi 4:35', note: 'Zoram covenanted to join Nephi and went with the family to the promised land.' },
+    { id: 'f102', q: 'Which younger brother did Nephi consecrate as a priest and teacher to his people?', answer: 'Jacob', answerType: 'person', ref: '2 Nephi 5:26', note: 'Nephi consecrated Jacob and Joseph, his younger brothers, as priests and teachers.' },
+    { id: 'f103', q: 'What wicked king ordered the prophet Abinadi put to death by fire?', answer: 'King Noah', answerType: 'person', ref: 'Mosiah 17:20', note: 'King Noah had Abinadi burned after he refused to recall his testimony of Christ.' },
+    { id: 'f104', q: 'What sign was given in the Americas at the birth of Christ?', answer: 'A night with no darkness', answerType: 'event', ref: '3 Nephi 1:19', note: 'There was a day, a night, and a day as if one day with no darkness, plus a new star.' },
+    { id: 'f105', q: 'How many disciples did Jesus Christ choose among the Nephites?', answer: 'Twelve', answerType: 'number', ref: '3 Nephi 12:1', note: 'Christ chose twelve Nephite disciples to lead and minister.' },
+    { id: 'f106', q: 'What did Nephi and Lehi see them encircled by in the Lamanite prison?', answer: 'Fire', answerType: 'object', ref: 'Helaman 5:23', note: 'Nephi and Lehi were encircled as if by fire and were not burned.' },
+    { id: 'f107', q: 'What land did the Nephites give the converted Lamanites (people of Ammon)?', answer: 'Jershon', answerType: 'place', ref: 'Alma 27:22', note: 'The people of Ammon were given the land of Jershon for their inheritance and protection.' },
+    { id: 'f108', q: 'What did the Zoramites climb to recite their proud, set prayer?', answer: 'The Rameumptom', answerType: 'object', ref: 'Alma 31:21', note: 'The Rameumptom was a high stand for the Zoramites\u2019 repetitive prayer.' },
+    { id: 'f109', q: 'Who led the 2,000 stripling warriors in battle?', answer: 'Helaman', answerType: 'person', ref: 'Alma 53:22', note: 'Helaman led the young warriors of the people of Ammon, and not one was slain.' },
+    { id: 'f110', q: 'What did Captain Moroni raise to rally the Nephites to defend their freedom?', answer: 'The title of liberty', answerType: 'object', ref: 'Alma 46:12', note: 'Moroni tore his coat and wrote the title of liberty to rally his people.' }
 
   ];
