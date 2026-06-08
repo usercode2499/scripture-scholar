@@ -2375,10 +2375,242 @@
     }
 
 
+,
+    ch26: {
+      id: 'ch26', chapter: 26, range: 'Alma 8–12', title: "Amulek and the Word", subtitle: "Two witnesses in Ammonihah", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-26?lang=eng',
+      reading: { body: [
+        "Alma went to preach in the wicked city of Ammonihah, but the people rejected him and cast him out. As he left, sorrowing, an angel appeared and commanded him to return.",
+        "Obeying quickly, Alma re-entered the city and asked a man for food. The man, Amulek, had been told by an angel to receive Alma. Amulek took him into his home, and the two became companions in testifying to the people.",
+        "When the lawyer Zeezrom tried to trap Amulek with clever questions and money, Amulek refused the bribe and testified boldly of the resurrection and the judgment. Alma then taught about faith, repentance, and the great plan of redemption through Jesus Christ.",
+        "Alma taught that God's word, faith, and repentance prepare us to stand before God, and that we must not procrastinate the day of our repentance."
+      ], principles: [
+        "When we obey quickly, the Lord prepares the way",
+        "The Lord prepares people to receive His servants",
+        "Two witnesses strengthen the testimony of truth",
+        "We should not procrastinate the day of our repentance"
+      ] },
+      reflection: '"When has obeying a prompting quickly — even when it was hard — led to a blessing you didn\'t expect?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'Why did Alma return to Ammonihah after being cast out?', options: ['He forgot something', 'An angel commanded him to return', 'The people invited him back', 'He lost his way'], correct: 1, reference: 'Alma 8:16', explanation: "An angel appeared and commanded Alma to return and preach again to the city." },
+        { type: 'multiple_choice', prompt: 'Who received Alma into his home and became his missionary companion?', options: ['Amulek', 'Zeezrom', 'Gideon', 'Korihor'], correct: 0, reference: 'Alma 8:27', explanation: "Amulek, prepared by an angel, took Alma in and joined him in testifying." },
+        { type: 'multiple_choice', prompt: 'What did the lawyer Zeezrom offer Amulek to deny the existence of God?', options: ['A house', 'Money (silver)', 'A position of power', 'Land'], correct: 1, reference: 'Alma 11:22', explanation: "Zeezrom offered Amulek six onties of silver to deny the existence of a Supreme Being, which Amulek refused." },
+        { type: 'fill_blank', prompt: 'Amulek and Alma taught about the great plan of ______ through Jesus Christ.', answer: 'redemption', acceptable: ['redemption'], reference: 'Alma 12:25', explanation: "Alma taught about the plan of redemption, prepared from the foundation of the world through Christ." },
+        { type: 'multiple_choice', prompt: 'What did Alma teach we should not procrastinate?', options: ['Our meals', 'The day of our repentance', 'Our travels', 'Our work'], correct: 1, reference: 'Alma 13:21 / 34:33', explanation: "Alma and Amulek pleaded with the people not to procrastinate the day of their repentance." }
+      ]
+    },
+    ch27: {
+      id: 'ch27', chapter: 27, range: 'Alma 13–16', title: "Faith and Deliverance", subtitle: "The trials of Ammonihah", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-27?lang=eng',
+      reading: { body: [
+        "Alma taught about the holy order of God — the priesthood — and how those who are faithful may enter into the rest of the Lord. Many believed, including the converted lawyer Zeezrom.",
+        "The wicked of Ammonihah, however, gathered the believing women and children and cast them into a fire, along with the scriptures. Amulek wanted to stop it, but Alma said the Lord receives the righteous unto Himself and would judge those who did this.",
+        "Alma and Amulek were imprisoned, mocked, smitten, and left without food for many days. Finally, in the strength of the Lord, they stood, and the prison walls collapsed, slaying their persecutors while they were delivered unharmed.",
+        "Zeezrom, sick with fever from guilt, was healed by Alma after confessing his faith in Christ. He was baptized and began to preach. Later the city of Ammonihah was destroyed in a single day by the Lamanites."
+      ], principles: [
+        "The priesthood is the holy order of God",
+        "The Lord receives the faithful, even through trials",
+        "God can deliver His servants in His own time",
+        "Sincere repentance brings healing and peace"
+      ] },
+      reflection: '"How do you keep faith when the Lord allows trials to continue rather than removing them right away?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'What happened to the believers\' scriptures in Ammonihah?', options: ['They were hidden safely', 'They were cast into the fire', 'They were sold', 'They were buried'], correct: 1, reference: 'Alma 14:8', explanation: "The wicked cast the believing women and children, along with their records, into the fire." },
+        { type: 'multiple_choice', prompt: 'How were Alma and Amulek delivered from prison?', options: ['An angel freed them', 'The prison walls fell down', 'They dug out', 'The guards released them'], correct: 1, reference: 'Alma 14:27', explanation: "In the strength of the Lord, the prison walls were rent and fell, slaying the persecutors while Alma and Amulek were unharmed." },
+        { type: 'multiple_choice', prompt: 'Which converted lawyer was healed of a fever after confessing faith in Christ?', options: ['Zeezrom', 'Korihor', 'Nehor', 'Gideon'], correct: 0, reference: 'Alma 15:11', explanation: "Zeezrom, sick because of his guilt, was healed by Alma after he believed in Christ, and was then baptized." },
+        { type: 'fill_blank', prompt: 'Alma taught about the holy ______ of God — the priesthood.', answer: 'order', acceptable: ['order'], reference: 'Alma 13:1', explanation: "Alma taught of the holy order of God by which His servants are called to teach the people." },
+        { type: 'multiple_choice', prompt: 'What eventually happened to the city of Ammonihah?', options: ['It prospered', 'It was destroyed in one day by the Lamanites', 'It was abandoned', 'It became the capital'], correct: 1, reference: 'Alma 16:9–10', explanation: "The Lamanites destroyed the whole city of Ammonihah in a single day, fulfilling the words of the prophets." }
+      ]
+    },
+    ch28: {
+      id: 'ch28', chapter: 28, range: 'Alma 17–22', title: "The Sons of Mosiah", subtitle: "Missionaries to the Lamanites", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-28?lang=eng',
+      reading: { body: [
+        "The sons of Mosiah — Ammon, Aaron, Omner, and Himni — refused to be kings and instead went to preach to the Lamanites, having prepared themselves through prayer, fasting, and study.",
+        "Ammon served King Lamoni and defended his flocks at the waters of Sebus, smiting off the arms of those who scattered them. Amazed, the king listened as Ammon taught him of God and the plan of redemption; the king and his household were converted.",
+        "Abish, a Lamanite woman already converted, gathered the people to witness the miracle at the king's court. Aaron, meanwhile, taught Lamoni's father, the king over all the land, who was also converted and opened his lands to the missionaries.",
+        "Through these labors, thousands of Lamanites came to know the Lord and never fell away."
+      ], principles: [
+        "Preparation through prayer and study precedes powerful service",
+        "Faithful service opens hearts to the gospel",
+        "One converted person can influence many",
+        "The Lord changes hearts through His servants"
+      ] },
+      reflection: '"How can quiet, faithful service — like Ammon tending flocks — open doors to share what you believe?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'What did the sons of Mosiah choose instead of becoming kings?', options: ['To become merchants', 'To preach to the Lamanites', 'To become judges', 'To stay home'], correct: 1, reference: 'Mosiah 28:10 / Alma 17:6', explanation: "They declined the kingdom and chose to preach the gospel to the Lamanites." },
+        { type: 'multiple_choice', prompt: 'How did Ammon defend King Lamoni\'s flocks at the waters of Sebus?', options: ['He hid the sheep', 'He smote off the arms of the attackers', 'He built a fence', 'He called for soldiers'], correct: 1, reference: 'Alma 17:37', explanation: "Ammon smote off the arms of those who tried to scatter the king's flocks, astonishing the other servants." },
+        { type: 'multiple_choice', prompt: 'Who was the Lamanite woman who gathered the people to see the miracle at Lamoni\'s court?', options: ['Abish', 'Sariah', 'Isabel', 'Sarah'], correct: 0, reference: 'Alma 19:16', explanation: "Abish, already converted to the Lord, ran from house to house to gather the people." },
+        { type: 'multiple_choice', prompt: 'Which son of Mosiah taught and converted Lamoni\'s father, the king over all the land?', options: ['Aaron', 'Ammon', 'Omner', 'Himni'], correct: 0, reference: 'Alma 22:1', explanation: "Aaron taught the great king the plan of redemption, and the king was converted." },
+        { type: 'fill_blank', prompt: 'Ammon defended the king\'s flocks at the waters of ______.', answer: 'Sebus', acceptable: ['sebus'], reference: 'Alma 17:26', explanation: "The waters of Sebus were where the king's flocks were gathered and where Ammon proved his faithfulness." }
+      ]
+    },
+    ch29: {
+      id: 'ch29', chapter: 29, range: 'Alma 23–29', title: "Buried Weapons", subtitle: "The people of Ammon and Korihor", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-28?lang=eng',
+      reading: { body: [
+        "The converted Lamanites took upon themselves the name Anti-Nephi-Lehies. As a covenant of peace, they buried their weapons of war deep in the earth, vowing never to shed blood again.",
+        "When attacked, they would not take up arms; many were slain as they prayed, and the sight of their faith led even more of their attackers to be converted. For their safety, the Nephites gave them the land of Jershon.",
+        "Ammon rejoiced in the Lord's goodness, saying he could not boast in himself but would boast of his God, through whom they had done mighty miracles.",
+        "Later the anti-Christ Korihor preached that there would be no Christ. He demanded a sign and was struck dumb; he confessed that he had always known there was a God, and was eventually trodden down and killed."
+      ], principles: [
+        "Covenants can require great sacrifice",
+        "Faithful example can convert even enemies",
+        "We boast not in ourselves but in God",
+        "Denying Christ leads to spiritual ruin"
+      ] },
+      reflection: '"What \'weapon\' — a habit, grudge, or fear — might the Lord be inviting you to bury for good?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'What did the converted Lamanites bury as a covenant of peace?', options: ['Their treasures', 'Their weapons of war', 'Their records', 'Their idols'], correct: 1, reference: 'Alma 24:17', explanation: "They buried their swords deep in the earth as a testimony that they would never shed blood again." },
+        { type: 'multiple_choice', prompt: 'What name did these converted Lamanites take upon themselves?', options: ['Nephites', 'Anti-Nephi-Lehies', 'Zoramites', 'Mulekites'], correct: 1, reference: 'Alma 23:17', explanation: "They called themselves Anti-Nephi-Lehies to distinguish themselves from the other Lamanites." },
+        { type: 'multiple_choice', prompt: 'What land did the Nephites give the people of Ammon for safety?', options: ['Jershon', 'Bountiful', 'Zarahemla', 'Nephi'], correct: 0, reference: 'Alma 27:22', explanation: "The Nephites granted them the land of Jershon and guarded them with their armies." },
+        { type: 'multiple_choice', prompt: 'What happened to the anti-Christ Korihor after he demanded a sign?', options: ['He was forgiven', 'He was struck dumb', 'He became a prophet', 'He fled the land'], correct: 1, reference: 'Alma 30:50', explanation: "Korihor was struck dumb and later confessed he had always known there was a God." },
+        { type: 'fill_blank', prompt: 'Ammon declared he would not boast in himself, but would boast of his ______.', answer: 'God', acceptable: ['god'], reference: 'Alma 26:12', explanation: "Ammon rejoiced that in the strength of the Lord they could do all things." }
+      ]
+    },
+    ch30: {
+      id: 'ch30', chapter: 30, range: 'Alma 30–31', title: "The Seed of Faith", subtitle: "Korihor and the Zoramites", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-29?lang=eng',
+      reading: { body: [
+        "After Korihor's downfall, Alma learned that the Zoramites had fallen into apostasy. They had built a high stand called the Rameumptom, where each person recited the same proud, set prayer, thanking God that they were chosen and others were not.",
+        "Distressed by their wickedness and pride, Alma led a mission to reclaim them, praying for strength and for success in bringing them back to Christ.",
+        "Many of the poor among the Zoramites, cast out of their synagogues because of their humble clothing, came to Alma to learn. He taught them on a hill called Onidah.",
+        "These humble poor were prepared to hear the word, showing that humility — even when forced by circumstances — can open the heart to faith."
+      ], principles: [
+        "Pride and set prayers can replace true worship",
+        "The Lord strengthens those who serve in hard places",
+        "Humility prepares the heart to receive the word",
+        "Affliction can lead us to seek God"
+      ] },
+      reflection: '"When has being humbled — even unwillingly — made you more open to God than when things were easy?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'What was the high stand the Zoramites used for their set prayer?', options: ['The Liahona', 'The Rameumptom', 'The title of liberty', 'The tower of Sherrizah'], correct: 1, reference: 'Alma 31:21', explanation: "The Zoramites climbed the Rameumptom one at a time to recite the same proud prayer." },
+        { type: 'multiple_choice', prompt: 'Why were the poor Zoramites cast out of their synagogues?', options: ['They were too loud', 'Because of their coarse, humble clothing', 'They could not read', 'They were foreigners'], correct: 1, reference: 'Alma 32:2–3', explanation: "The poor were despised and cast out because of their poverty and coarse apparel." },
+        { type: 'multiple_choice', prompt: 'On what hill did Alma teach the humble poor?', options: ['Onidah', 'Cumorah', 'Manti', 'Shim'], correct: 0, reference: 'Alma 32:4', explanation: "A great multitude of the poor gathered to Alma on the hill Onidah." },
+        { type: 'multiple_choice', prompt: 'Why did Alma pray for strength before teaching the Zoramites?', options: ['He was tired', 'He was distressed by their wickedness and pride', 'He was lost', 'He was afraid of the weather'], correct: 1, reference: 'Alma 31:30–33', explanation: "Alma's soul was grieved by the iniquity of the people, and he prayed for comfort and success." },
+        { type: 'fill_blank', prompt: 'The Zoramites recited their prayer atop a stand called the ______.', answer: 'Rameumptom', acceptable: ['rameumptom'], reference: 'Alma 31:21', explanation: "The Rameumptom was the holy stand where the Zoramites offered their repetitive, prideful prayer." }
+      ]
+    },
+    ch31: {
+      id: 'ch31', chapter: 31, range: 'Alma 32–35', title: "Experiment Upon the Word", subtitle: "Faith as a seed", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-30?lang=eng',
+      reading: { body: [
+        "Alma taught the humble poor that faith is not a perfect knowledge. He compared the word of God to a seed: if we give place for it and do not cast it out, we can experiment upon the word.",
+        "If the seed is good, it will begin to swell, enlarge the soul, and enlighten the understanding — and this is how we know the word is good. By nourishing it with faith and patience, the seed grows into a tree bearing the fruit of eternal life.",
+        "Amulek then testified of the Atonement of Jesus Christ — a great and last sacrifice, infinite and eternal — and pleaded with the people not to procrastinate the day of their repentance, for this life is the time to prepare to meet God.",
+        "Many of the Zoramite poor believed and were cast out, so the people of Ammon received them into the land of Jershon."
+      ], principles: [
+        "Faith is not a perfect knowledge",
+        "We can experiment upon the word of God",
+        "Nourishing faith leads to the fruit of eternal life",
+        "This life is the time to prepare to meet God"
+      ] },
+      reflection: '"What \'seed\' of faith are you nourishing right now, and how have you seen it begin to swell?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'To what did Alma compare the word of God?', options: ['A river', 'A seed', 'A sword', 'A mountain'], correct: 1, reference: 'Alma 32:28', explanation: "Alma compared the word to a seed that, if planted and nourished, grows in our hearts." },
+        { type: 'fill_blank', prompt: 'Alma said that faith is not a perfect ______.', answer: 'knowledge', acceptable: ['knowledge'], reference: 'Alma 32:21', explanation: "Faith is to hope for things which are not seen but are true; it is not a perfect knowledge." },
+        { type: 'multiple_choice', prompt: 'According to Amulek, what is this life the time to do?', options: ['Gather riches', 'Prepare to meet God', 'Travel the world', 'Build cities'], correct: 1, reference: 'Alma 34:32', explanation: "Amulek taught that this life is the time to prepare to meet God and not procrastinate repentance." },
+        { type: 'multiple_choice', prompt: 'How did Amulek describe the Atonement of Jesus Christ?', options: ['A small offering', 'A great and last sacrifice, infinite and eternal', 'A temporary fix', 'A symbol only'], correct: 1, reference: 'Alma 34:10', explanation: "Amulek testified that the Atonement is a great and last sacrifice, infinite and eternal." },
+        { type: 'multiple_choice', prompt: 'When the believing Zoramites were cast out, who received them?', options: ['The Lamanite king', 'The people of Ammon in Jershon', 'King Noah', 'No one'], correct: 1, reference: 'Alma 35:6–9', explanation: "The people of Ammon received the cast-out believers into the land of Jershon." }
+      ]
+    },
+    ch32: {
+      id: 'ch32', chapter: 32, range: 'Alma 36–39', title: "Counsel to His Sons", subtitle: "Alma's testimony of redemption", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-31?lang=eng',
+      reading: { body: [
+        "Alma gave personal counsel to each of his sons. To Helaman he recounted his own conversion — how, as an angel rebuked him, he was harrowed by the memory of his sins for three days, then cried to Jesus Christ for mercy and was filled with joy.",
+        "He entrusted Helaman with the sacred records and the Liahona, teaching that by small and simple means the Lord brings to pass great things, and that the Liahona had worked according to the faith of those who followed it.",
+        "To his faithful son Shiblon, Alma counseled steadiness and to bridle his passions that he might be filled with love.",
+        "To Corianton, who had sinned, Alma taught the plan of restoration and justice, reminding him that wickedness never was happiness, and calling him to repent and continue preaching."
+      ], principles: [
+        "Christ can turn our deepest pain into joy",
+        "By small and simple things great things come to pass",
+        "Bridle your passions to be filled with love",
+        "Wickedness never was happiness"
+      ] },
+      reflection: '"Which of Alma\'s words to his sons speaks most to your life right now — and why?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'For how long was Alma harrowed by the memory of his sins?', options: ['One day', 'Three days and three nights', 'A week', 'A year'], correct: 1, reference: 'Alma 36:16', explanation: "Alma was racked with torment for three days and three nights until he called upon Jesus Christ." },
+        { type: 'multiple_choice', prompt: 'What did Alma give Helaman along with the records?', options: ['A sword', 'The Liahona (the ball or director)', 'A crown', 'A map'], correct: 1, reference: 'Alma 37:38', explanation: "Alma entrusted Helaman with the sacred records and the Liahona, the director that worked by faith." },
+        { type: 'fill_blank', prompt: 'Alma taught that by small and simple things are great things brought to ______.', answer: 'pass', acceptable: ['pass'], reference: 'Alma 37:6', explanation: "Alma taught Helaman that the Lord works mighty purposes through small and simple means." },
+        { type: 'multiple_choice', prompt: 'What did Alma counsel his son Shiblon to bridle?', options: ['His horse', 'His passions', 'His tongue only', 'His spending'], correct: 1, reference: 'Alma 38:12', explanation: "Alma counseled Shiblon to bridle all his passions that he might be filled with love." },
+        { type: 'multiple_choice', prompt: 'What did Alma teach his son Corianton about wickedness?', options: ['It brings riches', 'Wickedness never was happiness', 'It is sometimes good', 'It has no consequences'], correct: 1, reference: 'Alma 41:10', explanation: "Alma taught Corianton the plan of restoration, reminding him that wickedness never was happiness." }
+      ]
+    },
+    ch33: {
+      id: 'ch33', chapter: 33, range: 'Alma 40–42', title: "The Plan of Restoration", subtitle: "Resurrection, justice, and mercy", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-31?lang=eng',
+      reading: { body: [
+        "Continuing his counsel to Corianton, Alma taught about the resurrection: that the spirits of all people return to God who gave them life, the righteous to a state of happiness called paradise, and the wicked to outer darkness, to await the resurrection.",
+        "In the resurrection, the spirit and body are reunited in their perfect form, never to be divided again. This restoration brings each person to be judged according to their works and desires.",
+        "Alma explained the plan of restoration: good is restored for good, evil for evil. He taught how justice and mercy both have their claim, and that mercy cannot rob justice — but through the Atonement, Christ satisfies the demands of justice for those who repent.",
+        "He pleaded with Corianton not to risk one more offense, but to let these truths trouble him unto repentance, and to come unto Christ."
+      ], principles: [
+        "The resurrection reunites spirit and body perfectly",
+        "We are judged by our works and desires",
+        "Justice and mercy both have their claims",
+        "The Atonement allows mercy to satisfy justice for the repentant"
+      ] },
+      reflection: '"How does understanding both the justice and the mercy of God change the way you approach repentance?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'In the resurrection, what is reunited never to be divided again?', options: ['Friends and family', 'The spirit and the body', 'Nations', 'Cities'], correct: 1, reference: 'Alma 40:23', explanation: "Alma taught that the soul (spirit and body) is restored to its perfect frame in the resurrection." },
+        { type: 'multiple_choice', prompt: 'According to Alma, by what are we judged?', options: ['Our wealth', 'Our works and desires', 'Our age', 'Our birthplace'], correct: 1, reference: 'Alma 41:3', explanation: "Alma taught that people are restored and judged according to their works and the desires of their hearts." },
+        { type: 'fill_blank', prompt: 'Alma taught that mercy cannot rob ______.', answer: 'justice', acceptable: ['justice'], reference: 'Alma 42:25', explanation: "Alma taught that mercy cannot rob justice, but through the Atonement Christ satisfies justice for the repentant." },
+        { type: 'multiple_choice', prompt: 'What does the plan of restoration mean?', options: ['Good is restored for good, evil for evil', 'Everyone gets the same reward', 'Nothing changes', 'Only the rich are saved'], correct: 0, reference: 'Alma 41:13', explanation: "The plan of restoration means that what we send out — good or evil — returns to us." },
+        { type: 'multiple_choice', prompt: 'What did Alma plead with Corianton to let trouble him?', options: ['His enemies', 'These truths, unto repentance', 'The weather', 'His wealth'], correct: 1, reference: 'Alma 42:29', explanation: "Alma urged Corianton to let his sins trouble him only enough to bring him to repentance." }
+      ]
+    },
+    ch34: {
+      id: 'ch34', chapter: 34, range: 'Alma 43–52', title: "The Title of Liberty", subtitle: "Captain Moroni defends freedom", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-32?lang=eng',
+      reading: { body: [
+        "When the Lamanites came to war, the Nephites were led by Captain Moroni, a mighty man of faith. He prepared his people with armor and fought only to defend their families, freedom, and religion.",
+        "When the dissenter Amalickiah sought to destroy the freedom of the people, Moroni tore his coat and wrote upon it: 'In memory of our God, our religion, and freedom, and our peace, our wives, and our children.' He fastened it on a pole as the title of liberty and called the people to covenant to defend their liberty.",
+        "Amalickiah, through treachery and murder, made himself king of the Lamanites and stirred them to war. The brave Teancum stole into the enemy camp by night and put a javelin through Amalickiah's heart.",
+        "Mormon wrote that if all men had been like Moroni, the very powers of hell would have been shaken; he was a man who did not delight in bloodshed but in defending his people."
+      ], principles: [
+        "We may righteously defend our families and freedom",
+        "Standing for liberty requires courage and covenant",
+        "Pride and treachery destroy nations",
+        "Righteous leaders defend rather than delight in war"
+      ] },
+      reflection: '"What does it look like to raise your own \'title of liberty\' — to stand for faith and family in your daily life?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'Who was the Nephite captain who raised the title of liberty?', options: ['Captain Moroni', 'Teancum', 'Helaman', 'Pahoran'], correct: 0, reference: 'Alma 46:12', explanation: "Captain Moroni tore his coat and made the title of liberty to rally the Nephites." },
+        { type: 'fill_blank', prompt: 'The title of liberty read: "In memory of our God, our religion, and ______..."', answer: 'freedom', acceptable: ['freedom'], reference: 'Alma 46:12', explanation: "Moroni wrote of God, religion, freedom, peace, wives, and children on the title of liberty." },
+        { type: 'multiple_choice', prompt: 'How did Moroni prepare his armies that gave them advantage?', options: ['With armor and shields', 'With more horses', 'With larger swords', 'With walls'], correct: 0, reference: 'Alma 43:19', explanation: "Moroni had prepared his people with breastplates and shields, which the Lamanites lacked." },
+        { type: 'multiple_choice', prompt: 'Who put a javelin through the Lamanite king Amalickiah?', options: ['Teancum', 'Moroni', 'Lehi', 'Helaman'], correct: 0, reference: 'Alma 51:34', explanation: "Teancum crept into the camp by night and slew Amalickiah with a javelin." },
+        { type: 'multiple_choice', prompt: 'What did Mormon say would happen if all men were like Moroni?', options: ['The powers of hell would be shaken forever', 'They would be rich', 'There would be no temples', 'Nothing'], correct: 0, reference: 'Alma 48:17', explanation: "Mormon praised Moroni, saying if all men were like him, the powers of hell would have been shaken." }
+      ]
+    },
+    ch35: {
+      id: 'ch35', chapter: 35, range: 'Alma 53–63', title: "The Stripling Warriors", subtitle: "Faith taught by their mothers", available: true, xpReward: 50,
+      sourceUrl: 'https://www.churchofjesuschrist.org/study/manual/book-of-mormon-teacher-manual/chapter-33?lang=eng',
+      reading: { body: [
+        "The people of Ammon, who had covenanted not to take up arms, had sons who had made no such covenant. Two thousand of these young men chose to defend their country, and they asked Helaman to be their leader.",
+        "These stripling warriors were exceedingly valiant for courage, strength, and activity — but most of all, they were true at all times to whatever they were entrusted. They had been taught by their mothers that if they did not doubt, God would deliver them.",
+        "In a fierce battle, all two thousand fought, and though many were wounded, not one of them was slain. They did not doubt that God would deliver them, and He did, according to their faith.",
+        "Later, Captain Moroni wrote to the chief judge Pahoran for help, and learned Pahoran had been driven from the judgment seat by rebels. Together they restored order, and through faith and unity the Nephites preserved their freedom."
+      ], principles: [
+        "Faith taught in the home gives strength in trial",
+        "Being true to trust is a mark of true discipleship",
+        "God delivers those who do not doubt",
+        "Unity and faith preserve a people"
+      ] },
+      reflection: '"Who first taught you to trust God — and how does that early teaching still strengthen you today?"',
+      questions: [
+        { type: 'multiple_choice', prompt: 'How many stripling warriors first followed Helaman?', options: ['Two thousand', 'One hundred', 'Ten thousand', 'Five hundred'], correct: 0, reference: 'Alma 53:22', explanation: "Two thousand young men of the people of Ammon went to battle under Helaman." },
+        { type: 'fill_blank', prompt: 'The young warriors had been taught by their ______ that if they did not doubt, God would deliver them.', answer: 'mothers', acceptable: ['mothers'], reference: 'Alma 56:47', explanation: "The stripling warriors\' faith came from the teaching of their mothers." },
+        { type: 'multiple_choice', prompt: 'After the fierce battle, how many of the stripling warriors were slain?', options: ['Not one', 'Half of them', 'A hundred', 'All but two'], correct: 0, reference: 'Alma 57:25', explanation: "Though many were wounded, not one of the stripling warriors was slain, because of their faith." },
+        { type: 'multiple_choice', prompt: 'What was the greatest quality of the stripling warriors?', options: ['Their wealth', 'They were true at all times to whatever was entrusted to them', 'Their height', 'Their speed only'], correct: 1, reference: 'Alma 53:20', explanation: "They were valiant, but above all they were true and faithful in every trust." },
+        { type: 'multiple_choice', prompt: 'Who had been driven from the judgment seat, prompting Moroni to march to his aid?', options: ['Pahoran', 'Nephihah', 'Alma', 'Lamoni'], correct: 0, reference: 'Alma 61:1–2', explanation: "Pahoran had been driven from the judgment seat by the king-men; Moroni came to help restore order." }
+      ]
+    }
+
   };
 
   // Order in which lessons appear on the path
-  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16', 'ch17', 'ch18', 'ch19', 'ch20', 'ch21', 'ch22', 'ch23', 'ch24', 'ch25'];
+  const LESSON_ORDER = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8', 'ch9', 'ch10', 'ch11', 'ch12', 'ch13', 'ch14', 'ch15', 'ch16', 'ch17', 'ch18', 'ch19', 'ch20', 'ch21', 'ch22', 'ch23', 'ch24', 'ch25', 'ch26', 'ch27', 'ch28', 'ch29', 'ch30', 'ch31', 'ch32', 'ch33', 'ch34', 'ch35'];
 
   // ============ DAILY VERSES ============
   // 14 verses that rotate daily based on day-of-year

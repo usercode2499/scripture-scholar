@@ -1793,8 +1793,130 @@
       q: 'Match: "...I, Mormon, ...began to be old..." (handing the record to his son)',
       options: ['Mormon 6:6', 'Words of Mormon 1:1', 'Mormon 1:1', 'Moroni 1:1'], correct: 1,
       ref: 'Words of Mormon 1:1', note: 'Mormon wrote a few words and delivered the plates to his son Moroni.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'On what date was the Church organized?',
+      options: ['April 6, 1830', 'July 24, 1847', 'April 3, 1836', 'September 22, 1827'], correct: 0,
+      ref: 'Church history', note: 'The Church was formally organized on April 6, 1830, in Fayette, New York.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'How old was Joseph Smith at the time of the First Vision?',
+      options: ['14', '17', '21', '12'], correct: 0,
+      ref: 'Church history', note: 'Joseph Smith was 14 years old in the spring of 1820 when he received the First Vision.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Which angel appeared to Joseph Smith in his bedroom and told him of the gold plates?',
+      options: ['Moroni', 'Gabriel', 'Nephi', 'John the Baptist'], correct: 0,
+      ref: 'Church history', note: 'The angel Moroni appeared to Joseph Smith on the night of September 21\u201322, 1823.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'In what year was the First Vision?',
+      options: ['1820', '1830', '1805', '1844'], correct: 0,
+      ref: 'Church history', note: 'The First Vision occurred in the spring of 1820 in a grove near Joseph Smith\u2019s home.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Who restored the Aaronic Priesthood to Joseph Smith and Oliver Cowdery?',
+      options: ['John the Baptist', 'Peter, James, and John', 'Moroni', 'Elijah'], correct: 0,
+      ref: 'Church history', note: 'John the Baptist conferred the Aaronic Priesthood on May 15, 1829.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Who restored the Melchizedek Priesthood?',
+      options: ['Peter, James, and John', 'John the Baptist', 'Moses', 'Elias'], correct: 0,
+      ref: 'Church history', note: 'The ancient Apostles Peter, James, and John conferred the Melchizedek Priesthood in 1829.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'On what date were priesthood keys restored in the Kirtland Temple by Moses, Elias, and Elijah?',
+      options: ['April 3, 1836', 'April 3, 1936', 'April 6, 1830', 'May 15, 1829'], correct: 0,
+      ref: 'Church history', note: 'On April 3, 1836, in the Kirtland Temple, Moses, Elias, and Elijah restored important priesthood keys.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'What was the first temple completed in this dispensation?',
+      options: ['Kirtland Temple', 'Salt Lake Temple', 'Nauvoo Temple', 'St. George Temple'], correct: 0,
+      ref: 'Church history', note: 'The Kirtland Temple (Ohio), dedicated in 1836, was the first temple completed in this dispensation.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'In what U.S. state did Joseph Smith receive the First Vision?',
+      options: ['New York', 'Utah', 'Ohio', 'Illinois'], correct: 0,
+      ref: 'Church history', note: 'The First Vision took place in a grove of trees near Palmyra, New York.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'From what hill did Joseph Smith obtain the gold plates?',
+      options: ['Hill Cumorah', 'Hill Onidah', 'Mount Zion', 'Ensign Peak'], correct: 0,
+      ref: 'Church history', note: 'Joseph Smith obtained the plates from the Hill Cumorah on September 22, 1827.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'About how long did it take to translate the Book of Mormon (the surviving text)?',
+      options: ['About 3 months', 'About 10 years', 'About 1 week', 'About 5 years'], correct: 0,
+      ref: 'Church history', note: 'The bulk of the Book of Mormon was translated in roughly three months in early 1829.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'How many witnesses (besides Joseph Smith) testified of seeing the gold plates?',
+      options: ['Eleven (Three and Eight)', 'Three', 'Eight', 'Twelve'], correct: 0,
+      ref: 'Church history', note: 'Three Witnesses and Eight Witnesses\u201411 in all\u2014testified of the plates.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'To which valley did Brigham Young lead the pioneers in 1847?',
+      options: ['Salt Lake Valley', 'San Joaquin Valley', 'Jackson County', 'Nauvoo'], correct: 0,
+      ref: 'Church history', note: 'The pioneers entered the Salt Lake Valley in July 1847 under Brigham Young.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Who succeeded Joseph Smith as President of the Church?',
+      options: ['Brigham Young', 'John Taylor', 'Wilford Woodruff', 'Joseph F. Smith'], correct: 0,
+      ref: 'Church history', note: 'Brigham Young led the Church after the martyrdom of Joseph Smith in 1844.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'In what city is the worldwide headquarters of the Church?',
+      options: ['Salt Lake City, Utah', 'Independence, Missouri', 'Nauvoo, Illinois', 'Palmyra, New York'], correct: 0,
+      ref: 'Church history', note: 'The Church is headquartered in Salt Lake City, Utah.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'How many members are in the Quorum of the Twelve Apostles when it is full?',
+      options: ['Twelve', 'Three', 'Seven', 'Fifteen'], correct: 0,
+      ref: 'Church doctrine', note: 'The Quorum of the Twelve Apostles has twelve members; with the First Presidency there are 15 prophets, seers, and revelators.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'Who became President of the Church in 2018?',
+      options: ['Russell M. Nelson', 'Thomas S. Monson', 'Dallin H. Oaks', 'Gordon B. Hinckley'], correct: 0,
+      ref: 'Church history', note: 'Russell M. Nelson became the 17th President of the Church in January 2018.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'What is the name of the Church\u2019s worldwide service program for young members and others?',
+      options: ['Missionary service', 'Pioneer trek', 'Pony Express', 'Handcart company'], correct: 0,
+      ref: 'Church practice', note: 'The Church operates one of the largest volunteer missionary programs in the world.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'How many official Articles of Faith did Joseph Smith write?',
+      options: ['Thirteen', 'Ten', 'Twelve', 'Seven'], correct: 0,
+      ref: 'Articles of Faith', note: 'The Articles of Faith, written by Joseph Smith in 1842, number thirteen.'
+    },
+    {
+      type: 'multiple_choice', category: 'general_knowledge',
+      q: 'What sacred meeting is held twice a year where Church leaders address members worldwide?',
+      options: ['General Conference', 'Stake conference', 'Ward council', 'Family home evening'], correct: 0,
+      ref: 'Church practice', note: 'General Conference is held each April and October and is broadcast worldwide.'
     }
+
   ];
+
 
 
 
@@ -1805,7 +1927,8 @@
     { id: 'who_spoke',      label: 'Who Spoke It?',    icon: '🗣️', desc: 'Identify who said the words' },
     { id: 'verse_location', label: 'Where\u2019s the Verse?', icon: '🔎', desc: 'Find the reference' },
     { id: 'complete_verse', label: 'Complete the Verse', icon: '✍️', desc: 'Fill in the missing word' },
-    { id: 'reference_match', label: 'Reference Match', icon: '🎯', desc: 'Match the statement to its reference' }
+    { id: 'reference_match', label: 'Reference Match', icon: '🎯', desc: 'Match the statement to its reference' },
+    { id: 'general_knowledge', label: 'General Knowledge', icon: '🏛️', desc: 'Church history facts (beyond the Book of Mormon)' }
   ];
 
 
