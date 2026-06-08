@@ -259,7 +259,123 @@
       note: 'The Jaredites built tight barges, lit by stones the Lord touched, to cross the sea.'
     },
 
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'How were Nephi and Lehi protected when an army came to slay them in a Lamanite prison?',
+      options: ['They were encircled by fire', 'An angel freed them', 'The walls fell down', 'They turned invisible'], correct: 0,
+      ref: 'Helaman 5:23', note: 'Nephi and Lehi stood as if in the midst of fire, unburned, and the Lamanites dared not touch them.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'About how many Lamanites were baptized after Nephi and Lehi preached in Zarahemla?',
+      options: ['Eight thousand', 'Two thousand', 'Five hundred', 'Twelve'], correct: 0,
+      ref: 'Helaman 5:19', note: 'Eight thousand Lamanites were baptized, convinced of the wickedness of their fathers\u2019 traditions.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Which Nephite dissenter, imprisoned with the Lamanites, told them to cry unto the voice to remove the darkness?',
+      options: ['Aminadab', 'Amalickiah', 'Zeezrom', 'Korihor'], correct: 0,
+      ref: 'Helaman 5:39', note: 'Aminadab, a former Nephite, saw the angels and taught the Lamanites to repent and cry to God.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What overshadowed the people while Nephi and Lehi were protected in prison?',
+      options: ['A cloud of darkness', 'A great flood', 'A swarm of insects', 'A pillar of smoke'], correct: 0,
+      ref: 'Helaman 5:28', note: 'A cloud of darkness overshadowed the people until they repented and were filled with the Holy Ghost.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who was the first person Alma baptized at the waters of Mormon?',
+      options: ['Helam', 'Limhi', 'Gideon', 'Amulek'], correct: 0,
+      ref: 'Mosiah 18:12\u201314', note: 'Alma baptized Helam first, and Alma himself was buried in the water with him.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What did Lehi see in his dream that was filthy, leading to the great and spacious building?',
+      options: ['A river of filthy water', 'A pit of fire', 'A field of thorns', 'A dark forest'], correct: 0,
+      ref: '1 Nephi 8:32', note: 'A river of filthy water ran along the rod of iron; many were drowned or wandered off in forbidden paths.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What was the great and spacious building in Lehi\u2019s dream a symbol of?',
+      options: ['The pride of the world', 'The temple of God', 'The city of Jerusalem', 'The kingdom of heaven'], correct: 0,
+      ref: '1 Nephi 11:36', note: 'The great and spacious building represented the pride and vain imaginations of the world; it fell.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'How long did the Jaredite barges travel upon the waters to reach the promised land?',
+      options: ['344 days', '40 days', '8 years', '120 days'], correct: 0,
+      ref: 'Ether 6:11', note: 'The Jaredites were upon the water 344 days, driven by the wind toward the promised land.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who were the last two Jaredite leaders whose armies destroyed each other?',
+      options: ['Coriantumr and Shiz', 'Nephi and Laman', 'Amlici and Alma', 'Teancum and Ammoron'], correct: 0,
+      ref: 'Ether 15', note: 'The Jaredite nation was destroyed in civil war; Coriantumr finally beheaded Shiz.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What did the people build at the time the Jaredites\u2019 languages were confounded?',
+      options: ['A great tower', 'A great ship', 'A temple', 'A wall'], correct: 0,
+      ref: 'Ether 1:33', note: 'At the great tower the Lord confounded the language of the people; the brother of Jared was spared.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who was the chief captain over the Lamanites that Moroni\u2019s forces defeated, a Nephite dissenter?',
+      options: ['Zerahemnah', 'Lamoni', 'Antipus', 'Pahoran'], correct: 0,
+      ref: 'Alma 43:5', note: 'Zerahemnah led the Lamanite armies; Moroni\u2019s armor-clad soldiers prevailed at the river Sidon.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What two things did Moroni\u2019s armies wear that the Lamanites did not, giving them advantage?',
+      options: ['Armor and shields', 'Swords and bows', 'Helmets only', 'Cloaks and sandals'], correct: 0,
+      ref: 'Alma 43:19', note: 'Moroni had prepared his people with breastplates, arm-shields, and head-shields against the naked Lamanites.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who was the Lamanite servant-king whom Ammon served, later struck down as if dead by the Spirit?',
+      options: ['Lamoni', 'Amalickiah', 'Lehonti', 'Ammoron'], correct: 0,
+      ref: 'Alma 18:42', note: 'King Lamoni fell as if dead under the power of God after Ammon taught him, then rose converted.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Whom did Amalickiah have poisoned by degrees to seize the Lamanite throne?',
+      options: ['Lehonti', 'Lamoni', 'Ammoron', 'Zerahemnah'], correct: 0,
+      ref: 'Alma 47:18', note: 'Amalickiah had Lehonti poisoned little by little, then took command and the throne by treachery.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What did the people of Limhi discover that recorded a destroyed people (the Jaredites)?',
+      options: ['Twenty-four gold plates', 'A brass ball', 'A stone altar', 'A sealed book'], correct: 0,
+      ref: 'Mosiah 8:9', note: 'A search party found 24 gold plates among ruins and bones; Mosiah later translated them (book of Ether).'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Who translated the 24 gold plates using the interpreters, becoming a seer?',
+      options: ['King Mosiah', 'King Benjamin', 'Alma', 'Limhi'], correct: 0,
+      ref: 'Mosiah 28:11\u201317', note: 'King Mosiah translated the Jaredite record by means of the two seer stones (interpreters).'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'After Christ\u2019s visit, how many years did the people live in peace with all things common among them?',
+      options: ['About 200 years', 'About 40 years', 'About 1000 years', 'About 10 years'], correct: 0,
+      ref: '4 Nephi 1:22', note: 'For about two hundred years the Nephites and Lamanites lived in righteousness with no contention.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'Which prophet-leader gathered the Nephites to the land of Cumorah for the final battle?',
+      options: ['Mormon', 'Moroni', 'Nephi', 'Helaman'], correct: 0,
+      ref: 'Mormon 6:2', note: 'Mormon gathered all his people to the land of Cumorah for the last great battle against the Lamanites.'
+    },
+    {
+      type: 'multiple_choice', category: 'facts',
+      q: 'What did the Nephites name the place where they first pitched tents after crossing the sea?',
+      options: ['The land of first inheritance', 'Bountiful', 'Zarahemla', 'Nephi'], correct: 0,
+      ref: '2 Nephi 5 / Alma 22:28', note: 'The place of their first landing was later called the land of their first inheritance.'
+    },
+
     // ============ CATEGORY: WHO SPOKE THESE WORDS ============
+
 
     {
       type: 'who_spoke', category: 'who_spoke',
@@ -449,7 +565,117 @@
       note: 'Samuel the Lamanite prophesied from the city wall of blessings and judgments to come.'
     },
 
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...we will be true at all times... even if it so be that we die..."',
+      options: ['The stripling warriors', 'The sons of Mosiah', 'The people of Ammon', 'The Three Nephites'], correct: 0,
+      ref: 'Alma 53:20', note: 'Helaman\u2019s two thousand young warriors were exceedingly valiant, true, and faithful.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...I have lived to fulfil the commandment of God... do as ye have done."',
+      options: ['Lehi', 'King Benjamin', 'Mormon', 'Alma the Elder'], correct: 1,
+      ref: 'Mosiah 2:31', note: 'King Benjamin counseled his people to keep the commandments and be blessed.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...as the Lord liveth, and as we live, we will not deliver up our brethren to be slain..."',
+      options: ['The people of Ammon', 'The Nephite judges', 'The Lamanite kings', 'The Gadianton robbers'], correct: 0,
+      ref: 'Alma 27:7', note: 'Ammon\u2019s converts (people of Anti-Nephi-Lehi) were offered protection in the land of Jershon.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"Yea, come unto Christ, and be perfected in him..."',
+      options: ['Moroni', 'Mormon', 'Nephi', 'Jacob'], correct: 0,
+      ref: 'Moroni 10:32', note: 'Moroni\u2019s final exhortation to deny ungodliness and be perfected in Christ.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...I, Nephi, was constrained by the Spirit that I should slay Laban..."',
+      options: ['Nephi', 'Sam', 'Zoram', 'Lehi'], correct: 0,
+      ref: '1 Nephi 4:10', note: 'Nephi recounted how the Spirit constrained him to slay Laban to obtain the brass plates.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...he hath given them knowledge... and they have waxed strong in battle..."',
+      options: ['Mormon (of his soldiers)', 'Moroni', 'Helaman', 'Captain Teancum'], correct: 0,
+      ref: 'Mormon 2:24', note: 'Mormon led the Nephite armies and recorded their struggles in the final wars.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"And now my son, I have somewhat to say concerning the thing which our fathers call a ball, or director..."',
+      options: ['Alma (to Helaman)', 'Lehi (to Nephi)', 'King Mosiah', 'Nephi (to Sam)'], correct: 0,
+      ref: 'Alma 37:38', note: 'Alma taught Helaman that the Liahona worked by faith, a type of the word of Christ.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...there shall be no more disputations among you..."',
+      options: ['Jesus Christ', 'Nephi', 'Mormon', 'King Benjamin'], correct: 0,
+      ref: '3 Nephi 11:28', note: 'The risen Christ taught the Nephites to end contention over points of doctrine.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...this is the desires which I desired of him \u2014 that I might be an instrument in the hands of God..."',
+      options: ['Ammon', 'Aaron', 'Alma', 'Omner'], correct: 0,
+      ref: 'Alma 29:9', note: 'Ammon rejoiced in being an instrument to bring souls to repentance.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...we talk of Christ, we rejoice in Christ, we preach of Christ..."',
+      options: ['Nephi', 'Jacob', 'Lehi', 'Enos'], correct: 0,
+      ref: '2 Nephi 25:26', note: 'Nephi taught that they wrote and prophesied of Christ so their children would know the source of forgiveness.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...wickedness never was happiness." (counsel to a wayward son)',
+      options: ['Alma (to Corianton)', 'Lehi (to Laman)', 'Mosiah', 'Helaman'], correct: 0,
+      ref: 'Alma 41:10', note: 'Alma corrected his son Corianton, teaching the plan of restoration and justice.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...by small and simple things are great things brought to pass..."',
+      options: ['Alma (to Helaman)', 'Nephi', 'King Benjamin', 'Moroni'], correct: 0,
+      ref: 'Alma 37:6', note: 'Alma taught Helaman the power of small means while entrusting him with the records.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"O Lord, wilt thou comfort my soul... that I may have success in bringing them again unto thee in Christ."',
+      options: ['Alma', 'Ammon', 'Nephi', 'Mormon'], correct: 0,
+      ref: 'Alma 31:31\u201332', note: 'Alma prayed for strength as he led the mission to the apostate Zoramites.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...he that diligently seeketh shall find; and the mysteries of God shall be unfolded unto them..."',
+      options: ['Nephi', 'Alma', 'Jacob', 'Mormon'], correct: 1,
+      ref: 'Alma 12:9 (theme)', note: 'Alma taught that those who harden not their hearts receive the greater portion of the word.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...nevertheless, Lord, thy will be done, and not ours."',
+      options: ['The brother of Jared', 'Nephi', 'Lehi', 'Jared'], correct: 0,
+      ref: 'Ether 3:2 (theme)', note: 'The brother of Jared approached the Lord with humility before the sixteen stones were touched.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...ye are eternally indebted to your heavenly Father..."',
+      options: ['King Benjamin', 'King Mosiah', 'Alma', 'Lehi'], correct: 0,
+      ref: 'Mosiah 2:34', note: 'King Benjamin taught the people of their debt to God for life and blessings.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"Behold, I am Nephi. I am a man of God, being commanded of him..."',
+      options: ['Nephi (son of Helaman)', 'Nephi (son of Lehi)', 'Mormon', 'Samuel'], correct: 0,
+      ref: 'Helaman 7\u20138', note: 'Nephi, son of Helaman, prayed on his tower and revealed the murder of the chief judge.'
+    },
+    {
+      type: 'who_spoke', category: 'who_spoke',
+      q: '"...for behold, this life is the time for men to prepare to meet God..."',
+      options: ['Amulek', 'Alma', 'Abinadi', 'Nephi'], correct: 0,
+      ref: 'Alma 34:32', note: 'Amulek pleaded with the Zoramites not to procrastinate the day of their repentance.'
+    },
+
     // ============ CATEGORY: WHERE IS THIS VERSE FOUND ============
+
 
 
     {
@@ -721,7 +947,125 @@
       note: 'King Benjamin\u2019s people experienced a mighty change of heart through the Spirit.'
     },
 
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...he that hath eternal life is rich..."',
+      options: ['2 Nephi 9:18', 'Jacob 2:18', 'Alma 1:30', 'Mosiah 4:19'], correct: 1,
+      ref: 'Jacob 2:18', note: 'Jacob taught the Nephites to seek the kingdom of God before riches.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...the Spirit of the Lord doth not dwell in unholy temples..."',
+      options: ['Helaman 4:24', 'Alma 7:21', 'Mosiah 2:37', '1 Nephi 17:34'], correct: 0,
+      ref: 'Helaman 4:24', note: 'The Nephites lost strength as they drove the Spirit from among them.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...come unto Christ, and lay hold upon every good gift..."',
+      options: ['Moroni 10:30', 'Moroni 7:19', 'Ether 12:4', 'Mosiah 5:2'], correct: 0,
+      ref: 'Moroni 10:30', note: 'Part of Moroni\u2019s closing exhortation in the Book of Mormon.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...all things which are good cometh of God..."',
+      options: ['Moroni 7:12', 'Alma 5:40', 'Moroni 7:16', '2 Nephi 2:27'], correct: 0,
+      ref: 'Moroni 7:12', note: 'Mormon taught how to discern that which is of God from that which is of the devil.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...they were desirous to be baptized as a witness... that they had entered into a covenant..."',
+      options: ['Mosiah 18:10', 'Alma 7:15', '3 Nephi 11:23', 'Moroni 6:2'], correct: 0,
+      ref: 'Mosiah 18:10', note: 'Alma taught the people at the waters of Mormon about the baptismal covenant.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...the worth of souls is great in the sight of God..."',
+      options: ['Alma 39:17 (theme)', 'Mosiah 28:3', '2 Nephi 26:24', 'Jacob 5:74'], correct: 0,
+      ref: 'Alma 39 / theme', note: 'The Book of Mormon repeatedly affirms God\u2019s concern for every soul.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...whatsoever thing persuadeth men to do good is of me..."',
+      options: ['Ether 4:12', 'Moroni 7:16', '2 Nephi 33:10', 'Alma 5:40'], correct: 0,
+      ref: 'Ether 4:12', note: 'The Lord declared that all good persuasion comes from Him.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...I would that ye should impart of your substance to the poor..."',
+      options: ['Mosiah 4:26', 'Mosiah 18:27', 'Alma 1:27', '3 Nephi 13:1'], correct: 0,
+      ref: 'Mosiah 4:26', note: 'King Benjamin taught retaining a remission of sins by caring for the poor.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...they were called the people of God from that time forward..."',
+      options: ['Mosiah 18:17', 'Alma 5:62', '3 Nephi 26:21', 'Moroni 6:4'], correct: 0,
+      ref: 'Mosiah 18:17', note: 'Those baptized at the waters of Mormon were called the church and people of God.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...I will prepare the way before you, if it so be that ye shall keep my commandments..."',
+      options: ['1 Nephi 17:13', '1 Nephi 3:7', '2 Nephi 1:20', 'Mosiah 2:22'], correct: 0,
+      ref: '1 Nephi 17:13', note: 'The Lord promised to be the Nephites\u2019 light and guide in the wilderness.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...inasmuch as ye shall keep my commandments ye shall prosper in the land..."',
+      options: ['2 Nephi 1:20', 'Mosiah 1:7', 'Alma 9:13', 'Omni 1:6'], correct: 0,
+      ref: '2 Nephi 1:20', note: 'A recurring Book of Mormon promise, first given to Lehi\u2019s family.'
+    },
+
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...he that is filthy shall be filthy still..."',
+      options: ['Mormon 9:14', '2 Nephi 9:16', 'Alma 7:21', 'Moroni 10:34'], correct: 0,
+      ref: 'Mormon 9:14', note: 'Moroni on the unchanging state of souls at the final judgment.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...are ye stripped of pride? I say unto you, if ye are not ye are not prepared to meet God."',
+      options: ['Alma 5:28', 'Alma 5:14', 'Mosiah 3:19', 'Moroni 7:6'], correct: 0,
+      ref: 'Alma 5:28', note: 'Alma\u2019s probing questions to the people of Zarahemla.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...the Lord cannot look upon sin with the least degree of allowance..."',
+      options: ['Alma 45:16', '1 Nephi 10:21', 'Mosiah 2:38', 'Moroni 9:6'], correct: 0,
+      ref: 'Alma 45:16', note: 'Alma\u2019s prophecy and blessing upon the land.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...they were firm, and steadfast, and immovable in keeping the commandments of God..."',
+      options: ['Alma 1:25', '3 Nephi 6:14', 'Mosiah 5:15', 'Helaman 15:8'], correct: 0,
+      ref: 'Alma 1:25', note: 'The faithful endured persecution after Nehor\u2019s influence.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...the Lord God doth work by means to bring about his great and eternal purposes..."',
+      options: ['Alma 37:7', 'Alma 37:6', '1 Nephi 9:6', '2 Nephi 27:23'], correct: 0,
+      ref: 'Alma 37:7', note: 'Alma taught Helaman that the Lord works through small and simple means.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...do not suppose... that ye shall be carried to heaven... and there sit down..."',
+      options: ['Alma 5:6 (theme)', 'Alma 34:32', '2 Nephi 9:27', 'Mosiah 4:30'], correct: 0,
+      ref: 'Alma 5 / theme', note: 'Alma warned against complacency in seeking salvation.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...the Lord granteth unto all nations... to teach his word..."',
+      options: ['Alma 29:8', '2 Nephi 29:12', 'Mosiah 28:3', 'Moroni 7:16'], correct: 0,
+      ref: 'Alma 29:8', note: 'Alma taught the Lord\u2019s word goes to all nations in their own tongue.'
+    },
+    {
+      type: 'verse_location', category: 'verse_location',
+      q: '"...by their fruits ye shall know them..." (as taught at the temple in Bountiful)',
+      options: ['3 Nephi 14:20', '3 Nephi 11:10', 'Moroni 7:5', 'Alma 5:40'], correct: 0,
+      ref: '3 Nephi 14:20', note: 'The risen Christ taught the Nephites as in the Sermon on the Mount.'
+    },
+
     // ============ CATEGORY: COMPLETE THE VERSE ============
+
+
 
 
     {
@@ -976,7 +1320,182 @@
       note: 'King Benjamin taught parents to teach and provide for their children in righteousness.'
     },
 
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'But behold, I say unto you that ye must pray always, and not',
+      after: '...',
+      answer: 'faint',
+      acceptable: ['faint'],
+      distractors: ['cease', 'doubt', 'tire'],
+      ref: '2 Nephi 32:9', note: 'Nephi taught to pray always so the Lord will consecrate our performance.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'Behold, I am Jesus Christ, whom the prophets testified shall come into the',
+      after: '.',
+      answer: 'world',
+      acceptable: ['world'],
+      distractors: ['flesh', 'temple', 'land'],
+      ref: '3 Nephi 11:10', note: 'The risen Christ announced Himself to the Nephites at the temple in Bountiful.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'O remember, my son, and learn wisdom in thy',
+      after: '...',
+      answer: 'youth',
+      acceptable: ['youth'],
+      distractors: ['heart', 'days', 'home'],
+      ref: 'Alma 37:35', note: 'Alma\u2019s counsel to Helaman.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'See that ye bridle all your',
+      after: ', that ye may be filled with love...',
+      answer: 'passions',
+      acceptable: ['passions'],
+      distractors: ['desires', 'thoughts', 'fears'],
+      ref: 'Alma 38:12', note: 'Alma\u2019s counsel to his son Shiblon.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And ye shall offer for a sacrifice unto me a broken heart and a contrite',
+      after: '.',
+      answer: 'spirit',
+      acceptable: ['spirit'],
+      distractors: ['soul', 'mind', 'offering'],
+      ref: '3 Nephi 9:20', note: 'The Lord taught the new covenant sacrifice after His crucifixion.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'Behold, I have given unto you my gospel, and this is the gospel which I have given unto you \u2014 that I came into the world to do the will of my',
+      after: '.',
+      answer: 'Father',
+      acceptable: ['father'],
+      distractors: ['God', 'people', 'Maker'],
+      ref: '3 Nephi 27:13', note: 'Christ declared His gospel to the Nephite disciples.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And whatsoever thing persuadeth men to do good is of',
+      after: '.',
+      answer: 'me',
+      acceptable: ['me'],
+      distractors: ['God', 'heaven', 'Christ'],
+      ref: 'Ether 4:12', note: 'The Lord declared that all good persuasion comes from Him.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And it came to pass that I, Nephi, did make many',
+      after: ' out of wood...',
+      answer: 'arrows',
+      acceptable: ['arrows'],
+      distractors: ['ships', 'tools', 'plates'],
+      ref: '1 Nephi 16:23', note: 'After breaking his bow, Nephi made a new bow and arrows to obtain food.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And he commanded them that they should teach nothing save it were the things which he had',
+      after: '...',
+      answer: 'taught',
+      acceptable: ['taught'],
+      distractors: ['written', 'spoken', 'commanded'],
+      ref: 'Mosiah 18:19', note: 'Alma instructed the priests at the waters of Mormon.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And now, my beloved brethren, I would that ye should come unto Christ, who is the Holy One of',
+      after: '...',
+      answer: 'Israel',
+      acceptable: ['israel'],
+      distractors: ['God', 'heaven', 'Zion'],
+      ref: 'Omni 1:26', note: 'Amaleki exhorted all to come unto Christ and offer their whole souls.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And now I would that ye should be humble, and be submissive and',
+      after: '...',
+      answer: 'gentle',
+      acceptable: ['gentle'],
+      distractors: ['patient', 'meek', 'kind'],
+      ref: 'Alma 7:23', note: 'Alma listed the virtues the people of Gideon should cultivate.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And they did all declare unto the people the selfsame thing \u2014 that their hearts had been changed; that they had no more desire to do',
+      after: '.',
+      answer: 'evil',
+      acceptable: ['evil'],
+      distractors: ['sin', 'wrong', 'harm'],
+      ref: 'Mosiah 5:2', note: 'King Benjamin\u2019s people experienced a mighty change of heart.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'For behold, my brethren, it is given unto you to',
+      after: ' good from evil...',
+      answer: 'judge',
+      acceptable: ['judge'],
+      distractors: ['know', 'discern', 'tell'],
+      ref: 'Moroni 7:15', note: 'Mormon taught that the Light of Christ helps us judge good from evil.'
+    },
+
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And now... are ye stripped of',
+      after: '? I say unto you, if ye are not ye are not prepared to meet God.',
+      answer: 'pride',
+      acceptable: ['pride'],
+      distractors: ['envy', 'sin', 'fear'],
+      ref: 'Alma 5:28', note: 'Alma\u2019s searching question to the people of Zarahemla.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'For behold, the Lord God doth work by',
+      after: ' to bring about his great and eternal purposes...',
+      answer: 'means',
+      acceptable: ['means'],
+      distractors: ['power', 'wonders', 'angels'],
+      ref: 'Alma 37:7', note: 'Alma to Helaman on small and simple means.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And they were firm, and steadfast, and',
+      after: ' in keeping the commandments of God...',
+      answer: 'immovable',
+      acceptable: ['immovable'],
+      distractors: ['faithful', 'diligent', 'humble'],
+      ref: 'Alma 1:25', note: 'The faithful Nephites endured persecution.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'And whoso believeth in me, and is',
+      after: ', the same shall be saved...',
+      answer: 'baptized',
+      acceptable: ['baptized'],
+      distractors: ['faithful', 'humble', 'cleansed'],
+      ref: '3 Nephi 11:33', note: 'Christ declared His doctrine of faith and baptism to the Nephites.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'For we labor diligently to write, to persuade our children... to believe in',
+      after: '...',
+      answer: 'Christ',
+      acceptable: ['christ'],
+      distractors: ['God', 'him', 'truth'],
+      ref: '2 Nephi 25:23', note: 'Nephi: it is by grace we are saved, after all we can do.'
+    },
+    {
+      type: 'complete_verse', category: 'complete_verse',
+      before: 'Behold, I would exhort you that when ye shall read these things... that ye would remember how',
+      after: ' the Lord hath been unto the children of men...',
+      answer: 'merciful',
+      acceptable: ['merciful'],
+      distractors: ['good', 'patient', 'gracious'],
+      ref: 'Moroni 10:3', note: 'Moroni\u2019s preface to his promise about the Book of Mormon.'
+    },
+
     // ============ CATEGORY: REFERENCE MATCH (statement → reference) ============
+
+
 
     {
       type: 'multiple_choice', category: 'reference_match',
@@ -1159,8 +1678,124 @@
       options: ['Mosiah 18:17', 'Alma 5:62', '3 Nephi 12:1', 'Moroni 6:4'], correct: 0,
       ref: 'Mosiah 18:17', note: 'Alma baptized believers at the waters of Mormon and organized the church.'
     }
+,
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "O remember, my son, and learn wisdom in thy youth."',
+      options: ['Alma 37:35', 'Alma 38:12', 'Mosiah 1:16', 'Helaman 5:9'], correct: 0,
+      ref: 'Alma 37:35', note: 'Alma to Helaman.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "See that ye bridle all your passions, that ye may be filled with love."',
+      options: ['Alma 38:12', 'Alma 37:35', 'Moroni 7:48', '2 Nephi 9:51'], correct: 0,
+      ref: 'Alma 38:12', note: 'Alma to his son Shiblon.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Behold, I am Jesus Christ, whom the prophets testified shall come into the world."',
+      options: ['3 Nephi 11:10', '3 Nephi 27:13', 'Mosiah 15:1', 'Alma 7:11'], correct: 0,
+      ref: '3 Nephi 11:10', note: 'Christ\u2019s appearance to the Nephites.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "He that hath eternal life is rich."',
+      options: ['Jacob 2:18', '2 Nephi 9:18', 'Mosiah 4:19', 'Alma 1:30'], correct: 0,
+      ref: 'Jacob 2:18', note: 'Jacob taught to seek the kingdom of God before riches.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Whatsoever thing persuadeth men to do good is of me."',
+      options: ['Ether 4:12', 'Moroni 7:16', '2 Nephi 33:10', 'Alma 5:40'], correct: 0,
+      ref: 'Ether 4:12', note: 'The Lord on all good coming from Him.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Inasmuch as ye shall keep my commandments ye shall prosper in the land."',
+      options: ['2 Nephi 1:20', '1 Nephi 2:20', 'Mosiah 1:7', 'Alma 9:13'], correct: 0,
+      ref: '2 Nephi 1:20', note: 'A recurring promise to Lehi\u2019s descendants.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "I, Nephi, was constrained by the Spirit that I should slay Laban."',
+      options: ['1 Nephi 4:10', '1 Nephi 3:7', '1 Nephi 16:23', '2 Nephi 5:19'], correct: 0,
+      ref: '1 Nephi 4:10', note: 'Nephi obtaining the brass plates.'
+    },
 
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "Behold, here are the waters of Mormon... what have you against being baptized?"',
+      options: ['Mosiah 18:8', 'Mosiah 18:17', 'Alma 5:14', '3 Nephi 11:23'], correct: 0,
+      ref: 'Mosiah 18:8', note: 'Alma invited believers to baptism at the waters of Mormon.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "And now... are ye stripped of pride? ...are ye stripped of envy?"',
+      options: ['Alma 5:28', 'Alma 5:14', 'Mosiah 3:19', 'Moroni 7:45'], correct: 0,
+      ref: 'Alma 5:28', note: 'Alma\u2019s searching questions to the people of Zarahemla.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...the Lord God prepareth the way..." (small means)',
+      options: ['1 Nephi 3:7', '1 Nephi 17:3', '2 Nephi 5:19', 'Mosiah 1:7'], correct: 1,
+      ref: '1 Nephi 17:3', note: 'The Lord nourishes and strengthens those who keep His commandments.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...they did look forward to the coming of Christ..."',
+      options: ['Jarom 1:11', 'Enos 1:8', 'Omni 1:26', 'Jacob 4:4'], correct: 3,
+      ref: 'Jacob 4:4', note: 'The Nephite prophets knew of Christ and rejoiced in His coming.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...feast upon his love..." (Jacob exhorting his people)',
+      options: ['Jacob 3:2', 'Jacob 2:18', '2 Nephi 9:51', 'Alma 5:14'], correct: 0,
+      ref: 'Jacob 3:2', note: 'Jacob comforted the pure in heart to receive the pleasing word of God.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...the Lord cannot look upon sin with the least degree of allowance."',
+      options: ['Alma 45:16', 'Mosiah 3:19', '1 Nephi 10:21', 'Moroni 9:6'], correct: 0,
+      ref: 'Alma 45:16', note: 'Alma blessed the land and warned of the consequences of sin.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...they were firm, and steadfast, and immovable in keeping the commandments..."',
+      options: ['Alma 1:25', '3 Nephi 6:14', 'Helaman 15:8', 'Mosiah 5:15'], correct: 0,
+      ref: 'Alma 1:25', note: 'The faithful Nephites remained steadfast amid persecution.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...there was a strict command throughout all the churches that there should be no persecutions..."',
+      options: ['Alma 1:21', 'Mosiah 27:2', '4 Nephi 1:2', 'Alma 4:8'], correct: 1,
+      ref: 'Mosiah 27:2', note: 'King Mosiah commanded equality and an end to persecutions among the people.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...the Lord doth grant unto all nations... to teach his word..."',
+      options: ['Alma 29:8', 'Moroni 7:16', '2 Nephi 29:12', 'Jacob 5:3'], correct: 0,
+      ref: 'Alma 29:8', note: 'Alma taught that the Lord grants His word to all nations.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...and thus we see..." (the watchword of Mormon\u2019s lessons)',
+      options: ['Alma 30:60', 'Helaman 3:27', 'Alma 24:27', '3 Nephi 5:13'], correct: 2,
+      ref: 'Alma 24:27', note: 'Mormon often drew lessons with the phrase \u201cthus we see.\u201d'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...he that is filthy shall be filthy still..."',
+      options: ['Mormon 9:14', '2 Nephi 9:16', 'Alma 7:21', 'Moroni 10:34'], correct: 0,
+      ref: 'Mormon 9:14', note: 'Moroni declared the unchanging state of the righteous and the filthy at judgment.'
+    },
+    {
+      type: 'multiple_choice', category: 'reference_match',
+      q: 'Match: "...I, Mormon, ...began to be old..." (handing the record to his son)',
+      options: ['Mormon 6:6', 'Words of Mormon 1:1', 'Mormon 1:1', 'Moroni 1:1'], correct: 1,
+      ref: 'Words of Mormon 1:1', note: 'Mormon wrote a few words and delivered the plates to his son Moroni.'
+    }
   ];
+
 
 
 
@@ -1172,6 +1807,7 @@
     { id: 'complete_verse', label: 'Complete the Verse', icon: '✍️', desc: 'Fill in the missing word' },
     { id: 'reference_match', label: 'Reference Match', icon: '🎯', desc: 'Match the statement to its reference' }
   ];
+
 
   // Build a randomized set of questions for a game, drawing only from the
   // selected category ids (or all if none specified). Each is normalized

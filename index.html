@@ -1898,7 +1898,7 @@
   }
   .stat-tiles {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-bottom: 16px;
   }
@@ -3683,46 +3683,82 @@
   /* Hidden by default; each level class turns its effect on. Effects stack
      because the markup carries every class from 20 up to the badge's level. */
   .badge-holo { opacity: 0; mix-blend-mode: screen; }
+  .badge-holo2 { opacity: 0; mix-blend-mode: screen; }
+  .badge-rays { opacity: 0; transform-box: view-box; transform-origin: 50px 50px; }
   .badge-ring-glint { opacity: 0; }
   .badge-aura { opacity: 0; }
+  .badge-aura2 { opacity: 0; }
 
-  /* L20 — richer, faster gold glow than the standard gold tier */
-  .badge-lvl-20 { animation: badgeGold20Glow 2s ease-in-out infinite, badgeBreathe 2.8s ease-in-out infinite; }
+  /* L20 — richer, faster, brighter gold glow than the standard gold tier */
+  .badge-lvl-20 { animation: badgeGold20Glow 1.8s ease-in-out infinite, badgeBreathe 2.6s ease-in-out infinite; }
   @keyframes badgeGold20Glow {
-    0%, 100% { filter: drop-shadow(0 0 5px rgba(212,163,44,0.6)) drop-shadow(0 0 3px rgba(255,240,180,0.6)); }
-    50%      { filter: drop-shadow(0 0 22px rgba(252,224,120,1)) drop-shadow(0 0 12px rgba(255,210,90,0.9)); }
+    0%, 100% { filter: drop-shadow(0 0 7px rgba(255,215,90,0.85)) drop-shadow(0 0 4px rgba(255,245,200,0.8)); }
+    50%      { filter: drop-shadow(0 0 30px rgba(255,235,140,1)) drop-shadow(0 0 16px rgba(255,220,110,1)) drop-shadow(0 0 6px rgba(255,255,255,0.9)); }
   }
-  /* L21 — adds a rotating ring glint */
+  /* L21 — adds a rotating ring glint (brighter, thicker) */
   .badge-lvl-21 .badge-ring-glint {
     opacity: 1; transform-box: view-box; transform-origin: 50px 50px;
-    animation: badgeRingGlintSpin 3.5s linear infinite;
+    animation: badgeRingGlintSpin 2.8s linear infinite;
+    filter: drop-shadow(0 0 3px rgba(255,246,216,0.9));
   }
   @keyframes badgeRingGlintSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   /* L22 — adds a pulsing outer aura ring */
-  .badge-lvl-22 .badge-aura { opacity: 1; animation: badgeAuraPulse 2.2s ease-in-out infinite; }
+  .badge-lvl-22 .badge-aura { opacity: 1; animation: badgeAuraPulse 2s ease-in-out infinite; }
   @keyframes badgeAuraPulse {
-    0%, 100% { opacity: 0; transform: scale(0.92); }
-    50%      { opacity: 0.7; transform: scale(1.04); }
+    0%, 100% { opacity: 0; transform: scale(0.9); }
+    50%      { opacity: 0.9; transform: scale(1.06); }
   }
   /* L23 — adds a slow continuous sway/tilt */
-  .badge-lvl-23 { animation: badgeGold20Glow 2s ease-in-out infinite, badgeBreathe 2.8s ease-in-out infinite, badgeSway 5s ease-in-out infinite; }
+  .badge-lvl-23 { animation: badgeGold20Glow 1.8s ease-in-out infinite, badgeBreathe 2.6s ease-in-out infinite, badgeSway 5s ease-in-out infinite; }
   @keyframes badgeSway {
     0%, 100% { rotate: -3deg; }
     50%      { rotate: 3deg; }
   }
   /* L24 — supercharged sparkles (faster, brighter) */
-  .badge-lvl-24 .badge-sparkles { opacity: 1; animation: badgeSparkleSpin 3.2s linear infinite; }
-  .badge-lvl-24 .badge-spark { animation: badgeSparkleTwinkle 0.9s ease-in-out infinite; }
-  /* L25 — holographic sheen sweep across the badge */
+  .badge-lvl-24 .badge-sparkles { opacity: 1; animation: badgeSparkleSpin 2.6s linear infinite; }
+  .badge-lvl-24 .badge-spark { animation: badgeSparkleTwinkle 0.8s ease-in-out infinite; filter: drop-shadow(0 0 2px rgba(255,255,255,0.95)); }
+
+  /* L25 — FULL holographic treatment: two counter-sweeping holo layers that
+     cover the whole plate, rotating starburst rays, a brighter glow, and a
+     second aura ring. The showpiece of the whole badge system. */
   .badge-lvl-25 .badge-holo {
     opacity: 1;
-    animation: badgeHoloSweep 3.5s linear infinite;
+    animation: badgeHoloSweep 3s linear infinite;
     transform-box: view-box; transform-origin: 50px 50px;
   }
+  .badge-lvl-25 .badge-holo2 {
+    opacity: 1;
+    animation: badgeHoloSweep2 4.2s linear infinite;
+    transform-box: view-box; transform-origin: 50px 50px;
+  }
+  .badge-lvl-25 .badge-rays {
+    opacity: 0.55;
+    animation: badgeRaysSpin 9s linear infinite, badgeRaysPulse 2s ease-in-out infinite;
+  }
+  .badge-lvl-25 .badge-aura2 { opacity: 1; animation: badgeAura2Pulse 1.6s ease-in-out infinite; }
+  /* Brighter, faster overall glow for the very top badge */
+  .badge-lvl-25 {
+    animation: badgeGold25Glow 1.6s ease-in-out infinite, badgeBreathe 2.6s ease-in-out infinite, badgeSway 5s ease-in-out infinite !important;
+  }
+  @keyframes badgeGold25Glow {
+    0%, 100% { filter: drop-shadow(0 0 10px rgba(255,235,150,0.95)) drop-shadow(0 0 5px rgba(255,255,255,0.85)); }
+    50%      { filter: drop-shadow(0 0 38px rgba(255,240,170,1)) drop-shadow(0 0 20px rgba(180,255,240,0.9)) drop-shadow(0 0 10px rgba(255,255,255,1)); }
+  }
   @keyframes badgeHoloSweep {
-    0%   { opacity: 0.15; transform: translateX(-20px) rotate(0deg); }
-    50%  { opacity: 0.7;  transform: translateX(20px) rotate(180deg); }
-    100% { opacity: 0.15; transform: translateX(-20px) rotate(360deg); }
+    0%   { opacity: 0.45; transform: translateX(-24px) rotate(0deg); }
+    50%  { opacity: 0.95; transform: translateX(24px) rotate(180deg); }
+    100% { opacity: 0.45; transform: translateX(-24px) rotate(360deg); }
+  }
+  @keyframes badgeHoloSweep2 {
+    0%   { opacity: 0.3;  transform: translateY(-22px) rotate(360deg); }
+    50%  { opacity: 0.75; transform: translateY(22px) rotate(180deg); }
+    100% { opacity: 0.3;  transform: translateY(-22px) rotate(0deg); }
+  }
+  @keyframes badgeRaysSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes badgeRaysPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 0.7; } }
+  @keyframes badgeAura2Pulse {
+    0%, 100% { opacity: 0; transform: scale(0.95); }
+    50%      { opacity: 1; transform: scale(1.08); }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -3734,8 +3770,10 @@
     .badge-fx-silver .badge-sparkles,
     .badge-fx-gold .badge-sparkles { animation: none; opacity: 0; }
     .badge-tap-pop { animation: none; }
-    .badge-lvl-20, .badge-lvl-23 { animation: none; filter: none; }
-    .badge-holo, .badge-ring-glint, .badge-aura { animation: none; opacity: 0; }
+    .badge-lvl-20, .badge-lvl-23, .badge-lvl-25 { animation: none !important; filter: none; }
+    .badge-holo, .badge-holo2, .badge-rays, .badge-ring-glint, .badge-aura, .badge-aura2 { animation: none; opacity: 0; }
+    /* Keep a gentle static holo so L25 still looks special without motion */
+    .badge-lvl-25 .badge-holo { opacity: 0.4; }
   }
 
   /* =================================== */
@@ -5135,6 +5173,11 @@
           <div class="stat-tile-value" id="statStreak">0</div>
           <div class="stat-tile-label">Day Streak</div>
         </div>
+        <div class="stat-tile">
+          <div class="stat-tile-icon">🏆</div>
+          <div class="stat-tile-value" id="statLongestStreak">0</div>
+          <div class="stat-tile-label">Best Streak</div>
+        </div>
       </div>
       <div class="level-progress" id="levelProgress" onclick="showLevelInfo()">
         <div class="level-progress-text">
@@ -5478,6 +5521,10 @@
           <div class="level-modal-stat-num" id="lmStreak">0</div>
           <div class="level-modal-stat-lbl">Day Streak</div>
         </div>
+        <div class="level-modal-stat">
+          <div class="level-modal-stat-num" id="lmLongestStreak">0</div>
+          <div class="level-modal-stat-lbl">Best Streak</div>
+        </div>
       </div>
       <!-- Hints — moved here from the navbar; tap for info, same function -->
       <div class="journey-hints" onclick="showStatLabel('hints', event)">
@@ -5632,6 +5679,7 @@
   // ============ STATE ============
   const state = {
     streak: 0,
+    longestStreak: 0,
     xp: 0,
     hints: 3, // welcome gift
     lastDate: null,
@@ -5653,6 +5701,10 @@
       const saved = JSON.parse(localStorage.getItem('scripture-scholar') || '{}');
       Object.assign(state, saved);
       if (!Array.isArray(state.completedLessons)) state.completedLessons = [];
+      // Longest streak — seed from current streak for existing users so their
+      // record isn't lower than where they already are.
+      if (typeof state.longestStreak !== 'number') state.longestStreak = state.streak || 0;
+      if ((state.streak || 0) > state.longestStreak) state.longestStreak = state.streak;
       // Migration: if upgrading from old version with hearts, give 3 starter hints
       if (typeof state.hints !== 'number') state.hints = 3;
       delete state.hearts; // no longer used
@@ -5677,6 +5729,7 @@
       localStorage.setItem('scripture-scholar', JSON.stringify({
         username: state.username,
         streak: state.streak,
+        longestStreak: state.longestStreak,
         xp: state.xp,
         hints: state.hints,
         lastDate: state.lastDate,
@@ -6031,6 +6084,8 @@
     document.getElementById('lmChapters').textContent = (state.completedLessons || []).length;
     document.getElementById('lmTotalXp').textContent = state.xp;
     document.getElementById('lmStreak').textContent = state.streak;
+    const lmLs = document.getElementById('lmLongestStreak');
+    if (lmLs) lmLs.textContent = state.longestStreak || 0;
   }
 
   function closeLevelModal(event) {
@@ -6319,6 +6374,8 @@
     document.getElementById('statChapters').textContent = state.completedLessons.length;
     document.getElementById('statXp').textContent = state.xp;
     document.getElementById('statStreak').textContent = state.streak;
+    const lsEl = document.getElementById('statLongestStreak');
+    if (lsEl) lsEl.textContent = state.longestStreak || 0;
   }
 
   function continueFromDashboard() {
@@ -6933,6 +6990,8 @@
     if (state.lastDate !== today) {
       state.streak += 1;
       state.lastDate = today;
+      // Track the best streak ever reached — survives even after a reset.
+      if (state.streak > (state.longestStreak || 0)) state.longestStreak = state.streak;
       // Daily task: keep your streak
       if (typeof markDailyTaskComplete === 'function') markDailyTaskComplete('streak_keep');
     }

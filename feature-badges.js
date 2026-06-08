@@ -167,11 +167,18 @@
             <circle cx="50" cy="50" r="42"/>
           </clipPath>
           <linearGradient id="${uid}_holo" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%"  stop-color="#ff7eb3" stop-opacity="0.55"/>
-            <stop offset="25%" stop-color="#7afcff" stop-opacity="0.55"/>
-            <stop offset="50%" stop-color="#feff9c" stop-opacity="0.55"/>
-            <stop offset="75%" stop-color="#a6ff8e" stop-opacity="0.55"/>
-            <stop offset="100%" stop-color="#d98eff" stop-opacity="0.55"/>
+            <stop offset="0%"  stop-color="#ff7eb3" stop-opacity="0.85"/>
+            <stop offset="20%" stop-color="#7afcff" stop-opacity="0.85"/>
+            <stop offset="40%" stop-color="#feff9c" stop-opacity="0.85"/>
+            <stop offset="60%" stop-color="#a6ff8e" stop-opacity="0.85"/>
+            <stop offset="80%" stop-color="#8ec5ff" stop-opacity="0.85"/>
+            <stop offset="100%" stop-color="#d98eff" stop-opacity="0.85"/>
+          </linearGradient>
+          <linearGradient id="${uid}_holo2" x1="1" y1="0" x2="0" y2="1">
+            <stop offset="0%"  stop-color="#fff6a0" stop-opacity="0.7"/>
+            <stop offset="33%" stop-color="#a6ffe0" stop-opacity="0.7"/>
+            <stop offset="66%" stop-color="#c8a6ff" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#ffb3d9" stop-opacity="0.7"/>
           </linearGradient>
         </defs>
 
@@ -205,12 +212,22 @@
         <!-- Shine sweep — tall/wide band fully inside the plate clip so no edges show -->
         <g clip-path="url(#${uid}_clip)">
           <rect class="badge-shine" x="-50" y="-40" width="34" height="180" fill="url(#${uid}_shine)" transform="rotate(20 50 50)"/>
-          <!-- Holographic sheen (level 25 only) -->
-          <rect class="badge-holo" x="8" y="8" width="84" height="84" fill="url(#${uid}_holo)"/>
+          <!-- Holographic sheen (level 25) — oversized so it always covers the full plate as it sweeps -->
+          <rect class="badge-holo" x="-40" y="-40" width="180" height="180" fill="url(#${uid}_holo)"/>
+          <rect class="badge-holo2" x="-40" y="-40" width="180" height="180" fill="url(#${uid}_holo2)"/>
+          <!-- Rotating starburst rays (level 25) -->
+          <g class="badge-rays">
+            ${Array.from({length: 12}).map((_, i) => {
+              const a = (i / 12) * 360;
+              return `<rect x="49" y="-6" width="2" height="56" fill="#fff8e0" opacity="0.5" transform="rotate(${a} 50 50)"/>`;
+            }).join('')}
+          </g>
         </g>
         <!-- Extra rotating ring glint (gold cumulative effect) -->
-        <circle class="badge-ring-glint" cx="50" cy="50" r="39" fill="none" stroke="#fff6d8" stroke-width="1.5" stroke-dasharray="6 200" opacity="0"/>
+        <circle class="badge-ring-glint" cx="50" cy="50" r="39" fill="none" stroke="#fff6d8" stroke-width="2" stroke-dasharray="6 200" opacity="0"/>
         <!-- Pulsing outer aura (gold cumulative effect) -->
-        <circle class="badge-aura" cx="50" cy="50" r="46" fill="none" stroke="${c.light}" stroke-width="2" opacity="0"/>
+        <circle class="badge-aura" cx="50" cy="50" r="46" fill="none" stroke="${c.light}" stroke-width="2.5" opacity="0"/>
+        <!-- Second, brighter aura ring for level 25 -->
+        <circle class="badge-aura2" cx="50" cy="50" r="49" fill="none" stroke="#fff6d8" stroke-width="1.5" opacity="0"/>
       </svg>`;
   }
